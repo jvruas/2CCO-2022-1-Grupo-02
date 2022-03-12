@@ -1,7 +1,14 @@
+body{
+    overflow-x: hidden;
+    user-select: none;
+}
+
 :root{
     --title-color: #FFFFFF;
     --subtitle-color: #FFFFFF;
     --itens-color: #FFFFFF;
+    --blue-color: #3682A9;
+    --green-color: #36A498;
 }
 
 a{
@@ -50,5 +57,22 @@ a{
     width: 90%;
     background-color: var(--itens-color);
 }
+
+.links-footer p a, .icons-footer a i{
+    color: var(--blue-color);
+}
+
+.links-footer p a:hover, .icons-footer a:hover, .icons-footer a i:hover{
+    color: var(--green-color);
+    text-decoration: none;
+}
+
+.text-linear{
+    background: linear-gradient(90.62deg, #369F64 49.93%, #36A498 95.79%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
 
 
