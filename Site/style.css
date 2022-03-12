@@ -1,4 +1,54 @@
-.fundo{
-    background-color: aqua;
-    height: 100vh;
+:root{
+    --title-color: #FFFFFF;
+    --subtitle-color: #FFFFFF;
+    --itens-color: #FFFFFF;
 }
+
+a{
+    text-decoration: none;
+}
+
+.img-fundo{
+    height: 100vh;
+    position: absolute;
+}
+
+.img-fundo-dep{
+    height: 120vh;
+    position: absolute;
+}
+
+.img-fundo img{
+    height: 100%;
+    width: 100%;
+}
+
+.title-color{
+    color: var(--title-color);
+}
+
+.subtitle-color{
+    color: var(--subtitle-color);
+}
+
+.nav-link{
+    color: var(--itens-color); 
+    font-size: 16px;
+}
+
+.nav-link-selected{
+    font-weight: 600; 
+}
+
+.text-enterprise span{
+    color: var(--itens-color);
+}
+
+.box-dep{
+    border-radius: 15px 0 0 15px;
+    height: 75%; 
+    width: 90%;
+    background-color: var(--itens-color);
+}
+
+
