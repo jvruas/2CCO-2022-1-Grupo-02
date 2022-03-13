@@ -3,6 +3,10 @@ body{
     user-select: none;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 :root{
     --title-color: #FFFFFF;
     --subtitle-color: #FFFFFF;
@@ -13,6 +17,11 @@ body{
 
 a{
     text-decoration: none;
+}
+
+a:hover{
+    text-decoration: none;
+    color: var(--title-color);
 }
 
 .img-fundo{
@@ -26,6 +35,18 @@ a{
 }
 
 .img-fundo img{
+    height: 100%;
+    width: 100%;
+}
+
+.img-formas{
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    z-index: 9998;
+}
+
+.img-formas img{
     height: 100%;
     width: 100%;
 }
@@ -47,8 +68,13 @@ a{
     font-weight: 600; 
 }
 
-.text-enterprise span{
+.nav-link:hover, .nav-link-selected:hover{
+    color: var(--green-color)
+}
+
+.text-enterprise{
     color: var(--itens-color);
+    font-size: 20px;
 }
 
 .box-dep{
