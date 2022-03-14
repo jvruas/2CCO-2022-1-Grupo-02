@@ -19,8 +19,12 @@ public class ProdutoController {
        produtos.add(novoPro);
        return "Produto cadastrado com sucesso.";
     }
+    @GetMapping
+    public List<Produto> exibirTodos(){
+        return produtos;
+    }
 
-    @PutMapping("/atualizar/{id}")
+    @PutMapping("/{id}")
     public String alterarStatus(@PathVariable int id) {
 
             for (Produto p : produtos){
@@ -37,7 +41,7 @@ public class ProdutoController {
     }
 
 
-    @DeleteMapping("/deletar/{id}")
+    @DeleteMapping("/{id}")
     public String deletar(@PathVariable int id) {
 
         for (Produto p : produtos) {
@@ -49,13 +53,10 @@ public class ProdutoController {
         return "Produto não encontrado";
     }
 
-@GetMapping("/exibir")
-    public List<Produto> exibirTodos(){
-        return produtos;
-}
 
 
-    @GetMapping("/exibirid/{id}")
+
+    @GetMapping("/{id}")
     public Produto exibirPorId(@PathVariable int id) {
         for (Produto p: produtos) {
             if (p.getIdProduto().equals(id)) {
@@ -65,7 +66,7 @@ public class ProdutoController {
         return null;
     }
 
-    @GetMapping("/exibircat/{categoria}")
+    @GetMapping("/{categoria}")
     public List<Produto> exibirPorCategoria(@PathVariable String categoria) {
         List<Produto> produtosCat = new ArrayList<>();
         for (Produto p: produtos) {
