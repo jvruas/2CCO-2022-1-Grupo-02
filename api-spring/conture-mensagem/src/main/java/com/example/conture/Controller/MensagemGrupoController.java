@@ -20,7 +20,7 @@ public class MensagemGrupoController {
             return "Mensagem cadastrada com sucesso";
         }
 
-        @DeleteMapping("/deletar")
+        @DeleteMapping("/deletar/{id}")
         public String deletar(@PathVariable int id) {
             for (MensagemGrupo m : mensagens) {
                 if (m.getIdMensagem().equals(id)) {
@@ -37,7 +37,7 @@ public class MensagemGrupoController {
         }
 
 
-        @GetMapping("/exibirId")
+        @GetMapping("/exibirId/{id}")
         public MensagemGrupo exibirPorID(@PathVariable int id) {
             for (MensagemGrupo m : mensagens) {
                 if (m.getIdMensagem().equals(id)) {

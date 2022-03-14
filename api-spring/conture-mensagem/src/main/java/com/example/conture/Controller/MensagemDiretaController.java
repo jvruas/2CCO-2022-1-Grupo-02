@@ -23,7 +23,7 @@ public class MensagemDiretaController {
 //        return "Cadastrado com sucesso";
     }
 
-    @DeleteMapping("/deletar")
+    @DeleteMapping("/deletar/{id}")
     public String deletar(@PathVariable int id) {
         for (MensagemDireta m : mensagens) {
             if (m.getIdMensagem().equals(id)) {
@@ -40,7 +40,7 @@ public class MensagemDiretaController {
     }
 
 
-    @GetMapping("/exibirId")
+    @GetMapping("/exibirId/{id}")
     public MensagemDireta exibirPorID(@PathVariable int id) {
         for (MensagemDireta m : mensagens) {
             if (m.getIdMensagem().equals(id)) {
