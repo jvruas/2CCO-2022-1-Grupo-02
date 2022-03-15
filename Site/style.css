@@ -13,6 +13,11 @@ html{
     --itens-color: #FFFFFF;
     --blue-color: #3682A9;
     --green-color: #36A498;
+    --header-color: #FFFFFF;
+}
+
+.header:root{
+    --header-color: #000000;  
 }
 
 a{
@@ -60,7 +65,7 @@ a:hover{
 }
 
 .nav-link{
-    color: var(--itens-color); 
+    color: var(--header-color); 
     font-size: 16px;
 }
 
@@ -73,7 +78,7 @@ a:hover{
 }
 
 .text-enterprise{
-    color: var(--itens-color);
+    color: var(--header-color);
     font-size: 20px;
 }
 
