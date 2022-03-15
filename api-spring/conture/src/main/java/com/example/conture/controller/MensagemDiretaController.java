@@ -1,4 +1,4 @@
-package com.example.conture.Controller;
+package com.example.conture.controller;
 
 import com.example.conture.domain.MensagemDireta;
 import org.springframework.web.bind.annotation.*;

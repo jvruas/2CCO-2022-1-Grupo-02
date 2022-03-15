@@ -1,4 +1,4 @@
-package com.example.contureproduto.entidade;
+package com.example.conture.domain;
 
 public class Produto {
     private Integer fkDoador;

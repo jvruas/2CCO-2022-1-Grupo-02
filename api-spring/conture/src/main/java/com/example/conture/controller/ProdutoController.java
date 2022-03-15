@@ -1,6 +1,5 @@
-package com.example.contureproduto.controle;
-
-import com.example.contureproduto.entidade.Produto;
+package com.example.conture.controller;
+import com.example.conture.domain.Produto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
