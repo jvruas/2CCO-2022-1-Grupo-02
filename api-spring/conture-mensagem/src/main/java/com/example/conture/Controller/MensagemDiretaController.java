@@ -1,8 +1,6 @@
 package com.example.conture.Controller;
 
-import com.example.conture.Entidade.Mensagem;
-import com.example.conture.Entidade.MensagemDireta;
-import com.example.conture.Entidade.MensagemGrupo;
+import com.example.conture.domain.MensagemDireta;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -10,20 +8,25 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/mensagemDireta")
+@RequestMapping("/mensagem-direta")
 public class MensagemDiretaController {
 
     List<MensagemDireta> mensagens = new ArrayList<>();
 
 
     @PostMapping
-    public List<MensagemDireta> cadastrar(@RequestBody MensagemDireta mensagem) {
+    public String cadastrar(@RequestBody MensagemDireta mensagem) {
         mensagens.add(mensagem);
-        return mensagens;
-//        return "Cadastrado com sucesso";
+
+        return "Cadastrado com sucesso";
     }
 
-    @DeleteMapping("/deletar/{id}")
+    @GetMapping
+    public List<MensagemDireta> exibirTodos() {
+        return this.mensagens;
+    }
+
+    @DeleteMapping("/{id}")
     public String deletar(@PathVariable int id) {
         for (MensagemDireta m : mensagens) {
             if (m.getIdMensagem().equals(id)) {
@@ -34,13 +37,7 @@ public class MensagemDiretaController {
         return "Mensagem não encontrada";
     }
 
-    @GetMapping("/exibir")
-    public List<MensagemDireta> exibirTodos() {
-        return mensagens;
-    }
-
-
-    @GetMapping("/exibirId/{id}")
+    @GetMapping("/{id}")
     public MensagemDireta exibirPorID(@PathVariable int id) {
         for (MensagemDireta m : mensagens) {
             if (m.getIdMensagem().equals(id)) {

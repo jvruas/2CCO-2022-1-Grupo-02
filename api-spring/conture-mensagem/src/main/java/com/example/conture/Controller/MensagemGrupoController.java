@@ -1,14 +1,13 @@
 package com.example.conture.Controller;
 
-import com.example.conture.Entidade.Mensagem;
-import com.example.conture.Entidade.MensagemGrupo;
+import com.example.conture.domain.MensagemGrupo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/mensagemGrupo")
+@RequestMapping("/mensagem-grupo")
 public class MensagemGrupoController {
 
         List<MensagemGrupo> mensagens = new ArrayList<>();
@@ -20,7 +19,12 @@ public class MensagemGrupoController {
             return "Mensagem cadastrada com sucesso";
         }
 
-        @DeleteMapping("/deletar/{id}")
+        @GetMapping
+        public List<MensagemGrupo> exibirTodos() {
+            return mensagens;
+        }
+
+        @DeleteMapping("/{id}")
         public String deletar(@PathVariable int id) {
             for (MensagemGrupo m : mensagens) {
                 if (m.getIdMensagem().equals(id)) {
@@ -32,12 +36,7 @@ public class MensagemGrupoController {
         }
 
 
-        public List<MensagemGrupo> exibirTodos() {
-            return mensagens;
-        }
-
-
-        @GetMapping("/exibirId/{id}")
+        @GetMapping("/{id}")
         public MensagemGrupo exibirPorID(@PathVariable int id) {
             for (MensagemGrupo m : mensagens) {
                 if (m.getIdMensagem().equals(id)) {
