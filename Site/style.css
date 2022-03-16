@@ -16,9 +16,6 @@ html{
     --header-color: #FFFFFF;
 }
 
-.header:root{
-    --header-color: #000000;  
-}
 
 a{
     text-decoration: none;
@@ -73,13 +70,9 @@ a:hover{
     font-weight: 600; 
 }
 
-.nav-link:hover, .nav-link-selected:hover{
-    color: var(--green-color)
-}
-
 .text-enterprise{
     color: var(--header-color);
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .box-dep{
@@ -104,6 +97,35 @@ a:hover{
     -webkit-text-fill-color: transparent;
 }
 
+/* teste */
+
+a, #header, #header img {
+    transition: all .4s;
+}
 
 
+#header.home span > span, #header.home a {
+    color: #fff;
+}
+
+#header:not(.home) {
+    background-color: #fff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+#header a {
+    color: black;
+}
+
+#header {
+    position: fixed;
+}
+
+#ulNav a:hover, #ulNav a.active {
+    color: var(--green-color);
+}
+
+main:not(.home) {
+    margin-top: 94px;
+}
 
