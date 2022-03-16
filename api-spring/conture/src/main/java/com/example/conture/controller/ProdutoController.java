@@ -11,8 +11,6 @@ public class ProdutoController {
 
     List<Produto> produtos = new ArrayList<>();
 
-
-
     @PostMapping
     public String cadastrar(@RequestBody Produto novoPro){
        produtos.add(novoPro);
@@ -39,7 +37,6 @@ public class ProdutoController {
         return "Produto não encontrado";
     }
 
-
     @DeleteMapping("/{id}")
     public String deletar(@PathVariable int id) {
 
@@ -52,10 +49,7 @@ public class ProdutoController {
         return "Produto não encontrado";
     }
 
-
-
-
-    @GetMapping("/{id}")
+    @GetMapping("mostrar-id/{id}")
     public Produto exibirPorId(@PathVariable int id) {
         for (Produto p: produtos) {
             if (p.getIdProduto().equals(id)) {
@@ -65,7 +59,7 @@ public class ProdutoController {
         return null;
     }
 
-    @GetMapping("/{categoria}")
+    @GetMapping("mostrar-categoria/{categoria}")
     public List<Produto> exibirPorCategoria(@PathVariable String categoria) {
         List<Produto> produtosCat = new ArrayList<>();
         for (Produto p: produtos) {

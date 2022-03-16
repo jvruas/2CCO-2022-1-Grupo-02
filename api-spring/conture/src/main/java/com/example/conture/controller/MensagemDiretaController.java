@@ -13,7 +13,6 @@ public class MensagemDiretaController {
 
     List<MensagemDireta> mensagens = new ArrayList<>();
 
-
     @PostMapping
     public String cadastrar(@RequestBody MensagemDireta mensagem) {
         mensagens.add(mensagem);
