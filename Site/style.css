@@ -14,6 +14,7 @@ html{
     --blue-color: #3682A9;
     --green-color: #36A498;
     --header-color: #FFFFFF;
+    --purple-color: #4e3069;
 }
 
 
@@ -83,8 +84,20 @@ a:hover{
 }
 
 .links-footer p a, .icons-footer a i{
-    color: var(--blue-color);
+    color: var(--purple-color);
 }
+
+.text-bold{
+    font-weight: 700;
+}
+
+.text-left{
+    text-align: left;
+}
+
+/* .links-color{
+    color: var(--purple-color);
+} */
 
 .links-footer p a:hover, .icons-footer a:hover, .icons-footer a i:hover{
     color: var(--green-color);

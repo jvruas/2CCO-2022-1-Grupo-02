@@ -5,10 +5,10 @@ $(document).scroll(function() {
 
 if (scroll > 400) {
     header.removeClass('home');
-    logoheader.attr('src', './img/logo black.png');
+    logoheader.attr('src', './img/ContureBlack.png');
 } else {
     header.addClass('home');
-    logoheader.attr('src', './img/Full white logo.png');
+    logoheader.attr('src', './img/ContureWhite.png');
 }
 
 if(scroll<400){
