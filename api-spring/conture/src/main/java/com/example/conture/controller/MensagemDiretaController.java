@@ -15,7 +15,7 @@ public class MensagemDiretaController {
     @PostMapping
     public String cadastrar(@RequestBody MensagemDireta mensagem) {
         mensagens.add(mensagem);
-        return "Cadastrado com sucesso!";
+        return "Mensagem cadastrada com sucesso!";
     }
 
     @GetMapping
