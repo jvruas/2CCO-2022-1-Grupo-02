@@ -1,10 +1,12 @@
 package com.example.conture.controller;
 
+import com.example.conture.domain.Mensagem;
 import com.example.conture.domain.MensagemDireta;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -21,8 +23,10 @@ public class MensagemDiretaController {
     }
 
     @GetMapping
-    public List<MensagemDireta> exibirTodos() {
-        return this.mensagens;
+    public String exibirTodos() {
+        return this.mensagens.stream()
+                             .map( MensagemDireta::exibirNotificacao)
+                             .reduce("",  (a, b) -> (a + b) + ("\n" + "-".repeat(35) + "\n") );
     }
 
     @DeleteMapping("/{id}")
@@ -37,10 +41,10 @@ public class MensagemDiretaController {
     }
 
     @GetMapping("/{id}")
-    public MensagemDireta exibirPorID(@PathVariable int id) {
-        for (MensagemDireta m : mensagens) {
-            if (m.getIdMensagem().equals(id)) {
-                return m;
+    public String exibirPorID(@PathVariable int id) {
+        for (MensagemDireta mensagem : this.mensagens) {
+            if (mensagem.getIdMensagem().equals(id)) {
+                return ("-".repeat(30) + "\n" + mensagem.exibirNotificacao());
             }
         }
         return null;

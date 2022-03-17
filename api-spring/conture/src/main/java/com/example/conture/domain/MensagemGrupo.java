@@ -28,4 +28,16 @@ public class MensagemGrupo extends Mensagem {
     public void setIdTopico(Integer idTopico) {
         this.idTopico = idTopico;
     }
+
+    @Override
+    public String exibirNotificacao() {
+        return String.format(
+                "\nNova notificação do topico %d no grupo %d%d\n\t%s\t\t\t%s",
+                this.getIdTopico(),
+                this.getFkDoador(),
+                this.getIdProduto(),
+                super.getCorpoMensagem(),
+                super.getData()
+        );
+    }
 }

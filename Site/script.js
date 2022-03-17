@@ -62,3 +62,18 @@ function bold(number){
             break;
     }
 }
+
+
+function mudarHistoria(number){
+    switch(number){
+        case 1:
+            $('#historiaP').css('visibility', 'hidden');
+            $('#historiaS').css('visibility', 'visible');            
+            break;
+
+        case 2:
+            $('#historiaP').css('visibility', 'visible');
+            $('#historiaS').css('visibility', 'hidden');   
+            break;
+    }
+}

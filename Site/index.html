@@ -52,16 +52,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto" id="ulNav">
             <li class="nav-item ml-2">
-              <a onclick="bold(1)" id="a_home" class="nav-link nav-link-selected" href="#home">Home</a>
+              <a id="a_home" class="nav-link nav-link-selected" href="#home">Home</a>
             </li>
             <li class="nav-item ml-2">
-              <a onclick="bold(2)" id="a_sobre" class="nav-link" href="#sobre">Sobre</a>
+              <a id="a_sobre" class="nav-link" href="#sobre">Sobre</a>
             </li>
             <li class="nav-item ml-2">
-              <a onclick="bold(3)" id="a_historia" class="nav-link" href="#historias">Histórias</a>
+              <a id="a_historia" class="nav-link" href="#historias">Histórias</a>
             </li>
             <li class="nav-item ml-2">
-              <a onclick="bold(4)" id="a_contato" class="nav-link" href="#contato">Contato</a>
+              <a id="a_contato" class="nav-link" href="#contato">Contato</a>
             </li>
           </ul>
         </div>
@@ -127,7 +127,7 @@
   <section id="historias">
 
 
-    <div class="img-fundo col-12 p-0" id="historiaP">
+    <div class="img-fundo col-12 p-0">
       <img src="./img/fundo.png" alt="" width="100%"> <!-- imagem fundo historias  -->
     </div>
 
@@ -139,7 +139,7 @@
 
       <div class="col-8 modal-dialog-centered p-0">
         <!-- box branco  -->
-        <div class="ml-auto box-dep row">
+        <div class="ml-auto box-dep row" id="historiaP">
           <div class="col-6 row" style="height: 100%;">
 
             <div class="mx-auto modal-dialog-centered" style="height: 100%">
@@ -174,7 +174,7 @@
             </div>
 
             <div class="ml-auto col-6 mt-5 pt-4">
-              <span style="font-weight: 600; ">
+              <span style="font-weight: 600; " onclick="mudarHistoria(1)">
                 Próximo >
               </span>
             </div>
@@ -183,13 +183,13 @@
         </div>
 
 
-        <div class="ml-auto box-dep row" style="display: none;" id="historiaS">
+        <div class="ml-auto box-dep row" id="historiaS" style="visibility: hidden; position: absolute; right: 0;">
           <div class="col-6 row" style="height: 100%;">
 
             <div class="mx-auto modal-dialog-centered" style="height: 100%">
 
               <div class="col-6 p-0">
-                <img src="./img/peoplef.jpg" alt="" width="200" height="" class="rounded-circle">
+                <img src="https://arita.com.br/wp-content/uploads/2020/08/pessoa-expansiva-principais-caracteristicas-desta-personalidade.jpg" alt="" width="200" height="200" class="rounded-circle">
               </div>
 
             </div>
@@ -201,9 +201,8 @@
               <span class="">
                 “Paulo um aaa de 16 anos que <br>
                 progaaaaaaaaramava pelo celular, fiquei <br>
-                aaaa impactada <br>
-a                e hoje após doação já está programando<br>
-                em seu
+                aaaa impactada
+                a e hoje após doação já está programando<br>
                 notebook, mais feliz e <br>
                 aaaaaaaa ainda, pois ele tem <br>
                 sede de conhecimento”
@@ -217,7 +216,7 @@ a                e hoje após doação já está programando<br>
             </div>
 
             <div class="ml-auto col-6 mt-5 pt-4">
-              <span style="font-weight: 600; ">
+              <span style="font-weight: 600; " onclick="mudarHistoria(2)">
                 Próximo >
               </span>
             </div>

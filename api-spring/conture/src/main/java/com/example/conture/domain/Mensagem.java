@@ -38,8 +38,6 @@ public abstract class Mensagem {
         this.data = data;
     }
 
-    public String exibirNotificacao(){
-        return null;
-    }
+    public abstract String exibirNotificacao();
 
 }
