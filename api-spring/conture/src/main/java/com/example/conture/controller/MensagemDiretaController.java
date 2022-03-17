@@ -1,13 +1,10 @@
 package com.example.conture.controller;
 
-import com.example.conture.domain.Mensagem;
 import com.example.conture.domain.MensagemDireta;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 @RestController
 @RequestMapping("/mensagem-direta")
@@ -18,15 +15,28 @@ public class MensagemDiretaController {
     @PostMapping
     public String cadastrar(@RequestBody MensagemDireta mensagem) {
         mensagens.add(mensagem);
-
-        return "Cadastrado com sucesso";
+        return "Cadastrado com sucesso!";
     }
 
     @GetMapping
     public String exibirTodos() {
+        if (this.mensagens.isEmpty()) {
+            return "Nenhuma nova mensagem direta";
+        }
+
         return this.mensagens.stream()
-                             .map( MensagemDireta::exibirNotificacao)
-                             .reduce("",  (a, b) -> (a + b) + ("\n" + "-".repeat(35) + "\n") );
+                             .map(MensagemDireta::exibirNotificacao)
+                             .reduce("",  (a, b) -> (a + b) + ("\n" + "-".repeat(35) + "\n"));
+    }
+
+    @GetMapping("/{id}")
+    public String exibirPorID(@PathVariable int id) {
+        for (MensagemDireta mensagem : this.mensagens) {
+            if (mensagem.getIdMensagem().equals(id)) {
+                return ("-".repeat(35) + "\n" + mensagem.exibirNotificacao() + "\n" + "-".repeat(35));
+            }
+        }
+        return "Mensagem não encontrada";
     }
 
     @DeleteMapping("/{id}")
@@ -39,15 +49,4 @@ public class MensagemDiretaController {
         }
         return "Mensagem não encontrada";
     }
-
-    @GetMapping("/{id}")
-    public String exibirPorID(@PathVariable int id) {
-        for (MensagemDireta mensagem : this.mensagens) {
-            if (mensagem.getIdMensagem().equals(id)) {
-                return ("-".repeat(30) + "\n" + mensagem.exibirNotificacao());
-            }
-        }
-        return null;
-    }
-
 }

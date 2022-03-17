@@ -34,9 +34,7 @@ public abstract class Mensagem {
         return data;
     }
 
-    public void setData(String data) {
-        this.data = data;
-    }
+    public void setData(String data) { this.data = data; }
 
     public abstract String exibirNotificacao();
 

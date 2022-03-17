@@ -32,11 +32,11 @@ public class MensagemGrupo extends Mensagem {
     @Override
     public String exibirNotificacao() {
         return String.format(
-                "\nNova notificação do topico %d no grupo %d%d\n\t%s\t\t\t%s",
-                this.getIdTopico(),
-                this.getFkDoador(),
+                "Nova mensagem no grupo do produto %d - Topico: %d:\n\t%s\nRemetente: %d\t\t\t%s",
                 this.getIdProduto(),
+                this.getIdTopico(),
                 super.getCorpoMensagem(),
+                super.getFkRemetente(),
                 super.getData()
         );
     }

@@ -10,40 +10,43 @@ import java.util.List;
 @RequestMapping("/mensagem-grupo")
 public class MensagemGrupoController {
 
-        List<MensagemGrupo> mensagens = new ArrayList<>();
+    List<MensagemGrupo> mensagens = new ArrayList<>();
 
-
-        @PostMapping
-        public String cadastrar(@RequestBody MensagemGrupo mensagem) {
-            mensagens.add(mensagem);
-            return "Mensagem cadastrada com sucesso";
-        }
-
-        @GetMapping
-        public List<MensagemGrupo> exibirTodos() {
-            return mensagens;
-        }
-
-        @DeleteMapping("/{id}")
-        public String deletar(@PathVariable int id) {
-            for (MensagemGrupo m : mensagens) {
-                if (m.getIdMensagem().equals(id)) {
-                    mensagens.remove(m);
-                    return "Mensagem removida com sucesso";
-                }
-            }
-            return "Mensagem não encontrada";
-        }
-
-
-        @GetMapping("/{id}")
-        public MensagemGrupo exibirPorID(@PathVariable int id) {
-            for (MensagemGrupo m : mensagens) {
-                if (m.getIdMensagem().equals(id)) {
-                    return m;
-                }
-            }
-            return null;
-        }
-
+    @PostMapping
+    public String cadastrar(@RequestBody MensagemGrupo mensagem) {
+        mensagens.add(mensagem);
+        return "Mensagem cadastrada com sucesso!";
     }
+
+    @GetMapping
+    public String exibirTodos() {
+        if (this.mensagens.isEmpty()) {
+            return "Nenhuma nova mensagem de grupo";
+        }
+
+        return this.mensagens.stream()
+                             .map(MensagemGrupo::exibirNotificacao)
+                             .reduce("",  (a, b) -> (a + b) + ("\n" + "-".repeat(35) + "\n"));
+    }
+
+    @GetMapping("/{id}")
+    public String exibirPorID(@PathVariable int id) {
+        for (MensagemGrupo mensagem : this.mensagens) {
+            if (mensagem.getIdMensagem().equals(id)) {
+                return ("-".repeat(35) + "\n" + mensagem.exibirNotificacao() + "\n" + "-".repeat(35));
+            }
+        }
+        return "Mensagem não encontrada";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deletar(@PathVariable int id) {
+        for (MensagemGrupo m : mensagens) {
+            if (m.getIdMensagem().equals(id)) {
+                mensagens.remove(m);
+                return "Mensagem removida com sucesso";
+            }
+        }
+        return "Mensagem não encontrada";
+    }
+}
