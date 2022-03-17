@@ -26,7 +26,7 @@ public class MensagemDiretaController {
 
         return this.mensagens.stream()
                              .map(MensagemDireta::exibirNotificacao)
-                             .reduce("",  (a, b) -> ("-".repeat(35) + "\n") + (a + b) + "\n");
+                             .reduce("",  (a, b) -> (a + b) + ("\n" + "-".repeat(50) + "\n"));
     }
 
     @GetMapping("/{id}")
