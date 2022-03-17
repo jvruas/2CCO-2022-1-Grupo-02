@@ -26,7 +26,7 @@ public class MensagemGrupoController {
 
         return this.mensagens.stream()
                              .map(MensagemGrupo::exibirNotificacao)
-                             .reduce("",  (a, b) -> (a + b) + ("\n" + "-".repeat(35) + "\n"));
+                             .reduce("",  (a, b) -> ("-".repeat(35) + "\n") + (a + b) + "\n");
     }
 
     @GetMapping("/{id}")
