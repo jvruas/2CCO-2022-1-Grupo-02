@@ -10,11 +10,11 @@ import java.util.List;
 @RequestMapping("/mensagem-grupo")
 public class MensagemGrupoController {
 
-    List<MensagemGrupo> mensagens = new ArrayList<>();
+    List<MensagemGrupo> mensagens = new ArrayList();
 
     @PostMapping
     public String cadastrar(@RequestBody MensagemGrupo mensagem) {
-        mensagens.add(mensagem);
+        this.mensagens.add(mensagem);
         return "Mensagem cadastrada com sucesso!";
     }
 
@@ -41,9 +41,9 @@ public class MensagemGrupoController {
 
     @DeleteMapping("/{id}")
     public String deletar(@PathVariable int id) {
-        for (MensagemGrupo m : mensagens) {
-            if (m.getIdMensagem().equals(id)) {
-                mensagens.remove(m);
+        for (MensagemGrupo mensagem : this.mensagens) {
+            if (mensagem.getIdMensagem().equals(id)) {
+                this.mensagens.remove(mensagem);
                 return "Mensagem removida com sucesso";
             }
         }

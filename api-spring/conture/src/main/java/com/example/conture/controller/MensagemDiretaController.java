@@ -10,11 +10,11 @@ import java.util.List;
 @RequestMapping("/mensagem-direta")
 public class MensagemDiretaController {
 
-    List<MensagemDireta> mensagens = new ArrayList<>();
+    List<MensagemDireta> mensagens = new ArrayList();
 
     @PostMapping
     public String cadastrar(@RequestBody MensagemDireta mensagem) {
-        mensagens.add(mensagem);
+        this.mensagens.add(mensagem);
         return "Mensagem cadastrada com sucesso!";
     }
 
@@ -41,9 +41,9 @@ public class MensagemDiretaController {
 
     @DeleteMapping("/{id}")
     public String deletar(@PathVariable int id) {
-        for (MensagemDireta m : mensagens) {
-            if (m.getIdMensagem().equals(id)) {
-                mensagens.remove(m);
+        for (MensagemDireta mensagem : this.mensagens) {
+            if (mensagem.getIdMensagem().equals(id)) {
+                this.mensagens.remove(mensagem);
                 return "Mensagem removida com sucesso";
             }
         }
