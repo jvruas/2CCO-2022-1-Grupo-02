@@ -33,7 +33,7 @@ public class MensagemGrupoController {
     public String exibirPorID(@PathVariable int id) {
         for (MensagemGrupo mensagem : this.mensagens) {
             if (mensagem.getIdMensagem().equals(id)) {
-                return ("-".repeat(35) + "\n" + mensagem.exibirNotificacao() + "\n" + "-".repeat(35));
+                return ("-".repeat(35) + "\n" + mensagem.exibirNotificacao() + "\n" + "-".repeat(50));
             }
         }
         return "Mensagem não encontrada";
