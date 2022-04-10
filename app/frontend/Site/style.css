@@ -1,0 +1,144 @@
+body{
+    overflow-x: hidden;
+    user-select: none;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+:root{
+    --title-color: #FFFFFF;
+    --subtitle-color: #FFFFFF;
+    --itens-color: #FFFFFF;
+    --blue-color: #3682A9;
+    --green-color: #36A498;
+    --header-color: #FFFFFF;
+    --purple-color: #4e3069;
+}
+
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: none;
+    color: var(--title-color);
+}
+
+.img-fundo{
+    height: 100vh;
+    position: absolute;
+}
+
+.img-fundo-dep{
+    height: 120vh;
+    position: absolute;
+}
+
+.img-fundo img{
+    height: 100%;
+    width: 100%;
+}
+
+.img-formas{
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    z-index: 9998;
+}
+
+.img-formas img{
+    height: 100%;
+    width: 100%;
+}
+
+.title-color{
+    color: var(--title-color);
+}
+
+.subtitle-color{
+    color: var(--subtitle-color);
+}
+
+.nav-link{
+    color: var(--header-color); 
+    font-size: 16px;
+}
+
+.nav-link-selected{
+    font-weight: 600; 
+}
+
+.text-enterprise{
+    color: var(--header-color);
+    font-size: 16px;
+}
+
+.box-dep{
+    border-radius: 15px 0 0 15px;
+    height: 75%; 
+    width: 90%;
+    background-color: var(--itens-color);
+}
+
+.links-footer p a, .icons-footer a i{
+    color: var(--purple-color);
+}
+
+.text-bold{
+    font-weight: 700;
+}
+
+.text-left{
+    text-align: left;
+}
+
+/* .links-color{
+    color: var(--purple-color);
+} */
+
+.links-footer p a:hover, .icons-footer a:hover, .icons-footer a i:hover{
+    color: var(--green-color);
+    text-decoration: none;
+}
+
+.text-linear{
+    background: linear-gradient(90.62deg, #369F64 49.93%, #36A498 95.79%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* teste */
+
+a, #header, #header img {
+    transition: all .4s;
+}
+
+
+#header.home span > span, #header.home a {
+    color: #fff;
+}
+
+#header:not(.home) {
+    background-color: #fff;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+#header a {
+    color: black;
+}
+
+#header {
+    position: fixed;
+}
+
+#ulNav a:hover, #ulNav a.active {
+    color: var(--green-color);
+}
+
+main:not(.home) {
+    margin-top: 94px;
+}
+
