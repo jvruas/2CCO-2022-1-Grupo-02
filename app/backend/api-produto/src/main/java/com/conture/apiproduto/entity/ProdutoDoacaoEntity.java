@@ -2,10 +2,7 @@ package com.conture.apiproduto.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -54,13 +51,11 @@ public class ProdutoDoacaoEntity {
 
 
 
-	@NotBlank
-	@NotNull
+	@PastOrPresent
 	private LocalDateTime dataCriacao;
 
 
-	@NotBlank
-	@NotNull
+	@PastOrPresent
 	private LocalDateTime dataConclusao;
 
 	@NotBlank

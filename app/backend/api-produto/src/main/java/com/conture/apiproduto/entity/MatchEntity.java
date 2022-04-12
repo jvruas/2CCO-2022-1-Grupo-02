@@ -1,10 +1,7 @@
 package com.conture.apiproduto.entity;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,9 +26,7 @@ public class MatchEntity {
 	@Max(100)
 	private Double matchPorcentagem;
 
-
-	@NotBlank
-	@NotNull
+	@PastOrPresent
 	private LocalDateTime dataInteresse;
 
 }
