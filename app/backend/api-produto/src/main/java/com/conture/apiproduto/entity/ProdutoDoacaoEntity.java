@@ -61,4 +61,109 @@ public class ProdutoDoacaoEntity {
 	@NotBlank
 	@NotNull
 	private int fkCategoriaProduto;
+
+
+	public int getFkDoador() {
+		return fkDoador;
+	}
+
+	public void setFkDoador(int fkDoador) {
+		this.fkDoador = fkDoador;
+	}
+
+	public int getIdDoacao() {
+		return idDoacao;
+	}
+
+	public void setIdDoacao(int idDoacao) {
+		this.idDoacao = idDoacao;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public boolean isDefeito() {
+		return defeito;
+	}
+
+	public void setDefeito(boolean defeito) {
+		this.defeito = defeito;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public boolean isEntrega() {
+		return entrega;
+	}
+
+	public void setEntrega(boolean entrega) {
+		this.entrega = entrega;
+	}
+
+	public Integer getQuantidadeVizualicao() {
+		return quantidadeVizualicao;
+	}
+
+	public void setQuantidadeVizualicao(Integer quantidadeVizualicao) {
+		this.quantidadeVizualicao = quantidadeVizualicao;
+	}
+
+	public LocalDateTime getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(LocalDateTime dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public LocalDateTime getDataConclusao() {
+		return dataConclusao;
+	}
+
+	public void setDataConclusao(LocalDateTime dataConclusao) {
+		this.dataConclusao = dataConclusao;
+	}
+
+	public int getFkCategoriaProduto() {
+		return fkCategoriaProduto;
+	}
+
+	public void setFkCategoriaProduto(int fkCategoriaProduto) {
+		this.fkCategoriaProduto = fkCategoriaProduto;
+	}
 }
