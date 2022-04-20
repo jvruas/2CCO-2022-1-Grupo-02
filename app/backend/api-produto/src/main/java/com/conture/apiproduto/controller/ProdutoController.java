@@ -1,5 +1,6 @@
 package com.conture.apiproduto.controller;
 
+import com.conture.apiproduto.ListaObj;
 import com.conture.apiproduto.entity.MatchEntity;
 import com.conture.apiproduto.entity.PreferenciaDonatarioEntity;
 import com.conture.apiproduto.entity.ProdutoDoacaoEntity;
@@ -32,6 +33,8 @@ ProdutoController {
 
          @Autowired
          private CategoriaProdutoRepository categoriaRepository;
+
+		 ListaObj<ProdutoDoacaoEntity> lista = new ListaObj<>(10);
 
         @PostMapping("/adicionar-produto")
         public ResponseEntity adicionarProduto(@RequestBody @Valid ProdutoDoacaoEntity produto) {
@@ -88,7 +91,16 @@ ProdutoController {
         return  ResponseEntity.status(201).body(lista);
     }
 
-    @GetMapping("/")
-    public ResponseEntity
+    @GetMapping("/listar-match/{idDoador}/{idProduto}")
+    public ResponseEntity listarMatch(@PathVariable int idDoador, @PathVariable int idProduto){
+			ProdutoDoacaoEntity lista = produtoRepository.findByMatch(idDoador,idProduto);
+			return  ResponseEntity.status(201).body(lista);
+	}
 
+	@DeleteMapping("/deletarProduto/{idProduto}")
+	public ResponseEntity deletarProduto(@PathVariable int idProduto){
+			for (ProdutoDoacaoEntity produto: lista){
+
+			}
+	}
 }

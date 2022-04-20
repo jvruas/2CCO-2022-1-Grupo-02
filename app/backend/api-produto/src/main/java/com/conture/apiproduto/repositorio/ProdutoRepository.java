@@ -15,7 +15,8 @@ public interface ProdutoRepository extends JpaRepository<ProdutoDoacaoEntity, Lo
     ProdutoDoacaoEntity findByNome(String nome);
     ProdutoDoacaoEntity findByIdDoadorandStatus(int idDoador, String status);
     ProdutoDoacaoEntity findByIdDonatarioandStatus(int idDonatario, String status);
-    ProdutoDoacaoEntity findBy
+    ProdutoDoacaoEntity findByMatch(int idDoador, int idProduto);
+
 
 
 }
