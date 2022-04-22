@@ -15,7 +15,7 @@ public class ProdutoDoacaoEntity {
 	@Id
 	@NotNull
 	@NotBlank
-	private int idDoacao;
+	private int idProdutoDoacao;
 
 
 	@NotBlank
@@ -71,12 +71,12 @@ public class ProdutoDoacaoEntity {
 		this.fkDoador = fkDoador;
 	}
 
-	public int getIdDoacao() {
-		return idDoacao;
+	public int getIdProdutoDoacao() {
+		return idProdutoDoacao;
 	}
 
-	public void setIdDoacao(int idDoacao) {
-		this.idDoacao = idDoacao;
+	public void setIdProdutoDoacao(int idProdutoDoacao) {
+		this.idProdutoDoacao = idProdutoDoacao;
 	}
 
 	public String getNome() {
