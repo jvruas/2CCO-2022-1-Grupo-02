@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class CategoriaProdutoEntity {
+public class CategoriaProduto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +20,13 @@ public class CategoriaProdutoEntity {
 	@Min(2)
 	private String nome;
 
+	// Getters
+	public Long getIdCategoriaProduto() { return idCategoriaProduto; }
+
+	public String getNome() { return nome; }
+
+	// Setters
+	public void setIdCategoriaProduto(Long idCategoriaProduto) { this.idCategoriaProduto = idCategoriaProduto; }
+
+	public void setNome(String nome) { this.nome = nome; }
 }

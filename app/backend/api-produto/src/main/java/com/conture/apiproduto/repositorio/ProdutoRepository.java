@@ -1,24 +1,33 @@
 package com.conture.apiproduto.repositorio;
 
-import com.conture.apiproduto.entity.ProdutoDoacaoEntity;
+import com.conture.apiproduto.entity.ProdutoDoacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ProdutoRepository extends JpaRepository<ProdutoDoacaoEntity, Integer>{
+public interface ProdutoRepository extends JpaRepository<ProdutoDoacao, Long>{
+	ProdutoDoacao findByIdProdutoDoacaoAndFkDoador(Long idProdutoDoacao, Long fkDoador);
 
-    ProdutoDoacaoEntity findByProdutoDoacaoAndDoador(int idProdutoDoacao, int fkDoador);
-    List<ProdutoDoacaoEntity> findByCategoriaNotEquals();
-    ProdutoDoacaoEntity findByMarca(String marca);
-    ProdutoDoacaoEntity findByNome(String nome);
-    ProdutoDoacaoEntity findByfkDoadorandStatus(int fkDoador, String status);
-    ProdutoDoacaoEntity findByIdDonatarioandStatus(int idDonatario, String status);
-    ProdutoDoacaoEntity findByMatch(int fkDoador, int idProdutoDoacao);
-	int countByMatch(int fkDoador, int idProdutoDoacao);
-	int countByVisualizacao(int fkDoador, int idProdutoDoacao);
-	ProdutoDoacaoEntity deleteByFkDoadorAndProdutoDoacao(int fkDoador, int idProdutoDoacao);
-	ProdutoDoacaoEntity deleteByMatch(int fkDoador,int fkDonatario ,int idProdutoDoacao);
+	List<ProdutoDoacao> findByFkCategoriaProduto(Long fkCategoriaProduto);
 
+	List<ProdutoDoacao> findByMarca(String marca);
 
+	List<ProdutoDoacao> findByNome(String nome);
+
+	List<ProdutoDoacao> findByFkDoadorAndStatus(Long fkDoador, String status);
+
+	ProdutoDoacao findByIdDonatarioAndStatus(Long fkDoador, String status);
+
+	ProdutoDoacao findByMatch(Long fkDoador, Long idProdutoDoacao);
+
+	int countByVisualizacao(Long fkDoador, Long idProdutoDoacao);
+
+	void deleteByFkDoadorAndIdProdutoDoacao(Long fkDoador, Long idProdutoDoacao);
+
+	ProdutoDoacao deleteByMatch(Long fkDoador, Long fkDonatario , Long idProdutoDoacao);
+
+//	@Query("update ")
+//	@Transactional
+//	@Modifying
 
 }

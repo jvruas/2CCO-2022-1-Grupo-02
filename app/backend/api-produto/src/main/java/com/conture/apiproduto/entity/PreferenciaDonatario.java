@@ -1,21 +1,19 @@
 package com.conture.apiproduto.entity;
 
-import jdk.jfr.Enabled;
-
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class PreferenciaDonatarioEntity {
+public class PreferenciaDonatario {
 
 	@NotBlank
 	@NotNull
-	private int fkDoador;
+	private Long fkDoador;
 
 	@NotBlank
 	@NotNull
-	private int fkDoacao;
+	private Long fkDoacao;
 
 
 	@NotBlank
@@ -38,5 +36,5 @@ public class PreferenciaDonatarioEntity {
 
 	@NotBlank
 	@NotNull
-	private int fkSituacaoAtual;
+	private Long fkSituacaoAtual;
 }

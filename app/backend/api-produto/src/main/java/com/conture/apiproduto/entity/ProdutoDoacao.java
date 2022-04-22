@@ -6,16 +6,16 @@ import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class ProdutoDoacaoEntity {
+public class ProdutoDoacao {
 
 	@NotNull
 	@NotBlank
-	private int fkDoador;
+	private Long fkDoador;
 
 	@Id
 	@NotNull
 	@NotBlank
-	private int idProdutoDoacao;
+	private Long idProdutoDoacao;
 
 
 	@NotBlank
@@ -60,22 +60,22 @@ public class ProdutoDoacaoEntity {
 
 	@NotBlank
 	@NotNull
-	private int fkCategoriaProduto;
+	private Long fkCategoriaProduto;
 
 
-	public int getFkDoador() {
+	public Long getFkDoador() {
 		return fkDoador;
 	}
 
-	public void setFkDoador(int fkDoador) {
+	public void setFkDoador(Long fkDoador) {
 		this.fkDoador = fkDoador;
 	}
 
-	public int getIdProdutoDoacao() {
+	public Long getIdProdutoDoacao() {
 		return idProdutoDoacao;
 	}
 
-	public void setIdProdutoDoacao(int idProdutoDoacao) {
+	public void setIdProdutoDoacao(Long idProdutoDoacao) {
 		this.idProdutoDoacao = idProdutoDoacao;
 	}
 
@@ -159,11 +159,11 @@ public class ProdutoDoacaoEntity {
 		this.dataConclusao = dataConclusao;
 	}
 
-	public int getFkCategoriaProduto() {
+	public Long getFkCategoriaProduto() {
 		return fkCategoriaProduto;
 	}
 
-	public void setFkCategoriaProduto(int fkCategoriaProduto) {
+	public void setFkCategoriaProduto(Long fkCategoriaProduto) {
 		this.fkCategoriaProduto = fkCategoriaProduto;
 	}
 }

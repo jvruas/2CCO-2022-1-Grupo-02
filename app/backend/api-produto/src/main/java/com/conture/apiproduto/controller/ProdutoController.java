@@ -1,138 +1,216 @@
 package com.conture.apiproduto.controller;
 
 import com.conture.apiproduto.ListaObj;
-import com.conture.apiproduto.entity.MatchEntity;
-import com.conture.apiproduto.entity.PreferenciaDonatarioEntity;
-import com.conture.apiproduto.entity.ProdutoDoacaoEntity;
+import com.conture.apiproduto.entity.CategoriaProduto;
+import com.conture.apiproduto.entity.Match;
+import com.conture.apiproduto.entity.PreferenciaDonatario;
+import com.conture.apiproduto.entity.ProdutoDoacao;
 import com.conture.apiproduto.repositorio.CategoriaProdutoRepository;
 import com.conture.apiproduto.repositorio.MatchRepository;
 import com.conture.apiproduto.repositorio.PreferenciaDonatarioRepository;
 import com.conture.apiproduto.repositorio.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
 @RequestMapping("/produtos")
 public class
 ProdutoController {
+	@Autowired
+	private ProdutoRepository produtoRepository;
 
-        @Autowired
-        private ProdutoRepository produtoRepository;
+	@Autowired
+	private PreferenciaDonatarioRepository preferenciaRepository;
 
-        @Autowired
-        private PreferenciaDonatarioRepository preferenciaRepository;
+	@Autowired
+	private MatchRepository matchRepository;
 
-        @Autowired
-        private MatchRepository matchRepository;
+	 @Autowired
+	 private CategoriaProdutoRepository categoriaRepository;
 
-         @Autowired
-         private CategoriaProdutoRepository categoriaRepository;
+	 ListaObj<ProdutoDoacao> listaPesquisa = new ListaObj<>(10);
 
-		 ListaObj<ProdutoDoacaoEntity> lista = new ListaObj<>(10);
+	@PostMapping("/adicionar-produto")
+	public ResponseEntity adicionarProduto(@RequestBody @Valid ProdutoDoacao produto) {
+		produtoRepository.save(produto);
+		return ResponseEntity.status(201).build();
+	}
 
-        @PostMapping("/adicionar-produto")
-        public ResponseEntity adicionarProduto(@RequestBody @Valid ProdutoDoacaoEntity produto) {
-            produtoRepository.save(produto);
-            return ResponseEntity.status(201).build();
-        }
+	@PostMapping("/adicionar-preferencia")
+	public ResponseEntity adicionarPreferenciaDonatario(@RequestBody @Valid PreferenciaDonatario preferencia){
+		preferenciaRepository.save(preferencia);
+		return ResponseEntity.status(201).build();
+	}
 
-        @PostMapping("/adicionar-preferencia")
-        public ResponseEntity adicionarPreferenciaDonatario(@RequestBody @Valid PreferenciaDonatarioEntity preferencia){
-            preferenciaRepository.save(preferencia);
-            return ResponseEntity.status(201).build();
-        }
+	@PostMapping("/adicionar-match")
+	public ResponseEntity adicionarMatch(@RequestBody @Valid Match match){
+		matchRepository.save(match);
+		return  ResponseEntity.status(201).build();
+	}
 
-        @PostMapping("/adicionar-match")
-        public ResponseEntity adicionarMatch(@RequestBody @Valid MatchEntity match){
-            matchRepository.save(match);
-            return  ResponseEntity.status(201).build();
-        }
-        @GetMapping("/pesquisar/{idProdutoDoacao}/{fkDoador}")
-        public ResponseEntity pesquisarProdutoId(@PathVariable int idProdutoDoacao, @PathVariable int fkDoador){
-          ProdutoDoacaoEntity lista =  produtoRepository.findByProdutoDoacaoAndDoador(idProdutoDoacao,fkDoador);
-            return ResponseEntity.status(200).body(lista);
+	@GetMapping("/pesquisar/{idProdutoDoacao}/{fkDoador}")
+	public ResponseEntity pesquisarProdutoId(@PathVariable Long idProdutoDoacao, @PathVariable Long fkDoador) {
+		Optional<ProdutoDoacao> produto = Optional.ofNullable(produtoRepository.findByIdProdutoDoacaoAndFkDoador(idProdutoDoacao, fkDoador));
 
-        }
+		if (produto.isEmpty()) {
+			return ResponseEntity.status(404).build();
+		}
 
-        @GetMapping("/listar-categorias")
-        public  ResponseEntity listarCategorias(){
-            List<ProdutoDoacaoEntity> lista = produtoRepository.findByCategoriaNotEquals();
-            return  ResponseEntity.status(201).body(lista);
-        }
+		// TODO: Verificar se necessita de tratativa de erro para quando os IDs nao existem.
 
-        @GetMapping("/listar-marca/{categoria}")
-        public ResponseEntity listarProdutoMarca(@PathVariable String categoria){
-           ProdutoDoacaoEntity lista = produtoRepository.findByMarca(categoria);
-            return ResponseEntity.status(201).body(lista);
-        }
+		return ResponseEntity.status(200).body(produto.get());
+	}
 
-        @GetMapping("/listar-nome/{nome}")
-        public ResponseEntity listarProdutoNome(@PathVariable String nome){
-            ProdutoDoacaoEntity lista = produtoRepository.findByNome(nome);
-            return  ResponseEntity.status(201).body(lista);
-        }
+	@GetMapping("/listar-categorias")
+	public  ResponseEntity listarCategorias() {
+		List<ProdutoDoacao> listaCategoria = produtoRepository.findAll();
 
-        @GetMapping("/listar-produto-doador/{fkDoador}/{status}")
-        public ResponseEntity listarStatusProdutoDoador(@PathVariable int fkDoador, @PathVariable String status){
-            ProdutoDoacaoEntity lista = produtoRepository.findByfkDoadorandStatus(fkDoador, status);
-            return  ResponseEntity.status(201).body(lista);
-        }
+		if (listaCategoria.isEmpty()) {
+			return ResponseEntity.status(204).build();
+		}
 
+		return  ResponseEntity.status(200).body(listaCategoria);
+	}
 
-    @GetMapping("/listar-produto-donatario/{idDonatario}/{status}")
-    public ResponseEntity listarStatusProdutoDonatario(@PathVariable int idDonatario, @PathVariable String status){
-        ProdutoDoacaoEntity lista = produtoRepository.findByIdDonatarioandStatus(idDonatario, status);
-        return  ResponseEntity.status(201).body(lista);
-    }
+	// FIXME: Iterator
+	@GetMapping("/categoria/{categoria}")
+	public ResponseEntity listarProdutoCategoria(@PathVariable String categoria) {
+		// TODO: Fazer trativa de erros para input errado no metodo.
 
-    @GetMapping("/listar-match/{fkDoador}/{idProdutoDoacao}")
-    public ResponseEntity listarMatch(@PathVariable int fkDoador, @PathVariable int idProdutoDoacao){
-			ProdutoDoacaoEntity lista = produtoRepository.findByMatch(fkDoador,idProdutoDoacao);
-			return  ResponseEntity.status(201).body(lista);
+		Optional<CategoriaProduto> categoriaPesquisada = Optional.ofNullable(this.categoriaRepository.findByNome(categoria));
+
+		if (categoriaPesquisada.isEmpty()) {
+			return ResponseEntity.status(404).build();
+		}
+
+		List<ProdutoDoacao> listaProduto = this.produtoRepository.findByFkCategoriaProduto(categoriaPesquisada.get().getIdCategoriaProduto());
+
+		if (listaProduto.isEmpty()) {
+			return ResponseEntity.status(204).build();
+		}
+
+		return ResponseEntity.status(200).body(listaProduto);
+	}
+
+	// FIXME: Iterator
+	@GetMapping("/marca/{marca}")
+	public ResponseEntity listarProdutoMarca(@PathVariable String marca) {
+		// TODO: Fazer trativa de erros para input errado no metodo.
+
+		List<ProdutoDoacao> listaProduto = produtoRepository.findByMarca(marca);
+
+		if (listaProduto.isEmpty()) {
+			return ResponseEntity.status(204).build();
+		}
+
+		return ResponseEntity.status(200).body(listaProduto);
+	}
+
+	// FIXME: Iterator
+	@GetMapping("/nome/{nome}")
+	public ResponseEntity listarProdutoNome(@PathVariable String nome) {
+		List<ProdutoDoacao> listaProduto = produtoRepository.findByNome(nome);
+
+		if (listaProduto.isEmpty()) {
+			return ResponseEntity.status(204).build();
+		}
+
+		return ResponseEntity.status(200).body(listaProduto);
+	}
+
+	@GetMapping("/listar-produto-doador/{fkDoador}/{status}")
+	public ResponseEntity listarStatusProdutoDoador(@PathVariable Long fkDoador, @PathVariable String status){
+		// TODO: Fazer trativa de erros para input errado no metodo.
+
+		// TODO: Fazer trativa de erros para input errado no metodo.
+		// TODO: Transformar A: andamento; R: recebido; D: doado
+
+		List<ProdutoDoacao> listaProduto = produtoRepository.findByFkDoadorAndStatus(fkDoador, status);
+
+		if (listaProduto.isEmpty()) {
+			return ResponseEntity.status(204).build();
+		}
+
+		// TODO: Lembrar de devolver DTO diferente do metodo listarStatusProdutoDonatario.
+
+		return  ResponseEntity.status(200).body(listaProduto);
+	}
+
+	@GetMapping("/listar-produto-donatario/{idDonatario}/{status}")
+	public ResponseEntity listarStatusProdutoDonatario(@PathVariable Long fkDoador, @PathVariable String status){
+		// TODO: Fazer trativa de erros para input errado no metodo.
+
+		// TODO: Fazer trativa de erros para input errado no metodo.
+		// TODO: Transformar A: andamento; R: recebido; D: doado
+
+		List<ProdutoDoacao> listaProduto = produtoRepository.findByFkDoadorAndStatus(fkDoador, status);
+
+		if (listaProduto.isEmpty()) {
+			return ResponseEntity.status(204).build();
+		}
+
+		// TODO: Lembrar de devolver DTO diferente do metodo listarStatusProdutoDoador.
+		return  ResponseEntity.status(200).body(listaProduto);
+	}
+
+	@GetMapping("/listar-match/{fkDoador}/{idProdutoDoacao}")
+	public ResponseEntity listarMatch(@PathVariable Long fkDoador, @PathVariable Long fkProdutoDoacao){
+		// TODO: Fazer trativa de erros para input errado no metodo.
+
+		List<Match> listaMatch = matchRepository.findByFkDoadorAndFkProdutoDoacao(fkDoador, fkProdutoDoacao);
+
+		if (listaMatch.isEmpty()) {
+			return ResponseEntity.status(204).build();
+		}
+
+		return  ResponseEntity.status(200).body(listaMatch);
 	}
 
 	@GetMapping("/contar-match/{fkDoador}/{idProdutoDoacao}")
-	public ResponseEntity contarMatch(@PathVariable int fkDoador, @PathVariable int idProdutoDoacao){
-		int contador = produtoRepository.countByMatch(fkDoador, idProdutoDoacao);
-		return  ResponseEntity.status(201).body(contador);
+	public ResponseEntity contarMatch(@PathVariable Long fkDoador, @PathVariable Long fkProdutoDoacao){
+		// TODO: Fazer trativa de erros para input errado no metodo.
+
+		Optional<Long> contador = Optional.ofNullable(matchRepository.countByFkDoadorAndFkProdutoDoacao(fkDoador, fkProdutoDoacao));
+
+		if (contador.isEmpty()) {
+			return ResponseEntity.status(404).build();
+		}
+
+		return  ResponseEntity.status(200).body(contador.get());
 	}
 
-	@DeleteMapping("/deletarProduto/{idProdutoDoacao}/{fkDoador}")
-	public ResponseEntity deletarProduto(@PathVariable int idProdutoDoacao,@PathVariable int fkDoador){
-			ProdutoDoacaoEntity produto = produtoRepository.deleteByFkDoadorAndProdutoDoacao(idProdutoDoacao, fkDoador);
-			produtoRepository.save(produto);
-			return ResponseEntity.status(201).build();
+	@DeleteMapping("/deletarProduto/{fkDoador}/{idProdutoDoacao}")
+	public ResponseEntity deletarProduto(@PathVariable Long fkDoador, @PathVariable Long idProdutoDoacao){
+		// TODO: Fazer trativa de erros para input errado no metodo.
 
+		Optional<ProdutoDoacao> produto = Optional.ofNullable(produtoRepository.findByIdProdutoDoacaoAndFkDoador(idProdutoDoacao, fkDoador));
+
+		if (produto.isEmpty()){
+			return ResponseEntity.status(404).build();
+		}
+		produtoRepository.deleteByFkDoadorAndIdProdutoDoacao(fkDoador, idProdutoDoacao);
+
+		return ResponseEntity.status(200).build();
 	}
 
 	//@PatchMapping("/atualizarStatusDoador/")----------
 
+	// TODO: FINALIZAR LOGICA
 	@DeleteMapping("/deletarMatch/{idProdutoDoacao}/{fkDonatario}/{fkDoador}")
-	public ResponseEntity deletarMatch(@PathVariable int idProdutoDoacao,@PathVariable int fkDonatario,@PathVariable int fkDoador){
-		ProdutoDoacaoEntity match = produtoRepository.deleteByMatch(idProdutoDoacao, fkDonatario,fkDoador);
+	public ResponseEntity deletarMatch(@PathVariable Long idProdutoDoacao,@PathVariable Long fkDonatario,@PathVariable Long fkDoador) {
+		ProdutoDoacao match = produtoRepository.deleteByMatch(idProdutoDoacao, fkDonatario,fkDoador);
 		produtoRepository.save(match);
 		return ResponseEntity.status(201).build();
 	}
 
 	@PutMapping("/atualizar-quantidade-visualizacao/{idProdutoDoacao}/{fkDoador}")
-	public ResponseEntity atualizarQuantidadeVisualizacao(@PathVariable int idProdutoDoacao,@PathVariable int fkDoador){
-			int visualizacao = produtoRepository.countByVisualizacao(idProdutoDoacao,fkDoador);
-			visualizacao++;
-			produtoRepository.save(visualizacao);
-			return ResponseEntity.status(201).build();
+	public ResponseEntity atualizarQuantidadeVisualizacao(@PathVariable Long idProdutoDoacao, @PathVariable Long fkDoador) {
+
 	}
-
-//	@PutMapping("atualizar-match")
-//	public ResponseEntity atualizarMatch(){
-//
-//	}
-
-
 }
-
