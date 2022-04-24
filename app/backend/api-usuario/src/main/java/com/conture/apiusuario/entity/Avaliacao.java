@@ -3,6 +3,9 @@ package com.conture.apiusuario.entity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,17 +13,21 @@ import java.time.LocalDateTime;
 public class Avaliacao {
 
    // Atributos
-
     @Id
-    private int fkDoador;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long fkProdutoDoacao;
 
-    //@Id
-    private int fkProdutoDoacao;
+	@NotNull
+	@Positive
+	private Long fkDonatario;
 
-    //@Id
-    private int fkDonatario;
+	@NotNull
+	@Positive
+	private Long fkDoador;
 
-    private int valor;
+	@NotNull
+	@Positive
+    private Long valor;
 
     private String comentario;
 
@@ -28,52 +35,60 @@ public class Avaliacao {
     @CreationTimestamp // Indica que o atributo receberá automaticamente a data e hora do sistema no momento da criação de um registro
     private LocalDateTime data;
 
-    // Getters e Setters
-    public int getFkDoador() {
-        return fkDoador;
-    }
+	// Construtor
+	public Avaliacao(Long fkDonatario, Long fkDoador, Long valor, String comentario) {
+		this.fkDonatario = fkDonatario;
+		this.fkDoador = fkDoador;
+		this.valor = valor;
+		this.comentario = comentario;
+	}
 
-    public void setFkDoador(int fkDoador) {
-        this.fkDoador = fkDoador;
-    }
+	// Getters e Setters
+	public Long getFkProdutoDoacao() {
+		return fkProdutoDoacao;
+	}
 
-    public int getFkProdutoDoacao() {
-        return fkProdutoDoacao;
-    }
+	public void setFkProdutoDoacao(Long fkProdutoDoacao) {
+		this.fkProdutoDoacao = fkProdutoDoacao;
+	}
 
-    public void setFkProdutoDoacao(int fkProdutoDoacao) {
-        this.fkProdutoDoacao = fkProdutoDoacao;
-    }
+	public Long getFkDoador() {
+		return fkDoador;
+	}
 
-    public int getFkDonatario() {
-        return fkDonatario;
-    }
+	public void setFkDoador(Long fkDoador) {
+		this.fkDoador = fkDoador;
+	}
 
-    public void setFkDonatario(int fkDonatario) {
-        this.fkDonatario = fkDonatario;
-    }
+	public Long getFkDonatario() {
+		return fkDonatario;
+	}
 
-    public int getValor() {
-        return valor;
-    }
+	public void setFkDonatario(Long fkDonatario) {
+		this.fkDonatario = fkDonatario;
+	}
 
-    public void setValor(int valor) {
-        this.valor = valor;
-    }
+	public Long getValor() {
+		return valor;
+	}
 
-    public String getComentario() {
-        return comentario;
-    }
+	public void setValor(Long valor) {
+		this.valor = valor;
+	}
 
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
-    }
+	public String getComentario() {
+		return comentario;
+	}
 
-    public LocalDateTime getData() {
-        return data;
-    }
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
 
-    public void setData(LocalDateTime data) {
-        this.data = data;
-    }
+	public LocalDateTime getData() {
+		return data;
+	}
+
+	public void setData(LocalDateTime data) {
+		this.data = data;
+	}
 }

@@ -18,7 +18,6 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
 
-
     @Email
     @NotBlank
     @Size(max = 80, message = "O e-mail deve ter no máximo 80 letras")
@@ -45,7 +44,6 @@ public class Usuario {
     @Size(max = 9, message = "O genero deve ter no máximo 9 letras")
     private String genero;
 
-    //@Temporal(TemporalType.DATE) // Indica o tipo de dado temporal que será guardado no campo do atributo mapeado
     private LocalDate dataNascimento;
 
     @NotBlank
@@ -55,7 +53,6 @@ public class Usuario {
     @NotBlank
     private String cep;
 
-    //@Temporal(TemporalType.DATE) // Indica o tipo de dado temporal que será guardado no campo do atributo mapeado
     @CreationTimestamp // Indica que o atributo receberá automaticamente a data e hora do sistema no momento da criação de um registro
     private LocalDate dataCadastro;
 
@@ -63,7 +60,7 @@ public class Usuario {
     @Size(max = 30, message = "A escolaridade deve ter no máximo 30 letras")
     private String escolaridade;
 
-    private int fkSituacaoAtual;
+    private Long fkSituacaoAtual;
 
     // Getters e Setters
     public Long getIdUsuario() {
@@ -162,11 +159,11 @@ public class Usuario {
         this.escolaridade = escolaridade;
     }
 
-    public int getFkSituacaoAtual() {
-        return fkSituacaoAtual;
-    }
+	public Long getFkSituacaoAtual() {
+		return fkSituacaoAtual;
+	}
 
-    public void setFkSituacaoAtual(int fkSituacaoAtual) {
-        this.fkSituacaoAtual = fkSituacaoAtual;
-    }
+	public void setFkSituacaoAtual(Long fkSituacaoAtual) {
+		this.fkSituacaoAtual = fkSituacaoAtual;
+	}
 }
