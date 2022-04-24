@@ -1,6 +1,7 @@
 package com.conture.apiproduto.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -9,10 +10,12 @@ public class PreferenciaDonatario {
 
 	@NotBlank
 	@NotNull
+
 	private Long fkDoador;
 
 	@NotBlank
 	@NotNull
+	@Id
 	private Long fkDoacao;
 
 

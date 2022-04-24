@@ -33,7 +33,7 @@ public class ProdutoDoacao {
 
 	@NotBlank
 	@NotNull
-	@Min(10)
+	@Min(5)
 	private String descricao;
 
 
@@ -43,11 +43,12 @@ public class ProdutoDoacao {
 
 	private boolean entrega;
 
+
 	@NotBlank
 	@NotNull
 	@Positive
 	@Min(1)
-	private Integer quantidadeVizualicao;
+	private int quantidadeVizualicao;
 
 
 
@@ -135,11 +136,11 @@ public class ProdutoDoacao {
 		this.entrega = entrega;
 	}
 
-	public Integer getQuantidadeVizualicao() {
+	public int getQuantidadeVizualicao() {
 		return quantidadeVizualicao;
 	}
 
-	public void setQuantidadeVizualicao(Integer quantidadeVizualicao) {
+	public void setQuantidadeVizualicao(int quantidadeVizualicao) {
 		this.quantidadeVizualicao = quantidadeVizualicao;
 	}
 
