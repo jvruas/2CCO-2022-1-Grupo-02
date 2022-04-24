@@ -1,24 +1,27 @@
 package com.conture.apiproduto.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
 public class Match {
-
-
 	@NotNull
+	@Positive
 	private Long fkDoador;
 
 	@NotNull
+	@Positive
 	private Long fkProdutoDoacao;
 
 	@NotNull
+	@Positive
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Long fkDonatario;
-
 
 	@NotNull
 	@Positive

@@ -1,22 +1,23 @@
 package com.conture.apiproduto.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
 public class ProdutoDoacao {
-
 	@NotNull
-
+	@Positive
 	private Long fkDoador;
 
-	@Id
 	@NotNull
-
+	@Positive
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
 	private Long idProdutoDoacao;
-
 
 	@NotBlank
 	@NotNull
@@ -46,11 +47,8 @@ public class ProdutoDoacao {
 
 
 	@NotNull
-	@Positive
-	@Min(1)
+	@PositiveOrZero
 	private int quantidadeVisualizacao;
-
-
 
 //	@PastOrPresent
 //	private LocalDateTime dataCriacao;
@@ -59,8 +57,8 @@ public class ProdutoDoacao {
 //	@PastOrPresent
 //	private LocalDateTime dataConclusao;
 
-
 	@NotNull
+	@Positive
 	private Long fkCategoriaProduto;
 
 

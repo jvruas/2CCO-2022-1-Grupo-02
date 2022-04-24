@@ -1,4 +1,4 @@
-package com.conture.apiproduto.repositorio;
+package com.conture.apiproduto.repository;
 
 import com.conture.apiproduto.entity.PreferenciaDonatario;
 import org.springframework.data.jpa.repository.JpaRepository;
