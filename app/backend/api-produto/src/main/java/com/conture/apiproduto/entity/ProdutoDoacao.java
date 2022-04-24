@@ -1,26 +1,27 @@
 package com.conture.apiproduto.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
 public class ProdutoDoacao {
-
 	@NotNull
-	@NotBlank
+	@Positive
 	private Long fkDoador;
 
-	@Id
 	@NotNull
-	@NotBlank
+	@Positive
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
 	private Long idProdutoDoacao;
 
-
 	@NotBlank
 	@NotNull
-	@Min(2)
+	@Size(min = 2)
 	private String nome;
 
 	@NotBlank
@@ -33,7 +34,7 @@ public class ProdutoDoacao {
 
 	@NotBlank
 	@NotNull
-	@Min(5)
+	@Size(min = 5)
 	private String descricao;
 
 
@@ -44,23 +45,20 @@ public class ProdutoDoacao {
 	private boolean entrega;
 
 
-	@NotBlank
+
+	@NotNull
+	@PositiveOrZero
+	private int quantidadeVisualizacao;
+
+//	@PastOrPresent
+//	private LocalDateTime dataCriacao;
+//
+//
+//	@PastOrPresent
+//	private LocalDateTime dataConclusao;
+
 	@NotNull
 	@Positive
-	@Min(1)
-	private int quantidadeVizualicao;
-
-
-
-	@PastOrPresent
-	private LocalDateTime dataCriacao;
-
-
-	@PastOrPresent
-	private LocalDateTime dataConclusao;
-
-	@NotBlank
-	@NotNull
 	private Long fkCategoriaProduto;
 
 
@@ -136,29 +134,29 @@ public class ProdutoDoacao {
 		this.entrega = entrega;
 	}
 
-	public int getQuantidadeVizualicao() {
-		return quantidadeVizualicao;
+	public int getQuantidadeVisualizacao() {
+		return quantidadeVisualizacao;
 	}
 
-	public void setQuantidadeVizualicao(int quantidadeVizualicao) {
-		this.quantidadeVizualicao = quantidadeVizualicao;
+	public void setQuantidadeVisualizacao(int quantidadeVisualizacao) {
+		this.quantidadeVisualizacao = quantidadeVisualizacao;
 	}
 
-	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
-	}
-
-	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
-
-	public LocalDateTime getDataConclusao() {
-		return dataConclusao;
-	}
-
-	public void setDataConclusao(LocalDateTime dataConclusao) {
-		this.dataConclusao = dataConclusao;
-	}
+	//	public LocalDateTime getDataCriacao() {
+//		return dataCriacao;
+//	}
+//
+//	public void setDataCriacao(LocalDateTime dataCriacao) {
+//		this.dataCriacao = dataCriacao;
+//	}
+//
+//	public LocalDateTime getDataConclusao() {
+//		return dataConclusao;
+//	}
+//
+//	public void setDataConclusao(LocalDateTime dataConclusao) {
+//		this.dataConclusao = dataConclusao;
+//	}
 
 	public Long getFkCategoriaProduto() {
 		return fkCategoriaProduto;

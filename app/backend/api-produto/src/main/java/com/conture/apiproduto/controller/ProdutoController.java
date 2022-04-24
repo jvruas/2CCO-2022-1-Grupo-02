@@ -5,10 +5,10 @@ import com.conture.apiproduto.entity.CategoriaProduto;
 import com.conture.apiproduto.entity.Match;
 import com.conture.apiproduto.entity.PreferenciaDonatario;
 import com.conture.apiproduto.entity.ProdutoDoacao;
-import com.conture.apiproduto.repositorio.CategoriaProdutoRepository;
-import com.conture.apiproduto.repositorio.MatchRepository;
-import com.conture.apiproduto.repositorio.PreferenciaDonatarioRepository;
-import com.conture.apiproduto.repositorio.ProdutoRepository;
+import com.conture.apiproduto.repository.CategoriaProdutoRepository;
+import com.conture.apiproduto.repository.MatchRepository;
+import com.conture.apiproduto.repository.PreferenciaDonatarioRepository;
+import com.conture.apiproduto.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-
 
 @RestController
 @RequestMapping("/produtos")
@@ -35,26 +34,26 @@ public class ProdutoController{
 
 	 ListaObj<ProdutoDoacao> listaPesquisa = new ListaObj<>(10);
 
-	@PostMapping("/adicionar-produto")
+	@PostMapping()
 	public ResponseEntity adicionarProduto(@RequestBody @Valid ProdutoDoacao produto) {
 		produtoRepository.save(produto);
 		return ResponseEntity.status(201).build();
 	}
 
-	@PostMapping("/adicionar-preferencia")
+	@PostMapping("/preferencia")
 	public ResponseEntity adicionarPreferenciaDonatario(@RequestBody @Valid PreferenciaDonatario preferencia){
 		preferenciaRepository.save(preferencia);
 		return ResponseEntity.status(201).build();
 	}
 
-	@PostMapping("/adicionar-match")
+	@PostMapping("/match")
 	public ResponseEntity adicionarMatch(@RequestBody @Valid Match match){
 		matchRepository.save(match);
 		return  ResponseEntity.status(201).build();
 	}
 
-	@GetMapping("/pesquisar/{idProdutoDoacao}/{fkDoador}")
-	public ResponseEntity pesquisarProdutoId(@PathVariable Long idProdutoDoacao, @PathVariable Long fkDoador) {
+	@GetMapping()
+	public ResponseEntity pesquisarProdutoId(@RequestParam Long idProdutoDoacao, @RequestParam Long fkDoador) {
 		Optional<ProdutoDoacao> produto = Optional.ofNullable(produtoRepository.findByIdProdutoDoacaoAndFkDoador(idProdutoDoacao, fkDoador));
 
 		if (produto.isEmpty()) {
@@ -66,7 +65,7 @@ public class ProdutoController{
 		return ResponseEntity.status(200).body(produto.get());
 	}
 
-	@GetMapping("/listar-categorias")
+	@GetMapping("/categorias")
 	public  ResponseEntity listarCategorias() {
 		List<ProdutoDoacao> listaCategoria = produtoRepository.findAll();
 
@@ -78,7 +77,7 @@ public class ProdutoController{
 	}
 
 	// FIXME: Iterator
-	@GetMapping("/categoria/{categoria}")
+	@GetMapping("/categorias/{categoria}")
 	public ResponseEntity listarProdutoCategoria(@PathVariable String categoria) {
 		// TODO: Fazer trativa de erros para input errado no metodo.
 
@@ -98,7 +97,7 @@ public class ProdutoController{
 	}
 
 	// FIXME: Iterator
-	@GetMapping("/marca/{marca}")
+	@GetMapping("/marcas/{marca}")
 	public ResponseEntity listarProdutoMarca(@PathVariable String marca) {
 		// TODO: Fazer trativa de erros para input errado no metodo.
 
@@ -111,7 +110,6 @@ public class ProdutoController{
 		return ResponseEntity.status(200).body(listaProduto);
 	}
 
-	// FIXME: Iterator
 	@GetMapping("/nome/{nome}")
 	public ResponseEntity listarProdutoNome(@PathVariable String nome) {
 		List<ProdutoDoacao> listaProduto = produtoRepository.findByNome(nome);
@@ -123,14 +121,14 @@ public class ProdutoController{
 		return ResponseEntity.status(200).body(listaProduto);
 	}
 
-	@GetMapping("/produto-doador/{fkDoador}/{status}")
-	public ResponseEntity filtrarStatusProdutoDoador(@PathVariable Long fkDoador, @PathVariable String status){
+	@GetMapping("/doador/status/{idDoador}/{status}")
+	public ResponseEntity filtrarStatusProdutoDoador(@PathVariable Long idDoador, @PathVariable String status){
 		// TODO: Fazer trativa de erros para input errado no metodo.
 
 		// TODO: Fazer trativa de erros para input errado no metodo.
 		// TODO: Transformar A: andamento; R: recebido; D: doado
 
-		List<ProdutoDoacao> listaProduto = produtoRepository.findByFkDoadorAndStatus(fkDoador, status);
+		List<ProdutoDoacao> listaProduto = produtoRepository.findByFkDoadorAndStatus(idDoador, status);
 
 		if (listaProduto.isEmpty()) {
 			return ResponseEntity.status(204).build();
@@ -141,7 +139,7 @@ public class ProdutoController{
 		return  ResponseEntity.status(200).body(listaProduto);
 	}
 
-	@GetMapping("/produto-donatario/{idDonatario}/{status}")
+	@GetMapping("/donatario/status/{idDonatario}/{status}")
 	public ResponseEntity filtrarStatusProdutoDonatario(@PathVariable Long idDonatario, @PathVariable String status){
 		// TODO: Fazer trativa de erros para input errado no metodo.
 
@@ -158,7 +156,7 @@ public class ProdutoController{
 		return  ResponseEntity.status(200).body(listaProduto);
 	}
 
-	@GetMapping("/produto-doador/{fkDoador}")
+	@GetMapping("/doador/{fkDoador}")
 	public ResponseEntity listarProdutosUsuario(@PathVariable Long fkDoador){
 		List<ProdutoDoacao> lista = produtoRepository.findByFkDoador(fkDoador);
 		if (lista.isEmpty()){
@@ -167,7 +165,7 @@ public class ProdutoController{
 		return ResponseEntity.status(200).body(lista);
 	}
 
-	@GetMapping("/match/{fkDoador}/{idProdutoDoacao}")
+	@GetMapping("/{fkDoador}/{fkProdutoDoacao}/match")
 	public ResponseEntity listarMatch(@PathVariable Long fkDoador, @PathVariable Long fkProdutoDoacao){
 		// TODO: Fazer trativa de erros para input errado no metodo.
 
@@ -180,7 +178,7 @@ public class ProdutoController{
 		return  ResponseEntity.status(200).body(listaMatch);
 	}
 
-	@GetMapping("/contar-match/{fkDoador}/{idProdutoDoacao}")
+	@GetMapping("{fkDoador}/{idProdutoDoacao}/match/quantidade")
 	public ResponseEntity contarMatch(@PathVariable Long fkDoador, @PathVariable Long fkProdutoDoacao){
 		// TODO: Fazer trativa de erros para input errado no metodo.
 
@@ -193,7 +191,7 @@ public class ProdutoController{
 		return  ResponseEntity.status(200).body(contador.get());
 	}
 
-	@DeleteMapping("/deletarProduto/{fkDoador}/{idProdutoDoacao}")
+	@DeleteMapping("/{fkDoador}/{idProdutoDoacao}")
 	public ResponseEntity deletarProduto(@PathVariable Long fkDoador, @PathVariable Long idProdutoDoacao){
 		// TODO: Fazer trativa de erros para input errado no metodo.
 
@@ -202,12 +200,12 @@ public class ProdutoController{
 		if (produto.isEmpty()){
 			return ResponseEntity.status(404).build();
 		}
-		produtoRepository.deleteByFkDoadorAndIdProdutoDoacao(fkDoador, idProdutoDoacao);
 
+		produtoRepository.deleteByFkDoadorAndIdProdutoDoacao(fkDoador, idProdutoDoacao);
 		return ResponseEntity.status(200).build();
 	}
 
-	@PatchMapping("/status-doacao/{idProdutoDoacao}/{fkDoador}")
+	@PatchMapping("/status/{fkDoador}/{idProdutoDoacao}")
 	public  ResponseEntity atualizarStatusDoacao(@PathVariable Long idProdutoDoacao, @PathVariable Long fkDoador){
 		Optional<ProdutoDoacao> produto = Optional.ofNullable(produtoRepository.findByIdProdutoDoacaoAndFkDoador(idProdutoDoacao, fkDoador));
 		if (produto.isEmpty()){
@@ -222,9 +220,8 @@ public class ProdutoController{
 
 	}
 
-	// TODO: FINALIZAR LOGICA
-	@DeleteMapping("/match/{fkDoador}/{fkProdutoDoacao}/{fkDonatario}")
-	public ResponseEntity deletarMatch(@PathVariable Long fkDoador,@PathVariable Long fkProdutoDoacao,@PathVariable Long fkDonatario) {
+	@DeleteMapping("/{fkDoador}/{fkProdutoDoacao}/match/{fkDonatario}")
+	public ResponseEntity deletarMatch(@PathVariable Long fkDoador, @PathVariable Long fkProdutoDoacao,@PathVariable Long fkDonatario) {
 		Optional<Match> match = Optional.ofNullable(matchRepository.findByFkDoadorAndFkProdutoDoacaoAndFkDonatario(fkDoador,fkProdutoDoacao,fkDonatario));
 		if (match.isEmpty()){
 			return ResponseEntity.status(404).build();
@@ -233,13 +230,13 @@ public class ProdutoController{
 		return ResponseEntity.status(200).build();
 	}
 
-	@PatchMapping("/quantidade-visualizacao/{idProdutoDoacao}/{fkDoador}/{visualizacao}")
+	@PatchMapping("/{fkDoador}/{idProdutoDoacao}/quantidade-visualizacao/{visualizacao}")
 	public ResponseEntity incrementarVisualizacao(@PathVariable Long idProdutoDoacao, @PathVariable Long fkDoador, @PathVariable int visualizacao) {
 		Optional<ProdutoDoacao> produto = Optional.ofNullable(produtoRepository.findByIdProdutoDoacaoAndFkDoador(idProdutoDoacao, fkDoador));
 		if (produto.isEmpty()){
 			return ResponseEntity.status(404).build();
 		}
-		produtoRepository.updateProdutoDoacaoSetQuantidadeVisualizacao(idProdutoDoacao, fkDoador, visualizacao+produto.get().getQuantidadeVizualicao());
+		produtoRepository.updateProdutoDoacaoSetQuantidadeVisualizacao(fkDoador, idProdutoDoacao, visualizacao + produto.get().getQuantidadeVisualizacao());
 		return ResponseEntity.status(200).build();
 	}
 

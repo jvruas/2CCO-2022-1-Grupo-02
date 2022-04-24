@@ -7,12 +7,14 @@ import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Entity
 public class CategoriaProduto {
-
-	@Id
+	@NotNull
+	@Positive
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
 	private Long idCategoriaProduto;
 
 	@NotNull
