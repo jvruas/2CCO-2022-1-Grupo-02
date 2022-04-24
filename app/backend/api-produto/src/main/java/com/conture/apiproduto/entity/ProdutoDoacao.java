@@ -9,18 +9,18 @@ import java.time.LocalDateTime;
 public class ProdutoDoacao {
 
 	@NotNull
-	@NotBlank
+
 	private Long fkDoador;
 
 	@Id
 	@NotNull
-	@NotBlank
+
 	private Long idProdutoDoacao;
 
 
 	@NotBlank
 	@NotNull
-	@Min(2)
+	@Size(min = 2)
 	private String nome;
 
 	@NotBlank
@@ -33,7 +33,7 @@ public class ProdutoDoacao {
 
 	@NotBlank
 	@NotNull
-	@Min(5)
+	@Size(min = 5)
 	private String descricao;
 
 
@@ -44,22 +44,22 @@ public class ProdutoDoacao {
 	private boolean entrega;
 
 
-	@NotBlank
+
 	@NotNull
 	@Positive
 	@Min(1)
-	private int quantidadeVizualicao;
+	private int quantidadeVisualizacao;
 
 
 
-	@PastOrPresent
-	private LocalDateTime dataCriacao;
+//	@PastOrPresent
+//	private LocalDateTime dataCriacao;
+//
+//
+//	@PastOrPresent
+//	private LocalDateTime dataConclusao;
 
 
-	@PastOrPresent
-	private LocalDateTime dataConclusao;
-
-	@NotBlank
 	@NotNull
 	private Long fkCategoriaProduto;
 
@@ -136,29 +136,29 @@ public class ProdutoDoacao {
 		this.entrega = entrega;
 	}
 
-	public int getQuantidadeVizualicao() {
-		return quantidadeVizualicao;
+	public int getQuantidadeVisualizacao() {
+		return quantidadeVisualizacao;
 	}
 
-	public void setQuantidadeVizualicao(int quantidadeVizualicao) {
-		this.quantidadeVizualicao = quantidadeVizualicao;
+	public void setQuantidadeVisualizacao(int quantidadeVisualizacao) {
+		this.quantidadeVisualizacao = quantidadeVisualizacao;
 	}
 
-	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
-	}
-
-	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
-
-	public LocalDateTime getDataConclusao() {
-		return dataConclusao;
-	}
-
-	public void setDataConclusao(LocalDateTime dataConclusao) {
-		this.dataConclusao = dataConclusao;
-	}
+	//	public LocalDateTime getDataCriacao() {
+//		return dataCriacao;
+//	}
+//
+//	public void setDataCriacao(LocalDateTime dataCriacao) {
+//		this.dataCriacao = dataCriacao;
+//	}
+//
+//	public LocalDateTime getDataConclusao() {
+//		return dataConclusao;
+//	}
+//
+//	public void setDataConclusao(LocalDateTime dataConclusao) {
+//		this.dataConclusao = dataConclusao;
+//	}
 
 	public Long getFkCategoriaProduto() {
 		return fkCategoriaProduto;

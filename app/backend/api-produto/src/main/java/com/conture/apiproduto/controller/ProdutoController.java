@@ -202,8 +202,8 @@ public class ProdutoController{
 		if (produto.isEmpty()){
 			return ResponseEntity.status(404).build();
 		}
-		produtoRepository.deleteByFkDoadorAndIdProdutoDoacao(fkDoador, idProdutoDoacao);
 
+		produtoRepository.deleteByFkDoadorAndIdProdutoDoacao(fkDoador, idProdutoDoacao);
 		return ResponseEntity.status(200).build();
 	}
 
@@ -239,7 +239,7 @@ public class ProdutoController{
 		if (produto.isEmpty()){
 			return ResponseEntity.status(404).build();
 		}
-		produtoRepository.updateProdutoDoacaoSetQuantidadeVisualizacao(idProdutoDoacao, fkDoador, visualizacao+produto.get().getQuantidadeVizualicao());
+		produtoRepository.updateProdutoDoacaoSetQuantidadeVisualizacao(idProdutoDoacao, fkDoador, visualizacao+produto.get().getQuantidadeVisualizacao());
 		return ResponseEntity.status(200).build();
 	}
 

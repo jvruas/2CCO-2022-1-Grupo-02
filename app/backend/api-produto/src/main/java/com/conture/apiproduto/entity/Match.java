@@ -10,26 +10,23 @@ public class Match {
 
 
 	@NotNull
-	@NotBlank
 	private Long fkDoador;
 
 	@NotNull
-	@NotBlank
 	private Long fkProdutoDoacao;
 
 	@NotNull
-	@NotBlank
 	@Id
 	private Long fkDonatario;
 
-	@NotBlank
+
 	@NotNull
 	@Positive
 	@Max(100)
 	private Double matchPorcentagem;
 
-	@PastOrPresent
-	private LocalDateTime dataInteresse;
+//	@PastOrPresent
+//	private LocalDateTime dataInteresse;
 
 	@NotBlank
 	@NotNull
@@ -45,7 +42,7 @@ public class Match {
 
 	public Double getMatchPorcentagem() { return matchPorcentagem; }
 
-	public LocalDateTime getDataInteresse() { return dataInteresse; }
+//	public LocalDateTime getDataInteresse() { return dataInteresse; }
 
 	public String getStatus() {
 		return status;
@@ -64,7 +61,7 @@ public class Match {
 
 	public void setMatchPorcentagem(Double matchPorcentagem) { this.matchPorcentagem = matchPorcentagem; }
 
-	public void setDataInteresse(LocalDateTime dataInteresse) { this.dataInteresse = dataInteresse; }
+//	public void setDataInteresse(LocalDateTime dataInteresse) { this.dataInteresse = dataInteresse; }
 
 	public Long getFkProdutoDoacao() {
 		return fkProdutoDoacao;
