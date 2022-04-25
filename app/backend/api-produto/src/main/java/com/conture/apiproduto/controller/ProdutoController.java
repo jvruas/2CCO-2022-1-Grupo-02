@@ -12,6 +12,7 @@ import com.conture.apiproduto.repository.CategoriaProdutoRepository;
 import com.conture.apiproduto.repository.MatchRepository;
 import com.conture.apiproduto.repository.PreferenciaDonatarioRepository;
 import com.conture.apiproduto.repository.ProdutoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -125,62 +126,60 @@ public class ProdutoController{
 		return ResponseEntity.status(200).body(listaProduto);
 	}
 
-	@GetMapping("/doador/status/{fkDoador}/{status}")
-	public ResponseEntity filtrarStatusProdutoDoador(@PathVariable Long fkDoador, @PathVariable String status){
-		// TODO: Fazer trativa de erros para input errado no metodo.
+//	@GetMapping("/doador/status/{fkDoador}/{status}")
+//	public ResponseEntity filtrarStatusProdutoDoador(@PathVariable Long fkDoador, @PathVariable String status){
+//		// TODO: Fazer trativa de erros para input errado no metodo.
+//		// TODO: Fazer trativa de erros para input errado no metodo.
+//		// TODO: Transformar A: andamento; R: recebido; D: doado T: todos
+//
+//		if (status.equalsIgnoreCase("D")){
+//			List<ProdutoDoacao> listaProdutos = produtoRepository.findByFkDoadorAndStatus(fkDoador,true);
+//			if (listaProdutos.isEmpty()){
+//				return ResponseEntity.status(204).build();
+//			}
+//		return ResponseEntity.status(200).body(listaProdutos);
+//		}
+//
+//		List<Match> listaMatch = matchRepository.findByFkDoadorAndStatus(fkDoador, status);
+//		if (listaMatch.isEmpty()) {
+//			return ResponseEntity.status(204).build();
+//		}
+//
+//		List<ProdutoDoacao> listaProdutos = new ArrayList<>();
+//		for ( Match match : listaMatch) {
+//			listaProdutos.add(produtoRepository.findByIdProdutoDoacaoAndFkDoador(match.getFkProdutoDoacao(), match.getFkDoador()));
+//		}
+//
+//		// TODO: Lembrar de devolver DTO diferente do metodo listarStatusProdutoDonatario.
+//		return  ResponseEntity.status(200).body(listaProdutos);
+//	}
 
-		// TODO: Fazer trativa de erros para input errado no metodo.
-		// TODO: Transformar A: andamento; R: recebido; D: doado T: todos
-
-		if (status.equalsIgnoreCase("D")){
-			List<ProdutoDoacao> listaProdutos = produtoRepository.findByFkDoadorAndStatus(fkDoador,true);
-			if (listaProdutos.isEmpty()){
-				return ResponseEntity.status(204).build();
-			}
-		return ResponseEntity.status(200).body(listaProdutos);
-		}
-
-		List<Match> listaMatch = matchRepository.findByFkDoadorAndStatus(fkDoador, status);
-		if (listaMatch.isEmpty()) {
-			return ResponseEntity.status(204).build();
-		}
-
-		List<ProdutoDoacao> listaProdutos = new ArrayList<>();
-		for ( Match match : listaMatch) {
-			listaProdutos.add(produtoRepository.findByIdProdutoDoacaoAndFkDoador(match.getFkProdutoDoacao(), match.getFkDoador()));
-		}
-
-		// TODO: Lembrar de devolver DTO diferente do metodo listarStatusProdutoDonatario.
-		return  ResponseEntity.status(200).body(listaProdutos);
-	}
-
-	@GetMapping("/donatario/status/{fkDonatario}/{status}")
-	public ResponseEntity filtrarStatusProdutoDonatario(@PathVariable Long fkDonatario, @PathVariable String status){
-		// TODO: Fazer trativa de erros para input errado no metodo.
-
-		// TODO: Fazer trativa de erros para input errado no metodo.
-		// TODO: Transformar A: andamento; R: recebido; D: doado
-
-		// TODO: Lembrar de devolver DTO diferente do metodo listarStatusProdutoDoador.
-		if (status.equals("D")){
-			List<ProdutoDoacao> listaProdutos = produtoRepository.findByFkDoadorAndStatus(fkDonatario,true);
-			if (listaProdutos.isEmpty()){
-				return ResponseEntity.status(204).build();
-			}
-			return ResponseEntity.status(200).body(listaProdutos);
-		}
-
-		List<Match> listaMatch = matchRepository.findByFkDoadorAndStatus(fkDonatario, status);
-		if (listaMatch.isEmpty()) {
-			return ResponseEntity.status(204).build();
-		}
-
-		List<ProdutoDoacao> listaProdutos = new ArrayList<>();
-		for ( Match match : listaMatch) {
-			listaProdutos.add(produtoRepository.findByIdProdutoDoacaoAndFkDoador(match.getFkProdutoDoacao(), match.getFkDonatario()));
-		}
-		return  ResponseEntity.status(200).body(listaProdutos);
-	}
+//	@GetMapping("/donatario/status/{fkDonatario}/{status}")
+//	public ResponseEntity filtrarStatusProdutoDonatario(@PathVariable Long fkDonatario, @PathVariable String status){
+//		// TODO: Fazer trativa de erros para input errado no metodo.
+//		// TODO: Fazer trativa de erros para input errado no metodo.
+//		// TODO: Transformar A: andamento; R: recebido; D: doado
+//		// TODO: Lembrar de devolver DTO diferente do metodo listarStatusProdutoDoador.
+//
+//		if (status.equals("D")){
+//			List<ProdutoDoacao> listaProdutos = produtoRepository.findByFkDoadorAndStatus(fkDonatario,true);
+//			if (listaProdutos.isEmpty()){
+//				return ResponseEntity.status(204).build();
+//			}
+//			return ResponseEntity.status(200).body(listaProdutos);
+//		}
+//
+//		List<Match> listaMatch = matchRepository.findByFkDoadorAndStatus(fkDonatario, status);
+//		if (listaMatch.isEmpty()) {
+//			return ResponseEntity.status(204).build();
+//		}
+//
+//		List<ProdutoDoacao> listaProdutos = new ArrayList<>();
+//		for ( Match match : listaMatch) {
+//			listaProdutos.add(produtoRepository.findByIdProdutoDoacaoAndFkDoador(match.getFkProdutoDoacao(), match.getFkDonatario()));
+//		}
+//		return  ResponseEntity.status(200).body(listaProdutos);
+//	}
 
 
 	@GetMapping("/doador/{fkDoador}")
@@ -241,7 +240,7 @@ public class ProdutoController{
 		if (produto.get().isStatus()){
 			return ResponseEntity.status(406).build();
 		}
-		produtoRepository.updateProdutoDoacaoSetStatus(statusProduto.getFkDoador(), statusProduto.getIdProdutoDoacao(),statusProduto.isStatus());
+		produtoRepository.updateProdutoDoacaoSetStatus(statusProduto.getFkDoador(), statusProduto.getIdProdutoDoacao());
 		return ResponseEntity.status(200).build();
 
 	}
