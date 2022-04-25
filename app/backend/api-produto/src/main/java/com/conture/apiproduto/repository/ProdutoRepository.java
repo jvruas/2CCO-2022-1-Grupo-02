@@ -17,7 +17,7 @@ public interface ProdutoRepository extends JpaRepository<ProdutoDoacao, Long>{
 
 	List<ProdutoDoacao> findByNome(String nome);
 
-	List<ProdutoDoacao> findByFkDoadorAndStatus(Long fkDoador, String status);
+	List<ProdutoDoacao> findByFkDoadorAndStatus(Long fkDoador, boolean status);
 
 //	ProdutoDoacao findByIdDonatarioAndStatus(Long fkDoador, String status);
 
@@ -33,8 +33,8 @@ public interface ProdutoRepository extends JpaRepository<ProdutoDoacao, Long>{
 
 	@Transactional
 	@Modifying
-	@Query("update ProdutoDoacao p set p.status = true where p.fkDoador = ?1 and p.idProdutoDoacao = ?2")
-	void updateProdutoDoacaoSetStatus(Long fkDoador, Long idProdutoDoacao);
+	@Query("update ProdutoDoacao p set p.status = ?3 where p.fkDoador = ?1 and p.idProdutoDoacao = ?2")
+	void updateProdutoDoacaoSetStatus(Long fkDoador, Long idProdutoDoacao,boolean status);
 
 
 	@Query("update ProdutoDoacao p set p.quantidadeVisualizacao = ?3 where p.fkDoador = ?1 and p.idProdutoDoacao = ?2")
