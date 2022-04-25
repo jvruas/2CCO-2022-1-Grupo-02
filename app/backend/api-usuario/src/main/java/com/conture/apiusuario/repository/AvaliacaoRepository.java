@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Integer> {
 
-	@Override
-	List<Avaliacao> findAll();
+
+	List<Avaliacao> findByFkDoador(Long fkDoador);
 
 }

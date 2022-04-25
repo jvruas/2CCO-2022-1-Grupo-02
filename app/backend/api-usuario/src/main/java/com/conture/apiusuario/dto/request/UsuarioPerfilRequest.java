@@ -1,15 +1,8 @@
 package com.conture.apiusuario.dto.request;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.validator.constraints.br.CPF;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 
 public class UsuarioPerfilRequest {
 
@@ -26,6 +19,10 @@ public class UsuarioPerfilRequest {
 	private String estadoCivil;
 
 	@NotBlank
+	@Size(max = 11, message = "O telefone deve ter no máximo 11 letras")
+	private String telefone;
+
+	@NotBlank
 	private String cep;
 
 	@NotBlank
@@ -34,52 +31,32 @@ public class UsuarioPerfilRequest {
 
 	private Long fkSituacaoAtual;
 
-	// Getters e Setters
+	// Getters
 	public Long getIdUsuario() {
 		return idUsuario;
-	}
-
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
 	}
 
 	public String getGenero() {
 		return genero;
 	}
 
-	public void setGenero(String genero) {
-		this.genero = genero;
-	}
-
 	public String getEstadoCivil() {
 		return estadoCivil;
 	}
 
-	public void setEstadoCivil(String estadoCivil) {
-		this.estadoCivil = estadoCivil;
+	public String getTelefone() {
+		return telefone;
 	}
 
 	public String getCep() {
 		return cep;
 	}
 
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
 	public String getEscolaridade() {
 		return escolaridade;
 	}
 
-	public void setEscolaridade(String escolaridade) {
-		this.escolaridade = escolaridade;
-	}
-
 	public Long getFkSituacaoAtual() {
 		return fkSituacaoAtual;
-	}
-
-	public void setFkSituacaoAtual(Long fkSituacaoAtual) {
-		this.fkSituacaoAtual = fkSituacaoAtual;
 	}
 }

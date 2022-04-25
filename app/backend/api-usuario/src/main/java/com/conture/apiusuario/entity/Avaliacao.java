@@ -3,16 +3,15 @@ package com.conture.apiusuario.entity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tb_avaliacao")
 public class Avaliacao {
 
-   // Atributos
+   	// Atributos
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long fkProdutoDoacao;
@@ -29,19 +28,11 @@ public class Avaliacao {
 	@Positive
     private Long valor;
 
+	@Size(max = 300, message = "O comentario deve ter no máximo 300 letras")
     private String comentario;
 
-    //@Temporal(TemporalType.TIMESTAMP) // Indica o tipo de dado temporal que será guardado no campo do atributo mapeado
     @CreationTimestamp // Indica que o atributo receberá automaticamente a data e hora do sistema no momento da criação de um registro
     private LocalDateTime data;
-
-	// Construtor
-	public Avaliacao(Long fkDonatario, Long fkDoador, Long valor, String comentario) {
-		this.fkDonatario = fkDonatario;
-		this.fkDoador = fkDoador;
-		this.valor = valor;
-		this.comentario = comentario;
-	}
 
 	// Getters e Setters
 	public Long getFkProdutoDoacao() {

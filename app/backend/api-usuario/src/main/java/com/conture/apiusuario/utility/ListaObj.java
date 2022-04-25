@@ -18,7 +18,6 @@ public class ListaObj<T> {
     }
 
     // Métodos
-
     /* Método adiciona - recebe o elemento a ser adicionado na lista
        Se a lista estiver cheia, exibe uma mensagem
      */
@@ -44,6 +43,7 @@ public class ListaObj<T> {
         }
     }
 
+	// Método Transformar em lista - Transforma os objetos em lista
 	public List<T> transformarEmLista() {
 		List<T> lista = new ArrayList<>();
 		if (nroElem == 0) {
@@ -98,12 +98,12 @@ public class ListaObj<T> {
         return removePeloIndice(busca(elementoARemover));
     }
 
-    /* getTamanho()  - retorna o tamanho da lista */
+    // getTamanho()  - retorna o tamanho da lista
     public int getTamanho() {
         return nroElem;
     }
 
-    /* getElemento() - recebe um índice e retorna o elemento desse índice */
+    // getElemento() - recebe um índice e retorna o elemento desse índice
     public T getElemento(int indice) {
         if (indice < 0 || indice >= nroElem) {   // se índice inválido
             return null;                        // então retorna null
@@ -113,7 +113,7 @@ public class ListaObj<T> {
         }
     }
 
-    /* limpa() - limpa a lista */
+    // limpa() - limpa a lista
     public void limpa() {
         nroElem = 0;
     }

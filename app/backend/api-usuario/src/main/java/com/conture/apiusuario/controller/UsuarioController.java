@@ -1,11 +1,8 @@
 package com.conture.apiusuario.controller;
 
-import com.conture.apiusuario.dto.request.AvaliacaoRequest;
-import com.conture.apiusuario.dto.request.UsuarioPerfilRequest;
+import com.conture.apiusuario.dto.request.*;
 import com.conture.apiusuario.entity.*;
 import com.conture.apiusuario.repository.*;
-import com.conture.apiusuario.dto.request.ReporteRequest;
-import com.conture.apiusuario.dto.request.UsuarioLoginRequest;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
 import com.conture.apiusuario.utility.GerenciadorUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +17,7 @@ import java.util.Optional;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
+	// Repository
     @Autowired
     private AvaliacaoRepository avaliacaoRepository;
 
@@ -36,15 +34,7 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
 
-	@GetMapping
-	public ResponseEntity listarUsuarios() {
-		if (GerenciadorUsuario.isEmpty()) {
-			return ResponseEntity.status(204).build();
-		}
-
-		return ResponseEntity.status(200).body(GerenciadorUsuario.listarUsuariosLogados());
-	}
-
+	// EndPoint
     @PostMapping
     public ResponseEntity adicionarUsuario(@RequestBody @Valid Usuario novoUsuario){
         this.usuarioRepository.save(novoUsuario);
@@ -53,24 +43,21 @@ public class UsuarioController {
 
     @PostMapping("/logar")
     public ResponseEntity login(@RequestBody @Valid UsuarioLoginRequest usuario){
-        Optional<UsuarioLogadoResponse> usuarioLogado = Optional.ofNullable(usuarioRepository.findByEmailAndSenha(usuario.getEmail(), usuario.getSenha()));
+        Optional<UsuarioLogadoResponse> usuarioLogado = Optional.ofNullable(this.usuarioRepository.findByEmailAndSenha(usuario.getEmail(), usuario.getSenha()));
 
-        if(usuarioLogado.isEmpty()) {
+		if(usuarioLogado.isEmpty()) {
             return ResponseEntity.status(404).build();
         }
-
-        GerenciadorUsuario.login(usuarioLogado.get());
+		GerenciadorUsuario.login(usuarioLogado.get());
         return ResponseEntity.status(201).body(usuarioLogado.get());
     }
 
 	@DeleteMapping("/logoff")
 	public ResponseEntity logoff(Long idUsuario){
 		boolean resposta = GerenciadorUsuario.logoff(idUsuario);
-
 		if (!resposta){
 			return ResponseEntity.status(404).build();
 		}
-
 		return  ResponseEntity.status(200).build();
 	}
 
@@ -83,23 +70,32 @@ public class UsuarioController {
 		if (reportador.isEmpty() || reportado.isEmpty() || tipoReporte.isEmpty()){
 			return ResponseEntity.status(404).build();
 		}
+		Reporte novoReporte = new Reporte();
+		novoReporte.setFkReportador(reporte.getFkReportador());
+		novoReporte.setFkReportado(reporte.getFkReportado());
+		novoReporte.setFkTipoReporte(reporte.getFkTipoReporte());
 
-		this.reporteRepository.save(new Reporte(reporte.getFkReportador(), reporte.getFkReportado(), reporte.getFkTipoReporte()));
-		return  ResponseEntity.status(200).build();
+		this.reporteRepository.save(novoReporte);
+		return ResponseEntity.status(200).build();
 	}
 
 	@PostMapping("/avaliacao")
 	public ResponseEntity avaliarUsuario(@RequestBody @Valid AvaliacaoRequest avaliacao){
 		Optional<Usuario> avaliado = Optional.ofNullable(usuarioRepository.findByIdUsuario(avaliacao.getFkDoador()));
-
 		Optional<UsuarioLogadoResponse> avaliador = GerenciadorUsuario.buscaUsuarioLogado(avaliacao.getFkDonatario());
 
 		if(avaliado.isEmpty() || avaliador.isEmpty()){
 			return ResponseEntity.status(404).build();
 		}
 
-		this.avaliacaoRepository.save(new Avaliacao(avaliacao.getFkDonatario(), avaliacao.getFkDoador(), avaliacao.getValor(), avaliacao.getComentario()));
-		return  ResponseEntity.status(200).build();
+		Avaliacao novaAvaliacao = new Avaliacao();
+		novaAvaliacao.setFkDoador(avaliacao.getFkDoador());
+		novaAvaliacao.setFkDonatario(avaliacao.getFkDonatario());
+		novaAvaliacao.setValor(avaliacao.getValor());
+		novaAvaliacao.setComentario(avaliacao.getComentario());
+
+		this.avaliacaoRepository.save(novaAvaliacao);
+		return ResponseEntity.status(200).build();
 	}
 
 	@DeleteMapping
@@ -117,7 +113,7 @@ public class UsuarioController {
 
 	@GetMapping("/nome")
 	public ResponseEntity pesquisarUsuarioNome(@RequestParam @Valid String nome){
-		List<Usuario> listaUsuarios = usuarioRepository.findByNome(nome);
+		List<Usuario> listaUsuarios = this.usuarioRepository.findByNome(nome);
 
 		if(listaUsuarios.isEmpty()){
 			return ResponseEntity.status(204).build();
@@ -128,7 +124,7 @@ public class UsuarioController {
 
 	@GetMapping("/id")
 	public ResponseEntity pesquisarUsuarioId(@RequestParam @Valid Long idUsuario){
-		Optional<Usuario> usuario = Optional.ofNullable(usuarioRepository.findByIdUsuario(idUsuario));
+		Optional<Usuario> usuario = Optional.ofNullable(this.usuarioRepository.findByIdUsuario(idUsuario));
 
 		if(usuario.isEmpty()){
 			return ResponseEntity.status(404).build();
@@ -139,7 +135,7 @@ public class UsuarioController {
 
 	@GetMapping("/tipos-de-reporte")
 	public ResponseEntity listarTiposReporte(){
-		List<TipoReporte> lista = tipoReporteRepository.findAll();
+		List<TipoReporte> lista = this.tipoReporteRepository.findAll();
 
 		if(lista.isEmpty()){
 			return ResponseEntity.status(404).build();
@@ -149,7 +145,7 @@ public class UsuarioController {
 
 	@GetMapping("/situacao-atual")
 	public ResponseEntity listarSituacoesAtuais(){
-		List<SituacaoAtual> lista = situacaoAtualRepository.findAll();
+		List<SituacaoAtual> lista = this.situacaoAtualRepository.findAll();
 
 		if(lista.isEmpty()){
 			return ResponseEntity.status(404).build();
@@ -158,8 +154,8 @@ public class UsuarioController {
 	}
 
 	@GetMapping("/avaliacoes")
-	public ResponseEntity listarAvaliacoes(){
-		List<Avaliacao> lista = avaliacaoRepository.findAll();
+	public ResponseEntity listarAvaliacoes(@RequestParam Long fkDoador){
+		List<Avaliacao> lista = this.avaliacaoRepository.findByFkDoador(fkDoador);
 
 		if(lista.isEmpty()){
 			return ResponseEntity.status(404).build();
@@ -167,22 +163,21 @@ public class UsuarioController {
 		return ResponseEntity.status(200).body(lista);
 	}
 
-	@PatchMapping("/senha")
-	public ResponseEntity atualizarSenha(@RequestParam Long idUsuario, @RequestParam @Valid String senha){
-		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(idUsuario);
+	@PutMapping("/senha")
+	public ResponseEntity atualizarSenha(@RequestBody UsuarioSenhaRequest novaSenha) {
+		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(novaSenha.getIdUsuario());
+		Usuario usuario = usuarioRepository.findByIdUsuario(novaSenha.getIdUsuario());
 
-		if(usuarioLogado.isEmpty()){
+		if (usuarioLogado.isEmpty() || !usuario.getSenha().equals(novaSenha.getSenhaAtual())) {
 			return ResponseEntity.status(404).build();
 		}
 
-		Usuario usuario = usuarioRepository.findByIdUsuario(idUsuario);
-		usuario.setSenha(senha);
-
+		usuario.setSenha(novaSenha.getSenhaNova());
 		this.usuarioRepository.save(usuario);
-		return  ResponseEntity.status(200).build();
+		return ResponseEntity.status(200).build();
 	}
 
-	@PatchMapping("/perfil")
+	@PutMapping("/perfil")
 	public ResponseEntity atualizarPerfil(@RequestBody @Valid UsuarioPerfilRequest usuarioPerfil){
 		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(usuarioPerfil.getIdUsuario());
 
@@ -200,7 +195,5 @@ public class UsuarioController {
 		this.usuarioRepository.save(usuario);
 		return  ResponseEntity.status(200).build();
 	}
-
-
 
 }

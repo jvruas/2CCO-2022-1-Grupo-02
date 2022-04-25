@@ -16,20 +16,12 @@ public class UsuarioLoginRequest {
 	@Size(max = 18, message = "A senha deve ter no máximo 18 letras")
     private String senha;
 
-    // Getters e Setters
-    public String getEmail() {
-        return email;
-    }
+    // Getters
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+	public String getSenha() {
+		return senha;
+	}
 }
