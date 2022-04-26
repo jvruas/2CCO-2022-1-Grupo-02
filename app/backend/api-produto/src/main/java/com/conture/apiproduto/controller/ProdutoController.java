@@ -230,9 +230,9 @@ public class ProdutoController{
 		return  ResponseEntity.status(200).body(listaMatch);
 	}
 
-	@GetMapping("/{fkDoador}/{idProdutoDoacao}/match/quantidade")
+	@GetMapping("/{fkDoador}/{fkProdutoDoacao}/match/quantidade")
 	public ResponseEntity contarMatch(@PathVariable Long fkDoador, @PathVariable Long fkProdutoDoacao){
-		// TODO: Fazer trativa de erros para input errado no metodo.
+
 
 		Optional<Long> contador = Optional.ofNullable(matchRepository.countByFkDoadorAndFkProdutoDoacao(fkDoador, fkProdutoDoacao));
 
@@ -240,7 +240,7 @@ public class ProdutoController{
 			return ResponseEntity.status(404).build();
 		}
 
-		return  ResponseEntity.status(200).body(contador.get());
+		return  ResponseEntity.status(200).body(contador);
 	}
 
 	@DeleteMapping("/{fkDoador}/{idProdutoDoacao}")
