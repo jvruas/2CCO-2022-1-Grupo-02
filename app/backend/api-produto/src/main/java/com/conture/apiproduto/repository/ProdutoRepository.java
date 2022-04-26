@@ -17,13 +17,9 @@ public interface ProdutoRepository extends JpaRepository<ProdutoDoacao, Long>{
 
 	List<ProdutoDoacao> findByNome(String nome);
 
-//	List<ProdutoDoacao> findByFkDoadorAndStatus(Long fkDoador, boolean status);
-
-//	ProdutoDoacao findByIdDonatarioAndStatus(Long fkDoador, String status);
+	List<ProdutoDoacao> findByFkDoadorAndStatus(Long fkDoador, boolean status);
 
 	List<ProdutoDoacao> findByFkDoador(Long fkDoador);
-
-//	List<ProdutoDoacao> findByFkDonatario(Long fkDonatario);
 
 	@Modifying
 	@Transactional

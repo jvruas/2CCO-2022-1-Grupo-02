@@ -3,8 +3,10 @@ package com.conture.apiproduto.dto.request;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 public class MatchIdentifierRequest {
 
@@ -21,6 +23,11 @@ public class MatchIdentifierRequest {
 	@Positive
 	@Id
 	private Long fkDonatario;
+
+	@NotBlank
+	@NotNull
+	@Size(min = 1,max = 1 )
+	private String status;
 
 	public Long getFkDoador() {
 		return fkDoador;
@@ -44,5 +51,13 @@ public class MatchIdentifierRequest {
 
 	public void setFkDonatario(Long fkDonatario) {
 		this.fkDonatario = fkDonatario;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }
