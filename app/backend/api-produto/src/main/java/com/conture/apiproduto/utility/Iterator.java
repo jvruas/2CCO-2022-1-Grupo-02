@@ -6,5 +6,5 @@ public interface Iterator<T> {
 
 	public boolean hasNext();
 
-	public Optional<T> getNext();
+	public T getNext();
 }

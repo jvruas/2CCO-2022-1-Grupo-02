@@ -1,5 +1,6 @@
 package com.conture.apiproduto.controller;
 
+import com.conture.apiproduto.utility.Iterator;
 import com.conture.apiproduto.utility.ListaObj;
 import com.conture.apiproduto.dto.request.AtualizarMatchIdentifierRequest;
 import com.conture.apiproduto.dto.request.MatchIdentifierRequest;
@@ -14,6 +15,8 @@ import com.conture.apiproduto.repository.MatchRepository;
 import com.conture.apiproduto.repository.PreferenciaDonatarioRepository;
 import com.conture.apiproduto.repository.ProdutoRepository;
 
+import com.conture.apiproduto.utility.SearchProdutoCategoriaIterator;
+import com.conture.apiproduto.utility.SearchProdutoMarcaIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -90,19 +93,21 @@ public class ProdutoController{
 	public ResponseEntity listarProdutoCategoria(@PathVariable String categoria) {
 		// TODO: Fazer trativa de erros para input errado no metodo.
 
-		Optional<CategoriaProduto> categoriaPesquisada = Optional.ofNullable(this.categoriaRepository.findByNome(categoria));
+		Optional<CategoriaProduto> categoriaProduto = Optional.ofNullable(this.categoriaRepository.findByNome(categoria));
 
-		if (categoriaPesquisada.isEmpty()) {
+		if (categoriaProduto.isEmpty()) {
 			return ResponseEntity.status(404).build();
 		}
 
-		List<ProdutoDoacao> listaProduto = this.produtoRepository.findByFkCategoriaProduto(categoriaPesquisada.get().getIdCategoriaProduto());
+		Iterator<ProdutoDoacao> iterator = new SearchProdutoCategoriaIterator(this.produtoRepository.findAll(), categoriaProduto.get().getIdCategoriaProduto());
 
-		if (listaProduto.isEmpty()) {
-			return ResponseEntity.status(204).build();
+		List<ProdutoDoacao> produtos = new ArrayList();
+
+		while (iterator.hasNext()) {
+			produtos.add(iterator.getNext());
 		}
 
-		return ResponseEntity.status(200).body(listaProduto);
+		return ResponseEntity.status(200).body(produtos);
 	}
 
 	// FIXME: Iterator
@@ -110,13 +115,18 @@ public class ProdutoController{
 	public ResponseEntity listarProdutoMarca(@PathVariable String marca) {
 		// TODO: Fazer trativa de erros para input errado no metodo.
 
-		List<ProdutoDoacao> listaProduto = produtoRepository.findByMarca(marca);
+		Iterator<ProdutoDoacao> iterator = new SearchProdutoMarcaIterator(this.produtoRepository.findAll(), marca);
 
-		if (listaProduto.isEmpty()) {
-			return ResponseEntity.status(204).build();
+		List<ProdutoDoacao> produtos = new ArrayList();
+
+		while (iterator.hasNext()) {
+			iterator.getNext();
+			produtos.add();
 		}
 
-		return ResponseEntity.status(200).body(listaProduto);
+		return ResponseEntity.status(200).body(produtos);
+
+
 	}
 
 	@GetMapping("/nome")

@@ -11,7 +11,7 @@ import javax.validation.constraints.Positive;
 
 @Entity
 public class CategoriaProduto {
-	@NotNull
+
 	@Positive
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
