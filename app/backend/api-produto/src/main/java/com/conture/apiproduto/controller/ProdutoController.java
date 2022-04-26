@@ -41,10 +41,8 @@ public class ProdutoController{
 	 @Autowired
 	 private CategoriaProdutoRepository categoriaRepository;
 
-	 ListaObj<ProdutoDoacao> listaProdutos = new ListaObj<>(10);
-	 ListaObj<PreferenciaDonatario> listaPreferencia = new ListaObj<>(10);
-	 ListaObj<Match> listaMatch = new ListaObj<>(10);
-	 ListaObj<CategoriaProduto> listaCategoria = new ListaObj<>(10);
+	 ListaObj<String> listaHistorico = new ListaObj<>(10);
+
 
 	@PostMapping()
 	public ResponseEntity adicionarProduto(@RequestBody @Valid ProdutoDoacao produto) {
@@ -91,53 +89,67 @@ public class ProdutoController{
 	// FIXME: Iterator
 	@GetMapping("/categorias/{categoria}")
 	public ResponseEntity listarProdutoCategoria(@PathVariable String categoria) {
-		// TODO: Fazer trativa de erros para input errado no metodo.
 
 		Optional<CategoriaProduto> categoriaProduto = Optional.ofNullable(this.categoriaRepository.findByNome(categoria));
+		List<ProdutoDoacao> produtos = this.produtoRepository.findAll();
 
 		if (categoriaProduto.isEmpty()) {
 			return ResponseEntity.status(404).build();
 		}
 
-		Iterator<ProdutoDoacao> iterator = new SearchProdutoCategoriaIterator(this.produtoRepository.findAll(), categoriaProduto.get().getIdCategoriaProduto());
+		Iterator<ProdutoDoacao> iterator = new SearchProdutoCategoriaIterator(produtos,categoriaProduto.get().getIdCategoriaProduto());
 
-		List<ProdutoDoacao> produtos = new ArrayList();
+		List<ProdutoDoacao> produtosResponse = new ArrayList();
 
 		while (iterator.hasNext()) {
-			produtos.add(iterator.getNext());
+			produtosResponse.add(iterator.getNext());
+		}
+		if (produtosResponse.get(0) == null) {
+			return ResponseEntity.status(204).build();
 		}
 
-		return ResponseEntity.status(200).body(produtos);
+		return ResponseEntity.status(200).body(produtosResponse);
 	}
 
 	// FIXME: Iterator
 	@GetMapping("/marcas/{marca}")
 	public ResponseEntity listarProdutoMarca(@PathVariable String marca) {
-		// TODO: Fazer trativa de erros para input errado no metodo.
 
-		Iterator<ProdutoDoacao> iterator = new SearchProdutoMarcaIterator(this.produtoRepository.findAll(), marca);
+		List<ProdutoDoacao> produtos = this.produtoRepository.findAll();
 
-		List<ProdutoDoacao> produtos = new ArrayList();
+		if (produtos.isEmpty()) {
+			return ResponseEntity.status(204).build();
+		}
+		Iterator<ProdutoDoacao> iterator = new SearchProdutoMarcaIterator(produtos, marca);
+
+		List<ProdutoDoacao> produtosResponse = new ArrayList();
 
 		while (iterator.hasNext()) {
-			iterator.getNext();
-			produtos.add();
+			produtosResponse.add(iterator.getNext());
 		}
-
-		return ResponseEntity.status(200).body(produtos);
-
+		if (produtosResponse.get(0) == null) {
+			return ResponseEntity.status(204).build();
+		}
+		return ResponseEntity.status(200).body(produtosResponse);
 
 	}
 
-	@GetMapping("/nome")
-	public ResponseEntity listarProdutoNome(@RequestParam String nome) {
-		List<ProdutoDoacao> listaProduto = produtoRepository.findByNome(nome);
+	@GetMapping("/nome/{nome}")
+	public ResponseEntity listarProdutoNome(@PathVariable String nome) {
+		List<ProdutoDoacao> listaProduto = produtoRepository.findByNomeContainsIgnoreCase(nome);
+		listaHistorico.adicionaNoInicio(nome);
+		return ResponseEntity.status(200).body(listaProduto);
 
-		if (listaProduto.isEmpty()) {
-			return ResponseEntity.status(204).build();
+	}
+	@GetMapping("/historico")
+	public ResponseEntity listarHistorico(){
+
+		ArrayList<String> historico = new ArrayList<>();
+		for (int i = 0; i < listaHistorico.getTamanho(); i++) {
+			historico.add(listaHistorico.getElemento(i));
 		}
 
-		return ResponseEntity.status(200).body(listaProduto);
+	return ResponseEntity.status(200).body(historico);
 	}
 
 	@GetMapping("/doador/status/{fkDoador}/{status}")

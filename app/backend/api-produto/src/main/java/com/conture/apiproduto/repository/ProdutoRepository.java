@@ -15,7 +15,8 @@ public interface ProdutoRepository extends JpaRepository<ProdutoDoacao, Long>{
 
 	List<ProdutoDoacao> findByMarca(String marca);
 
-	List<ProdutoDoacao> findByNome(String nome);
+	List<ProdutoDoacao> findByNomeContainsIgnoreCase(String nome);
+
 
 	List<ProdutoDoacao> findByFkDoadorAndStatus(Long fkDoador, boolean status);
 

@@ -28,6 +28,22 @@ public class ListaObj<T> {
         }
     }
 
+
+	public boolean adicionaNoInicio(T elemNovo){
+		if(nroElem != vetor.length){
+			nroElem++;
+			for(int i = nroElem-1; i > 0; i--){
+				vetor[i] = vetor[i-1];
+			}
+			vetor[0] = elemNovo;
+			return true;
+		}
+		return false;
+	}
+
+
+
+
     /* Método exibe - exibe os elementos da lista */
     public void exibe() {
         if (nroElem == 0) {

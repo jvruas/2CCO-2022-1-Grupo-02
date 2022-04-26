@@ -21,28 +21,18 @@ public class SearchProdutoCategoriaIterator<T> implements Iterator<T>{
 	}
 	@Override
 	public boolean hasNext() {
-		 if (this.iterationState == collection.size()) return false;
-
-		 if (this.collection.get(iterationState + 1) == null) return false;
-
-		for (int i = this.iterationState; i < this.collection.size(); i++) {
-			ProdutoDoacao produtoDoacao = this.collection.get(i);
-			if (produtoDoacao.getFkCategoriaProduto().equals(categoria)) {
-				return true;
-			}
-		}
-
-		return false;
+		return this.iterationState < this.collection.size();
 	}
 
 	@Override
 	public T getNext() {
 		for (int i = this.iterationState; i < this.collection.size(); i++) {
+			this.iterationState++;
+
 			ProdutoDoacao produtoDoacao = this.collection.get(i);
 			if (produtoDoacao.getFkCategoriaProduto().equals(categoria)) {
 				return (T) produtoDoacao;
 			}
-			this.iterationState++;
 		}
 
 		return null;
