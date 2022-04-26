@@ -11,7 +11,9 @@ public interface RespostaRepository extends JpaRepository<Resposta, Long> {
 
     Resposta findByIdResposta(Long idResposta);
 
-    Resposta deleteAllByFkPergunta(Long fkPergunta);
+    void deleteByFkPergunta(Long fkPergunta);
+
+	int countByFkPergunta(Long fkPergunta);
 
     default boolean exists(Resposta resposta) {
         return false;

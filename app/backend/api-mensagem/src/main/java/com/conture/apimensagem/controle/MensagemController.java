@@ -71,7 +71,7 @@ public class MensagemController {
     }
 
 
-    @GetMapping("grupo/pergunta/{fkDonatario}/{fkDoador}/fkProdutoDoacao")
+    @GetMapping("grupo/pergunta/{fkDonatario}/{fkDoador}/{fkProdutoDoacao}")
     public ResponseEntity getMensagemGrupoPergunta(@PathVariable Long fkDonatario,
                                                    @PathVariable Long fkDoador,
                                                    @PathVariable Long fkProdutoDoacao
@@ -91,7 +91,7 @@ public class MensagemController {
         return ResponseEntity.status(204).build();
     }
 
-    @GetMapping("grupo/resposta/{fkPergunta}")
+    @GetMapping("grupo/resposta/{idPergunta}")
     public ResponseEntity getMensagemGrupoResposta(@PathVariable Long idPergunta){
 
         List<Resposta> respostas =
@@ -118,8 +118,13 @@ public class MensagemController {
     @DeleteMapping("grupo/pergunta/{idPergunta}")
     public ResponseEntity deleteMensagemGrupoPergunta(@PathVariable Long idPergunta){
         if (repositoryPergunta.existsById(idPergunta)){
-            if (repositoryResposta.existsByFkPergunta(idPergunta)){
-                repositoryResposta.deleteAllByFkPergunta(idPergunta);
+            if (repositoryResposta.countByFkPergunta(idPergunta)>=1){
+				List<Resposta> respostas =
+				repositoryResposta.findByFkPerguntaOrderByDataAsc(idPergunta);
+				for (Resposta r:
+					 respostas) {
+					repositoryResposta.deleteById(r.getIdResposta());
+				}
             }
             repositoryPergunta.deleteById(idPergunta);
             return ResponseEntity.status(200).build();
