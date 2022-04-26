@@ -1,5 +1,6 @@
 package com.conture.apimensagem.controle;
 
+import com.conture.apimensagem.entidade.ListaObj;
 import com.conture.apimensagem.entidade.Mensagem;
 import com.conture.apimensagem.entidade.Pergunta;
 import com.conture.apimensagem.entidade.Resposta;
@@ -8,13 +9,15 @@ import com.conture.apimensagem.repositorio.MensagemRepository;
 import com.conture.apimensagem.repositorio.PerguntaRepository;
 import com.conture.apimensagem.repositorio.RespostaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Formatter;
+import java.util.FormatterClosedException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/mensagem")
@@ -154,7 +157,6 @@ public class MensagemController {
         }
         return ResponseEntity.status(400).build();
     }
-
     @PutMapping("grupo/resposta/{idResposta}")
     public ResponseEntity putMensagemGrupoResposta(@RequestBody Resposta resposta,
                                                    @PathVariable Long idResposta) {
@@ -168,7 +170,6 @@ public class MensagemController {
         }
         return ResponseEntity.status(400).build();
     }
-
     @PutMapping("direta/{idMensagem}")
     public ResponseEntity putMensagemDireta(@RequestBody Mensagem mensagem,
 											@PathVariable Long idMensagem) {
@@ -183,19 +184,77 @@ public class MensagemController {
         return ResponseEntity.status(400).build();
     }
 
-	@GetMapping("/relatorio-geral")
+	@GetMapping("/relatorio/perguntas-frequentes")
 	public ResponseEntity getRelatorio() {
 		String relatorio = "";
 
-		List<Pergunta> lista = repositoryPergunta.findAll();
-		for(var perguntas : lista){
-			relatorio += perguntas.getIdPergunta() + ";" + perguntas.getMensagem() + ";" +
-					perguntas.getData() + "\r\n";
+		List<Pergunta> perguntas = repositoryPergunta.findAll();
+		ListaObj<Pergunta> lista = new ListaObj((int) repositoryPergunta.count());
+
+		System.out.println(lista.getTamanho());
+		System.out.println(perguntas.size());
+
+		for (int idx = 0; idx < perguntas.size(); idx++){
+			lista.adiciona(perguntas.get(idx));
 		}
 
+		for (int i = 0; i < perguntas.size(); i++){
+			relatorio += lista.getElemento(i).getIdPergunta() + ";" + lista.getElemento(i).getMensagem() + ";" +
+			lista.getElemento(i).getData();
+		}
+
+		String csv = gravaArquivoCsv(lista, "perguntas");
 		return ResponseEntity.status(200)
 				.header("content-type", "text/csv")
 				.header("content-disposition", "filename=\"perguntas-frequentes.csv\"")
-				.body(relatorio);
+				.body(csv);
 	}
+
+	public String gravaArquivoCsv(ListaObj<Pergunta> lista, String nomeArq) {
+		FileWriter arq = null;
+		Formatter saida = null;
+		Boolean deuRuim = false;
+		nomeArq += ".csv";
+		String formatado="";
+
+		try {
+			arq = new FileWriter(nomeArq, false);
+			saida = new Formatter(arq);
+		}
+		catch (IOException erro) {
+			System.out.println("Erro ao abrir o arquivo!");
+			System.exit(1);
+		}
+
+		try {
+			formatado = "";
+			System.out.println(lista.getTamanho());
+			for (int i= 0; i< lista.getTamanho(); i++) {
+				Pergunta listPerguntas = lista.getElemento(i);
+				formatado += String.format("%d;%s;%s;\n",
+						listPerguntas.getIdPergunta(), listPerguntas.getMensagem(), listPerguntas.getData());
+			}
+			System.out.println(formatado);
+			saida.format(formatado);
+		}
+		catch (FormatterClosedException erro) {
+			System.out.println("Erro ao gravar arquivo");
+			deuRuim = true;
+		}
+		finally {
+			saida.close();
+			try {
+				arq.close();
+			}
+			catch (IOException erro) {
+				System.out.println("Erro ao fechar o arquivo");
+				deuRuim = true;
+			}
+			if (deuRuim) {
+				System.exit(1);
+			}
+		}
+		return formatado;
+	}
+
 }
