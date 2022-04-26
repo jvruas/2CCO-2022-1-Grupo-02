@@ -32,6 +32,7 @@ public class ProdutoDoacao {
 	@NotNull
 	private String modelo;
 
+
 	@NotBlank
 	@NotNull
 	@Size(min = 5)

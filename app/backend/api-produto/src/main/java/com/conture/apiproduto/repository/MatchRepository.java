@@ -22,8 +22,8 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 
 	@Transactional
 	@Modifying
-	@Query("update Match m set m.status = ?4 where m.fkDoador = ?1 and m.fkProdutoDoacao = ?2 and m.fkDonatario = ?3")
-	void updateMatchSetStatus(Long fkDoador, Long fkProdutoDoacao, Long fkDonatario, String status);
+	@Query("update Match m set m.status =?4  where m.fkDoador = ?1 and m.fkProdutoDoacao = ?2 and m.fkDonatario = ?3")
+	void updateMatchSetStatus(Long fkDoador, Long fkProdutoDoacao, Long fkDonatario,String status);
 
 	List<Match> findByFkDoadorAndStatus(Long fkDoador, String status);
 }

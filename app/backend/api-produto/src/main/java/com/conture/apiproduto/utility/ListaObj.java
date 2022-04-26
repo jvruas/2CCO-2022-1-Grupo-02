@@ -1,4 +1,4 @@
-package com.conture.apiproduto;
+package com.conture.apiproduto.utility;
 
 public class ListaObj<T> {
 

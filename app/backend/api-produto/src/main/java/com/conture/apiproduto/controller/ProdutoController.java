@@ -1,6 +1,7 @@
 package com.conture.apiproduto.controller;
 
-import com.conture.apiproduto.ListaObj;
+import com.conture.apiproduto.utility.ListaObj;
+import com.conture.apiproduto.dto.request.AtualizarMatchIdentifierRequest;
 import com.conture.apiproduto.dto.request.MatchIdentifierRequest;
 import com.conture.apiproduto.dto.request.ProdutoDoacaoStatusRequest;
 import com.conture.apiproduto.dto.request.VisualizacaoRequest;
@@ -34,10 +35,13 @@ public class ProdutoController{
 	@Autowired
 	private MatchRepository matchRepository;
 
-	@Autowired
-	private CategoriaProdutoRepository categoriaRepository;
+	 @Autowired
+	 private CategoriaProdutoRepository categoriaRepository;
 
-	ListaObj<ProdutoDoacao> listaPesquisa = new ListaObj<>(10);
+	 ListaObj<ProdutoDoacao> listaProdutos = new ListaObj<>(10);
+	 ListaObj<PreferenciaDonatario> listaPreferencia = new ListaObj<>(10);
+	 ListaObj<Match> listaMatch = new ListaObj<>(10);
+	 ListaObj<CategoriaProduto> listaCategoria = new ListaObj<>(10);
 
 	@PostMapping()
 	public ResponseEntity adicionarProduto(@RequestBody @Valid ProdutoDoacao produto) {
@@ -115,8 +119,8 @@ public class ProdutoController{
 		return ResponseEntity.status(200).body(listaProduto);
 	}
 
-	@GetMapping("/nome/{nome}")
-	public ResponseEntity listarProdutoNome(@PathVariable String nome) {
+	@GetMapping("/nome")
+	public ResponseEntity listarProdutoNome(@RequestParam String nome) {
 		List<ProdutoDoacao> listaProduto = produtoRepository.findByNome(nome);
 
 		if (listaProduto.isEmpty()) {
@@ -255,6 +259,7 @@ public class ProdutoController{
 		return ResponseEntity.status(200).build();
 	}
 
+
 	@PatchMapping("/visualizacao")
 	public ResponseEntity incrementarVisualizacao(@RequestBody @Valid VisualizacaoRequest visualizacao ) {
 		Optional<ProdutoDoacao> produto = Optional.ofNullable(produtoRepository.findByIdProdutoDoacaoAndFkDoador(visualizacao.getIdProdutoDoacao(), visualizacao.getFkDoador()));
@@ -266,13 +271,13 @@ public class ProdutoController{
 	}
 
 
-	@PatchMapping("/match/{fkDoador}/{fkProdutoDoacao}/{fkDonatario}")
-	public ResponseEntity atualizarMatch(@RequestBody @Valid MatchIdentifierRequest matchIdentifier ){
+	@PatchMapping("/match/{fkDoador}/{fkProdutoDoacao}/{fkDonatario}/{status}")
+	public ResponseEntity atualizarMatch(@RequestBody @Valid AtualizarMatchIdentifierRequest matchIdentifier ){
 		Optional<Match> match = Optional.ofNullable(matchRepository.findByFkDoadorAndFkProdutoDoacaoAndFkDonatario(matchIdentifier.getFkDoador(), matchIdentifier.getFkProdutoDoacao(), matchIdentifier.getFkDonatario()));
 		if (match.isEmpty()){
 			return ResponseEntity.status(404).build();
 		}
-		matchRepository.updateMatchSetStatus(matchIdentifier.getFkDoador(), matchIdentifier.getFkProdutoDoacao(), matchIdentifier.getFkDonatario(), matchIdentifier.getStatus());
+		matchRepository.updateMatchSetStatus(matchIdentifier.getFkDoador(), matchIdentifier.getFkProdutoDoacao(), matchIdentifier.getFkDonatario(),matchIdentifier.getStatus());
 		return ResponseEntity.status(200).build();
 	}
 }
