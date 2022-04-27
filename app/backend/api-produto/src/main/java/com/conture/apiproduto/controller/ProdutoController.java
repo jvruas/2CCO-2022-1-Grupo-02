@@ -105,8 +105,8 @@ public class ProdutoController{
 		return  ResponseEntity.status(200).body(listaCategoria);
 	}
 
-	@GetMapping("/categoria/{categoria}")
-	public ResponseEntity listarProdutoCategoria(@PathVariable String categoria) {
+	@GetMapping("/nome/categoria")
+	public ResponseEntity listarProdutoCategoria(@RequestParam String categoria) {
 
 		Optional<CategoriaProduto> categoriaProduto = this.categoriaRepository.findByNomeIgnoreCase(categoria);
 
@@ -129,8 +129,8 @@ public class ProdutoController{
 		return ResponseEntity.status(200).body(produtosResponse);
 	}
 
-	@GetMapping("/marca/{marca}")
-	public ResponseEntity listarProdutoMarca(@PathVariable String marca) {
+	@GetMapping("/marca")
+	public ResponseEntity listarProdutoMarca(@RequestParam String marca) {
 		Iterator<ProdutoDoacao> iterator = new SearchProdutoMarcaIterator(this.produtoRepository.findAll(), marca);
 
 		List<ProdutoDoacao> produtosResponse = new ArrayList();
@@ -146,8 +146,8 @@ public class ProdutoController{
 		return ResponseEntity.status(200).body(produtosResponse);
 	}
 
-	@GetMapping("/nome/{nome}")
-	public ResponseEntity listarProdutoNome(@PathVariable String nome) {
+	@GetMapping("/nome")
+	public ResponseEntity listarProdutoNome(@RequestParam String nome) {
 		List<ProdutoDoacao> listaProduto = produtoRepository.acharPeloNomeIgnoreCase(nome);
 		listaHistorico.adicionaNoInicio(nome);
 		return ResponseEntity.status(200).body(listaProduto);
@@ -164,8 +164,8 @@ public class ProdutoController{
 	return ResponseEntity.status(200).body(historico);
 	}
 
-	@GetMapping("/doador/status/{fkDoador}/{status}")
-	public ResponseEntity filtrarStatusProdutoDoador(@PathVariable Long fkDoador, @PathVariable String status){
+	@GetMapping("/doador/status")
+	public ResponseEntity filtrarStatusProdutoDoador(@RequestParam Long fkDoador, @RequestParam String status){
 
 		if (status.equalsIgnoreCase("D")){
 			List<ProdutoDoacao> listaProdutos = produtoRepository.findByFkDoadorAndStatus(fkDoador,true);
@@ -188,8 +188,8 @@ public class ProdutoController{
 		return  ResponseEntity.status(200).body(listaProdutos);
 	}
 
-	@GetMapping("/donatario/status/{fkDonatario}/{status}")
-	public ResponseEntity filtrarStatusProdutoDonatario(@PathVariable Long fkDonatario, @PathVariable String status){
+	@GetMapping("/donatario/status")
+	public ResponseEntity filtrarStatusProdutoDonatario(@RequestParam Long fkDonatario, @RequestParam String status){
 
 		if (status.equals("D")){
 			List<ProdutoDoacao> listaProdutos = produtoRepository.findByFkDoadorAndStatus(fkDonatario,true);
@@ -212,8 +212,8 @@ public class ProdutoController{
 	}
 
 
-	@GetMapping("/doador/{fkDoador}")
-	public ResponseEntity listarProdutosUsuario(@PathVariable Long fkDoador){
+	@GetMapping("/doador")
+	public ResponseEntity listarProdutosUsuario(@RequestParam Long fkDoador){
 		List<ProdutoDoacao> lista = produtoRepository.findByFkDoador(fkDoador);
 		if (lista.isEmpty()){
 			return ResponseEntity.status(204).build();
@@ -221,8 +221,8 @@ public class ProdutoController{
 		return ResponseEntity.status(200).body(lista);
 	}
 
-	@GetMapping("/{fkDoador}/{fkProdutoDoacao}/match")
-	public ResponseEntity listarMatch(@PathVariable Long fkDoador, @PathVariable Long fkProdutoDoacao){
+	@GetMapping("/lista/match")
+	public ResponseEntity listarMatch(@RequestParam Long fkDoador, @RequestParam Long fkProdutoDoacao){
 
 		List<Match> listaMatch = matchRepository.findByFkDoadorAndFkProdutoDoacao(fkDoador, fkProdutoDoacao);
 
@@ -233,15 +233,15 @@ public class ProdutoController{
 		return  ResponseEntity.status(200).body(listaMatch);
 	}
 
-	@GetMapping("/{fkDoador}/{fkProdutoDoacao}/match/quantidade")
-	public ResponseEntity contarMatch(@PathVariable Long fkDoador, @PathVariable Long fkProdutoDoacao){
+	@GetMapping("/match/quantidade")
+	public ResponseEntity contarMatch(@RequestParam Long fkDoador, @RequestParam Long fkProdutoDoacao){
 
 		Long contador = matchRepository.countByFkDoadorAndFkProdutoDoacao(fkDoador, fkProdutoDoacao);
 		return  ResponseEntity.status(200).body(contador);
 	}
 
-	@DeleteMapping("/{fkDoador}/{idProdutoDoacao}")
-	public ResponseEntity deletarProduto(@PathVariable Long fkDoador, @PathVariable Long idProdutoDoacao){
+	@DeleteMapping("")
+	public ResponseEntity deletarProduto(@RequestParam Long fkDoador, @RequestParam Long idProdutoDoacao){
 
 		Optional<ProdutoDoacao> produto = produtoRepository.findByIdProdutoDoacaoAndFkDoador(idProdutoDoacao, fkDoador);
 
