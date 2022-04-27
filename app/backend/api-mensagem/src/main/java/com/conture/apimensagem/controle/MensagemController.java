@@ -35,7 +35,7 @@ public class MensagemController {
     @Autowired
     private PerguntaRepository repositoryPergunta;
 
-    @PostMapping("direta/")
+    @PostMapping("direta")
     public ResponseEntity postMensagemDireta(@RequestBody @Valid Mensagem mensagem){
         if (!repositoryMensagem.exists(mensagem)){
             repositoryMensagem.save(mensagem);
@@ -45,7 +45,7 @@ public class MensagemController {
     }
 
     @PostMapping("grupo/pergunta")
-    public ResponseEntity postMensagemGrupoPergunta(@RequestBody Pergunta pergunta){
+    public ResponseEntity postMensagemGrupoPergunta(@RequestBody @Valid Pergunta pergunta){
         if (!repositoryPergunta.exists(pergunta)){
             repositoryPergunta.save(pergunta);
             return ResponseEntity.status(201).build();
@@ -54,7 +54,7 @@ public class MensagemController {
     }
 
     @PostMapping("grupo/resposta")
-    public ResponseEntity postMensagemGrupoResposta(@RequestBody Resposta resposta){
+    public ResponseEntity postMensagemGrupoResposta(@RequestBody @Valid Resposta resposta){
         if (!repositoryResposta.exists(resposta)){
             repositoryResposta.save(resposta);
             return ResponseEntity.status(201).build();
@@ -145,7 +145,7 @@ public class MensagemController {
     }
 
     @PutMapping("grupo/pergunta/{idPergunta}")
-    public ResponseEntity putMensagemGrupoPergunta(@RequestBody Pergunta pergunta,
+    public ResponseEntity putMensagemGrupoPergunta(@RequestBody @Valid Pergunta pergunta,
                                                    @PathVariable Long idPergunta) {
 
         if (repositoryPergunta.existsById(idPergunta)){
@@ -158,7 +158,7 @@ public class MensagemController {
         return ResponseEntity.status(400).build();
     }
     @PutMapping("grupo/resposta/{idResposta}")
-    public ResponseEntity putMensagemGrupoResposta(@RequestBody Resposta resposta,
+    public ResponseEntity putMensagemGrupoResposta(@RequestBody @Valid Resposta resposta,
                                                    @PathVariable Long idResposta) {
 
         if (repositoryResposta.existsById(idResposta)){
@@ -171,7 +171,7 @@ public class MensagemController {
         return ResponseEntity.status(400).build();
     }
     @PutMapping("direta/{idMensagem}")
-    public ResponseEntity putMensagemDireta(@RequestBody Mensagem mensagem,
+    public ResponseEntity putMensagemDireta(@RequestBody @Valid Mensagem mensagem,
 											@PathVariable Long idMensagem) {
 
         if (repositoryMensagem.existsById(idMensagem)){
