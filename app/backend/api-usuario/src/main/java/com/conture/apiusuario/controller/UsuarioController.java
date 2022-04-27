@@ -138,6 +138,7 @@ public class UsuarioController {
 	}
 
 	@GetMapping("/tipos-de-reporte")
+
 	public ResponseEntity listarTiposReporte(){
 		List<TipoReporte> lista = this.tipoReporteRepository.findAll();
 

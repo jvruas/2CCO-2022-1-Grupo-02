@@ -1,6 +1,6 @@
 package com.conture.apimensagem.controle;
 
-import com.conture.apimensagem.entidade.ListaObj;
+import com.conture.apimensagem.servicos.ListaObj;
 import com.conture.apimensagem.entidade.Mensagem;
 import com.conture.apimensagem.entidade.Pergunta;
 import com.conture.apimensagem.entidade.Resposta;
