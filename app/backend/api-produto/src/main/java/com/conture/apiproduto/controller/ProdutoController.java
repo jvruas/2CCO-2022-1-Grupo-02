@@ -1,11 +1,8 @@
 package com.conture.apiproduto.controller;
 
+import com.conture.apiproduto.dto.request.*;
 import com.conture.apiproduto.utility.Iterator;
 import com.conture.apiproduto.utility.ListaObj;
-import com.conture.apiproduto.dto.request.AtualizarMatchIdentifierRequest;
-import com.conture.apiproduto.dto.request.MatchIdentifierRequest;
-import com.conture.apiproduto.dto.request.ProdutoDoacaoStatusRequest;
-import com.conture.apiproduto.dto.request.VisualizacaoRequest;
 import com.conture.apiproduto.entity.CategoriaProduto;
 import com.conture.apiproduto.entity.Match;
 import com.conture.apiproduto.entity.PreferenciaDonatario;
@@ -22,7 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,8 +44,22 @@ public class ProdutoController{
 
 
 	@PostMapping()
-	public ResponseEntity adicionarProduto(@RequestBody @Valid ProdutoDoacao produto) {
-		produtoRepository.save(produto);
+	public ResponseEntity adicionarProduto(@RequestBody @Valid ProdutoDoacaoRequest produtoRequest) {
+
+		ProdutoDoacao produto = new ProdutoDoacao();
+
+		produto.setFkDoador(produtoRequest.getFkDoador());
+		produto.setNome(produtoRequest.getNome());
+		produto.setMarca(produtoRequest.getMarca());
+		produto.setModelo(produtoRequest.getModelo());
+		produto.setDescricao(produtoRequest.getDescricao());
+		produto.setDefeito(produtoRequest.isDefeito());
+		produto.setStatus(produtoRequest.isStatus());
+		produto.setEntrega(produtoRequest.isEntrega());
+		produto.setQuantidadeVisualizacao(produtoRequest.getQuantidadeVisualizacao());
+		produto.setFkCategoriaProduto(produtoRequest.getFkCategoriaProduto());
+
+		this.produtoRepository.save(produto);
 		return ResponseEntity.status(201).build();
 	}
 
@@ -57,25 +70,31 @@ public class ProdutoController{
 	}
 
 	@PostMapping("/match")
-	public ResponseEntity adicionarMatch(@RequestBody @Valid Match match){
+	public ResponseEntity adicionarMatch(@RequestBody @Valid MatchRequest matchRequest){
+
+		Match match = new Match();
+		match.setFkDoador(matchRequest.getFkDoador());
+		match.setFkProdutoDoacao(matchRequest.getFkProdutoDoacao());
+		match.setFkDonatario(matchRequest.getFkDonatario());
+		match.setMatchPorcentagem(matchRequest.getMatchPorcentagem());
+		match.setStatus(matchRequest.getStatus());
+
 		matchRepository.save(match);
 		return  ResponseEntity.status(201).build();
 	}
 
 	@GetMapping()
 	public ResponseEntity pesquisarProdutoId(@RequestParam Long idProdutoDoacao, @RequestParam Long fkDoador) {
-		Optional<ProdutoDoacao> produto = Optional.ofNullable(produtoRepository.findByIdProdutoDoacaoAndFkDoador(idProdutoDoacao, fkDoador));
+		Optional<ProdutoDoacao> produto = produtoRepository.findByIdProdutoDoacaoAndFkDoador(idProdutoDoacao, fkDoador);
 
 		if (produto.isEmpty()) {
 			return ResponseEntity.status(404).build();
 		}
 
-		// TODO: Verificar se necessita de tratativa de erro para quando os IDs nao existem.
-
 		return ResponseEntity.status(200).body(produto.get());
 	}
 
-	@GetMapping("/categorias")
+	@GetMapping("/categoria")
 	public  ResponseEntity listarCategorias() {
 		List<ProdutoDoacao> listaCategoria = produtoRepository.findAll();
 
@@ -86,24 +105,23 @@ public class ProdutoController{
 		return  ResponseEntity.status(200).body(listaCategoria);
 	}
 
-	// FIXME: Iterator
-	@GetMapping("/categorias/{categoria}")
+	@GetMapping("/categoria/{categoria}")
 	public ResponseEntity listarProdutoCategoria(@PathVariable String categoria) {
 
-		Optional<CategoriaProduto> categoriaProduto = Optional.ofNullable(this.categoriaRepository.findByNome(categoria));
-		List<ProdutoDoacao> produtos = this.produtoRepository.findAll();
+		Optional<CategoriaProduto> categoriaProduto = this.categoriaRepository.findByNomeIgnoreCase(categoria);
 
 		if (categoriaProduto.isEmpty()) {
-			return ResponseEntity.status(404).build();
+			return ResponseEntity.status(204).build();
 		}
 
-		Iterator<ProdutoDoacao> iterator = new SearchProdutoCategoriaIterator(produtos,categoriaProduto.get().getIdCategoriaProduto());
+		Iterator<ProdutoDoacao> iterator = new SearchProdutoCategoriaIterator(this.produtoRepository.findAll(), categoriaProduto.get().getIdCategoriaProduto());
 
 		List<ProdutoDoacao> produtosResponse = new ArrayList();
 
 		while (iterator.hasNext()) {
 			produtosResponse.add(iterator.getNext());
 		}
+
 		if (produtosResponse.get(0) == null) {
 			return ResponseEntity.status(204).build();
 		}
@@ -111,32 +129,26 @@ public class ProdutoController{
 		return ResponseEntity.status(200).body(produtosResponse);
 	}
 
-	// FIXME: Iterator
-	@GetMapping("/marcas/{marca}")
+	@GetMapping("/marca/{marca}")
 	public ResponseEntity listarProdutoMarca(@PathVariable String marca) {
-
-		List<ProdutoDoacao> produtos = this.produtoRepository.findAll();
-
-		if (produtos.isEmpty()) {
-			return ResponseEntity.status(204).build();
-		}
-		Iterator<ProdutoDoacao> iterator = new SearchProdutoMarcaIterator(produtos, marca);
+		Iterator<ProdutoDoacao> iterator = new SearchProdutoMarcaIterator(this.produtoRepository.findAll(), marca);
 
 		List<ProdutoDoacao> produtosResponse = new ArrayList();
 
 		while (iterator.hasNext()) {
 			produtosResponse.add(iterator.getNext());
 		}
+
 		if (produtosResponse.get(0) == null) {
 			return ResponseEntity.status(204).build();
 		}
-		return ResponseEntity.status(200).body(produtosResponse);
 
+		return ResponseEntity.status(200).body(produtosResponse);
 	}
 
 	@GetMapping("/nome/{nome}")
 	public ResponseEntity listarProdutoNome(@PathVariable String nome) {
-		List<ProdutoDoacao> listaProduto = produtoRepository.findByNomeContainsIgnoreCase(nome);
+		List<ProdutoDoacao> listaProduto = produtoRepository.acharPeloNomeIgnoreCase(nome);
 		listaHistorico.adicionaNoInicio(nome);
 		return ResponseEntity.status(200).body(listaProduto);
 
@@ -154,9 +166,6 @@ public class ProdutoController{
 
 	@GetMapping("/doador/status/{fkDoador}/{status}")
 	public ResponseEntity filtrarStatusProdutoDoador(@PathVariable Long fkDoador, @PathVariable String status){
-		// TODO: Fazer trativa de erros para input errado no metodo.
-		// TODO: Fazer trativa de erros para input errado no metodo.
-		// TODO: Transformar A: andamento; R: recebido; D: doado T: todos
 
 		if (status.equalsIgnoreCase("D")){
 			List<ProdutoDoacao> listaProdutos = produtoRepository.findByFkDoadorAndStatus(fkDoador,true);
@@ -173,19 +182,14 @@ public class ProdutoController{
 
 		List<ProdutoDoacao> listaProdutos = new ArrayList<>();
 		for ( Match match : listaMatch) {
-			listaProdutos.add(produtoRepository.findByIdProdutoDoacaoAndFkDoador(match.getFkProdutoDoacao(), match.getFkDoador()));
+			listaProdutos.add(produtoRepository.findByIdProdutoDoacaoAndFkDoador(match.getFkProdutoDoacao(), match.getFkDoador()).get());
 		}
 
-		// TODO: Lembrar de devolver DTO diferente do metodo listarStatusProdutoDonatario.
 		return  ResponseEntity.status(200).body(listaProdutos);
 	}
 
 	@GetMapping("/donatario/status/{fkDonatario}/{status}")
 	public ResponseEntity filtrarStatusProdutoDonatario(@PathVariable Long fkDonatario, @PathVariable String status){
-		// TODO: Fazer trativa de erros para input errado no metodo.
-		// TODO: Fazer trativa de erros para input errado no metodo.
-		// TODO: Transformar A: andamento; R: recebido; D: doado
-		// TODO: Lembrar de devolver DTO diferente do metodo listarStatusProdutoDoador.
 
 		if (status.equals("D")){
 			List<ProdutoDoacao> listaProdutos = produtoRepository.findByFkDoadorAndStatus(fkDonatario,true);
@@ -202,7 +206,7 @@ public class ProdutoController{
 
 		List<ProdutoDoacao> listaProdutos = new ArrayList<>();
 		for ( Match match : listaMatch) {
-			listaProdutos.add(produtoRepository.findByIdProdutoDoacaoAndFkDoador(match.getFkProdutoDoacao(), match.getFkDonatario()));
+			listaProdutos.add(produtoRepository.findByIdProdutoDoacaoAndFkDoador(match.getFkProdutoDoacao(), match.getFkDonatario()).get());
 		}
 		return  ResponseEntity.status(200).body(listaProdutos);
 	}
@@ -219,7 +223,6 @@ public class ProdutoController{
 
 	@GetMapping("/{fkDoador}/{fkProdutoDoacao}/match")
 	public ResponseEntity listarMatch(@PathVariable Long fkDoador, @PathVariable Long fkProdutoDoacao){
-		// TODO: Fazer trativa de erros para input errado no metodo.
 
 		List<Match> listaMatch = matchRepository.findByFkDoadorAndFkProdutoDoacao(fkDoador, fkProdutoDoacao);
 
@@ -233,21 +236,14 @@ public class ProdutoController{
 	@GetMapping("/{fkDoador}/{fkProdutoDoacao}/match/quantidade")
 	public ResponseEntity contarMatch(@PathVariable Long fkDoador, @PathVariable Long fkProdutoDoacao){
 
-
-		Optional<Long> contador = Optional.ofNullable(matchRepository.countByFkDoadorAndFkProdutoDoacao(fkDoador, fkProdutoDoacao));
-
-		if (contador.isEmpty()) {
-			return ResponseEntity.status(404).build();
-		}
-
+		Long contador = matchRepository.countByFkDoadorAndFkProdutoDoacao(fkDoador, fkProdutoDoacao);
 		return  ResponseEntity.status(200).body(contador);
 	}
 
 	@DeleteMapping("/{fkDoador}/{idProdutoDoacao}")
 	public ResponseEntity deletarProduto(@PathVariable Long fkDoador, @PathVariable Long idProdutoDoacao){
-		// TODO: Fazer trativa de erros para input errado no metodo.
 
-		Optional<ProdutoDoacao> produto = Optional.ofNullable(produtoRepository.findByIdProdutoDoacaoAndFkDoador(idProdutoDoacao, fkDoador));
+		Optional<ProdutoDoacao> produto = produtoRepository.findByIdProdutoDoacaoAndFkDoador(idProdutoDoacao, fkDoador);
 
 		if (produto.isEmpty()){
 			return ResponseEntity.status(404).build();
@@ -257,34 +253,35 @@ public class ProdutoController{
 		return ResponseEntity.status(200).build();
 	}
 
-	@PatchMapping("/status")
-	public  ResponseEntity atualizarStatusDoacao(@RequestBody @Valid ProdutoDoacaoStatusRequest statusProduto){
-		Optional<ProdutoDoacao> produto = Optional.ofNullable(produtoRepository.findByIdProdutoDoacaoAndFkDoador(statusProduto.getFkDoador(), statusProduto.getIdProdutoDoacao()));
+	@PatchMapping()
+	public  ResponseEntity concluirDoacao(@RequestParam Long fkDoador, @RequestParam Long idProdutoDoacao){
+		Optional<ProdutoDoacao> produto = produtoRepository.findByIdProdutoDoacaoAndFkDoador(idProdutoDoacao, fkDoador);
 		if (produto.isEmpty()){
 			return ResponseEntity.status(404).build();
 		}
+
 		if (produto.get().isStatus()){
 			return ResponseEntity.status(406).build();
 		}
-		produtoRepository.updateProdutoDoacaoSetStatus(statusProduto.getFkDoador(), statusProduto.getIdProdutoDoacao());
-		return ResponseEntity.status(200).build();
 
+		produtoRepository.updateProdutoDoacaoConcluido(fkDoador, idProdutoDoacao, Date.from(Instant.now()));
+		return ResponseEntity.status(200).build();
 	}
 
 	@DeleteMapping("/match")
 	public ResponseEntity deletarMatch(@RequestBody @Valid MatchIdentifierRequest matchIdentifier) {
-		Optional<Match> match = Optional.ofNullable(matchRepository.findByFkDoadorAndFkProdutoDoacaoAndFkDonatario(matchIdentifier.getFkDoador(),matchIdentifier.getFkProdutoDoacao(),matchIdentifier.getFkDonatario()));
+		Optional<Match> match = matchRepository.findByFkDoadorAndFkProdutoDoacaoAndFkDonatario(matchIdentifier.getFkDoador(),matchIdentifier.getFkProdutoDoacao(),matchIdentifier.getFkDonatario());
 		if (match.isEmpty()){
 			return ResponseEntity.status(404).build();
 		}
-		matchRepository.deleteByFkDoadorAndFkProdutoDoacaoAndFkDonatario(matchIdentifier.getFkDoador(),matchIdentifier.getFkProdutoDoacao(),matchIdentifier.getFkDonatario());
+		matchRepository.deleteByFkDoadorAndFkProdutoDoacaoAndFkDonatario(matchIdentifier.getFkDoador(),matchIdentifier.getFkProdutoDoacao(), matchIdentifier.getFkDonatario());
 		return ResponseEntity.status(200).build();
 	}
 
 
 	@PatchMapping("/visualizacao")
 	public ResponseEntity incrementarVisualizacao(@RequestBody @Valid VisualizacaoRequest visualizacao ) {
-		Optional<ProdutoDoacao> produto = Optional.ofNullable(produtoRepository.findByIdProdutoDoacaoAndFkDoador(visualizacao.getIdProdutoDoacao(), visualizacao.getFkDoador()));
+		Optional<ProdutoDoacao> produto = produtoRepository.findByIdProdutoDoacaoAndFkDoador(visualizacao.getIdProdutoDoacao(), visualizacao.getFkDoador());
 		if (produto.isEmpty()){
 			return ResponseEntity.status(404).build();
 		}
@@ -293,13 +290,13 @@ public class ProdutoController{
 	}
 
 
-	@PatchMapping("/match/{fkDoador}/{fkProdutoDoacao}/{fkDonatario}/{status}")
+	@PatchMapping("/match")
 	public ResponseEntity atualizarMatch(@RequestBody @Valid AtualizarMatchIdentifierRequest matchIdentifier ){
-		Optional<Match> match = Optional.ofNullable(matchRepository.findByFkDoadorAndFkProdutoDoacaoAndFkDonatario(matchIdentifier.getFkDoador(), matchIdentifier.getFkProdutoDoacao(), matchIdentifier.getFkDonatario()));
+		Optional<Match> match = matchRepository.findByFkDoadorAndFkProdutoDoacaoAndFkDonatario(matchIdentifier.getFkDoador(), matchIdentifier.getFkProdutoDoacao(), matchIdentifier.getFkDonatario());
 		if (match.isEmpty()){
 			return ResponseEntity.status(404).build();
 		}
 		matchRepository.updateMatchSetStatus(matchIdentifier.getFkDoador(), matchIdentifier.getFkProdutoDoacao(), matchIdentifier.getFkDonatario(),matchIdentifier.getStatus());
-		return ResponseEntity.status(200).build();
+		return ResponseEntity.status(200).body(matchIdentifier);
 	}
 }

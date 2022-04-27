@@ -1,169 +1,112 @@
 package com.conture.apiproduto.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class ProdutoDoacao {
-	@NotNull
-	@Positive
-	private Long fkDoador;
+@NotNull
+@Positive
+private Long fkDoador;
 
-	@NotNull
-	@Positive
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Id
-	private Long idProdutoDoacao;
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Id
+private Long idProdutoDoacao;
 
-	@NotBlank
-	@NotNull
-	@Size(min = 2)
-	private String nome;
+@NotBlank
+@NotNull
+@Size(min = 2)
+private String nome;
 
-	@NotBlank
-	@NotNull
-	private String marca;
+@NotBlank
+@NotNull
+private String marca;
 
-	@NotBlank
-	@NotNull
-	private String modelo;
+@NotBlank
+@NotNull
+private String modelo;
 
 
-	@NotBlank
-	@NotNull
-	@Size(min = 5)
-	private String descricao;
+@NotBlank
+@NotNull
+@Size(min = 5)
+private String descricao;
 
 
-	private boolean defeito;
+private boolean defeito;
 
-	private boolean status;
+private boolean status;
 
-	private boolean entrega;
+private boolean entrega;
 
 
 
-	@NotNull
-	@PositiveOrZero
-	private int quantidadeVisualizacao;
+@NotNull
+@PositiveOrZero
+private int quantidadeVisualizacao;
 
-//	@PastOrPresent
-//	private LocalDateTime dataCriacao;
-//
-//
-//	@PastOrPresent
-//	private LocalDateTime dataConclusao;
+@PastOrPresent
+@CreationTimestamp
+@Temporal(TemporalType.TIMESTAMP)
+private Date dataCriacao;
 
-	@NotNull
-	@Positive
-	private Long fkCategoriaProduto;
+@Temporal(TemporalType.TIMESTAMP)
+private Date dataConclusao;
 
+@NotNull
+@Positive
+private Long fkCategoriaProduto;
 
-	public Long getFkDoador() {
-		return fkDoador;
-	}
+public Long getFkDoador() { return fkDoador; }
 
-	public void setFkDoador(Long fkDoador) {
-		this.fkDoador = fkDoador;
-	}
+public Long getIdProdutoDoacao() { return idProdutoDoacao; }
 
-	public Long getIdProdutoDoacao() {
-		return idProdutoDoacao;
-	}
+public String getNome() { return nome; }
 
-	public void setIdProdutoDoacao(Long idProdutoDoacao) {
-		this.idProdutoDoacao = idProdutoDoacao;
-	}
+public String getMarca() { return marca; }
 
-	public String getNome() {
-		return nome;
-	}
+public String getModelo() { return modelo; }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+public String getDescricao() { return descricao; }
 
-	public String getMarca() {
-		return marca;
-	}
+public boolean isDefeito() { return defeito; }
 
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
+public boolean isStatus() { return status; }
 
-	public String getModelo() {
-		return modelo;
-	}
+public boolean isEntrega() { return entrega; }
 
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
-	}
+public int getQuantidadeVisualizacao() { return quantidadeVisualizacao; }
 
-	public String getDescricao() {
-		return descricao;
-	}
+public Date getDataCriacao() { return dataCriacao; }
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+public Date getDataConclusao() { return dataConclusao; }
 
-	public boolean isDefeito() {
-		return defeito;
-	}
+public Long getFkCategoriaProduto() { return fkCategoriaProduto; }
 
-	public void setDefeito(boolean defeito) {
-		this.defeito = defeito;
-	}
+public void setFkDoador(Long fkDoador) { this.fkDoador = fkDoador; }
 
-	public boolean isStatus() {
-		return status;
-	}
+public void setNome(String nome) { this.nome = nome; }
 
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
+public void setMarca(String marca) { this.marca = marca; }
 
-	public boolean isEntrega() {
-		return entrega;
-	}
+public void setModelo(String modelo) { this.modelo = modelo; }
 
-	public void setEntrega(boolean entrega) {
-		this.entrega = entrega;
-	}
+public void setDescricao(String descricao) { this.descricao = descricao; }
 
-	public int getQuantidadeVisualizacao() {
-		return quantidadeVisualizacao;
-	}
+public void setDefeito(boolean defeito) { this.defeito = defeito; }
 
-	public void setQuantidadeVisualizacao(int quantidadeVisualizacao) {
-		this.quantidadeVisualizacao = quantidadeVisualizacao;
-	}
+public void setStatus(boolean status) { this.status = status; }
 
-	//	public LocalDateTime getDataCriacao() {
-//		return dataCriacao;
-//	}
-//
-//	public void setDataCriacao(LocalDateTime dataCriacao) {
-//		this.dataCriacao = dataCriacao;
-//	}
-//
-//	public LocalDateTime getDataConclusao() {
-//		return dataConclusao;
-//	}
-//
-//	public void setDataConclusao(LocalDateTime dataConclusao) {
-//		this.dataConclusao = dataConclusao;
-//	}
+public void setEntrega(boolean entrega) { this.entrega = entrega; }
 
-	public Long getFkCategoriaProduto() {
-		return fkCategoriaProduto;
-	}
+public void setQuantidadeVisualizacao(int quantidadeVisualizacao) { this.quantidadeVisualizacao = quantidadeVisualizacao; }
 
-	public void setFkCategoriaProduto(Long fkCategoriaProduto) {
-		this.fkCategoriaProduto = fkCategoriaProduto;
-	}
+public void setDataConclusao(Date dataConclusao) { this.dataConclusao = dataConclusao; }
+
+public void setFkCategoriaProduto(Long fkCategoriaProduto) { this.fkCategoriaProduto = fkCategoriaProduto; }
 }

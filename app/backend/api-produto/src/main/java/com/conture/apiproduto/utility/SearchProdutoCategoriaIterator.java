@@ -3,7 +3,6 @@ package com.conture.apiproduto.utility;
 import com.conture.apiproduto.entity.ProdutoDoacao;
 
 import java.util.List;
-import java.util.Optional;
 
 public class SearchProdutoCategoriaIterator<T> implements Iterator<T>{
 	private List<ProdutoDoacao> collection;
@@ -19,6 +18,7 @@ public class SearchProdutoCategoriaIterator<T> implements Iterator<T>{
 		this.categoria = categoria;
 		this.iterationState = 0;
 	}
+
 	@Override
 	public boolean hasNext() {
 		return this.iterationState < this.collection.size();
@@ -37,5 +37,4 @@ public class SearchProdutoCategoriaIterator<T> implements Iterator<T>{
 
 		return null;
 	}
-
 }

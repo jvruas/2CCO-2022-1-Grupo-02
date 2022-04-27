@@ -2,9 +2,7 @@ package com.conture.apiproduto.utility;
 
 import com.conture.apiproduto.entity.ProdutoDoacao;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class SearchProdutoMarcaIterator<T> implements Iterator<T> {
 	private List<ProdutoDoacao> collection;
@@ -19,10 +17,12 @@ public class SearchProdutoMarcaIterator<T> implements Iterator<T> {
 		this.marca = marca;
 		this.iterationState = 0;
 	}
+
 	@Override
 	public boolean hasNext() {
 		return this.iterationState < this.collection.size();
 	}
+
 	@Override
 	public T getNext() {
 		for (int i = this.iterationState; i < this.collection.size(); i++) {

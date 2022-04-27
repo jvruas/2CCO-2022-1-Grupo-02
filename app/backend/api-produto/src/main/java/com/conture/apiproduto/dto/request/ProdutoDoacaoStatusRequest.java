@@ -7,8 +7,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 public class ProdutoDoacaoStatusRequest {
-
-
 	@NotNull
 	@Positive
 	private Long fkDoador;
@@ -17,10 +15,6 @@ public class ProdutoDoacaoStatusRequest {
 	@Positive
 	@Id
 	private Long idProdutoDoacao;
-
-
-	private boolean status;
-
 
 	public Long getFkDoador() {
 		return fkDoador;
@@ -36,13 +30,5 @@ public class ProdutoDoacaoStatusRequest {
 
 	public void setIdProdutoDoacao(Long idProdutoDoacao) {
 		this.idProdutoDoacao = idProdutoDoacao;
-	}
-
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
 	}
 }

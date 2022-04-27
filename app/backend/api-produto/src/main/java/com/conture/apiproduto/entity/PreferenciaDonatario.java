@@ -14,8 +14,6 @@ public class PreferenciaDonatario {
 	@Positive
 	private Long fkDoador;
 
-	@NotNull
-	@Positive
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Long fkDoacao;
@@ -40,60 +38,29 @@ public class PreferenciaDonatario {
 	@Positive
 	private Long fkSituacaoAtual;
 
+	public Long getFkDoador() { return fkDoador; }
 
-	public Long getFkDoador() {
-		return fkDoador;
-	}
+	public Long getFkDoacao() { return fkDoacao; }
 
-	public void setFkDoador(Long fkDoador) {
-		this.fkDoador = fkDoador;
-	}
+	public String getGenero() { return genero; }
 
-	public Long getFkDoacao() {
-		return fkDoacao;
-	}
+	public String getFaixaEtaria() { return faixaEtaria; }
 
-	public void setFkDoacao(Long fkDoacao) {
-		this.fkDoacao = fkDoacao;
-	}
+	public String getEstadoCivil() { return estadoCivil; }
 
-	public String getGenero() {
-		return genero;
-	}
+	public String getGrauEscolaridade() { return grauEscolaridade; }
 
-	public void setGenero(String genero) {
-		this.genero = genero;
-	}
+	public Long getFkSituacaoAtual() { return fkSituacaoAtual; }
 
-	public String getFaixaEtaria() {
-		return faixaEtaria;
-	}
+	public void setFkDoador(Long fkDoador) { this.fkDoador = fkDoador; }
 
-	public void setFaixaEtaria(String faixaEtaria) {
-		this.faixaEtaria = faixaEtaria;
-	}
+	public void setGenero(String genero) { this.genero = genero; }
 
-	public String getEstadoCivil() {
-		return estadoCivil;
-	}
+	public void setFaixaEtaria(String faixaEtaria) { this.faixaEtaria = faixaEtaria; }
 
-	public void setEstadoCivil(String estadoCivil) {
-		this.estadoCivil = estadoCivil;
-	}
+	public void setEstadoCivil(String estadoCivil) { this.estadoCivil = estadoCivil; }
 
-	public String getGrauEscolaridade() {
-		return grauEscolaridade;
-	}
+	public void setGrauEscolaridade(String grauEscolaridade) { this.grauEscolaridade = grauEscolaridade; }
 
-	public void setGrauEscolaridade(String grauEscolaridade) {
-		this.grauEscolaridade = grauEscolaridade;
-	}
-
-	public Long getFkSituacaoAtual() {
-		return fkSituacaoAtual;
-	}
-
-	public void setFkSituacaoAtual(Long fkSituacaoAtual) {
-		this.fkSituacaoAtual = fkSituacaoAtual;
-	}
+	public void setFkSituacaoAtual(Long fkSituacaoAtual) { this.fkSituacaoAtual = fkSituacaoAtual; }
 }

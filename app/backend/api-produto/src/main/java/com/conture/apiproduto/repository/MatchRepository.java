@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MatchRepository extends JpaRepository<Match, Long> {
 	List<Match> findByFkDoadorAndFkProdutoDoacao(Long fkDoador, Long fkProdutoDoacao);
@@ -18,12 +19,12 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
 	@Modifying
 	void deleteByFkDoadorAndFkProdutoDoacaoAndFkDonatario(Long fkDoador, Long fkProdutoDoacao, Long fkDonatario);
 
-	Match findByFkDoadorAndFkProdutoDoacaoAndFkDonatario(Long fkDoador, Long fkProdutoDoacao, Long fkDonatario);
+	Optional<Match> findByFkDoadorAndFkProdutoDoacaoAndFkDonatario(Long fkDoador, Long fkProdutoDoacao, Long fkDonatario);
 
 	@Transactional
 	@Modifying
 	@Query("update Match m set m.status =?4 where m.fkDoador = ?1 and m.fkProdutoDoacao = ?2 and m.fkDonatario = ?3")
-	void updateMatchSetStatus(Long fkDoador, Long fkProdutoDoacao, Long fkDonatario,String status);
+	void updateMatchSetStatus(Long fkDoador, Long fkProdutoDoacao, Long fkDonatario, String status);
 
 	List<Match> findByFkDoadorAndStatus(Long fkDoador, String status);
 }

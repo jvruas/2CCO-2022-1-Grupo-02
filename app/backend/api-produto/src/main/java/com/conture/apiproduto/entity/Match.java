@@ -1,14 +1,15 @@
 package com.conture.apiproduto.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class Match {
+
 	@NotNull
 	@Positive
 	private Long fkDoador;
@@ -17,35 +18,35 @@ public class Match {
 	@Positive
 	private Long fkProdutoDoacao;
 
-	@NotNull
-	@Positive
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	@Id
+	@Positive
+	@NotNull
 	private Long fkDonatario;
 
 	@NotNull
 	@Positive
 	@Max(100)
+	@Min(0)
 	private Double matchPorcentagem;
 
-//	@PastOrPresent
-//	private LocalDateTime dataInteresse;
+	@PastOrPresent
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataInteresse;
 
 	@NotBlank
 	@NotNull
 	@Size(min = 1,max = 1 )
 	private String status;
 
-	// Getters
 	public Long getFkDoador() { return fkDoador; }
-
-
-
-	public Long getFkDonatario() { return fkDonatario; }
 
 	public Double getMatchPorcentagem() { return matchPorcentagem; }
 
-//	public LocalDateTime getDataInteresse() { return dataInteresse; }
+	public Long getFkDonatario() { return fkDonatario; }
+
+	public Date getDataInteresse() {return this.dataInteresse;}
 
 	public String getStatus() {
 		return status;
@@ -55,16 +56,11 @@ public class Match {
 		this.status = status;
 	}
 
-	//Setters
 	public void setFkDoador(Long fkDoador) { this.fkDoador = fkDoador; }
 
-
-
-	public void setFkDonatario(Long fkDonatario) { this.fkDonatario = fkDonatario; }
+	public void setFkDonatario(Long fkDonatario) {this.fkDonatario = fkDonatario;}
 
 	public void setMatchPorcentagem(Double matchPorcentagem) { this.matchPorcentagem = matchPorcentagem; }
-
-//	public void setDataInteresse(LocalDateTime dataInteresse) { this.dataInteresse = dataInteresse; }
 
 	public Long getFkProdutoDoacao() {
 		return fkProdutoDoacao;
