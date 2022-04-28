@@ -2,6 +2,7 @@ package com.conture.apimensagem.controle;
 
 import com.conture.apimensagem.dto.requests.MensagemRequest;
 import com.conture.apimensagem.dto.requests.PerguntaRequest;
+import com.conture.apimensagem.dto.requests.RespostaRequest;
 import com.conture.apimensagem.entidade.ChatDireto;
 import com.conture.apimensagem.servicos.ListaObj;
 import com.conture.apimensagem.entidade.Mensagem;
@@ -18,42 +19,37 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.FormatterClosedException;
-import java.util.List;
+import java.time.Instant;
+import java.util.*;
 
 @RestController
 @RequestMapping("/mensagem")
 public class MensagemController {
-
-    @Autowired
-    private MensagemRepository repositoryMensagem;
-
-    @Autowired
-    private RespostaRepository repositoryResposta;
-
-    @Autowired
-    private ChatDiretoRepository repositoryChatDireto;
-
-    @Autowired
-    private PerguntaRepository repositoryPergunta;
+	@Autowired
+	private MensagemRepository repositoryMensagem;
+	@Autowired
+	private RespostaRepository repositoryResposta;
+	@Autowired
+	private ChatDiretoRepository repositoryChatDireto;
+	@Autowired
+	private PerguntaRepository repositoryPergunta;
 
     @PostMapping("/direta")
-    public ResponseEntity adicionarMensagemDireta(@RequestBody @Valid MensagemRequest mensagemRequest){
+    public ResponseEntity adicionarMensagemDireta(@RequestBody @Valid MensagemRequest mensagemRequest) {
 		Mensagem mensagem = new Mensagem();
 
-		if (!this.repositoryChatDireto.existsByIdChatDireto(mensagemRequest.getFkChatDireto())) {
-			ChatDireto chatDireto = new ChatDireto();
+		Optional<ChatDireto> chatDireto = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(mensagemRequest.getFkUsuarioRemetente(), mensagemRequest.getFkUsuarioDestinatario());
 
-			chatDireto.setIdChatDireto(mensagemRequest.getFkChatDireto());
-			chatDireto.setFkUsuarioRemetente(mensagemRequest.getFkUsuarioRemetente());
-			chatDireto.setFkUsuarioDestinatario(mensagemRequest.getFkUsuarioDestinatario());
+		if (chatDireto.isEmpty()) {
+			chatDireto = Optional.of(new ChatDireto());
 
-			this.repositoryChatDireto.save(chatDireto);
+			chatDireto.get().setFkUsuarioRemetente(mensagemRequest.getFkUsuarioRemetente());
+			chatDireto.get().setFkUsuarioDestinatario(mensagemRequest.getFkUsuarioDestinatario());
+
+			this.repositoryChatDireto.save(chatDireto.get());
 		}
 
-		mensagem.setFkChatDireto(mensagemRequest.getFkChatDireto());
+		mensagem.setFkChatDireto(chatDireto.get().getIdChatDireto());
 		mensagem.setMensagem(mensagemRequest.getMensagem());
 
 		repositoryMensagem.save(mensagem);
@@ -74,17 +70,37 @@ public class MensagemController {
     }
 
     @PostMapping("/grupo/resposta")
-    public ResponseEntity adicionarMensagemGrupo(@RequestBody @Valid Resposta resposta) {
+    public ResponseEntity adicionarMensagemGrupo(@RequestBody @Valid RespostaRequest respostaRequest) {
+		if (!this.repositoryPergunta.existsByIdPergunta(respostaRequest.getFkPergunta())) {
+			return ResponseEntity.status(404).build();
+		}
+
+		Resposta resposta = new Resposta();
+
+		resposta.setFkPergunta(respostaRequest.getFkPergunta());
+		resposta.setMensagem(respostaRequest.getMensagem());
+		resposta.setFkDoador(respostaRequest.getFkDoador());
+		resposta.setFkProdutoDoacao(respostaRequest.getFkProdutoDoacao());
+
 		repositoryResposta.save(resposta);
 		return ResponseEntity.status(201).build();
-    }
+	}
 
     @GetMapping("/direta")
-    public ResponseEntity listarMensagemDireta(@RequestParam Long idChatDireto){
-		List<Mensagem> mensagems =
-                repositoryMensagem.findByFkChatDiretoOrderByDataDesc(idChatDireto);
+    public ResponseEntity listarMensagemDireta(
+			@RequestParam Long fkUsuarioRemetente,
+			@RequestParam Long fkUsuarioDestinatario
+	){
+		Optional<ChatDireto> chatDireto1 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(fkUsuarioRemetente, fkUsuarioDestinatario);
+		Optional<ChatDireto> chatDireto2 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(fkUsuarioDestinatario, fkUsuarioRemetente);
 
-        if (mensagems.isEmpty()){
+		if (chatDireto1.isEmpty() && chatDireto2.isEmpty()) {
+			return ResponseEntity.status(400).build();
+		}
+
+		List<Mensagem> mensagems = this.repositoryMensagem.acharPorFkChatDiretoOrderByDataDesc(chatDireto1.get().getIdChatDireto(), chatDireto2.get().getIdChatDireto());
+
+		if (mensagems.isEmpty()){
 			return ResponseEntity.status(204).build();
 		}
 
@@ -96,8 +112,7 @@ public class MensagemController {
 			@RequestParam Long fkDoador,
 			@RequestParam Long fkProdutoDoacao
     ) {
-
-		List<Pergunta> perguntaList = repositoryPergunta.findByFkDoadorAndFkProdutoDoacaoOrderByDataAsc(fkDoador, fkProdutoDoacao);
+		List<Pergunta> perguntaList = this.repositoryPergunta.findByFkDoadorAndFkProdutoDoacaoOrderByDataAsc(fkDoador, fkProdutoDoacao);
 
 		if (perguntaList.isEmpty()) {
 			return ResponseEntity.status(204).build();
@@ -121,100 +136,59 @@ public class MensagemController {
 			groupChatList.add(topicList);
 		}
 
-        return ResponseEntity.status(200).body(groupChatList);
-    }
+		return ResponseEntity.status(200).body(groupChatList);
+	}
 
-    @GetMapping("grupo/resposta/{idPergunta}")
-    public ResponseEntity getMensagemGrupoResposta(@PathVariable Long idPergunta){
+	@DeleteMapping("/direta/{idMensagem}")
+	public ResponseEntity removerMensagemDireta(@PathVariable Long idMensagem){
+		if (!this.repositoryMensagem.existsById(idMensagem)){
+			return ResponseEntity.status(404).build();
+		}
 
-        List<Resposta> respostas =
-                repositoryResposta
-                        .findByFkPerguntaOrderByDataDesc(
-                                idPergunta
-                        );
+		this.repositoryMensagem.deleteById(idMensagem);
+		return ResponseEntity.status(200).build();
+	}
 
-        if (!respostas.isEmpty()){
-            return ResponseEntity.status(200).body(respostas);
-        }
-        return ResponseEntity.status(204).build();
-    }
+	@DeleteMapping("/grupo/resposta/{idResposta}")
+	public ResponseEntity removerResposta(@PathVariable Long idResposta){
+		if (!this.repositoryResposta.existsById(idResposta)){
+			return ResponseEntity.status(404).build();
+		}
 
-    @DeleteMapping("direta/{idMensagem}")
-    public ResponseEntity deleteMensagemDireta(@PathVariable Long idMensagem){
-        if (repositoryMensagem.existsById(idMensagem)){
-            repositoryMensagem.deleteById(idMensagem);
-            return ResponseEntity.status(200).build();
-        }
-        return ResponseEntity.status(400).build();
-    }
+		this.repositoryResposta.deleteById(idResposta);
 
-    @DeleteMapping("grupo/pergunta/{idPergunta}")
-    public ResponseEntity deleteMensagemGrupoPergunta(@PathVariable Long idPergunta){
-        if (repositoryPergunta.existsById(idPergunta)){
-            if (repositoryResposta.countByFkPergunta(idPergunta)>=1){
-				List<Resposta> respostas =
-				repositoryResposta.findByFkPerguntaOrderByDataDesc(idPergunta);
-				for (Resposta r:
-					 respostas) {
-					repositoryResposta.deleteById(r.getIdResposta());
-				}
-            }
-            repositoryPergunta.deleteById(idPergunta);
-            return ResponseEntity.status(200).build();
-        }
-        return ResponseEntity.status(400).build();
-    }
+		return ResponseEntity.status(200).build();
+	}
 
-    @DeleteMapping("grupo/resposta/{idResposta}")
-    public ResponseEntity deleteMensagemGrupoResposta(@PathVariable Long idResposta){
-        if (repositoryResposta.existsById(idResposta)){
-            repositoryResposta.deleteById(idResposta);
-            return ResponseEntity.status(200).build();
-        }
-        return ResponseEntity.status(400).build();
-    }
+    @PatchMapping("/grupo/resposta/{idResposta}")
+    public ResponseEntity putMensagemGrupoResposta(
+			@RequestParam String mensagem,
+			@PathVariable Long idResposta
+	) {
+		if (!this.repositoryResposta.existsById(idResposta)) {
+			return ResponseEntity.status(404).build();
+		}
 
-    @PutMapping("grupo/pergunta/{idPergunta}")
-    public ResponseEntity putMensagemGrupoPergunta(@RequestBody @Valid Pergunta pergunta,
-                                                   @PathVariable Long idPergunta) {
+		this.repositoryResposta.updateMensagemResposta(idResposta, mensagem, Date.from(Instant.now()));
 
-        if (repositoryPergunta.existsById(idPergunta)){
-            Pergunta pergunta1 = repositoryPergunta.findByIdPergunta(idPergunta);
-            pergunta1.setMensagem(pergunta.getMensagem());
-            repositoryPergunta.save(pergunta1);
+		return ResponseEntity.status(200).build();
+	}
 
-            return ResponseEntity.status(200).build();
-        }
-        return ResponseEntity.status(400).build();
-    }
-    @PutMapping("grupo/resposta/{idResposta}")
-    public ResponseEntity putMensagemGrupoResposta(@RequestBody @Valid Resposta resposta,
-                                                   @PathVariable Long idResposta) {
+    @PatchMapping("/direta/{idMensagem}")
+    public ResponseEntity putMensagemDireta(
+			@RequestParam String mensagem,
+			@PathVariable Long idMensagem
+	) {
+		if (!this.repositoryMensagem.existsById(idMensagem)){
+			return ResponseEntity.status(404).build();
+		}
 
-        if (repositoryResposta.existsById(idResposta)){
-            Resposta resposta1 = repositoryResposta.findByIdResposta(idResposta);
-            resposta1.setMensagem(resposta.getMensagem());
-            repositoryResposta.save(resposta1);
+		this.repositoryMensagem.updateMensagem(idMensagem, mensagem, Date.from(Instant.now()));
 
-            return ResponseEntity.status(200).build();
-        }
-        return ResponseEntity.status(400).build();
-    }
-    @PutMapping("direta/{idMensagem}")
-    public ResponseEntity putMensagemDireta(@RequestBody @Valid Mensagem mensagem,
-											@PathVariable Long idMensagem) {
+		return ResponseEntity.status(200).build();
+	}
 
-        if (repositoryMensagem.existsById(idMensagem)){
-            Mensagem mensagem1 = repositoryMensagem.findByIdMensagem(idMensagem);
-            mensagem1.setMensagem(mensagem.getMensagem());
-            repositoryMensagem.save(mensagem1);
-
-            return ResponseEntity.status(200).build();
-        }
-        return ResponseEntity.status(400).build();
-    }
-
-	@GetMapping("/relatorio/perguntas-frequentes")
+	@GetMapping("/grupo/relatorio/perguntas-frequentes")
 	public ResponseEntity getRelatorio() {
 		String relatorio = "";
 
@@ -233,14 +207,14 @@ public class MensagemController {
 			lista.getElemento(i).getData();
 		}
 
-		String csv = gravaArquivoCsv(lista, "perguntas");
+		String csv = this.gravaArquivoCsv(lista, "perguntas");
 		return ResponseEntity.status(200)
 				.header("content-type", "text/csv")
 				.header("content-disposition", "filename=\"perguntas-frequentes.csv\"")
 				.body(csv);
 	}
 
-	public String gravaArquivoCsv(ListaObj<Pergunta> lista, String nomeArq) {
+	private String gravaArquivoCsv(ListaObj<Pergunta> lista, String nomeArq) {
 		FileWriter arq = null;
 		Formatter saida = null;
 		Boolean deuRuim = false;
@@ -286,5 +260,4 @@ public class MensagemController {
 		}
 		return formatado;
 	}
-
 }
