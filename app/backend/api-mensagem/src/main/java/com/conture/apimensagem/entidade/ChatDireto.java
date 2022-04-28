@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Entity
 public class ChatDireto {
@@ -12,9 +13,13 @@ public class ChatDireto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idChatDireto;
-    @NotNull
+
+	@Positive
+	@NotNull
     private Long fkUsuarioRemetente;
-    @NotNull
+
+	@Positive
+	@NotNull
     private Long fkUsuarioDestinatario;
 
     public Long getIdChatDireto() {
@@ -37,7 +42,5 @@ public class ChatDireto {
         return fkUsuarioDestinatario;
     }
 
-    public void setFkUsuarioDestinatario(Long fkUsuarioDestinatario) {
-        this.fkUsuarioDestinatario = fkUsuarioDestinatario;
-    }
+    public void setFkUsuarioDestinatario(Long fkUsuarioDestinatario) { this.fkUsuarioDestinatario = fkUsuarioDestinatario; }
 }

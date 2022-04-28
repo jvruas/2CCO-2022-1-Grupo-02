@@ -1,13 +1,16 @@
 package com.conture.apimensagem.controle;
 
+import com.conture.apimensagem.dto.requests.MensagemRequest;
+import com.conture.apimensagem.dto.requests.PerguntaRequest;
+import com.conture.apimensagem.entidade.ChatDireto;
 import com.conture.apimensagem.servicos.ListaObj;
 import com.conture.apimensagem.entidade.Mensagem;
 import com.conture.apimensagem.entidade.Pergunta;
 import com.conture.apimensagem.entidade.Resposta;
-import com.conture.apimensagem.repositorio.ChatDiretoRepository;
-import com.conture.apimensagem.repositorio.MensagemRepository;
-import com.conture.apimensagem.repositorio.PerguntaRepository;
-import com.conture.apimensagem.repositorio.RespostaRepository;
+import com.conture.apimensagem.repository.ChatDiretoRepository;
+import com.conture.apimensagem.repository.MensagemRepository;
+import com.conture.apimensagem.repository.PerguntaRepository;
+import com.conture.apimensagem.repository.RespostaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.FormatterClosedException;
 import java.util.List;
@@ -35,63 +39,89 @@ public class MensagemController {
     @Autowired
     private PerguntaRepository repositoryPergunta;
 
-    @PostMapping("direta")
-    public ResponseEntity postMensagemDireta(@RequestBody @Valid Mensagem mensagem){
-        if (!repositoryMensagem.exists(mensagem)){
-            repositoryMensagem.save(mensagem);
-            return ResponseEntity.status(201).build();
-        }
-        return ResponseEntity.status(409).build();
+    @PostMapping("/direta")
+    public ResponseEntity adicionarMensagemDireta(@RequestBody @Valid MensagemRequest mensagemRequest){
+		Mensagem mensagem = new Mensagem();
+
+		if (!this.repositoryChatDireto.existsByIdChatDireto(mensagemRequest.getFkChatDireto())) {
+			ChatDireto chatDireto = new ChatDireto();
+
+			chatDireto.setIdChatDireto(mensagemRequest.getFkChatDireto());
+			chatDireto.setFkUsuarioRemetente(mensagemRequest.getFkUsuarioRemetente());
+			chatDireto.setFkUsuarioDestinatario(mensagemRequest.getFkUsuarioDestinatario());
+
+			this.repositoryChatDireto.save(chatDireto);
+		}
+
+		mensagem.setFkChatDireto(mensagemRequest.getFkChatDireto());
+		mensagem.setMensagem(mensagemRequest.getMensagem());
+
+		repositoryMensagem.save(mensagem);
+		return ResponseEntity.status(201).build();
     }
 
-    @PostMapping("grupo/pergunta")
-    public ResponseEntity postMensagemGrupoPergunta(@RequestBody @Valid Pergunta pergunta){
-        if (!repositoryPergunta.exists(pergunta)){
-            repositoryPergunta.save(pergunta);
-            return ResponseEntity.status(201).build();
-        }
-        return ResponseEntity.status(409).build();
+    @PostMapping("/grupo/pergunta")
+    public ResponseEntity adicionarMensagemPergunta(@RequestBody @Valid PerguntaRequest perguntaRequest) {
+		Pergunta pergunta = new Pergunta();
+
+		pergunta.setFkDonatario(perguntaRequest.getFkDonatario());
+		pergunta.setMensagem(perguntaRequest.getMensagem());
+		pergunta.setFkDoador(perguntaRequest.getFkDoador());
+		pergunta.setFkProdutoDoacao(perguntaRequest.getFkProdutoDoacao());
+
+		repositoryPergunta.save(pergunta);
+		return ResponseEntity.status(201).build();
     }
 
-    @PostMapping("grupo/resposta")
-    public ResponseEntity postMensagemGrupoResposta(@RequestBody @Valid Resposta resposta){
-        if (!repositoryResposta.exists(resposta)){
-            repositoryResposta.save(resposta);
-            return ResponseEntity.status(201).build();
-        }
-        return ResponseEntity.status(409).build();
+    @PostMapping("/grupo/resposta")
+    public ResponseEntity adicionarMensagemGrupo(@RequestBody @Valid Resposta resposta) {
+		repositoryResposta.save(resposta);
+		return ResponseEntity.status(201).build();
     }
 
-    @GetMapping("direta/{idChatDireto}")
-    public ResponseEntity getMensagemDireta(@PathVariable Long idChatDireto){
-        List<Mensagem> mensagems =
-                repositoryMensagem.findByFkChatDiretoOrderByDataAsc(idChatDireto);
+    @GetMapping("/direta")
+    public ResponseEntity listarMensagemDireta(@RequestParam Long idChatDireto){
+		List<Mensagem> mensagems =
+                repositoryMensagem.findByFkChatDiretoOrderByDataDesc(idChatDireto);
 
-        if (!mensagems.isEmpty()){
-            return ResponseEntity.status(200).body(mensagems);
-        }
-        return ResponseEntity.status(204).build();
-    }
+        if (mensagems.isEmpty()){
+			return ResponseEntity.status(204).build();
+		}
 
+		return ResponseEntity.status(200).body(mensagems);
+	}
 
-    @GetMapping("grupo/pergunta/{fkDonatario}/{fkDoador}/{fkProdutoDoacao}")
-    public ResponseEntity getMensagemGrupoPergunta(@PathVariable Long fkDonatario,
-                                                   @PathVariable Long fkDoador,
-                                                   @PathVariable Long fkProdutoDoacao
-    ){
+    @GetMapping("/grupo")
+    public ResponseEntity listarMensagemGrupo(
+			@RequestParam Long fkDoador,
+			@RequestParam Long fkProdutoDoacao
+    ) {
 
-        List<Pergunta> perguntas =
-        repositoryPergunta
-                .findByFkDonatarioAndFkDoadorAndFkProdutoDoacaoOrderByDataAsc(
-                        fkDonatario,
-                        fkDoador,
-                        fkProdutoDoacao
-                );
+		List<Pergunta> perguntaList = repositoryPergunta.findByFkDoadorAndFkProdutoDoacaoOrderByDataAsc(fkDoador, fkProdutoDoacao);
 
-        if (!perguntas.isEmpty()){
-            return ResponseEntity.status(200).body(perguntas);
-        }
-        return ResponseEntity.status(204).build();
+		if (perguntaList.isEmpty()) {
+			return ResponseEntity.status(204).build();
+		}
+
+		List<List<Object>> groupChatList = new ArrayList();
+
+		for (int i = 0; i < perguntaList.size(); i++) {
+			List<Object> topicList = new ArrayList();
+
+			topicList.add(perguntaList.get(i));
+
+			List<Resposta> respostaList = this.repositoryResposta.findByFkPerguntaOrderByDataDesc(perguntaList.get(i).getIdPergunta());
+
+			if (respostaList.isEmpty()) {
+				continue;
+			}
+
+			topicList.add(respostaList);
+
+			groupChatList.add(topicList);
+		}
+
+        return ResponseEntity.status(200).body(groupChatList);
     }
 
     @GetMapping("grupo/resposta/{idPergunta}")
@@ -99,7 +129,7 @@ public class MensagemController {
 
         List<Resposta> respostas =
                 repositoryResposta
-                        .findByFkPerguntaOrderByDataAsc(
+                        .findByFkPerguntaOrderByDataDesc(
                                 idPergunta
                         );
 
@@ -123,7 +153,7 @@ public class MensagemController {
         if (repositoryPergunta.existsById(idPergunta)){
             if (repositoryResposta.countByFkPergunta(idPergunta)>=1){
 				List<Resposta> respostas =
-				repositoryResposta.findByFkPerguntaOrderByDataAsc(idPergunta);
+				repositoryResposta.findByFkPerguntaOrderByDataDesc(idPergunta);
 				for (Resposta r:
 					 respostas) {
 					repositoryResposta.deleteById(r.getIdResposta());

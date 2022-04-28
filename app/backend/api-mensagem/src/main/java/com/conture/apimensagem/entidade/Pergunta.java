@@ -1,11 +1,11 @@
 package com.conture.apimensagem.entidade;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class Pergunta {
@@ -13,28 +13,33 @@ public class Pergunta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPergunta;
+
+	@Positive
     @NotNull
     private Long fkDonatario;
+
     @NotBlank
     @Size(min = 3, max = 100)
     private String mensagem;
-    @PastOrPresent
-    private LocalDateTime data;
 
+	@PastOrPresent
+	@CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+	private Date data;
+
+	@Positive
     @NotNull
     private Long fkDoador;
+
+	@Positive
     @NotNull
     private Long fkProdutoDoacao;
 
-    public LocalDateTime getData() {
-        return data;
-    }
+	public Date getData() { return data; }
 
-    public void setData(LocalDateTime data) {
-        this.data = data;
-    }
+	public void setData(Date data) { this.data = data; }
 
-    public String getMensagem() {
+	public String getMensagem() {
         return mensagem;
     }
 

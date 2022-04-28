@@ -1,8 +1,11 @@
 package com.conture.apimensagem.entidade;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 public class Mensagem {
@@ -10,11 +13,17 @@ public class Mensagem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMensagem;
+
     @PastOrPresent
-    private LocalDateTime data;
-    @NotBlank
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+    private Date data;
+
+	@NotBlank
     @Size(min = 3, max = 100)
     private String mensagem;
+
+	@Positive
     @NotNull
     private Long fkChatDireto;
 
@@ -26,15 +35,11 @@ public class Mensagem {
         this.idMensagem = idMensagem;
     }
 
-    public LocalDateTime getData() {
-        return data;
-    }
+	public Date getData() { return data; }
 
-    public void setData(LocalDateTime data) {
-        this.data = data;
-    }
+	public void setData(Date data) { this.data = data; }
 
-    public String getMensagem() {
+	public String getMensagem() {
         return mensagem;
     }
 

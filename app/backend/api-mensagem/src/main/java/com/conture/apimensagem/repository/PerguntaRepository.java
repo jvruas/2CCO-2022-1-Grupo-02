@@ -1,25 +1,21 @@
-package com.conture.apimensagem.repositorio;
+package com.conture.apimensagem.repository;
 
-import com.conture.apimensagem.entidade.Mensagem;
 import com.conture.apimensagem.entidade.Pergunta;
-import com.conture.apimensagem.entidade.Resposta;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 public interface PerguntaRepository extends JpaRepository<Pergunta, Long> {
     List<Pergunta>
-    findByFkDonatarioAndFkDoadorAndFkProdutoDoacaoOrderByDataAsc(
+    findByFkDonatarioAndFkDoadorAndFkProdutoDoacaoOrderByDataDesc(
             Long fkDonatario,
             Long fkDoador,
             Long fkProdutoDoacao
     );
 
-    Pergunta findByIdPergunta(Long idPergunta);
+	List<Pergunta> findByFkDoadorAndFkProdutoDoacaoOrderByDataAsc(Long fkDoador, Long fkProdutoDoacao);
 
-    default boolean exists(Pergunta pergunta) {
-        return false;
-    }
+    Pergunta findByIdPergunta(Long idPergunta);
 
     //Pergunta deleteByIdPergunta(Long idPergunta);
 }
