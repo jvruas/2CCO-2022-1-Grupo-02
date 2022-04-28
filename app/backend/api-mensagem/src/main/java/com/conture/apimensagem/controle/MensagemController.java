@@ -57,7 +57,7 @@ public class MensagemController {
     }
 
     @PostMapping("/grupo/pergunta")
-    public ResponseEntity adicionarMensagemPergunta(@RequestBody @Valid PerguntaRequest perguntaRequest) {
+    public ResponseEntity adicionarPergunta(@RequestBody @Valid PerguntaRequest perguntaRequest) {
 		Pergunta pergunta = new Pergunta();
 
 		pergunta.setFkDonatario(perguntaRequest.getFkDonatario());
@@ -70,7 +70,7 @@ public class MensagemController {
     }
 
     @PostMapping("/grupo/resposta")
-    public ResponseEntity adicionarMensagemGrupo(@RequestBody @Valid RespostaRequest respostaRequest) {
+    public ResponseEntity adicionarResposta(@RequestBody @Valid RespostaRequest respostaRequest) {
 		if (!this.repositoryPergunta.existsByIdPergunta(respostaRequest.getFkPergunta())) {
 			return ResponseEntity.status(404).build();
 		}
@@ -161,9 +161,9 @@ public class MensagemController {
 	}
 
     @PatchMapping("/grupo/resposta/{idResposta}")
-    public ResponseEntity putMensagemGrupoResposta(
-			@RequestParam String mensagem,
-			@PathVariable Long idResposta
+    public ResponseEntity updateResposta(
+			@PathVariable Long idResposta,
+			@RequestParam String mensagem
 	) {
 		if (!this.repositoryResposta.existsById(idResposta)) {
 			return ResponseEntity.status(404).build();
@@ -175,9 +175,9 @@ public class MensagemController {
 	}
 
     @PatchMapping("/direta/{idMensagem}")
-    public ResponseEntity putMensagemDireta(
-			@RequestParam String mensagem,
-			@PathVariable Long idMensagem
+    public ResponseEntity updateMensagemDireta(
+			@PathVariable Long idMensagem,
+			@RequestParam String mensagem
 	) {
 		if (!this.repositoryMensagem.existsById(idMensagem)){
 			return ResponseEntity.status(404).build();
