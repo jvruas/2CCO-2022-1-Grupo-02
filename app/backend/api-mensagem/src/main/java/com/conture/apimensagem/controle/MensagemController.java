@@ -195,9 +195,6 @@ public class MensagemController {
 		List<Pergunta> perguntas = repositoryPergunta.findAll();
 		ListaObj<Pergunta> lista = new ListaObj((int) repositoryPergunta.count());
 
-		System.out.println(lista.getTamanho());
-		System.out.println(perguntas.size());
-
 		for (int idx = 0; idx < perguntas.size(); idx++){
 			lista.adiciona(perguntas.get(idx));
 		}
@@ -238,8 +235,7 @@ public class MensagemController {
 				formatado += String.format("%d;%s;%s;\n",
 						listPerguntas.getIdPergunta(), listPerguntas.getMensagem(), listPerguntas.getData());
 			}
-			System.out.println(formatado);
-			saida.format(formatado);
+
 		}
 		catch (FormatterClosedException erro) {
 			System.out.println("Erro ao gravar arquivo");
