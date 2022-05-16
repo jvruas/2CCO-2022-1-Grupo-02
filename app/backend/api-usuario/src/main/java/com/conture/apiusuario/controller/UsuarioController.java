@@ -4,6 +4,7 @@ import com.conture.apiusuario.dto.request.*;
 import com.conture.apiusuario.entity.*;
 import com.conture.apiusuario.repository.*;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
+import com.conture.apiusuario.utility.FilaObj;
 import com.conture.apiusuario.utility.GerenciadorUsuario;
 import com.conture.apiusuario.utility.ListaObj;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+	FilaObj<Avaliacao> listaAvaliacao = new FilaObj<>(20);
 
 
 	// EndPoint
@@ -88,15 +91,16 @@ public class UsuarioController {
 		Optional<Usuario> avaliado = Optional.ofNullable(usuarioRepository.findByIdUsuario(avaliacao.getFkDoador()));
 		Optional<UsuarioLogadoResponse> avaliador = GerenciadorUsuario.buscaUsuarioLogado(avaliacao.getFkDonatario());
 
-		if(avaliado.isEmpty() || avaliador.isEmpty()){
-			return ResponseEntity.status(404).build();
-		}
+		//if(avaliado.isEmpty() || avaliador.isEmpty()){
+		//	return ResponseEntity.status(404).build();
+		//}
 
 		Avaliacao novaAvaliacao = new Avaliacao();
 		novaAvaliacao.setFkDoador(avaliacao.getFkDoador());
 		novaAvaliacao.setFkDonatario(avaliacao.getFkDonatario());
 		novaAvaliacao.setValor(avaliacao.getValor());
 		novaAvaliacao.setComentario(avaliacao.getComentario());
+
 
 		this.avaliacaoRepository.save(novaAvaliacao);
 		return ResponseEntity.status(200).build();
@@ -160,12 +164,11 @@ public class UsuarioController {
 
 	@GetMapping("/avaliacoes")
 	public ResponseEntity listarAvaliacoes(@RequestParam Long fkDoador){
-		List<Avaliacao> lista = this.avaliacaoRepository.findByFkDoador(fkDoador);
-
-		if(lista.isEmpty()){
-			return ResponseEntity.status(404).build();
+		List<Avaliacao> lista = avaliacaoRepository.findAllByFkDoador(fkDoador);
+		for (int i =0; i<lista.size();i++ ){
+			listaAvaliacao.insert(lista.get(i));
 		}
-		return ResponseEntity.status(200).body(lista);
+		return ResponseEntity.status(200).body(listaAvaliacao.transformarEmLista());
 	}
 
 	@PutMapping("/senha")

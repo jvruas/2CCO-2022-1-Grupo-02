@@ -1,8 +1,7 @@
 package com.conture.apiproduto.controller;
 
 import com.conture.apiproduto.dto.request.*;
-import com.conture.apiproduto.utility.Iterator;
-import com.conture.apiproduto.utility.ListaObj;
+import com.conture.apiproduto.utility.*;
 import com.conture.apiproduto.entity.CategoriaProduto;
 import com.conture.apiproduto.entity.Match;
 import com.conture.apiproduto.entity.PreferenciaDonatario;
@@ -12,8 +11,6 @@ import com.conture.apiproduto.repository.MatchRepository;
 import com.conture.apiproduto.repository.PreferenciaDonatarioRepository;
 import com.conture.apiproduto.repository.ProdutoRepository;
 
-import com.conture.apiproduto.utility.SearchProdutoCategoriaIterator;
-import com.conture.apiproduto.utility.SearchProdutoMarcaIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +39,9 @@ public class ProdutoController{
 	 @Autowired
 	 private CategoriaProdutoRepository categoriaRepository;
 
-	 ListaObj<String> listaHistorico = new ListaObj<>(10);
+	 //ListaObj<String> listaHistorico = new ListaObj<>(10);
+
+	 PilhaObj<String> listaHistorico = new PilhaObj<>(10);
 
 
 	@PostMapping()
@@ -151,19 +150,21 @@ public class ProdutoController{
 	@GetMapping("/nome")
 	public ResponseEntity listarProdutoNome(@RequestParam String nome) {
 		List<ProdutoDoacao> listaProduto = produtoRepository.acharPeloNomeIgnoreCase(nome);
-		listaHistorico.adicionaNoInicio(nome);
+		Boolean repetido = false;
+		for (int i=0; i<listaHistorico.transformarEmLista().size(); i++ ){
+			if (listaHistorico.transformarEmLista().get(i).equalsIgnoreCase(nome)){
+				repetido = true;
+			}
+		}
+		if (!repetido){
+			listaHistorico.push(nome);
+		}
 		return ResponseEntity.status(200).body(listaProduto);
 
 	}
 	@GetMapping("/historico")
 	public ResponseEntity listarHistorico(){
-
-		ArrayList<String> historico = new ArrayList<>();
-		for (int i = 0; i < listaHistorico.getTamanho(); i++) {
-			historico.add(listaHistorico.getElemento(i));
-		}
-
-	return ResponseEntity.status(200).body(historico);
+		return ResponseEntity.status(200).body(listaHistorico.transformarEmLista());
 	}
 
 	@GetMapping("/doador/status")
