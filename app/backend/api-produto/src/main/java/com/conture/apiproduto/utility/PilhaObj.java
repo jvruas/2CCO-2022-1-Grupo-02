@@ -1,5 +1,7 @@
 package com.conture.apiproduto.utility;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +14,17 @@ public class PilhaObj<T> {
 		this.stack = (T[]) new Object[lenght];
 	}
 
+	@JsonIgnore
 	public int getTop() {
 		return top;
 	}
 
+	@JsonIgnore
 	public boolean isEmpty() {
 		return top == -1;
 	}
 
+	@JsonIgnore
 	public boolean  isFull(){
 		return stack.length -1 == top ;
 
@@ -58,16 +63,17 @@ public class PilhaObj<T> {
 		}
 	}
 
-	public List<T> transformarEmLista() {
-		List<T> lista = new ArrayList<>();
-		if (top == 0) {
-			return lista;
-		}
+	public T[] getPilha() {
 
-		for (int i = top; i > -1; i--) {
-			lista.add(stack[i]);
+		T[] pilhaReturn = (T[]) new Object[top + 1];
+		if(!isEmpty()){
+			int idx = 0;
+			for (int i = getTop(); i>=0; i--) {
+				pilhaReturn[idx++] = stack[i];
+			}
 		}
-		return lista;
+		return pilhaReturn;
 	}
+
 
 }

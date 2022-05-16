@@ -1,5 +1,7 @@
 package com.conture.apiusuario.utility;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class FilaObj<T> {
 
 	// Métodos
 
+	@JsonIgnore
 	/* Método isEmpty() - retorna true se a fila está vazia e false caso contrário */
 	public boolean isEmpty() {
 		if (getTamanho()==0){
@@ -24,6 +27,7 @@ public class FilaObj<T> {
 		return false;
 	}
 
+	@JsonIgnore
 	/* Método isFull() - retorna true se a fila está cheia e false caso contrário */
 	public boolean isFull() {
 		if (getTamanho()==fila.length){
@@ -74,19 +78,19 @@ public class FilaObj<T> {
 		}
 	}
 
-	public List<T> transformarEmLista() {
-		List<T> lista = new ArrayList<>();
-		if (tamanho == 0) {
-			return lista;
-		}
-
-		for (int i = 0; i < tamanho; i++) {
-			lista.add(fila[i]);
-		}
-		return lista;
-	}
-
+	@JsonIgnore
 	public int getTamanho(){
 		return tamanho;
+	}
+
+	public T[] getFila() {
+
+		T[] filaReturn = (T[]) new Object[tamanho];
+		if(!isEmpty()){
+			for (int i = 0; i < getTamanho(); i++) {
+				filaReturn[i] = fila[i];
+			}
+		}
+		return filaReturn;
 	}
 }

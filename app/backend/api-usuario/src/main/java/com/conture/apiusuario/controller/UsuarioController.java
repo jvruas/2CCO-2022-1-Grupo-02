@@ -6,16 +6,11 @@ import com.conture.apiusuario.repository.*;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
 import com.conture.apiusuario.utility.FilaObj;
 import com.conture.apiusuario.utility.GerenciadorUsuario;
-import com.conture.apiusuario.utility.ListaObj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -38,7 +33,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-	FilaObj<Avaliacao> listaAvaliacao = new FilaObj<>(20);
+	FilaObj<Avaliacao> filaAvaliacao = new FilaObj<>(20);
 
 
 	// EndPoint
@@ -166,9 +161,9 @@ public class UsuarioController {
 	public ResponseEntity listarAvaliacoes(@RequestParam Long fkDoador){
 		List<Avaliacao> lista = avaliacaoRepository.findAllByFkDoador(fkDoador);
 		for (int i =0; i<lista.size();i++ ){
-			listaAvaliacao.insert(lista.get(i));
+			filaAvaliacao.insert(lista.get(i));
 		}
-		return ResponseEntity.status(200).body(listaAvaliacao.transformarEmLista());
+		return ResponseEntity.status(200).body(filaAvaliacao);
 	}
 
 	@PutMapping("/senha")
