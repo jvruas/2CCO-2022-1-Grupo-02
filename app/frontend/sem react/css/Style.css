@@ -1,0 +1,60 @@
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif, roboto;
+    text-decoration: none;
+}
+
+/*Header simples*/
+header{
+    height: 80px;
+    width: 100%;
+    background-color: #7724BE;
+}
+
+.logo-menu {
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 50px;
+}
+
+.logo {
+    margin: auto;
+    height: 80px;
+    margin-top: auto;
+}
+
+.span-contraste {
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    float: right;
+    margin-top: -20px;
+    color: #fff;
+    cursor: pointer
+}
+.container {
+    width: 80%;
+    margin: auto;
+    /* background-color: tomato; */
+    
+}
+
+
+
+/*Footer*/
+
+
+
+
+
+
+
+
+
+/*Header completo*/
