@@ -30,6 +30,8 @@ h1{
     margin-top: 50px;
     width: 466px;
     height: 1000px;
+   
+    
     background-color: antiquewhite;
 }
 
@@ -39,18 +41,41 @@ h1{
     text-align: left;
 }
 
-.input_metade{
+.input_double{
+    text-align: left;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: auto;
+    justify-content: center;
+    margin: auto;
+}
+
+.input .input_double{
     display: flex;
     flex-direction: column;
     text-align: left;
-    width: 40%;
+    width: 100%;
     height: 44px;
     border: 1px solid #A6A6A6;
     border-radius: 3px;
+    
+}
+input .input_double{
+    width: 90%;
+    height: 44px;
+    border: 1px solid #A6A6A6;
+    border-radius: 3px;
+    
 }
 
 .imp_progresso{
    margin: auto;
+}
+
+.img_acessibilidade{
+    position: fixed;
+    margin-left: 94%;
+    margin-top: 15%;
 }
 
 input{
@@ -60,7 +85,7 @@ input{
     border-radius: 3px;
 }
 
-button{
+.btn_cadastrar{
 
     width: 178px;
     height: 44px;
@@ -72,5 +97,20 @@ button{
     display: grid;
     grid-template-columns: 80% 20%;
     align-items: center;
+}
+
+.btn_voltar{
+    width: 178px;
+    height: 44px;
+    background-color: var(--verde-btn);
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    /* margin-left: 55%; */
+    display: grid;
+    grid-template-columns: 20% 80%;
+    align-items: center;
+    justify-content: center;
+
 }
 
