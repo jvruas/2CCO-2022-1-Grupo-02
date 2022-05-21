@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="../imagens/Black logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/Style.css">
     <link rel="stylesheet" href="../css/EsqueciSenha.css">
+    <script type="text/javascript" src="../js/EsqueciSenha.js"></script>
 </head>
 <body>
     
@@ -17,24 +18,25 @@
         </div>
     </header>
     <img class="img_acessibilidade" src="../imagens/image 4.png" alt="">
-    <section>
+    <section class="centralizado">
         <form id="" action="" onsubmit="">
-            
-            <div>
-                <h1>Alterar senha</h1>
+            <div class="divisao centralizado">
+                <h1>ALTERAR SENHA</h1>
             </div>
-            <div class="input">
-                <label for="nome">Senha<img src="../imagens/info-circle 1.png" alt=""></label>
-                <input type="password" name="nome">
+            <div class="divisao input">
+                <label for="senha">Senha<img src="../imagens/info-circle 1.png" alt="Ícone de confirmação"></label>
+                <input type="password" name="senha" id="senha">
+                <img src="../imagens/eye-slash-closed.png" alt="Ícone senha escondida" class="eye" id="eye2" onClick="mostrarOcultarSenha2()">
             </div>
-            <div class="input">
-                <label for="senha">Confirmar senha</label>
-                <input type="password" name="senha">
+            <div class="divisao input">
+                <label for="confSenha">Confirmar sua senha</label>
+                <input type="password" name="confSenha" id="confSenha">
+                <img src="../imagens/eye-slash-closed.png" alt="Ícone senha escondida" class="eye" id="eye3" onClick="mostrarOcultarSenha3()">
             </div>
-            
-            <button>Salvar <img src="../imagens/folder-plus.png" alt=""></button>
+            <div class="divisao centralizado">
+                <button><p>SALVAR</p><img src="../imagens/folder-plus.png" alt="Ícone de confirmação"></button>
+            </div>
         </form>
     </section>
-
 </body>
 </html>
