@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,11 +11,12 @@
     <link rel="stylesheet" href="../css/Cadastro1.css">
     <script type="text/javascript" src="../js/Cadastro.js"></script>
 </head>
+
 <body>
-    
+
     <header>
         <div class="container">
-          <img src="../imagens/logo-conture.png" alt="Logo Conture" class="logo" />
+            <img src="../imagens/logo-conture.png" alt="Logo Conture" class="logo" />
         </div>
     </header>
     <img class="img_acessibilidade" src="../imagens/image 4.png" alt="">
@@ -30,23 +32,39 @@
                 <label for="nome">E-mail</label>
                 <input type="email" name="nome">
             </div>
+
             <div class="divisao input">
-                <label for="senha">Senha<img src="../imagens/info-circle 1.png" alt=""></label>
+
+                <label for="senha">
+                    <div class="tooltip">Senha<img src="../imagens/info-circle 1.png" alt="Ícone deconfirmação">
+                        <span class="tooltiptext">
+                            <b>Dicas para criar uma senha segura:</b>
+                            <br>Use no mínimo 6 caracteres
+                            <br>Combine letras maiúsculas e minúsculas, símbolos e números
+                            <br>Não use informações pessoais
+                        </span>
+                    </div>
+                </label>
+
                 <input type="password" name="senha" id="senha">
-                <img src="../imagens/eye-slash-closed.png" alt="Ícone senha escondida" class="eye" id="eye4" onClick="mostrarOcultarSenha4()">
+                <img src="../imagens/eye-slash-closed.png" alt="Ícone senha escondida" class="eye" id="eye4"
+                    onClick="mostrarOcultarSenha4()">
             </div>
+
             <div class="divisao input">
                 <label for="confSenha">Confirmar senha</label>
                 <input type="password" name="confSenha" id="confSenha">
-                <img src="../imagens/eye-slash-closed.png" alt="Ícone senha escondida" class="eye" id="eye5" onClick="mostrarOcultarSenha5()">
+                <img src="../imagens/eye-slash-closed.png" alt="Ícone senha escondida" class="eye" id="eye5"
+                    onClick="mostrarOcultarSenha5()">
             </div>
             <div class="divisao direita">
                 <button type="submit">PRÓXIMO<img src="../imagens/seta.png" alt=""></button>
             </div>
-                      
+
         </form>
-        
+
     </section>
 
 </body>
+
 </html>
