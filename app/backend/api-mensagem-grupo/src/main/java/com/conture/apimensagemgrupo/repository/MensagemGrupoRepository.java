@@ -1,13 +1,9 @@
-package com.conture.apimensagem.repository;
+package com.conture.apimensagemgrupo.repository;
 
-import com.conture.apimensagem.entidade.MensagemGrupo;
-import com.conture.apimensagem.entidade.Pergunta;
+import com.conture.apimensagemgrupo.entidade.MensagemGrupo;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 public interface MensagemGrupoRepository extends JpaRepository<MensagemGrupo, Integer> {

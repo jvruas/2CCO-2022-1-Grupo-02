@@ -1,6 +1,5 @@
-package com.conture.apimensagem.dto.requests;
+package com.conture.apimensagemgrupo.dto.requests;
 
-import com.conture.apimensagem.entidade.MensagemGrupo;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;

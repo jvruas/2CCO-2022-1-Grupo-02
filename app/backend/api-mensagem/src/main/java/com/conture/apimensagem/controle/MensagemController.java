@@ -107,37 +107,37 @@ public class MensagemController {
 		return ResponseEntity.status(200).body(mensagems);
 	}
 
-    @GetMapping("/grupo")
-    public ResponseEntity listarMensagemGrupo(
-			@RequestParam Long fkDoador,
-			@RequestParam Long fkProdutoDoacao
-    ) {
-		List<Pergunta> perguntaList = this.repositoryPergunta.findByFkDoadorAndFkProdutoDoacaoOrderByDataAsc(fkDoador, fkProdutoDoacao);
-
-		if (perguntaList.isEmpty()) {
-			return ResponseEntity.status(204).build();
-		}
-
-		List<List<Object>> groupChatList = new ArrayList();
-
-		for (int i = 0; i < perguntaList.size(); i++) {
-			List<Object> topicList = new ArrayList();
-
-			topicList.add(perguntaList.get(i));
-
-			List<Resposta> respostaList = this.repositoryResposta.findByFkPerguntaOrderByDataDesc(perguntaList.get(i).getIdPergunta());
-
-			if (respostaList.isEmpty()) {
-				continue;
-			}
-
-			topicList.add(respostaList);
-
-			groupChatList.add(topicList);
-		}
-
-		return ResponseEntity.status(200).body(groupChatList);
-	}
+//    @GetMapping("/grupo")
+//    public ResponseEntity listarMensagemGrupo(
+//			@RequestParam Long fkDoador,
+//			@RequestParam Long fkProdutoDoacao
+//    ) {
+//		List<Pergunta> perguntaList = this.repositoryPergunta.findByFkDoadorAndFkProdutoDoacaoOrderByDataAsc(fkDoador, fkProdutoDoacao);
+//
+//		if (perguntaList.isEmpty()) {
+//			return ResponseEntity.status(204).build();
+//		}
+//
+//		List<List<Object>> groupChatList = new ArrayList();
+//
+//		for (int i = 0; i < perguntaList.size(); i++) {
+//			List<Object> topicList = new ArrayList();
+//
+//			topicList.add(perguntaList.get(i));
+//
+//			List<Resposta> respostaList = this.repositoryResposta.findByFkPerguntaOrderByDataDesc(perguntaList.get(i).getIdPergunta());
+//
+//			if (respostaList.isEmpty()) {
+//				continue;
+//			}
+//
+//			topicList.add(respostaList);
+//
+//			groupChatList.add(topicList);
+//		}
+//
+//		return ResponseEntity.status(200).body(groupChatList);
+//	}
 
 	@DeleteMapping("/direta/{idMensagem}")
 	public ResponseEntity removerMensagemDireta(@PathVariable Long idMensagem){

@@ -30,10 +30,9 @@ public class MensagemGrupo {
 	@NotNull
 	private Integer fkProdutoDoacao;
 
+
 	@ManyToOne
 	@JoinColumn(name = "fk_mensagem_principal_id_mensagem_grupo")
-	@Positive
-	@NotNull
 	private MensagemGrupo fkMensagemPrincipal;
 
 	public MensagemGrupo getFkMensagemPrincipal() {
@@ -43,6 +42,7 @@ public class MensagemGrupo {
 	public void setFkMensagemPrincipal(MensagemGrupo fkMensagemPrincipal) {
 		this.fkMensagemPrincipal = fkMensagemPrincipal;
 	}
+
 
 	public Integer getIdMensagemGrupo() {
 		return idMensagemGrupo;

@@ -1,14 +1,17 @@
-package com.conture.apimensagem.dto.requests;
+package com.conture.apimensagemgrupo.entidade;
 
-import com.conture.apimensagem.entidade.MensagemGrupo;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
 
-public class MensagemGrupoRequest {
+@Entity
+public class MensagemGrupo {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idMensagemGrupo;
 
 	@NotBlank
 	@Size(min = 3, max = 100)
@@ -27,10 +30,27 @@ public class MensagemGrupoRequest {
 	@NotNull
 	private Integer fkProdutoDoacao;
 
-	@Positive
-	private Integer fkMensagemPrincipal;
+
+	@ManyToOne
+	@JoinColumn(name = "fk_mensagem_principal_id_mensagem_grupo")
+	private MensagemGrupo fkMensagemPrincipal;
+
+	public MensagemGrupo getFkMensagemPrincipal() {
+		return fkMensagemPrincipal;
+	}
+
+	public void setFkMensagemPrincipal(MensagemGrupo fkMensagemPrincipal) {
+		this.fkMensagemPrincipal = fkMensagemPrincipal;
+	}
 
 
+	public Integer getIdMensagemGrupo() {
+		return idMensagemGrupo;
+	}
+
+	public void setIdMensagemGrupo(Integer idMensagemGrupo) {
+		this.idMensagemGrupo = idMensagemGrupo;
+	}
 
 	public String getMensagem() {
 		return mensagem;
@@ -62,13 +82,5 @@ public class MensagemGrupoRequest {
 
 	public void setFkProdutoDoacao(Integer fkProdutoDoacao) {
 		this.fkProdutoDoacao = fkProdutoDoacao;
-	}
-
-	public Integer getFkMensagemPrincipal() {
-		return fkMensagemPrincipal;
-	}
-
-	public void setFkMensagemPrincipal(Integer fkMensagemPrincipal) {
-		this.fkMensagemPrincipal = fkMensagemPrincipal;
 	}
 }

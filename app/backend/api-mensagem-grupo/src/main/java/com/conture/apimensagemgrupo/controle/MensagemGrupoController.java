@@ -1,11 +1,8 @@
-package com.conture.apimensagem.controle;
+package com.conture.apimensagemgrupo.controle;
 
-import com.conture.apimensagem.dto.requests.MensagemGrupoListarRequest;
-import com.conture.apimensagem.dto.requests.MensagemGrupoRequest;
-import com.conture.apimensagem.dto.requests.PerguntaRequest;
-import com.conture.apimensagem.entidade.MensagemGrupo;
-import com.conture.apimensagem.entidade.Pergunta;
-import com.conture.apimensagem.repository.MensagemGrupoRepository;
+import com.conture.apimensagemgrupo.dto.requests.MensagemGrupoRequest;
+import com.conture.apimensagemgrupo.entidade.MensagemGrupo;
+import com.conture.apimensagemgrupo.repository.MensagemGrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
