@@ -3,16 +3,13 @@ section{
     height: calc(100vh - 90px);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center; 
 }
 
 form{
-    margin-top: 25px;
     width: 466px;
-    height: 470;
+    height: 400px;
     display: grid;
-    grid-template-rows: 65px 55px 90px 90px 90px 80px;
+    grid-template-rows: 80px 90px 90px 140px;
 }
 
 .divisao{
@@ -23,12 +20,6 @@ form{
 .centralizado{
     display: flex;
     justify-content: center;
-    align-items: center;
-}
-
-.direita{
-    display: flex;
-    justify-content: end;
     align-items: center;
 }
 
@@ -47,6 +38,8 @@ input{
     padding-right: 70px;
 }
 
+
+
 h1{
     font-size: 22px;
 }
@@ -59,31 +52,45 @@ h1{
     left: 90%;
 }
 
-label img{
-    padding-left: 10px;
-}
-
-label, button, input{
+label, button, a, input{
     font-size: 16px;
 }
 
 button{
-    width: 178px;
+    width: 100%;
     height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: white;
     background-color: var(--verde-btn);
     border: none;
     border-radius: 3px;
-    color: #fff;
-    font-weight: 600;
-    display: grid;
-    grid-template-columns: 80% 20%;
-    align-items: center;
-    margin-top: 5%
+}
+
+button p{
+    padding-left: 7%;
+}
+
+label img{
+    padding-left: 10px;
+}
+
+button img{
+    position: relative;
+    left: 35%;
 }
 
 button:hover{
     background-color: var(--verde-btn-hover);
 }
+
+.cadastre{
+    width: 466px;
+    height: 12%;
+}
+
 
 /*Tooltip*/
 .tooltip {
@@ -110,10 +117,15 @@ button:hover{
   .tooltip:hover .tooltiptext {
     visibility: visible;
   }
+  
 
 
 @media (max-width: 500px){
-    form{
+    form, .cadastre{
         width: 90%;
     }
+    button img{
+        left: 30%;
+    }
+    
 }
