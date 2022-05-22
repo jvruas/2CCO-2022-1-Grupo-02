@@ -5,9 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="shortcut icon" href="../imagens/logo-conture.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../imagens/Black logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/Style.css">
-    <link rel="stylesheet" href="../css/Cadastro.css">
+    <link rel="stylesheet" href="../css/Cadastro1.css">
+    <script type="text/javascript" src="../js/Cadastro.js"></script>
 </head>
 <body>
     
@@ -18,25 +19,31 @@
     </header>
     <img class="img_acessibilidade" src="../imagens/image 4.png" alt="">
     <section>
-        <form class="form1" id="" action="" onsubmit="">
-            <h1>CADASTRO DE USUÁRIO</h1>
-            <img class="imp_progresso" src="../imagens/Etapas.png" alt="">
-
-            <div class="input">
+        <form action="../html/Cadastro2.html" method="post">
+            <div class="divisao centralizado">
+                <h1>CADASTRO DE USUÁRIO</h1>
+            </div>
+            <div class="divisao centralizado">
+                <img class="imp_progresso" src="../imagens/Etapas.png" alt="Barra de progresso de cadastro">
+            </div>
+            <div class="divisao input">
                 <label for="nome">E-mail</label>
                 <input type="email" name="nome">
             </div>
-            <div class="input">
-                <label for="senha">Senha <img src="../imagens/info-circle 1.png" alt=""></label>
-                <input type="password" name="senha">
+            <div class="divisao input">
+                <label for="senha">Senha<img src="../imagens/info-circle 1.png" alt=""></label>
+                <input type="password" name="senha" id="senha">
+                <img src="../imagens/eye-slash-closed.png" alt="Ícone senha escondida" class="eye" id="eye4" onClick="mostrarOcultarSenha4()">
             </div>
-            <div class="input">
-                <label for="senha">Confirmar senha</label>
-                <input type="password" name="confirmar_senha">
+            <div class="divisao input">
+                <label for="confSenha">Confirmar senha</label>
+                <input type="password" name="confSenha" id="confSenha">
+                <img src="../imagens/eye-slash-closed.png" alt="Ícone senha escondida" class="eye" id="eye5" onClick="mostrarOcultarSenha5()">
             </div>
-            
-            <a href="../html/Cadastro2.html"><button class="btn_cadastrar" >PRÓXIMO <img src="../imagens/seta.png" alt=""></button></a>
-            
+            <div class="divisao direita">
+                <button type="submit">PRÓXIMO<img src="../imagens/seta.png" alt=""></button>
+            </div>
+                      
         </form>
         
     </section>

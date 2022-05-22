@@ -14,7 +14,14 @@
     --verde-btn: #369F64;
     --verde-btn-hover: #308354;
     --referencia: #7724BE;
+    --cinza-btn: #E5E5E5;
+    --cinza-btn-hover: #9F9F9F;
+    --cinza-btn-border: #C4C4C4;
 }
+
+::-webkit-scrollbar{
+    display: none;
+} 
 
 /*Header simples*/
 header{
