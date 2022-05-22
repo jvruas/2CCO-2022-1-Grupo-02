@@ -9,12 +9,3 @@ function mostrarOcultarSenha(){
         img.src="../imagens/eye-slash-closed.png";
     }
 }
-
-function popUp(){
-    var popUp = document.getElementById("esqueceu_senha");
-    if(popUp.display=="none"){
-        popUp.display="flex";
-    }else{
-        popUp.type="none";
-    }
-}
