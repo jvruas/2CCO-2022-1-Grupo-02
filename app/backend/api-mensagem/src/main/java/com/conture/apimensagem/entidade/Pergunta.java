@@ -11,11 +11,11 @@ public class Pergunta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPergunta;
+    private Integer idPergunta;
 
 	@Positive
     @NotNull
-    private Long fkDonatario;
+    private Integer fkDonatario;
 
     @NotBlank
     @Size(min = 3, max = 100)
@@ -28,11 +28,11 @@ public class Pergunta {
 
 	@Positive
     @NotNull
-    private Long fkDoador;
+    private Integer fkDoador;
 
 	@Positive
     @NotNull
-    private Long fkProdutoDoacao;
+    private Integer fkProdutoDoacao;
 
 	public Date getData() { return data; }
 
@@ -46,35 +46,35 @@ public class Pergunta {
         this.mensagem = mensagem;
     }
 
-    public Long getIdPergunta() {
+    public Integer getIdPergunta() {
         return idPergunta;
     }
 
-    public void setIdPergunta(Long idPergunta) {
+    public void setIdPergunta(Integer idPergunta) {
         this.idPergunta = idPergunta;
     }
 
-    public Long getFkDonatario() {
+    public Integer getFkDonatario() {
         return fkDonatario;
     }
 
-    public void setFkDonatario(Long fkDonatario) {
+    public void setFkDonatario(Integer fkDonatario) {
         this.fkDonatario = fkDonatario;
     }
 
-    public Long getFkDoador() {
+    public Integer getFkDoador() {
         return fkDoador;
     }
 
-    public void setFkDoador(Long fkDoador) {
+    public void setFkDoador(Integer fkDoador) {
         this.fkDoador = fkDoador;
     }
 
-    public Long getFkProdutoDoacao() {
+    public Integer getFkProdutoDoacao() {
         return fkProdutoDoacao;
     }
 
-    public void setFkProdutoDoacao(Long fkProdutoDoacao) {
+    public void setFkProdutoDoacao(Integer fkProdutoDoacao) {
         this.fkProdutoDoacao = fkProdutoDoacao;
     }
 }

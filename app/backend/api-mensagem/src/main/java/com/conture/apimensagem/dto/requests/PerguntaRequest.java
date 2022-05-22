@@ -6,7 +6,7 @@ public class PerguntaRequest {
 
 	@Positive
 	@NotNull
-	private Long fkDonatario;
+	private Integer fkDonatario;
 
 	@NotBlank
 	@Size(min = 3, max = 100)
@@ -14,17 +14,17 @@ public class PerguntaRequest {
 
 	@Positive
 	@NotNull
-	private Long fkDoador;
+	private Integer fkDoador;
 
 	@Positive
 	@NotNull
-	private Long fkProdutoDoacao;
+	private Integer fkProdutoDoacao;
 
 	public PerguntaRequest(
-			Long fkDonatario,
+			Integer fkDonatario,
 		   	String mensagem,
-			Long fkDoador,
-			Long fkProdutoDoacao
+			Integer fkDoador,
+			Integer fkProdutoDoacao
 	) {
 		this.fkDonatario = fkDonatario;
 		this.mensagem = mensagem;
@@ -32,11 +32,11 @@ public class PerguntaRequest {
 		this.fkProdutoDoacao = fkProdutoDoacao;
 	}
 
-	public Long getFkDonatario() { return fkDonatario; }
+	public Integer getFkDonatario() { return fkDonatario; }
 
 	public String getMensagem() { return mensagem; }
 
-	public Long getFkDoador() { return fkDoador; }
+	public Integer getFkDoador() { return fkDoador; }
 
-	public Long getFkProdutoDoacao() { return fkProdutoDoacao; }
+	public Integer getFkProdutoDoacao() { return fkProdutoDoacao; }
 }
