@@ -1,12 +1,30 @@
 import MenuSimples from "./MenuSimples";
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/EsqueciSenha.css'
+import '../html-css-template/js/EsqueciSenha.js'
 
 import iconInfoSenha from "../html-css-template/imagens/info-circle 1.png"
 import iconSenha from "../html-css-template/imagens/eye-slash-closed.png"
 import iconSalvar from "../html-css-template/imagens/folder-plus.png"
+import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"
+import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
 
 function EsqueciSenha() {
+
+
+    const handleClick = () => {
+            var senha = document.getElementById("senha");
+            var img = document.getElementById("eye2");
+            if(senha.type=="password"){
+                senha.type="text";
+                img.src=iconOpen;
+            }else{
+                senha.type="password";
+                img.src=iconClose;
+            }
+    }
+
+
     return (
         <>
             <MenuSimples />
@@ -29,8 +47,7 @@ function EsqueciSenha() {
                 </label>
 
                 <input type="password" name="senha" id="senha"/>
-                <img src={iconSenha} alt="Ícone senha escondida" class="eye" id="eye2"
-                    onClick="mostrarOcultarSenha2()"/>
+                <img src={iconSenha} alt="Ícone senha escondida" class="eye" id="eye2" onClick={handleClick}/>
             </div>
             <div class="divisao input">
                 <label for="confSenha">Confirmar sua senha</label>
