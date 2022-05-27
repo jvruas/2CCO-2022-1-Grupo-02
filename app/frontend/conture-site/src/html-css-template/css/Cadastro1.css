@@ -7,7 +7,7 @@ section{
     justify-content: center; 
 }
 
-form{
+#form-cadastro1{
     margin-top: 25px;
     width: 466px;
     height: 470;
@@ -67,7 +67,7 @@ label, button, input{
     font-size: 16px;
 }
 
-button{
+.link{
     width: 178px;
     height: 44px;
     background-color: var(--verde-btn);
@@ -81,7 +81,7 @@ button{
     margin-top: 5%
 }
 
-button:hover{
+.link:hover{
     background-color: var(--verde-btn-hover);
 }
 
@@ -113,7 +113,7 @@ button:hover{
 
 
 @media (max-width: 500px){
-    form{
+    #form-cadastro1{
         width: 90%;
     }
 }

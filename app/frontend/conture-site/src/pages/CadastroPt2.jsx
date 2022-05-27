@@ -1,4 +1,4 @@
-import MenuSimples from "./MenuSimples";
+import MenuSimples from "../components/MenuSimples";
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/Cadastro2.css'
 
@@ -11,7 +11,7 @@ function CadastrarPt2() {
         <>
             <MenuSimples />
             <section>
-        <form id="" action="" onsubmit="">
+        <form id="form-cadastro2" action="" onsubmit="">
             <div class="divisao centralizado">
                 <h1>CADASTRO DE USUÁRIO</h1>
             </div>

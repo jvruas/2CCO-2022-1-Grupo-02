@@ -1,12 +1,9 @@
 import './App.css';
-import EsqueciSenha from './components/EsqueciSenha';
+import Rotas from './routes';
 
 function App() {
   return (
-    
-    <EsqueciSenha/>
-   
-    
+    <Rotas/>
   );
 }
 

@@ -1,4 +1,4 @@
-import MenuSimples from "./MenuSimples";
+import MenuSimples from "../components/MenuSimples";
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/Cadastro1.css'
 
@@ -6,13 +6,14 @@ import iconSenha from "../html-css-template/imagens/eye-slash-closed.png"
 import imgEtapa from "../html-css-template/imagens/Etapas.png"
 import iconInfoSenha from "../html-css-template/imagens/info-circle 1.png"
 import iconSeta from "../html-css-template/imagens/seta.png"
+import { Link } from "react-router-dom";
 
 function CadastrarPt1() {
     return (
         <>
             <MenuSimples />
             <section>
-                <form action="../html/Cadastro2.html" method="post">
+                <form id="form-cadastro1" action="../html/Cadastro2.html" method="post">
                     <div class="divisao centralizado">
                         <h1>CADASTRO DE USUÁRIO</h1>
                     </div>
@@ -49,7 +50,7 @@ function CadastrarPt1() {
                             onClick="mostrarOcultarSenha5()" />
                     </div>
                     <div class="divisao direita">
-                        <button type="submit">PRÓXIMO<img src={iconSeta} alt="Ícone de próximo" /></button>
+                        <Link className="link" to="/finalizar-cadastro"><button type="submit">PRÓXIMO<img src={iconSeta} alt="Ícone de próximo" /></button></Link>
                     </div>
 
                 </form>
