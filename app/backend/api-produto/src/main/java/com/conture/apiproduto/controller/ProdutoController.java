@@ -93,7 +93,7 @@ public class ProdutoController {
 
 	@GetMapping("/categoria")
 	public ResponseEntity listarCategorias() {
-		List<ProdutoDoacao> listaCategoria = produtoRepository.findAll();
+		List<CategoriaProduto> listaCategoria = categoriaRepository.findAll();
 
 		if (listaCategoria.isEmpty()) {
 			return ResponseEntity.status(204).build();

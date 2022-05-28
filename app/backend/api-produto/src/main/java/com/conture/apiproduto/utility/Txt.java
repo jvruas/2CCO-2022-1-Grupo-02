@@ -56,18 +56,18 @@ public class Txt {
 					System.out.println("Data e hora da gravação: " + registro.substring(9,28));
 					System.out.println("Versão do documento: " + registro.substring(28,30));
 				}
-				else if (tipoRegistro.equals("TR")) {
-					System.out.println("É um registro de trailer");
-					qtdRegCorpoGravado = Integer.parseInt(registro.substring(2,12));
-					if (contaRegCorpoLido == qtdRegCorpoGravado) {
-						System.out.println("Quantidade de registros lidos é compatível " +
-								"com a quantidade de registros gravados");
-					}
-					else {
-						System.out.println("Quantidade de registros lidos não é compatível " +
-								"com a quantidade de registros gravados");
-					}
-				}
+				//else if (tipoRegistro.equals("TR")) {
+				//	System.out.println("É um registro de trailer");
+				//	qtdRegCorpoGravado = Integer.parseInt(registro.substring(2,12));
+				//	if (contaRegCorpoLido == qtdRegCorpoGravado) {
+				//		System.out.println("Quantidade de registros lidos é compatível " +
+				//				"com a quantidade de registros gravados");
+				//	}
+				//	else {
+				//		System.out.println("Quantidade de registros lidos não é compatível " +
+				//				"com a quantidade de registros gravados");
+				//	}
+				//}
 				else if (tipoRegistro.equals("CP02")) {
 					System.out.println("É um registro de corpo");
 					fkDoador = Long.valueOf(registro.substring(4,8));
@@ -77,20 +77,20 @@ public class Txt {
 					categoria = registro.substring(188,208).trim();
 					defeito = Boolean.valueOf(registro.substring(208,209));
 					entrega = Boolean.valueOf(registro.substring(210,211));
-					descricao = registro.substring(128,188).trim();
+					descricao = registro.substring(211,271).trim();
 					contaRegCorpoLido++;
 
 					Optional<CategoriaProduto> categoriaEncontrada =
 							repositoryCategoria
 									.findByNomeIgnoreCase(categoria);
 
+					fkCategoria = categoriaEncontrada.get().getIdCategoriaProduto();
+
 					ProdutoDoacao produtoDoacao = new ProdutoDoacao(
 							fkDoador, nome,
 							marca, modelo,
 							descricao, defeito,
-							entrega,
-							categoriaEncontrada.get()
-									.getIdCategoriaProduto()
+							entrega, fkCategoria
 					);
 
 
