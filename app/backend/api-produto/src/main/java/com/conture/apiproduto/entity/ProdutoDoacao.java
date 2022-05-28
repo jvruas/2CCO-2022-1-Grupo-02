@@ -62,7 +62,23 @@ private Date dataConclusao;
 @Positive
 private Long fkCategoriaProduto;
 
-public Long getFkDoador() { return fkDoador; }
+
+	public ProdutoDoacao(Long fkDoador, String nome, String marca, String modelo, String descricao,
+						 boolean defeito, boolean entrega, Long fkCategoriaProduto) {
+		this.fkDoador = fkDoador;
+		this.nome = nome;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.descricao = descricao;
+		this.defeito = defeito;
+		this.entrega = entrega;
+		this.fkCategoriaProduto = fkCategoriaProduto;
+	}
+
+	public ProdutoDoacao() {
+	}
+
+	public Long getFkDoador() { return fkDoador; }
 
 public Long getIdProdutoDoacao() { return idProdutoDoacao; }
 

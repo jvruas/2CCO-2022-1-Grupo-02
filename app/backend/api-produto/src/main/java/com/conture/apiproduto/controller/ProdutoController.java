@@ -291,4 +291,14 @@ public class ProdutoController {
 		matchRepository.updateMatchSetStatus(matchIdentifier.getFkDoador(), matchIdentifier.getFkProdutoDoacao(), matchIdentifier.getFkDonatario(), matchIdentifier.getStatus());
 		return ResponseEntity.status(200).body(matchIdentifier);
 	}
+
+	@PostMapping(value = "/importacao", consumes = "text/txt")
+	public ResponseEntity postImportacao(@RequestBody String importacao) {
+		Txt importarTxt = new Txt();
+
+		if (importarTxt.leArquivoTxt("teste", importacao)){
+			return ResponseEntity.status(201).build();
+		}
+		return ResponseEntity.status(404).build();
+	}
 }
