@@ -1,6 +1,5 @@
-section{
+.section-cadastro2{
     width: 100%;
-    height: 950px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -98,5 +97,9 @@ a{
 @media (max-width: 500px){
     #form-cadastro2{
         width: 90%;
+    }
+
+    .btn{
+        width: 150px;
     }
 }

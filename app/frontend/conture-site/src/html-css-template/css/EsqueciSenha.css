@@ -1,4 +1,4 @@
-section{
+.section-esqueci-senha{
     width: 100%;
     height: calc(100vh - 90px);
     display: flex;
@@ -77,7 +77,7 @@ label img{
     padding-left: 10px;
 }
 
-button img{
+.btn-esqc img{
     position: relative;
     left: 35%;
 }

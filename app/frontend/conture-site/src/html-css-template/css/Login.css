@@ -1,4 +1,4 @@
-section{
+.section-login{
     width: 100%;
     height: calc(100vh - 90px);
     display: flex;
@@ -55,7 +55,7 @@ label, button, .link-cadastro, input{
     font-size: 16px;
 }
 
-b{
+.link-esqc a, .purple{
     color: var(--referencia);
 }
 
@@ -76,7 +76,7 @@ button p{
     padding-left: 7%;
 }
 
-button img{
+.btn-login img{
     position: relative;
     left: 35%;
 }
@@ -94,8 +94,8 @@ button:hover{
     #form-login, .cadastre{
         width: 90%;
     }
-    button img{
-        left: 30%;
+    .btn-login img{
+        left: 25%;
     }
     
 }
