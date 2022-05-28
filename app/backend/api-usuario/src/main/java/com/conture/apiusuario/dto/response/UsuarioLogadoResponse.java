@@ -1,17 +1,22 @@
 package com.conture.apiusuario.dto.response;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import com.conture.apiusuario.entity.SituacaoAtual;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class UsuarioLogadoResponse {
-
-    // Atributos
-	private Long idUsuario;
+	private Integer idUsuario;
 
 	@Email
 	@NotBlank
+	@Column(unique=true)
 	@Size(max = 80, message = "O e-mail deve ter no máximo 80 letras")
 	private String email;
 
@@ -24,26 +29,40 @@ public class UsuarioLogadoResponse {
 	private String sobrenome;
 
 	@NotBlank
-	@Size(max = 9, message = "O genero deve ter no máximo 9 letras")
+	@Size(min = 1, max = 1, message = "O genero deve ter 1 letra")
 	private String genero;
 
-	private LocalDate dataNascimento;
+	@Past
+	private Date dataNascimento;
 
 	@NotBlank
-	@Size(max = 10, message = "O cpf deve ter no máximo 10 letras")
+	@Size(min = 1, max = 1, message = "O cpf deve ter 1 letra")
 	private String estadoCivil;
 
 	// Indica que o atributo receberá automaticamente a data e hora do sistema no momento da criação de um registro
-	private LocalDate dataCadastro;
+	@PastOrPresent
+	private Date dataCadastro;
 
 	@NotBlank
-	@Size(max = 30, message = "A escolaridade deve ter no máximo 30 letras")
-	private String escolaridade;
+	@Size(min = 1, max = 1, message = "A escolaridade deve ter 1 letra")
+	private String grauEscolaridade;
 
-	private Long fkSituacaoAtual;
+	@NotNull
+	private SituacaoAtual situacaoAtual;
 
-	// Construtor
-	public UsuarioLogadoResponse(Long idUsuario, String email, String nome, String sobrenome, String genero, LocalDate dataNascimento, String estadoCivil, LocalDate dataCadastro, String escolaridade, Long fkSituacaoAtual) {
+
+	public UsuarioLogadoResponse(
+			Integer idUsuario,
+			String email,
+			String nome,
+			String sobrenome,
+			String genero,
+			Date dataNascimento,
+			String estadoCivil,
+			Date dataCadastro,
+			String grauEscolaridade,
+			SituacaoAtual situacaoAtual
+	) {
 		this.idUsuario = idUsuario;
 		this.email = email;
 		this.nome = nome;
@@ -52,12 +71,12 @@ public class UsuarioLogadoResponse {
 		this.dataNascimento = dataNascimento;
 		this.estadoCivil = estadoCivil;
 		this.dataCadastro = dataCadastro;
-		this.escolaridade = escolaridade;
-		this.fkSituacaoAtual = fkSituacaoAtual;
+		this.grauEscolaridade = grauEscolaridade;
+		this.situacaoAtual = situacaoAtual;
 	}
 
-	// Getters e Setters
-	public Long getIdUsuario() {
+
+	public Integer getIdUsuario() {
 		return idUsuario;
 	}
 
@@ -77,7 +96,7 @@ public class UsuarioLogadoResponse {
 		return genero;
 	}
 
-	public LocalDate getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
@@ -85,16 +104,16 @@ public class UsuarioLogadoResponse {
 		return estadoCivil;
 	}
 
-	public LocalDate getDataCadastro() {
+	public Date getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public String getEscolaridade() {
-		return escolaridade;
+	public String getGrauEscolaridade() {
+		return grauEscolaridade;
 	}
 
-	public Long getFkSituacaoAtual() {
-		return fkSituacaoAtual;
+	public SituacaoAtual getSituacaoAtual() {
+		return situacaoAtual;
 	}
 
 	@Override

@@ -4,70 +4,83 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import java.time.LocalDateTime;
+import javax.validation.constraints.PastOrPresent;
+import java.util.Date;
 
 @Entity
 public class Reporte {
-
-    // Atributos
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idReporte;
+	private Integer idReporte;
+
+	@PastOrPresent
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+    private Date data;
 
 	@NotNull
-	@Positive
-    private Long fkReportador;
+	@ManyToOne
+	private Usuario reportador;
 
 	@NotNull
-	@Positive
-    private Long fkReportado;
-
-    @CreationTimestamp // Indica que o atributo receberá automaticamente a data e hora do sistema no momento da criação de um registro
-    private LocalDateTime data;
+	@ManyToOne
+	private Usuario reportado;
 
 	@NotNull
-	@Positive
-    private Long fkTipoReporte;
+	@ManyToOne
+    private TipoReporte tipoReporte;
 
-	// Getters e Setters
-    public Long getFkReportador() {
-        return fkReportador;
-    }
+	private Reporte(
+			Integer fkReportador,
+			Integer fkReportado,
+			Integer fkTipoReporte
+	) {
+		this.setReportador(fkReportador);
+		this.setReportado(fkReportado);
+		this.setTipoReporte(fkTipoReporte);
+	}
 
-    public void setFkReportador(Long fkReportador) {
-        this.fkReportador = fkReportador;
-    }
+	public static Reporte fromPattern(
+			Integer fkReportador,
+			Integer fkReportado,
+			Integer fkTipoReporte
+	) {
+		return new Reporte(fkReportador, fkReportado, fkTipoReporte);
+	}
 
-    public Long getFkReportado() {
-        return fkReportado;
-    }
+	public Integer getIdReporte() {
+		return idReporte;
+	}
 
-    public void setFkReportado(Long fkReportado) {
-        this.fkReportado = fkReportado;
-    }
+	public void setIdReporte(Integer idReporte) {
+		this.idReporte = idReporte;
+	}
 
-    public Long getIdReporte() {
-        return idReporte;
-    }
+	public Date getData() {
+		return data;
+	}
 
-    public void setIdReporte(Long idReporte) {
-        this.idReporte = idReporte;
-    }
+	public Usuario getReportador() {
+		return reportador;
+	}
 
-    public LocalDateTime getData() {
-        return data;
-    }
+	public void setReportador(Integer fkReportador) {
+		this.reportador = Usuario.fromPattern(fkReportador);
+	}
 
-    public void setData(LocalDateTime data) {
-        this.data = data;
-    }
+	public Usuario getReportado() {
+		return reportado;
+	}
 
-    public Long getFkTipoReporte() {
-        return fkTipoReporte;
-    }
+	public void setReportado(Integer fkReportado) {
+		this.reportado = Usuario.fromPattern(fkReportado);
+	}
 
-    public void setFkTipoReporte(Long fkTipoReporte) {
-        this.fkTipoReporte = fkTipoReporte;
-    }
+	public TipoReporte getTipoReporte() {
+		return tipoReporte;
+	}
+
+	public void setTipoReporte(Integer fkTipoReporte) {
+		this.tipoReporte = TipoReporte.fromPattern(fkTipoReporte);
+	}
 }

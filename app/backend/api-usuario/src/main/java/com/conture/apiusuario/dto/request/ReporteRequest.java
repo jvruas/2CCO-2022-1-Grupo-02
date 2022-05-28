@@ -8,27 +8,27 @@ public class ReporteRequest {
 	// Atributos
 	@NotNull
 	@Positive
-	private Long fkReportador;
+	private Integer fkReportador;
 
 	//@Id
 	@NotNull
 	@Positive
-	private Long fkReportado;
+	private Integer fkReportado;
 
 	@NotNull
 	@Positive
-	private Long fkTipoReporte;
+	private Integer fkTipoReporte;
 
 	// Getters
-	public Long getFkReportador() {
+	public Integer getFkReportador() {
 		return fkReportador;
 	}
 
-	public Long getFkReportado() {
+	public Integer getFkReportado() {
 		return fkReportado;
 	}
 
-	public Long getFkTipoReporte() {
+	public Integer getFkTipoReporte() {
 		return fkTipoReporte;
 	}
 }

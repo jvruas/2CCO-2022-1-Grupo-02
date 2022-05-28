@@ -1,38 +1,45 @@
 package com.conture.apiusuario.dto.request;
 
+import com.conture.apiusuario.entity.SituacaoAtual;
+
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.*;
 
 public class UsuarioPerfilRequest {
+	@NotNull
+	@Positive
+	private Integer idUsuario;
 
-	// Atributos
-	@Id
-	private Long idUsuario;
-
+	@NotNull
 	@NotBlank
-	@Size(max = 9, message = "O genero deve ter no máximo 9 letras")
+	@Size(min = 1, max = 1, message = "O genero deve ter 1 letra")
 	private String genero;
-
+	@NotNull
 	@NotBlank
-	@Size(max = 10, message = "O cpf deve ter no máximo 10 letras")
+	@Size(min = 1, max = 1, message = "O cpf deve ter 1 letra")
 	private String estadoCivil;
-
+	@NotNull
 	@NotBlank
-	@Size(max = 11, message = "O telefone deve ter no máximo 11 letras")
-	private String telefone;
-
-	@NotBlank
+	@Size(max = 8, message = "O cep deve ter no máximo 8 letras")
+	@Pattern(regexp = "^[0-9]+$", message = "O CEP aceita apenas números")
 	private String cep;
-
+	@NotNull
 	@NotBlank
-	@Size(max = 30, message = "A escolaridade deve ter no máximo 30 letras")
-	private String escolaridade;
+	@Size(min = 1, max = 1, message = "A escolaridade deve ter 1 letra")
+	private String grauEscolaridade;
+	@NotNull
+	@NotBlank
+	@Size(min = 11, max = 11, message = "O telefone deve ter 11 letras")
+	@Pattern(regexp = "^[0-9]+$", message = "O telefone aceita apenas números")
+	private String telefone;
+	@NotNull
+	@NotNull
+	@Positive
+	private Integer fkSituacaoAtual;
 
-	private Long fkSituacaoAtual;
 
-	// Getters
-	public Long getIdUsuario() {
+	public Integer getIdUsuario() {
 		return idUsuario;
 	}
 
@@ -52,11 +59,9 @@ public class UsuarioPerfilRequest {
 		return cep;
 	}
 
-	public String getEscolaridade() {
-		return escolaridade;
+	public String getGrauEscolaridade() {
+		return grauEscolaridade;
 	}
 
-	public Long getFkSituacaoAtual() {
-		return fkSituacaoAtual;
-	}
+	public Integer getFkSituacaoAtual() { return fkSituacaoAtual; }
 }

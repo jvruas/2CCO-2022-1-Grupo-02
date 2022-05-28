@@ -1,21 +1,19 @@
 package com.conture.apiusuario.entity;
 
+import com.conture.apiusuario.dto.request.UsuarioCadastroRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import javax.validation.constraints.*;
+import java.util.Date;
 
 @Entity
 public class Usuario {
-
-    // Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
+    private Integer idUsuario;
 
     @Email
     @NotBlank
@@ -38,145 +36,169 @@ public class Usuario {
     @CPF
     @NotBlank
 	@Column(unique=true)
-    @Size(max = 11, message = "O cpf deve ter no máximo 11 letras")
-    private String cpf;
+    @Size(min = 11, max = 11, message = "O cpf deve ter 11 letras")
+	@Pattern(regexp = "^[0-9]+$", message = "O CPF aceita apenas números")
+	private String cpf;
 
     @NotBlank
-    @Size(max = 9, message = "O genero deve ter no máximo 9 letras")
+    @Size(min = 1, max = 1, message = "O genero deve ter 1 letra")
     private String genero;
 
-    private LocalDate dataNascimento;
+	@Past
+	@Temporal(TemporalType.TIMESTAMP)
+    private Date dataNascimento;
 
     @NotBlank
-    @Size(max = 10, message = "O cpf deve ter no máximo 10 letras")
+    @Size(min = 1, max = 1, message = "O cpf deve ter 1 letra")
     private String estadoCivil;
 
 	@NotBlank
-	@Size(max = 11, message = "O telefone deve ter no máximo 11 letras")
+	@Size(min = 11, max = 11, message = "O telefone deve ter 11 letras")
+	@Pattern(regexp = "^[0-9]+$", message = "O telefone aceita apenas números")
 	private String telefone;
 
     @NotBlank
-    private String cep;
+	@Size(max = 8, message = "O cep deve ter no máximo 8 letras")
+	@Pattern(regexp = "^[0-9]+$", message = "O CEP aceita apenas números")
+	private String cep;
 
-    @CreationTimestamp // Indica que o atributo receberá automaticamente a data e hora do sistema no momento da criação de um registro
-    private LocalDate dataCadastro;
+	@PastOrPresent
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+    private Date dataCadastro;
 
     @NotBlank
-    @Size(max = 30, message = "A escolaridade deve ter no máximo 30 letras")
-    private String escolaridade;
+    @Size(min = 1, max = 1, message = "A escolaridade deve ter 1 letra")
+    private String grauEscolaridade;
 
-    private Long fkSituacaoAtual;
+	@NotNull
+	@JsonIgnore
+	private boolean removido;
 
-    // Getters e Setters
-	public Long getIdUsuario() {
-		return idUsuario;
-	}
+	@ManyToOne()
+	private SituacaoAtual situacaoAtual;
 
-	public void setIdUsuario(Long idUsuario) {
+	private Usuario (Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
+	private Usuario(
+			String email,
+			String senha,
+			String nome,
+			String sobrenome,
+			String cpf,
+			String genero,
+			Date dataNascimento,
+			String estadoCivil,
+			String telefone,
+			String cep,
+			String grauEscolaridade,
+			Integer fkSituacaoAtual
+	) {
+		this.idUsuario = idUsuario;
 		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getSobrenome() {
-		return sobrenome;
-	}
-
-	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	public String getGenero() {
-		return genero;
-	}
-
-	public void setGenero(String genero) {
 		this.genero = genero;
-	}
-
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}
-
-	public String getEstadoCivil() {
-		return estadoCivil;
-	}
-
-	public void setEstadoCivil(String estadoCivil) {
 		this.estadoCivil = estadoCivil;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
 		this.telefone = telefone;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
 		this.cep = cep;
-	}
-
-	public LocalDate getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
+		this.grauEscolaridade = grauEscolaridade;
+		this.removido = removido;
+
+		SituacaoAtual situacaoAtual = new SituacaoAtual();
+
+		situacaoAtual.setIdSituacaoAtual(fkSituacaoAtual);
+
+		this.situacaoAtual = situacaoAtual;
 	}
 
-	public String getEscolaridade() {
-		return escolaridade;
+
+	public static Usuario fromPattern(UsuarioCadastroRequest novoUsuario) {
+		return new Usuario(
+				novoUsuario.getEmail(),
+				novoUsuario.getSenha(),
+				novoUsuario.getNome(),
+				novoUsuario.getSobrenome(),
+				novoUsuario.getCpf(),
+				novoUsuario.getGenero(),
+				novoUsuario.getDataNascimento(),
+				novoUsuario.getEstadoCivil(),
+				novoUsuario.getTelefone(),
+				novoUsuario.getCep(),
+				novoUsuario.getGrauEscolaridade(),
+				novoUsuario.getFkSituacaoAtual()
+		);
 	}
 
-	public void setEscolaridade(String escolaridade) {
-		this.escolaridade = escolaridade;
+	public static Usuario fromPattern(Integer idUsuario) {
+		return new Usuario(idUsuario);
 	}
 
-	public Long getFkSituacaoAtual() {
-		return fkSituacaoAtual;
-	}
+	public Integer getIdUsuario() { return idUsuario; }
 
-	public void setFkSituacaoAtual(Long fkSituacaoAtual) {
-		this.fkSituacaoAtual = fkSituacaoAtual;
+	public String getEmail() { return email; }
+
+	public String getSenha() { return senha; }
+
+	public String getNome() { return nome; }
+
+	public String getSobrenome() { return sobrenome; }
+
+	public String getCpf() { return cpf; }
+
+	public String getGenero() { return genero; }
+
+	public Date getDataNascimento() { return dataNascimento; }
+
+	public String getEstadoCivil() { return estadoCivil; }
+
+	public String getTelefone() { return telefone; }
+
+	public String getCep() { return cep; }
+
+	public Date getDataCadastro() { return dataCadastro; }
+
+	public String getGrauEscolaridade() { return grauEscolaridade; }
+
+	public boolean isRemovido() { return removido; }
+
+	public SituacaoAtual getSituacaoAtual() { return situacaoAtual; }
+
+	public void setIdUsuario(Integer idUsuario) { this.idUsuario = idUsuario; }
+
+	public void setEmail(String email) { this.email = email; }
+
+	public void setSenha(String senha) { this.senha = senha; }
+
+	public void setNome(String nome) { this.nome = nome; }
+
+	public void setSobrenome(String sobrenome) { this.sobrenome = sobrenome; }
+
+	public void setCpf(String cpf) { this.cpf = cpf; }
+
+	public void setGenero(String genero) { this.genero = genero; }
+
+	public void setDataNascimento(Date dataNascimento) { this.dataNascimento = dataNascimento; }
+
+	public void setEstadoCivil(String estadoCivil) { this.estadoCivil = estadoCivil; }
+
+	public void setTelefone(String telefone) { this.telefone = telefone; }
+
+	public void setCep(String cep) { this.cep = cep; }
+
+	public void setGrauEscolaridade(String grauEscolaridade) { this.grauEscolaridade = grauEscolaridade; }
+
+	public void setRemovido(boolean removido) { this.removido = removido; }
+
+	public void setSituacaoAtual(Integer situacaoAtual) {
+		SituacaoAtual novaSituacaoAtual = new SituacaoAtual();
+		novaSituacaoAtual.setIdSituacaoAtual(situacaoAtual);
+		this.situacaoAtual = novaSituacaoAtual;
 	}
 }

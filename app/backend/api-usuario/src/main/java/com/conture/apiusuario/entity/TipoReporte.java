@@ -6,22 +6,27 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class TipoReporte {
-
-    // Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idTipoReporte;
+    private Integer idTipoReporte;
 
 	@NotBlank
-	@Size(max = 45, message = "O tipo de reporte deve ter no máximo 12 letras")
+	@Size(max = 45, message = "O tipo de reporte deve ter no máximo 45 letras")
     private String nome;
 
-    // Getters e Setters
-    public Long getIdTipoReporte() {
+	private TipoReporte(Integer idTipoReporte) {
+		this.idTipoReporte = idTipoReporte;
+	}
+
+	public static TipoReporte fromPattern(Integer idTipoReporte) {
+		return new TipoReporte(idTipoReporte);
+	}
+
+	public Integer getIdTipoReporte() {
         return idTipoReporte;
     }
 
-    public void setIdTipoReporte(Long idTipoReporte) {
+    public void setIdTipoReporte(Integer idTipoReporte) {
         this.idTipoReporte = idTipoReporte;
     }
 

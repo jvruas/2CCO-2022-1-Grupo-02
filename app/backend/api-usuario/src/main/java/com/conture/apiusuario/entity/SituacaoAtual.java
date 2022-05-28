@@ -6,22 +6,20 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class SituacaoAtual {
-
-    // Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idSituacaoAtual;
+    private Integer idSituacaoAtual;
 
 	@NotBlank
     @Size(max = 45, message = "A situação atual deve ter no máximo 45 letras")
     private String nome;
 
-    // Getters e Settes
-    public int getIdSituacaoAtual() {
+
+    public Integer getIdSituacaoAtual() {
         return idSituacaoAtual;
     }
 
-    public void setIdSituacaoAtual(int idSituacaoAtual) {
+    public void setIdSituacaoAtual(Integer idSituacaoAtual) {
         this.idSituacaoAtual = idSituacaoAtual;
     }
 

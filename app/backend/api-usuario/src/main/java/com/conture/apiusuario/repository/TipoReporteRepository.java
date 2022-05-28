@@ -10,5 +10,5 @@ public interface TipoReporteRepository extends JpaRepository<TipoReporte,Integer
 	@Override
 	List<TipoReporte> findAll();
 
-	TipoReporte findByIdTipoReporte(Long tipoReporte);
+	TipoReporte findByIdTipoReporte(Integer tipoReporte);
 }

@@ -3,67 +3,45 @@ package com.conture.apiusuario.entity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import javax.validation.constraints.*;
+import java.util.Date;
 
 @Entity
 public class Avaliacao {
-
-   	// Atributos
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long fkProdutoDoacao;
+	private Integer idAvaliacao;
 
 	@NotNull
-	@Positive
-	private Long fkDonatario;
-
-	@NotNull
-	@Positive
-	private Long fkDoador;
-
-	@NotNull
-	@Positive
-    private Long valor;
+	@PositiveOrZero
+	@Max(5)
+    private Integer valor;
 
 	@Size(max = 300, message = "O comentario deve ter no máximo 300 letras")
     private String comentario;
 
-    @CreationTimestamp // Indica que o atributo receberá automaticamente a data e hora do sistema no momento da criação de um registro
-    private LocalDateTime data;
+	@PastOrPresent
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+    private Date data;
 
-	// Getters e Setters
-	public Long getFkProdutoDoacao() {
-		return fkProdutoDoacao;
+	@NotNull
+	@Positive
+	private Integer fkMatch;
+
+	public Integer getIdAvaliacao() {
+		return idAvaliacao;
 	}
 
-	public void setFkProdutoDoacao(Long fkProdutoDoacao) {
-		this.fkProdutoDoacao = fkProdutoDoacao;
+	public void setIdAvaliacao(Integer idAvaliacao) {
+		this.idAvaliacao = idAvaliacao;
 	}
 
-	public Long getFkDoador() {
-		return fkDoador;
-	}
-
-	public void setFkDoador(Long fkDoador) {
-		this.fkDoador = fkDoador;
-	}
-
-	public Long getFkDonatario() {
-		return fkDonatario;
-	}
-
-	public void setFkDonatario(Long fkDonatario) {
-		this.fkDonatario = fkDonatario;
-	}
-
-	public Long getValor() {
+	public Integer getValor() {
 		return valor;
 	}
 
-	public void setValor(Long valor) {
+	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
 
@@ -75,11 +53,19 @@ public class Avaliacao {
 		this.comentario = comentario;
 	}
 
-	public LocalDateTime getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(LocalDateTime data) {
-		this.data = data;
+//	public void setData(Date data) {
+//		this.data = data;
+//	}
+
+	public Integer getFkMatch() {
+		return fkMatch;
+	}
+
+	public void setFkMatch(Integer fkMatch) {
+		this.fkMatch = fkMatch;
 	}
 }

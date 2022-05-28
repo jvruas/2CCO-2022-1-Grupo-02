@@ -4,14 +4,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 public class UsuarioSenhaRequest {
-
-	// Atributos
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idUsuario;
+	@NotNull
+	@Positive
+	private Integer idUsuario;
 
 	@NotBlank
 	@Size(max = 18, message = "A senha deve ter no máximo 18 letras")
@@ -21,8 +21,8 @@ public class UsuarioSenhaRequest {
 	@Size(max = 18, message = "A senha deve ter no máximo 18 letras")
 	private String senhaNova;
 
-	// Getters
-	public Long getIdUsuario() {
+
+	public Integer getIdUsuario() {
 		return idUsuario;
 	}
 

@@ -5,8 +5,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class UsuarioLoginRequest {
-
-    // Atributos
 	@Email
 	@NotBlank
 	@Size(max = 80, message = "O e-mail deve ter no máximo 80 letras")
@@ -16,7 +14,7 @@ public class UsuarioLoginRequest {
 	@Size(max = 18, message = "A senha deve ter no máximo 18 letras")
     private String senha;
 
-    // Getters
+
 	public String getEmail() {
 		return email;
 	}

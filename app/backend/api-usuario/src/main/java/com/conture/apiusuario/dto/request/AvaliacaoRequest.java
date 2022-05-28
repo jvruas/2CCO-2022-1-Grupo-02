@@ -4,6 +4,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 public class AvaliacaoRequest {
 
@@ -20,6 +21,7 @@ public class AvaliacaoRequest {
 	@Positive
 	private Long valor;
 
+	@Size(max = 300, message = "O comentario deve ter no máximo 300 letras")
 	private String comentario;
 
 	// Getters

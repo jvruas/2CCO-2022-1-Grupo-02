@@ -13,7 +13,7 @@ public class GerenciadorUsuario {
         listaLogados.adiciona(usuario);
     }
 
-    public static boolean logoff(Long idUsuario) {
+    public static boolean logoff(Integer idUsuario) {
         return listaLogados.removeElemento(new UsuarioLogadoResponse(idUsuario, null, null, null, null, null, null, null, null, null));
     }
 
@@ -25,7 +25,7 @@ public class GerenciadorUsuario {
         return listaLogados.getTamanho() == 0;
     }
 
-	public static Optional<UsuarioLogadoResponse> buscaUsuarioLogado(Long idUsuario){
+	public static Optional<UsuarioLogadoResponse> buscaUsuarioLogado(Integer idUsuario){
 		int indice = listaLogados.busca(new UsuarioLogadoResponse(idUsuario, null, null, null, null, null, null, null, null, null));
 
 		if(indice == -1){

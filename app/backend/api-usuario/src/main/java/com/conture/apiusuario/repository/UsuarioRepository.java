@@ -4,26 +4,35 @@ import com.conture.apiusuario.entity.Usuario;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+    Optional<UsuarioLogadoResponse> findByEmailAndSenha(String email, String senha);
 
-    /*@Query("select new com.conture.apiusuario.resposta.UsuarioLogado(u.id_usuario, u.nome, u.sobrenome, u.genero," +
-            "u.data_nascimento, u.estado_civil, u.cep, u.data_cadastro, u.escolaridade, u.fk_situacao_atual" +
-            "from Usuario u")*/
-    // List<UsuarioLogado> listaUsuario();
+	Optional<UsuarioLogadoResponse> findByIdUsuario(Integer idUsuario);
 
-    UsuarioLogadoResponse findByEmailAndSenha(String email, String senha);
 
-	Usuario findByIdUsuario(Long idUsuario);
+	List<UsuarioLogadoResponse> findByNomeIgnoreCaseContainsOrderByNome(String nome);
 
-	List<Usuario> findByNome(String nome);
-
+	@Query("update Usuario u set u.email = null, u.senha = null, u.nome = null, u.sobrenome = null, u.cpf = null, u.genero = null, u.dataNascimento = null, u.estadoCivil = null, u.telefone = null, u.cep = null, u.grauEscolaridade = null, u.situacaoAtual = null, u.removido = true where u.idUsuario = ?1")
 	@Modifying
 	@Transactional
-	void deleteByIdUsuario(Long idUsuario);
+	void logicDelete(Integer idUsuario);
 
-	boolean existsByIdUsuario(Long idUsuario);
+	@Query("update Usuario u set u.senha = ?2 where u.idUsuario = ?1")
+	@Modifying
+	@Transactional
+	void updateSenha(Integer idUsuario, String novaSenha);
+
+	boolean existsByEmail(String email);
+
+	boolean existsByCpf(String cpf);
+
+	@Query("Select u.idUsuario FROM Usuario u WHERE u.cpf = ?1")
+	Integer getIdUserByCpf(String cpf);
+
 }
