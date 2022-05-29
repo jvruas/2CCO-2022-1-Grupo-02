@@ -14,6 +14,8 @@ public class TipoReporte {
 	@Size(max = 45, message = "O tipo de reporte deve ter no máximo 45 letras")
     private String nome;
 
+	public TipoReporte() {}
+
 	private TipoReporte(Integer idTipoReporte) {
 		this.idTipoReporte = idTipoReporte;
 	}

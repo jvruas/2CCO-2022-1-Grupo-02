@@ -12,19 +12,37 @@ public class ImagemUsuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idImagemUsuario;
-
+	@NotBlank
+	@Size(min = 1, max = 1, message = "O Tipo de imagem deve ter 1 letra")
+	private String tipoImagem;
 	@NotNull
 	@JsonIgnore
 	@Column(length = 16_777_216)
 	private byte[] imagemUsuario;
-
-	@NotBlank
-	@Size(min = 1, max = 1, message = "O Tipo de imagem deve ter 1 letra")
-	private String tipoImagem;
-
 	@NotNull
 	@ManyToOne
 	private Usuario usuario;
+
+
+	public ImagemUsuario(){}
+
+	private ImagemUsuario(
+			String tipoImagem,
+			byte[] imagemUsuario,
+			Integer fkUsuario
+	) {
+		this.tipoImagem = tipoImagem;
+		this.imagemUsuario = imagemUsuario;
+		this.setUsuario(fkUsuario);
+	}
+
+	public static ImagemUsuario fromPattern(
+			String tipoImagem,
+			byte[] imagemUsuario,
+			Integer fkUsuario
+	) {
+		return new ImagemUsuario(tipoImagem, imagemUsuario, fkUsuario);
+	}
 
 	public Integer getIdImagemUsuario() { return idImagemUsuario; }
 
@@ -50,7 +68,7 @@ public class ImagemUsuario {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuario(Integer fkUsuario) {
+		this.usuario = Usuario.fromPattern(fkUsuario);
 	}
 }

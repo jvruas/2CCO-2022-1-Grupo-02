@@ -78,6 +78,8 @@ public class Usuario {
 	@ManyToOne()
 	private SituacaoAtual situacaoAtual;
 
+	public Usuario() {}
+
 	private Usuario (Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}

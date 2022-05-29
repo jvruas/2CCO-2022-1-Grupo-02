@@ -28,6 +28,9 @@ public class DesligamentoConta {
 	@ManyToOne
 	private Usuario usuario;
 
+
+	public DesligamentoConta() {}
+
 	private DesligamentoConta(
 			String motivoDesligamentoConta,
 			Integer fkUsuario

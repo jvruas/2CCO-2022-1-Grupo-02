@@ -30,6 +30,8 @@ public class Reporte {
 	@ManyToOne
     private TipoReporte tipoReporte;
 
+	public Reporte() {}
+
 	private Reporte(
 			Integer fkReportador,
 			Integer fkReportado,

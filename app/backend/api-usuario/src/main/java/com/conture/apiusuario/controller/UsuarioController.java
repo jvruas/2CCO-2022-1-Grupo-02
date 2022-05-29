@@ -52,20 +52,26 @@ public class UsuarioController {
 
 	@PostMapping("/logar")
 	public ResponseEntity<UsuarioLogadoResponse> login(@RequestBody @Valid UsuarioLoginRequest usuario) {
-		Optional<UsuarioLogadoResponse> usuarioLogado = this.usuarioRepository.findByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
+		Optional<UsuarioLogadoResponse> usuarioPesquisado = this.usuarioRepository.findByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
 
-		if (usuarioLogado.isEmpty()) {
+		if (usuarioPesquisado.isEmpty()) {
 			return status(404).build();
 		}
 
-		GerenciadorUsuario.login(usuarioLogado.get());
+		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(usuarioPesquisado.get().getIdUsuario());
 
-		return status(201).body(usuarioLogado.get());
+		if (usuarioLogado.isPresent()) {
+			return status(409).build();
+		}
+
+		GerenciadorUsuario.login(usuarioPesquisado.get());
+
+		return status(201).body(usuarioPesquisado.get());
 	}
 
 
-	@DeleteMapping("/logoff")
-	public ResponseEntity logoff(Integer idUsuario) {
+	@DeleteMapping("/{idUsuario}/logoff")
+	public ResponseEntity logoff(@PathVariable Integer idUsuario) {
 		if (!GerenciadorUsuario.logoff(idUsuario)){
 			return status(404).build();
 		}
@@ -120,9 +126,9 @@ public class UsuarioController {
 //	}
 
 
-	@DeleteMapping
+	@DeleteMapping("/{idUsuario}")
 	public ResponseEntity deletarUsuario(
-			@RequestParam Integer idUsuario,
+			@PathVariable Integer idUsuario,
 			@RequestParam String motivoDesligamento
 	) {
 		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(idUsuario);
@@ -156,8 +162,8 @@ public class UsuarioController {
 	}
 
 
-	@GetMapping("/id")
-	public ResponseEntity<UsuarioLogadoResponse> pesquisarUsuarioId(@RequestParam @Valid Integer idUsuario) {
+	@GetMapping("/{idUsuario}")
+	public ResponseEntity<UsuarioLogadoResponse> pesquisarUsuarioId(@PathVariable @Valid Integer idUsuario) {
 		Optional<UsuarioLogadoResponse> usuario = this.usuarioRepository.findByIdUsuario(idUsuario);
 
 		if (usuario.isEmpty()) {
@@ -244,7 +250,8 @@ public class UsuarioController {
 		return ResponseEntity.status(200).build();
 	}
 
-	@PostMapping(value = "/imagem/{idUsuario}", consumes = "image/jpeg")
+
+	@PostMapping(value = "/{idUsuario}/imagem", consumes = "image/jpeg")
 	public ResponseEntity adicionarImagem(
 			@PathVariable Integer idUsuario,
 			@RequestParam String tipoImagem,
@@ -254,7 +261,33 @@ public class UsuarioController {
 			return status(400).build();
 		}
 
-		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(idUsuario, tipoImagem);
+		if (!tipoImagem.equals("b") && !tipoImagem.equals("p")) {
+			return status(404).build();
+		}
+
+		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
+
+		if (idImagemUsuario.isPresent()) {
+			return status(409).build();
+		}
+
+		this.imagemUsuarioRepository.save(ImagemUsuario.fromPattern(tipoImagem, novaImagem, idUsuario));
+
+		return status(201).build();
+	}
+
+
+	@PatchMapping(value = "/{idUsuario}/imagem", consumes = "image/jpeg")
+	public ResponseEntity atualizarImagem(
+			@PathVariable Integer idUsuario,
+			@RequestParam String tipoImagem,
+			@RequestBody byte[] novaImagem
+	) {
+		if (novaImagem.length > 16_777_216 || novaImagem.length == 0) { // Magical Number -> 16MB
+			return status(400).build();
+		}
+
+		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
 
 		if (idImagemUsuario.isEmpty()) {
 			return status(404).build();
@@ -266,25 +299,15 @@ public class UsuarioController {
 	}
 
 
-	@PatchMapping(value = "/imagem/{idUsuario}", consumes = "image/jpeg")
-	public ResponseEntity atualizarImagem(
-			@PathVariable Integer idUsuario,
-			@RequestParam String tipoImagem,
-			@RequestBody byte[] novaImagem
-	) {
-		if (novaImagem.length > 16_777_216 || novaImagem.length == 0) { // Magical Number -> 16MB
-			return status(400).build();
-		}
-
-		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(idUsuario, tipoImagem);
+	@GetMapping(value = "/{idUsuario}/imagem", produces = "image/jpeg")
+	public ResponseEntity<byte[]> getImagem(@PathVariable Integer idUsuario, @RequestParam String tipoImagem){
+		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
 
 		if (idImagemUsuario.isEmpty()) {
 			return status(404).build();
 		}
 
-		this.imagemUsuarioRepository.updateImagem(idImagemUsuario.get(), novaImagem);
-
-		return status(200).build();
+		return status(200).body(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
 	}
 
 	//+ adicionarImagem(idUsuario: Integer, tipoImagem: String): ResponseEntity<Integer>
