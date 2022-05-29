@@ -9,8 +9,8 @@ import java.util.List;
 public interface MensagemGrupoRepository extends JpaRepository<MensagemGrupo, Integer> {
 
 
-	@Query("select m.mensagem, m.data from MensagemGrupo as m where m.fkProdutoDoacao =?1")
-	List<MensagemGrupo> acharMensagemProduto(Integer fkProdutoDoacao);
+	@Query("select m.mensagem, m.data from MensagemGrupo as m where m.fkProdutoDoacao =?1 order by m.data")
+	List<String> acharMensagemProduto(Integer fkProdutoDoacao);
 
 
 

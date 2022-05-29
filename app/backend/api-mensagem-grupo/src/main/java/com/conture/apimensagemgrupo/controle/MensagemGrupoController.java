@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,13 +44,29 @@ public class MensagemGrupoController {
 
 
 	@GetMapping
-	public ResponseEntity listarMensagens(@RequestParam Integer fkProdutoDoacao){
-		List<MensagemGrupo> listaMensagem = this.mensagemGrupoRepository.acharMensagemProduto(fkProdutoDoacao);
-		if (listaMensagem.isEmpty()){
+	public ResponseEntity<List<List<String>>> listarMensagens(@RequestParam Integer fkProdutoDoacao){
+		List<String> listaMensagem = this.mensagemGrupoRepository.acharMensagemProduto(fkProdutoDoacao);
+
+//		List<List<Object>> lista = new ArrayList();
+//		for (List<MensagemGrupo> l: listaMensagem){
+//			lista.add(l);
+//		}
+
+		List<List<String>> lista = new ArrayList();
+
+
+        for (int i = 0; i < listaMensagem.size(); i++) {
+			lista.add(listaMensagem);
+        }
+
+		if (lista.isEmpty()){
 			return ResponseEntity.status(404).build();
 		}
-		return ResponseEntity.status(200).body(listaMensagem);
+
+
+		return ResponseEntity.status(200).body(lista);
 	}
+
 
 //    @GetMapping("/grupo")
 //    public ResponseEntity listarMensagemGrupo(
