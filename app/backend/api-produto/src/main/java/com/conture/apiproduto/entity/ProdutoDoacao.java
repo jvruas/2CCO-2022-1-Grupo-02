@@ -58,13 +58,12 @@ private Date dataCriacao;
 @Temporal(TemporalType.TIMESTAMP)
 private Date dataConclusao;
 
-@NotNull
-@Positive
-private Long fkCategoriaProduto;
+@ManyToOne
+private CategoriaProduto fkCategoriaProduto;
 
 
 	public ProdutoDoacao(Long fkDoador, String nome, String marca, String modelo, String descricao,
-						 boolean defeito, boolean entrega, Long fkCategoriaProduto) {
+						 boolean defeito, boolean entrega, CategoriaProduto fkCategoriaProduto) {
 		this.fkDoador = fkDoador;
 		this.nome = nome;
 		this.marca = marca;
@@ -102,7 +101,7 @@ public Date getDataCriacao() { return dataCriacao; }
 
 public Date getDataConclusao() { return dataConclusao; }
 
-public Long getFkCategoriaProduto() { return fkCategoriaProduto; }
+public CategoriaProduto getFkCategoriaProduto() { return fkCategoriaProduto; }
 
 public void setFkDoador(Long fkDoador) { this.fkDoador = fkDoador; }
 
@@ -124,5 +123,5 @@ public void setQuantidadeVisualizacao(int quantidadeVisualizacao) { this.quantid
 
 public void setDataConclusao(Date dataConclusao) { this.dataConclusao = dataConclusao; }
 
-public void setFkCategoriaProduto(Long fkCategoriaProduto) { this.fkCategoriaProduto = fkCategoriaProduto; }
+public void setFkCategoriaProduto(CategoriaProduto fkCategoriaProduto) { this.fkCategoriaProduto = fkCategoriaProduto; }
 }

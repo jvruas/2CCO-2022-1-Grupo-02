@@ -293,10 +293,10 @@ public class ProdutoController {
 	}
 
 	@PostMapping(value = "/importacao", consumes = "text/txt")
-	public ResponseEntity postImportacao(@RequestBody String importacao) {
+	public ResponseEntity postImportacao(@RequestBody byte[] importacao) {
 		Txt importarTxt = new Txt();
 
-		if (importarTxt.leArquivoTxt("teste", importacao)){
+		if (importarTxt.leArquivoTxt(importacao, categoriaRepository, produtoRepository)){
 			return ResponseEntity.status(201).build();
 		}
 		return ResponseEntity.status(404).build();

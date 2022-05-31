@@ -14,69 +14,29 @@ import java.util.List;
 import java.util.Optional;
 
 public class Txt {
-
-	@Autowired
-	private CategoriaProdutoRepository repositoryCategoria;
-
-	@Autowired
-	private ProdutoRepository repositoryProduto;
-
-	public void gravaRegistro(String registro, String nomeArq) {
-		BufferedWriter saida = null;
-
-		// try-catch para abrir o arquivo
-		try {
-			saida = new BufferedWriter(new FileWriter(nomeArq, true));
-		}
-		catch (IOException erro) {
-			System.out.println("Erro ao abrir o arquivo: " + erro);
-		}
-
-		// try-catch para gravar o registro e fechar o arquivo
-		try {
-			saida.append(registro + "\n");
-			saida.close();
-		}
-		catch (IOException erro) {
-			System.out.println("Erro ao gravar o arquivo: " + erro);
-		}
-	}
-
-	public void gravaArquivoTxt(String corpo, String nomeArq) {
-		int contaRegCorpo = 0;
-
-		// Monta o registro de header
-		String header = "HDPRODUTO";
-		header += LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
-		header += "01";
-		// Grava o registro de header
-		gravaRegistro(header, nomeArq);
-
-		// Monta e grava os registros de corpo
-		gravaRegistro(corpo, nomeArq);
-
-
-		// Monta e grava o registro de trailer
-		String trailer = "TR";
-		trailer += String.format("%010d", contaRegCorpo);
-		gravaRegistro(trailer, nomeArq);
-	}
-
-	public Boolean leArquivoTxt(String nomeArq, String registro) {
-		gravaArquivoTxt(registro, nomeArq);
+	public Boolean leArquivoTxt(
+			byte[] importacao,
+			CategoriaProdutoRepository repositoryCategoria,
+			ProdutoRepository repositoryProduto
+	) {
 		BufferedReader entrada = null;
 		Long fkDoador;
 		String tipoRegistro;
-		String nome, marca, modelo, descricao, categoria;
+		String nome, marca, modelo, descricao, categoria, registro;
 		Boolean defeito, entrega;
-		Long fkCategoria;
+		CategoriaProduto fkCategoria;
 		int contaRegCorpoLido = 0;
-		int qtdRegCorpoGravado = 10;
 
 		List<ProdutoDoacao> listaLida = new ArrayList<>();
 
+		String filePath = "arq.txt";
+		File file = new File(filePath);
+
 		try {
-			entrada = new BufferedReader(new FileReader(nomeArq));
+			BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(file));
+			os.write(importacao);
+			os.close();
+			entrada = new BufferedReader(new FileReader(file));
 		}
 		catch (IOException erro) {
 			System.out.println("Erro ao abrir o arquivo: " + erro);
@@ -106,7 +66,6 @@ public class Txt {
 					contaRegCorpoLido++;
 				} else if (tipoRegistro.equals("TR")) {
 					System.out.println("É um registro de trailer");
-					qtdRegCorpoGravado = Integer.parseInt(registro.substring(2, 12));
 				}
 				//	else {
 				//		System.out.println("Quantidade de registros lidos não é compatível " +
@@ -120,10 +79,10 @@ public class Txt {
 					nome = registro.substring(8, 68).trim();
 					marca = registro.substring(68, 128).trim();
 					modelo = registro.substring(128, 188).trim();
-					categoria = registro.substring(188, 208).trim();
-					defeito = Boolean.valueOf(registro.substring(208, 209));
-					entrega = Boolean.valueOf(registro.substring(210, 211));
-					descricao = registro.substring(211, 271).trim();
+					categoria = registro.substring(188, 233).trim();
+					defeito = Boolean.valueOf(registro.substring(233, 234));
+					entrega = Boolean.valueOf(registro.substring(234, 235));
+					descricao = registro.substring(235, 635).trim();
 
 					contaRegCorpoLido++;
 
@@ -133,7 +92,7 @@ public class Txt {
 
 					Optional<CategoriaProduto> categoriaEncontrada = repositoryCategoria.findByNomeIgnoreCase(categoria);
 
-					fkCategoria = categoriaEncontrada.get().getIdCategoriaProduto();
+					fkCategoria = categoriaEncontrada.get();
 
 					ProdutoDoacao produtoDoacao = new ProdutoDoacao(
 							fkDoador, nome,
@@ -154,7 +113,6 @@ public class Txt {
 				}
 
 				registro = entrada.readLine();
-				qtdRegCorpoGravado--;
 			}
 		}
 		catch (IOException erro) {
@@ -172,6 +130,7 @@ public class Txt {
 				repositoryProduto.save(p);
 			}
 			System.out.println(listaLida);
+			file.delete();
 			return true;
 		}
 		catch (IllegalStateException e){
