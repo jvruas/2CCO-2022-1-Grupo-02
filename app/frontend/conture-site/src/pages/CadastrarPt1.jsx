@@ -78,7 +78,7 @@ function CadastrarPt1() {
                             onClick={handleClick2} />
                     </div>
                     <div class="divisao direita">
-                        <Link className="link" to="/finalizar-cadastro"><button type="submit">PRÓXIMO<img src={iconSeta} alt="Ícone de próximo" /></button></Link>
+                        <Link className="link" to="/finalizar-cadastro"><button className="btn-cadastro1" type="submit">PRÓXIMO<img src={iconSeta} alt="Ícone de próximo" /></button></Link>
                     </div>
 
                 </form>

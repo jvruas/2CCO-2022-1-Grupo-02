@@ -11,7 +11,7 @@ function PopUp() {
                     <form id="popUp" action="" onsubmit="">
                         <div class="divisao centralizado">
                             <h2>REDEFINIR A SENHA</h2>
-                            <a href="../html/Login.html"><img class="btn_fechar" src={iconClosePop} alt="Ícone fechar" /></a>
+                            <Link className="link-fechar" to="/login"><img class="btn_fechar" src={iconClosePop} alt="Ícone fechar" /></Link>
                         </div>
                         <div class="paragrafo">
                             <p>Identifique-se para receber um e-mail com as instruções e o link para criar uma nova senha.</p>
@@ -21,7 +21,7 @@ function PopUp() {
                             <input type="email" name="email" />
                         </div>
                         <div class="divisao centralizado">
-                            <Link className="link-confirmar" to="/esqueci-senha"><button><p>CONFIRMAR</p><img class="icon" src={iconOk} alt="Ícone de confirmação" /></button></Link>
+                            <Link className="link-popUp" to="/esqueci-senha"><button className="btn-popUp"><p>CONFIRMAR</p><img class="icon" src={iconOk} alt="Ícone de confirmação" /></button></Link>
                         </div>
                     </form>
                 </div>
