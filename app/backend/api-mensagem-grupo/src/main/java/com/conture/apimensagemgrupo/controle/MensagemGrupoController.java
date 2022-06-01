@@ -73,8 +73,9 @@ public class MensagemGrupoController {
 				listaGrupo.add(topicList);
 			}
         }
+
 		if (listaGrupo.isEmpty()){
-			return status(204).body(listaGrupo);
+			return status(204).build();
 		}
 
 		return status(200).body(listaGrupo);

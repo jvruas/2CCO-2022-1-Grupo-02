@@ -1,5 +1,6 @@
 package com.conture.apimensagemgrupo.controle;
 
+import com.conture.apimensagemgrupo.dto.requests.MensagemGrupoRequest;
 import com.conture.apimensagemgrupo.entidade.MensagemGrupo;
 import com.conture.apimensagemgrupo.repository.MensagemGrupoRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -44,16 +45,34 @@ class MensagemGrupoControllerTest {
 
 
 	@Test
+	@DisplayName("Verificando se irá voltar status 201")
+	void adicionarMensagemIraRetornar201() {
+		when(mensagemGrupoRepository.findByIdMensagemGrupo(1)).thenReturn(new MensagemGrupoRequest());
+		MensagemGrupoRequest  m = mensagemGrupoRepository.findByIdMensagemGrupo(1);
+		ResponseEntity response = controller.adicionarPergunta(m);
+		assertEquals(201, response.getStatusCodeValue());
+	}
+
+	@Test
+	@DisplayName("Verificando se irá voltar status 401")
+	void adicionarMensagemIraRetornar401() {
+		when(mensagemGrupoRepository.findByIdMensagemGrupoAndFkProdutoDoacao(1,1)).thenReturn(new MensagemGrupo());
+		List<MensagemGrupo>  m = mensagemGrupoRepository.findByIdMensagemGrupoAndFkProdutoDoacao(1,2);
+		ResponseEntity response = controller.adicionarPergunta(m);
+		assertEquals(401, response.getStatusCodeValue());
+	}
+
+	@Test
 	@DisplayName("Verificando se irá voltar status 200")
 	void listarSeIraRetornar200() {
 		MensagemGrupo m1 = mock(MensagemGrupo.class);
 		List<MensagemGrupo> resposta = List.of(m1);
-
+		when(mensagemGrupoRepository.acharMensagemPergunta(1)).thenReturn(resposta);
 		ResponseEntity<List<Object>> response = controller.listarMensagens(1);
 
 		assertEquals(200, response.getStatusCodeValue());
-		assertNotNull(response.getBody());
 	}
+
 
 	@Test
 	@DisplayName("Verificando se irá voltar status 204")
@@ -64,7 +83,7 @@ class MensagemGrupoControllerTest {
 		ResponseEntity<List<Object>> response = controller.listarMensagens(5);
 
 		assertEquals(204, response.getStatusCodeValue());
-		assertNotNull(response.getBody());
+
 	}
 
 }

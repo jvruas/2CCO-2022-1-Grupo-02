@@ -1,5 +1,6 @@
 package com.conture.apimensagemgrupo.repository;
 
+import com.conture.apimensagemgrupo.dto.requests.MensagemGrupoRequest;
 import com.conture.apimensagemgrupo.dto.response.MensagemGrupoResponse;
 import com.conture.apimensagemgrupo.entidade.MensagemGrupo;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +15,7 @@ public interface MensagemGrupoRepository extends JpaRepository<MensagemGrupo, In
 	@Query("select m from MensagemGrupo as m where m.fkProdutoDoacao =?1 and m.fkMensagemPrincipal IS NULL")
 	List<MensagemGrupo> acharMensagemPergunta(Integer fkProdutoDoacao);
 
+	MensagemGrupoRequest findByIdMensagemGrupo(Integer idMensagemGrupo);
 
 	List<MensagemGrupo> findByIdMensagemGrupoAndFkProdutoDoacao(Integer idMensagemGrupo, Integer fkProdutoDoacao);
 
