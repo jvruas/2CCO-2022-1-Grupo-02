@@ -48,7 +48,8 @@ public class UsuarioLogadoResponse {
 	private String grauEscolaridade;
 
 	@NotNull
-	private SituacaoAtual situacaoAtual;
+	@NotBlank
+	private String situacaoAtual;
 
 
 	public UsuarioLogadoResponse(
@@ -61,7 +62,7 @@ public class UsuarioLogadoResponse {
 			String estadoCivil,
 			Date dataCadastro,
 			String grauEscolaridade,
-			SituacaoAtual situacaoAtual
+			String situacaoAtual
 	) {
 		this.idUsuario = idUsuario;
 		this.email = email;
@@ -112,7 +113,7 @@ public class UsuarioLogadoResponse {
 		return grauEscolaridade;
 	}
 
-	public SituacaoAtual getSituacaoAtual() {
+	public String getSituacaoAtual() {
 		return situacaoAtual;
 	}
 

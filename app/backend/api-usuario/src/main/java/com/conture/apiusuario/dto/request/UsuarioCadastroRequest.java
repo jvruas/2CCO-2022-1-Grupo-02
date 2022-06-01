@@ -18,7 +18,7 @@ public class UsuarioCadastroRequest {
 
 	@NotNull
 	@NotBlank
-	@Size(max = 18, message = "A senha deve ter no máximo 18 letras")
+	@Size(min = 6, max = 18, message = "A senha deve ter no máximo 18 letras")
 	private String senha;
 
 	@NotNull
@@ -60,7 +60,7 @@ public class UsuarioCadastroRequest {
 
 	@NotNull
 	@NotBlank
-	@Size(max = 8, message = "O cep deve ter no máximo 8 letras")
+	@Size(min = 8, max = 8, message = "O cep deve ter no máximo 8 letras")
 	@Pattern(regexp = "^[0-9]+$", message = "O CEP aceita apenas números")
 	private String cep;
 

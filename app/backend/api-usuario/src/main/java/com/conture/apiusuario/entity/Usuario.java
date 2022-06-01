@@ -1,6 +1,7 @@
 package com.conture.apiusuario.entity;
 
 import com.conture.apiusuario.dto.request.UsuarioCadastroRequest;
+import com.conture.apiusuario.dto.request.UsuarioPerfilRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
@@ -22,7 +23,7 @@ public class Usuario {
     private String email;
 
     @NotBlank
-    @Size(max = 18, message = "A senha deve ter no máximo 18 letras")
+    @Size(min = 6, max = 18, message = "A senha deve ter no máximo 18 letras")
     private String senha;
 
     @NotBlank
@@ -58,7 +59,7 @@ public class Usuario {
 	private String telefone;
 
     @NotBlank
-	@Size(max = 8, message = "O cep deve ter no máximo 8 letras")
+	@Size(min = 8, max = 8, message = "O cep deve ter no máximo 8 letras")
 	@Pattern(regexp = "^[0-9]+$", message = "O CEP aceita apenas números")
 	private String cep;
 
@@ -120,6 +121,9 @@ public class Usuario {
 		this.situacaoAtual = situacaoAtual;
 	}
 
+	public static Usuario fromPattern(Integer idUsuario) {
+		return new Usuario(idUsuario);
+	}
 
 	public static Usuario fromPattern(UsuarioCadastroRequest novoUsuario) {
 		return new Usuario(
@@ -136,10 +140,6 @@ public class Usuario {
 				novoUsuario.getGrauEscolaridade(),
 				novoUsuario.getFkSituacaoAtual()
 		);
-	}
-
-	public static Usuario fromPattern(Integer idUsuario) {
-		return new Usuario(idUsuario);
 	}
 
 	public Integer getIdUsuario() { return idUsuario; }
@@ -198,9 +198,9 @@ public class Usuario {
 
 	public void setRemovido(boolean removido) { this.removido = removido; }
 
-	public void setSituacaoAtual(Integer situacaoAtual) {
+	public void setSituacaoAtual(Integer fksituacaoAtual) {
 		SituacaoAtual novaSituacaoAtual = new SituacaoAtual();
-		novaSituacaoAtual.setIdSituacaoAtual(situacaoAtual);
+		novaSituacaoAtual.setIdSituacaoAtual(fksituacaoAtual);
 		this.situacaoAtual = novaSituacaoAtual;
 	}
 }

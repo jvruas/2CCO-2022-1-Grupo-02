@@ -13,25 +13,25 @@ public class UsuarioPerfilRequest {
 
 	@NotNull
 	@NotBlank
-	@Size(min = 1, max = 1, message = "O genero deve ter 1 letra")
+	@Size(min = 1, max = 1)
 	private String genero;
 	@NotNull
 	@NotBlank
-	@Size(min = 1, max = 1, message = "O cpf deve ter 1 letra")
+	@Size(min = 1, max = 1)
 	private String estadoCivil;
 	@NotNull
 	@NotBlank
-	@Size(max = 8, message = "O cep deve ter no máximo 8 letras")
-	@Pattern(regexp = "^[0-9]+$", message = "O CEP aceita apenas números")
+	@Size(min = 8, max = 8)
+	@Pattern(regexp = "^[0-9]+$")
 	private String cep;
 	@NotNull
 	@NotBlank
-	@Size(min = 1, max = 1, message = "A escolaridade deve ter 1 letra")
+	@Size(min = 1, max = 1)
 	private String grauEscolaridade;
 	@NotNull
 	@NotBlank
-	@Size(min = 11, max = 11, message = "O telefone deve ter 11 letras")
-	@Pattern(regexp = "^[0-9]+$", message = "O telefone aceita apenas números")
+	@Size(min = 11, max = 11)
+	@Pattern(regexp = "^[0-9]+$")
 	private String telefone;
 	@NotNull
 	@NotNull

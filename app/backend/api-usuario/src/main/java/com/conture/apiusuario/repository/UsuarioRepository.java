@@ -11,12 +11,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-    Optional<UsuarioLogadoResponse> findByEmailAndSenha(String email, String senha);
+	@Query("select new com.conture.apiusuario.dto.response.UsuarioLogadoResponse(u.idUsuario, u.email, u.nome, u.sobrenome, u.genero, u.dataNascimento, u.estadoCivil, u.dataCadastro, u.grauEscolaridade, u.situacaoAtual.nome) from Usuario u where u.email = ?1 and u.senha = ?2")
+	Optional<UsuarioLogadoResponse> findByEmailAndSenha(String email, String senha);
 
-	Optional<UsuarioLogadoResponse> findByIdUsuario(Integer idUsuario);
+	@Query("select new com.conture.apiusuario.dto.response.UsuarioLogadoResponse(u.idUsuario, u.email, u.nome, u.sobrenome, u.genero, u.dataNascimento, u.estadoCivil, u.dataCadastro, u.grauEscolaridade, u.situacaoAtual.nome) from Usuario u where u.idUsuario = ?1")
+	Optional<UsuarioLogadoResponse> getByIdUsuario(Integer idUsuario);
 
-
-	List<UsuarioLogadoResponse> findByNomeIgnoreCaseContainsOrderByNome(String nome);
+	@Query("select new com.conture.apiusuario.dto.response.UsuarioLogadoResponse(u.idUsuario, u.email, u.nome, u.sobrenome, u.genero, u.dataNascimento, u.estadoCivil, u.dataCadastro, u.grauEscolaridade, u.situacaoAtual.nome) from Usuario u where lower(concat(u.nome, u.sobrenome)) like concat('%',?1,'%') order by u.nome")
+	List<UsuarioLogadoResponse> getByNome(String nome);
 
 	@Query("update Usuario u set u.email = null, u.senha = null, u.nome = null, u.sobrenome = null, u.cpf = null, u.genero = null, u.dataNascimento = null, u.estadoCivil = null, u.telefone = null, u.cep = null, u.grauEscolaridade = null, u.situacaoAtual = null, u.removido = true where u.idUsuario = ?1")
 	@Modifying
