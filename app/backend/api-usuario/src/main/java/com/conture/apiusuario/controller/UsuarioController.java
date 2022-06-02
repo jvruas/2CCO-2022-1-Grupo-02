@@ -272,6 +272,10 @@ public class UsuarioController {
 			return status(400).build();
 		}
 
+		if (!this.usuarioRepository.existsById(idUsuario)) {
+			return status(404).build();
+		}
+
 		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
 
 		if (idImagemUsuario.isPresent()) {
@@ -327,6 +331,24 @@ public class UsuarioController {
 
 		return status(200).body(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
 	}
-	
-	//+ deletarImagem(idUsuario: Integer, tipoImagem: String): ResponseEntity
+
+	@DeleteMapping("/{idUsuario}/imagem")
+	public ResponseEntity deletarImagem(
+			@PathVariable @Min(1) Integer idUsuario,
+			@RequestParam @Size(min = 1, max = 1) String tipoImagem
+	) {
+		if (!tipoImagem.equals("b") && !tipoImagem.equals("p")) {
+			return status(400).build();
+		}
+
+		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
+
+		if (idImagemUsuario.isEmpty()) {
+			return status(404).build();
+		}
+
+		this.imagemUsuarioRepository.deleteById(idImagemUsuario.get());
+
+		return status(200).build();
+	}
 }
