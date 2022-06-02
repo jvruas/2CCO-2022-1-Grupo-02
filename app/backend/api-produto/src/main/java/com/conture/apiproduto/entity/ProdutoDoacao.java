@@ -1,5 +1,6 @@
 package com.conture.apiproduto.entity;
 
+import com.conture.apiproduto.rest.usuario.UsuarioResposta;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -10,9 +11,6 @@ import java.util.Date;
 
 @Entity
 public class ProdutoDoacao {
-@NotNull
-@Positive
-private Long fkDoador;
 
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 @Id
@@ -58,13 +56,15 @@ private Date dataCriacao;
 @Temporal(TemporalType.TIMESTAMP)
 private Date dataConclusao;
 
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	private UsuarioResposta usuario;
 @ManyToOne
 private CategoriaProduto fkCategoriaProduto;
 
 
-	public ProdutoDoacao(Long fkDoador, String nome, String marca, String modelo, String descricao,
+	public ProdutoDoacao(UsuarioResposta usuario, String nome, String marca, String modelo, String descricao,
 						 boolean defeito, boolean entrega, CategoriaProduto fkCategoriaProduto) {
-		this.fkDoador = fkDoador;
+		this.usuario = usuario;
 		this.nome = nome;
 		this.marca = marca;
 		this.modelo = modelo;
@@ -77,9 +77,16 @@ private CategoriaProduto fkCategoriaProduto;
 	public ProdutoDoacao() {
 	}
 
-	public Long getFkDoador() { return fkDoador; }
 
-public Long getIdProdutoDoacao() { return idProdutoDoacao; }
+	public UsuarioResposta getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioResposta usuario) {
+		this.usuario = usuario;
+	}
+
+	public Long getIdProdutoDoacao() { return idProdutoDoacao; }
 
 public String getNome() { return nome; }
 
@@ -103,7 +110,6 @@ public Date getDataConclusao() { return dataConclusao; }
 
 public CategoriaProduto getFkCategoriaProduto() { return fkCategoriaProduto; }
 
-public void setFkDoador(Long fkDoador) { this.fkDoador = fkDoador; }
 
 public void setNome(String nome) { this.nome = nome; }
 

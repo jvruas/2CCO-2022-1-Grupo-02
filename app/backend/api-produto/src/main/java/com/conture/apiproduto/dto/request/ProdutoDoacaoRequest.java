@@ -1,14 +1,14 @@
 package com.conture.apiproduto.dto.request;
 
 import com.conture.apiproduto.entity.CategoriaProduto;
+import com.conture.apiproduto.rest.usuario.UsuarioResposta;
 
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.*;
 
 public class ProdutoDoacaoRequest {
-    @NotNull
-    @Positive
-    private Long fkDoador;
+    @ManyToOne
+    private UsuarioResposta usuario;
 
     @NotBlank
     @NotNull
@@ -45,7 +45,7 @@ public class ProdutoDoacaoRequest {
     private CategoriaProduto fkCategoriaProduto;
 
     public ProdutoDoacaoRequest(
-            Long fkDoador,
+            UsuarioResposta usuario,
             String nome,
             String marca,
             String modelo,
@@ -56,7 +56,7 @@ public class ProdutoDoacaoRequest {
             int quantidadeVisualizacao,
             CategoriaProduto fkCategoriaProduto
     ) {
-        this.fkDoador = fkDoador;
+        this.usuario = usuario;
         this.nome = nome;
         this.marca = marca;
         this.modelo = modelo;
@@ -68,8 +68,8 @@ public class ProdutoDoacaoRequest {
         this.fkCategoriaProduto = fkCategoriaProduto;
     }
 
-    public Long getFkDoador() {
-        return fkDoador;
+    public UsuarioResposta getUsuario() {
+        return usuario;
     }
 
     public String getNome() {

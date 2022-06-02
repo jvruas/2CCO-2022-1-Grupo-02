@@ -2,6 +2,7 @@ package com.conture.apiusuario.dto.response;
 
 import com.conture.apiusuario.entity.SituacaoAtual;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
@@ -47,6 +48,13 @@ public class UsuarioLogadoResponse {
 	@Size(min = 1, max = 1, message = "A escolaridade deve ter 1 letra")
 	private String grauEscolaridade;
 
+	@CPF
+	@NotBlank
+	@Column(unique=true)
+	@Size(min = 11, max = 11, message = "O cpf deve ter 11 letras")
+	@Pattern(regexp = "^[0-9]+$", message = "O CPF aceita apenas números")
+	private String cpf;
+
 	@NotNull
 	private SituacaoAtual situacaoAtual;
 
@@ -61,7 +69,9 @@ public class UsuarioLogadoResponse {
 			String estadoCivil,
 			Date dataCadastro,
 			String grauEscolaridade,
-			SituacaoAtual situacaoAtual
+			SituacaoAtual situacaoAtual,
+			String cpf
+
 	) {
 		this.idUsuario = idUsuario;
 		this.email = email;
@@ -73,11 +83,16 @@ public class UsuarioLogadoResponse {
 		this.dataCadastro = dataCadastro;
 		this.grauEscolaridade = grauEscolaridade;
 		this.situacaoAtual = situacaoAtual;
+		this.cpf = cpf;
 	}
 
 
 	public Integer getIdUsuario() {
 		return idUsuario;
+	}
+
+	public String getCpf() {
+		return cpf;
 	}
 
 	public String getEmail() {

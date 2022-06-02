@@ -1,5 +1,6 @@
 package com.conture.apiproduto.entity;
 
+import com.conture.apiproduto.rest.usuario.UsuarioResposta;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -10,19 +11,19 @@ import java.util.Date;
 @Entity
 public class Match {
 
-	@NotNull
-	@Positive
-	private Long fkDoador;
-
-	@NotNull
-	@Positive
-	private Long fkProdutoDoacao;
-
-
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	@Positive
-	@NotNull
-	private Long fkDonatario;
+	private Long id;
+
+
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	private UsuarioResposta fkDoador;
+
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	private ProdutoDoacao fkProdutoDoacao;
+
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	private UsuarioResposta fkDonatario;
 
 	@NotNull
 	@Positive
@@ -40,11 +41,11 @@ public class Match {
 	@Size(min = 1,max = 1 )
 	private String status;
 
-	public Long getFkDoador() { return fkDoador; }
+	public UsuarioResposta getFkDoador() { return fkDoador; }
 
 	public Double getMatchPorcentagem() { return matchPorcentagem; }
 
-	public Long getFkDonatario() { return fkDonatario; }
+	public UsuarioResposta getFkDonatario() { return fkDonatario; }
 
 	public Date getDataInteresse() {return this.dataInteresse;}
 
@@ -56,17 +57,25 @@ public class Match {
 		this.status = status;
 	}
 
-	public void setFkDoador(Long fkDoador) { this.fkDoador = fkDoador; }
+	public void setFkDoador(UsuarioResposta fkDoador) { this.fkDoador = fkDoador; }
 
-	public void setFkDonatario(Long fkDonatario) {this.fkDonatario = fkDonatario;}
+	public void setFkDonatario(UsuarioResposta fkDonatario) {this.fkDonatario = fkDonatario;}
 
 	public void setMatchPorcentagem(Double matchPorcentagem) { this.matchPorcentagem = matchPorcentagem; }
 
-	public Long getFkProdutoDoacao() {
+	public ProdutoDoacao getFkProdutoDoacao() {
 		return fkProdutoDoacao;
 	}
 
-	public void setFkProdutoDoacao(Long fkProdutoDoacao) {
+	public void setFkProdutoDoacao(ProdutoDoacao fkProdutoDoacao) {
 		this.fkProdutoDoacao = fkProdutoDoacao;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

@@ -4,7 +4,8 @@ import com.conture.apiproduto.entity.CategoriaProduto;
 import com.conture.apiproduto.entity.ProdutoDoacao;
 import com.conture.apiproduto.repository.CategoriaProdutoRepository;
 import com.conture.apiproduto.repository.ProdutoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.conture.apiproduto.rest.usuario.ClienteUsuario;
+import com.conture.apiproduto.rest.usuario.UsuarioResposta;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -17,14 +18,16 @@ public class Txt {
 	public Boolean leArquivoTxt(
 			byte[] importacao,
 			CategoriaProdutoRepository repositoryCategoria,
-			ProdutoRepository repositoryProduto
+			ProdutoRepository repositoryProduto,
+			ClienteUsuario repositoryUsuario
 	) {
 		BufferedReader entrada = null;
-		Long fkDoador;
+		Long fkUsuario;
 		String tipoRegistro;
 		String nome, marca, modelo, descricao, categoria, registro;
 		Boolean defeito, entrega;
 		CategoriaProduto fkCategoria;
+		UsuarioResposta usuario;
 		int contaRegCorpoLido = 0;
 
 		List<ProdutoDoacao> listaLida = new ArrayList<>();
@@ -75,14 +78,14 @@ public class Txt {
 				else if (tipoRegistro.equals("CP02")) {
 					System.out.println("É um registro de corpo");
 					System.out.println(registro);
-					fkDoador = Long.valueOf(registro.substring(4, 8));
+					fkUsuario = Long.valueOf(registro.substring(4, 8));
 					nome = registro.substring(8, 68).trim();
 					marca = registro.substring(68, 128).trim();
 					modelo = registro.substring(128, 188).trim();
 					categoria = registro.substring(188, 233).trim();
 					defeito = Boolean.valueOf(registro.substring(233, 234));
 					entrega = Boolean.valueOf(registro.substring(234, 235));
-					descricao = registro.substring(235, 635).trim();
+					descricao = registro.substring(235, 490).trim();
 
 					contaRegCorpoLido++;
 
@@ -91,11 +94,16 @@ public class Txt {
 					System.out.println(categoria);
 
 					Optional<CategoriaProduto> categoriaEncontrada = repositoryCategoria.findByNomeIgnoreCase(categoria);
-
 					fkCategoria = categoriaEncontrada.get();
 
+					UsuarioResposta usuarioEncontrado = repositoryUsuario.getUsuario(fkUsuario);
+					usuario = usuarioEncontrado;
+
+
+
 					ProdutoDoacao produtoDoacao = new ProdutoDoacao(
-							fkDoador, nome,
+							usuario,
+							nome,
 							marca, modelo,
 							descricao, defeito,
 							entrega, fkCategoria
@@ -135,6 +143,73 @@ public class Txt {
 		}
 		catch (IllegalStateException e){
 			return false;
+		}
+	}
+
+	public Boolean gravaArquivoTxt(List<ProdutoDoacao> lista) {
+		int contaRegCorpo = 0;
+
+		// Monta o registro de header
+		String header = "HDPRODUTO";
+		header += LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+		header += "01";
+		// Grava o registro de header
+		gravaRegistro(header);
+
+		// Monta e grava os registros de corpo
+		String corpo;
+		for (ProdutoDoacao a : lista) {
+			String defeito;
+			if(a.isDefeito()){
+				defeito = "S";
+			} else {
+				defeito = "N";
+			}
+
+			corpo = "CP01";
+			corpo += String.format("%-60.60s", a.getNome());
+			corpo += String.format("%-60.60s", a.getMarca());
+			corpo += String.format("%-60.60s", a.getModelo());
+			corpo += String.format("%-255.255s", a.getDescricao());
+			corpo += String.format("%-1.1s", defeito);
+			corpo += String.format("%-19.19s", a.getDataCriacao());
+			corpo += String.format("%-45.45s", a.getFkCategoriaProduto().getNome());
+			corpo += String.format("%-45.45s", a.getUsuario().getNome());
+			corpo += String.format("%-80.80s", a.getUsuario().getEmail());
+			corpo += String.format("%-45.45s", a.getUsuario().getCpf());
+			contaRegCorpo++;
+			gravaRegistro(corpo);
+
+			System.out.println("CORPO");
+			System.out.println(corpo);
+		}
+
+
+		// Monta e grava o registro de trailer
+		String trailer = "TR";
+		trailer += String.format("%05d", contaRegCorpo);
+		gravaRegistro(trailer);
+		return true;
+	}
+
+	public static void gravaRegistro(String registro) {
+		BufferedWriter saida = null;
+
+		// try-catch para abrir o arquivo
+		try {
+			saida = new BufferedWriter(new FileWriter("produtos.txt", true));
+		}
+		catch (IOException erro) {
+			System.out.println("Erro ao abrir o arquivo: " + erro);
+		}
+
+		// try-catch para gravar o registro e fechar o arquivo
+		try {
+			saida.append(registro + "\n");
+			saida.close();
+		}
+		catch (IOException erro) {
+			System.out.println("Erro ao gravar o arquivo: " + erro);
 		}
 	}
 }
