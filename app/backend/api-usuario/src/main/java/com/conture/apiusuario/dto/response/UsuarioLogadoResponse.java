@@ -56,7 +56,8 @@ public class UsuarioLogadoResponse {
 	private String cpf;
 
 	@NotNull
-	private SituacaoAtual situacaoAtual;
+	@NotBlank
+	private String situacaoAtual;
 
 
 	public UsuarioLogadoResponse(
@@ -127,7 +128,7 @@ public class UsuarioLogadoResponse {
 		return grauEscolaridade;
 	}
 
-	public SituacaoAtual getSituacaoAtual() {
+	public String getSituacaoAtual() {
 		return situacaoAtual;
 	}
 

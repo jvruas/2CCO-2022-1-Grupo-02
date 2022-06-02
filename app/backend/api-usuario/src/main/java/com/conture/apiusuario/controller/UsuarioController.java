@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.util.*;
 
 import static org.springframework.http.ResponseEntity.*;
@@ -71,7 +72,7 @@ public class UsuarioController {
 
 
 	@DeleteMapping("/{idUsuario}/logoff")
-	public ResponseEntity logoff(@PathVariable Integer idUsuario) {
+	public ResponseEntity logoff(@PathVariable @Min(1) Integer idUsuario) {
 		if (!GerenciadorUsuario.logoff(idUsuario)){
 			return status(404).build();
 		}
@@ -79,7 +80,17 @@ public class UsuarioController {
 		return status(200).build();
 	}
 
-	// TODO: + existsUsuarioLogado(idUsuario: Integer): ResponseEntity<Boolean>
+
+	@GetMapping("/{idUsuario}/logado")
+	public ResponseEntity<UsuarioLogadoResponse> existsUsuarioLogado(@RequestParam @Min(1) Integer idUsuario) {
+		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(idUsuario);
+
+		if (usuarioLogado.isEmpty()) {
+			return status(404).build();
+		}
+
+		return status(200).body(usuarioLogado.get());
+	}
 
 
 	@PostMapping("/reporte")
@@ -91,7 +102,7 @@ public class UsuarioController {
 				|| !this.usuarioRepository.existsById(reporte.getFkReportado())
 				|| !this.tipoReporteRepository.existsById(reporte.getFkTipoReporte())
 		) {
-			return status(404).build();
+			return status(401).build();
 		}
 
 		this.reporteRepository.save(Reporte.fromPattern(
@@ -128,9 +139,11 @@ public class UsuarioController {
 
 	@DeleteMapping("/{idUsuario}")
 	public ResponseEntity deletarUsuario(
-			@PathVariable Integer idUsuario,
-			@RequestParam String motivoDesligamento
+			@PathVariable @Min(1) Integer idUsuario,
+			@RequestParam @Size(min = 1, max = 1) String motivoDesligamento
 	) {
+		if (motivoDesligamento.equals(" ")) return status(400).build();
+
 		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(idUsuario);
 
 		if (usuarioLogado.isEmpty()) {
@@ -151,20 +164,21 @@ public class UsuarioController {
 	public ResponseEntity<List<UsuarioLogadoResponse>> pesquisarUsuarioNome(
 			@RequestParam @Valid String nome
 	) {
-		List<UsuarioLogadoResponse> listaUsuarios = this.usuarioRepository
-														.findByNomeIgnoreCaseContainsOrderByNome(nome);
+		if (nome.trim().equals("")) return status(400).build();
 
-		if (listaUsuarios.isEmpty()) {
+		List<UsuarioLogadoResponse> listaUsuarioPesquisado = this.usuarioRepository.getByNome(nome.replaceAll(" ", "").toLowerCase());
+
+		if (listaUsuarioPesquisado.isEmpty()) {
 			return status(204).build();
 		}
 
-		return status(200).body(listaUsuarios);
+		return status(200).body(listaUsuarioPesquisado);
 	}
 
 
 	@GetMapping("/{idUsuario}")
-	public ResponseEntity<UsuarioLogadoResponse> pesquisarUsuarioId(@PathVariable @Valid Integer idUsuario) {
-		Optional<UsuarioLogadoResponse> usuario = this.usuarioRepository.findByIdUsuario(idUsuario);
+	public ResponseEntity<UsuarioLogadoResponse> pesquisarUsuarioId(@PathVariable @Min(1) Integer idUsuario) {
+		Optional<UsuarioLogadoResponse> usuario = this.usuarioRepository.getByIdUsuario(idUsuario);
 
 		if (usuario.isEmpty()) {
 			return status(404).build();
@@ -211,7 +225,7 @@ public class UsuarioController {
 
 
 	@PatchMapping("/senha")
-	public ResponseEntity atualizarSenha(@RequestBody UsuarioSenhaRequest usuarioSenha) {
+	public ResponseEntity atualizarSenha(@RequestBody @Valid UsuarioSenhaRequest usuarioSenha) {
 		Optional<Usuario> usuario = this.usuarioRepository.findById(usuarioSenha.getIdUsuario());
 
 		if (usuario.isEmpty()) {
@@ -219,9 +233,12 @@ public class UsuarioController {
 		}
 
 		if (!usuario.get().getSenha().equals(usuarioSenha.getSenhaAtual())
-				|| usuario.get().getSenha().equals(usuarioSenha.getSenhaNova())
 		) {
-			return status(400).build();
+			return status(403).build();
+		}
+
+		if (usuario.get().getSenha().equals(usuarioSenha.getSenhaNova())) {
+			return status(409).build();
 		}
 
 		this.usuarioRepository.updateSenha(usuarioSenha.getIdUsuario(), usuarioSenha.getSenhaNova());
@@ -238,7 +255,7 @@ public class UsuarioController {
 			return ResponseEntity.status(404).build();
 		}
 
-		Usuario usuario = usuarioRepository.getById(usuarioPerfil.getIdUsuario());
+		Usuario usuario = this.usuarioRepository.getById(usuarioPerfil.getIdUsuario());
 		usuario.setGenero(usuarioPerfil.getGenero());
 		usuario.setEstadoCivil(usuarioPerfil.getEstadoCivil());
 		usuario.setCep(usuarioPerfil.getCep());
@@ -253,8 +270,8 @@ public class UsuarioController {
 
 	@PostMapping(value = "/{idUsuario}/imagem", consumes = "image/jpeg")
 	public ResponseEntity adicionarImagem(
-			@PathVariable Integer idUsuario,
-			@RequestParam String tipoImagem,
+			@PathVariable @Min(1) Integer idUsuario,
+			@RequestParam @Size(min = 1, max = 1) String tipoImagem,
 			@RequestBody byte[] novaImagem
 	) {
 		if (novaImagem.length > 16_777_216 || novaImagem.length == 0) { // Magical Number -> 16MB
@@ -262,6 +279,10 @@ public class UsuarioController {
 		}
 
 		if (!tipoImagem.equals("b") && !tipoImagem.equals("p")) {
+			return status(400).build();
+		}
+
+		if (!this.usuarioRepository.existsById(idUsuario)) {
 			return status(404).build();
 		}
 
@@ -279,11 +300,15 @@ public class UsuarioController {
 
 	@PatchMapping(value = "/{idUsuario}/imagem", consumes = "image/jpeg")
 	public ResponseEntity atualizarImagem(
-			@PathVariable Integer idUsuario,
-			@RequestParam String tipoImagem,
+			@PathVariable @Min(1) Integer idUsuario,
+			@RequestParam @Size(min = 1, max = 1) String tipoImagem,
 			@RequestBody byte[] novaImagem
 	) {
 		if (novaImagem.length > 16_777_216 || novaImagem.length == 0) { // Magical Number -> 16MB
+			return status(400).build();
+		}
+
+		if (!tipoImagem.equals("b") && !tipoImagem.equals("p")) {
 			return status(400).build();
 		}
 
@@ -300,7 +325,14 @@ public class UsuarioController {
 
 
 	@GetMapping(value = "/{idUsuario}/imagem", produces = "image/jpeg")
-	public ResponseEntity<byte[]> getImagem(@PathVariable Integer idUsuario, @RequestParam String tipoImagem){
+	public ResponseEntity<byte[]> getImagem(
+			@PathVariable @Min(1) Integer idUsuario,
+			@RequestParam @Size(min = 1, max = 1) String tipoImagem
+	) {
+		if (!tipoImagem.equals("b") && !tipoImagem.equals("p")) {
+			return status(400).build();
+		}
+
 		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
 
 		if (idImagemUsuario.isEmpty()) {
@@ -310,6 +342,23 @@ public class UsuarioController {
 		return status(200).body(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
 	}
 
-	//+ adicionarImagem(idUsuario: Integer, tipoImagem: String): ResponseEntity<Integer>
-	//+ deletarImagem(idUsuario: Integer, tipoImagem: String): ResponseEntity
+	@DeleteMapping("/{idUsuario}/imagem")
+	public ResponseEntity deletarImagem(
+			@PathVariable @Min(1) Integer idUsuario,
+			@RequestParam @Size(min = 1, max = 1) String tipoImagem
+	) {
+		if (!tipoImagem.equals("b") && !tipoImagem.equals("p")) {
+			return status(400).build();
+		}
+
+		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
+
+		if (idImagemUsuario.isEmpty()) {
+			return status(404).build();
+		}
+
+		this.imagemUsuarioRepository.deleteById(idImagemUsuario.get());
+
+		return status(200).build();
+	}
 }

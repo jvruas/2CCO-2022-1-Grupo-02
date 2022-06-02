@@ -1,6 +1,7 @@
 package com.conture.apimensagemgrupo.controle;
 
 import com.conture.apimensagemgrupo.dto.requests.MensagemGrupoRequest;
+import com.conture.apimensagemgrupo.dto.response.MensagemGrupoResponse;
 import com.conture.apimensagemgrupo.entidade.MensagemGrupo;
 import com.conture.apimensagemgrupo.repository.MensagemGrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.http.ResponseEntity.*;
 
 
 @RestController
@@ -29,42 +32,53 @@ public class MensagemGrupoController {
         mensagemGrupo.setFkUsuario(mensagem.getFkUsuario());
         mensagemGrupo.setFkProdutoDoacao(mensagem.getFkProdutoDoacao());
 
+
 		if (mensagem.getFkMensagemPrincipal() != null) {
 			MensagemGrupo mensagemPrincipal = new MensagemGrupo();
 
-			mensagemPrincipal.setIdMensagemGrupo(mensagem.getFkMensagemPrincipal());
+			List<MensagemGrupo> m = mensagemGrupoRepository.findByIdMensagemGrupoAndFkProdutoDoacao(mensagem.getFkMensagemPrincipal(),mensagem.getFkProdutoDoacao());
+			if (m.isEmpty()){
+				return status(401).build();
+			}
 
+			mensagemPrincipal.setIdMensagemGrupo(mensagem.getFkMensagemPrincipal());
 			mensagemGrupo.setFkMensagemPrincipal(mensagemPrincipal);
 		}
-
 		mensagemGrupoRepository.save(mensagemGrupo);
-
-		return ResponseEntity.status(201).build();
+		return status(201).build();
     }
 
-
 	@GetMapping
-	public ResponseEntity<List<List<String>>> listarMensagens(@RequestParam Integer fkProdutoDoacao){
-		List<String> listaMensagem = this.mensagemGrupoRepository.acharMensagemProduto(fkProdutoDoacao);
+	public ResponseEntity<List<Object>> listarMensagens(@RequestParam Integer fkProdutoDoacao){
+		List<Object> listaGrupo = new ArrayList();
 
-//		List<List<Object>> lista = new ArrayList();
-//		for (List<MensagemGrupo> l: listaMensagem){
-//			lista.add(l);
-//		}
+		List<MensagemGrupo> listaPergunta = this.mensagemGrupoRepository.acharMensagemPergunta(fkProdutoDoacao);
 
-		List<List<String>> lista = new ArrayList();
-
-
-        for (int i = 0; i < listaMensagem.size(); i++) {
-			lista.add(listaMensagem);
-        }
-
-		if (lista.isEmpty()){
-			return ResponseEntity.status(404).build();
+		if (listaPergunta.isEmpty()) {
+			return status(204).build();
 		}
 
+		for (int i = 0; i < listaPergunta.size(); i++) {
+            List<Object> topicList = new ArrayList();
 
-		return ResponseEntity.status(200).body(lista);
+            topicList.add(listaPergunta.get(i));
+
+            List<MensagemGrupoResponse> listaResposta =
+					this.mensagemGrupoRepository.acharMensagemResposta(fkProdutoDoacao, listaPergunta.get(i));
+
+			if (listaResposta.isEmpty()) {
+				listaGrupo.add(topicList);
+			} else {
+				topicList.add(listaResposta);
+				listaGrupo.add(topicList);
+			}
+        }
+
+		if (listaGrupo.isEmpty()){
+			return status(204).build();
+		}
+
+		return status(200).body(listaGrupo);
 	}
 
 
@@ -101,9 +115,4 @@ public class MensagemGrupoController {
 //
 //        return ResponseEntity.status(200).body(groupChatList);
 //    }
-
-
-
-
-
 }

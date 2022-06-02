@@ -12,13 +12,13 @@ public class UsuarioSenhaRequest {
 	@NotNull
 	@Positive
 	private Integer idUsuario;
-
+	@NotNull
 	@NotBlank
-	@Size(max = 18, message = "A senha deve ter no máximo 18 letras")
+	@Size(min = 6, max = 18)
 	private String senhaAtual;
-
+	@NotNull
 	@NotBlank
-	@Size(max = 18, message = "A senha deve ter no máximo 18 letras")
+	@Size(min = 6, max = 18)
 	private String senhaNova;
 
 
