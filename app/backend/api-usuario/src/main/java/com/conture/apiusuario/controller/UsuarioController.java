@@ -80,7 +80,17 @@ public class UsuarioController {
 		return status(200).build();
 	}
 
-	// TODO: + existsUsuarioLogado(idUsuario: Integer): ResponseEntity<Boolean>
+
+	@GetMapping("/{idUsuario}/logado")
+	public ResponseEntity<UsuarioLogadoResponse> existsUsuarioLogado(@RequestParam @Min(1) Integer idUsuario) {
+		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(idUsuario);
+
+		if (usuarioLogado.isEmpty()) {
+			return status(404).build();
+		}
+
+		return status(200).body(usuarioLogado.get());
+	}
 
 
 	@PostMapping("/reporte")
