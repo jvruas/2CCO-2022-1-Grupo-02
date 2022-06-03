@@ -50,11 +50,11 @@ public class UsuarioController {
 
 		this.usuarioRepository.save(Usuario.fromPattern(novoUsuario));
 
-		return status(201).body(this.usuarioRepository.getIdUserByCpf(novoUsuario.getCpf()));
+		return status(201).body(this.usuarioRepository.getIdUserByCpf(novoUsuario.getCpf()).get());
 	}
 
 
-	@PostMapping("/logar")
+	@PostMapping("/login")
 	public ResponseEntity<UsuarioLogadoResponse> login(@RequestBody @Valid UsuarioLoginRequest usuario) {
 		Optional<UsuarioLogadoResponse> usuarioPesquisado = this.usuarioRepository.getByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
 
@@ -74,9 +74,9 @@ public class UsuarioController {
 	}
 
 
-	@DeleteMapping("/{idUsuario}/logoff")
+	@DeleteMapping("/{idUsuario}/login")
 	public ResponseEntity logoff(@PathVariable @Min(1) Integer idUsuario) {
-		if (!GerenciadorUsuario.logoff(idUsuario)){
+		if (!GerenciadorUsuario.logoff(idUsuario)) {
 			return status(404).build();
 		}
 
@@ -84,7 +84,7 @@ public class UsuarioController {
 	}
 
 
-	@GetMapping("/{idUsuario}/logado")
+	@GetMapping("/{idUsuario}/login")
 	public ResponseEntity<UsuarioLogadoResponse> existsUsuarioLogado(@RequestParam @Min(1) Integer idUsuario) {
 		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(idUsuario);
 
@@ -187,6 +187,22 @@ public class UsuarioController {
 		}
 
 		return status(200).body(usuario.get());
+	}
+
+
+	@GetMapping("/email")
+	public ResponseEntity<Integer> pesquisarUsuarioEmail(@RequestParam @Size(max = 80) @Pattern(regexp = "[@]") String email) {
+		if (email.trim().equals("")) {
+			return status(400).build();
+		}
+
+		Optional<Integer> idUsuario = this.usuarioRepository.getByEmail(email);
+
+		if (idUsuario.isEmpty()) {
+			return status(404).build();
+		}
+
+		return status(200).body(idUsuario.get());
 	}
 
 

@@ -34,12 +34,12 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
 	boolean existsByCpf(String cpf);
 
-//	@Query("select u from Usuario u where u.idUsuario = ?1 and u.removido = false")
-//	Optional<Usuario> getUsuarioById(Integer idUsuario);
-
 	@Query("select case when count(u) = 1 then true else false end from Usuario u where u.idUsuario = ?1 and u.removido = false")
 	boolean hasUsuarioById(Integer idUsuario);
 
 	@Query("Select u.idUsuario FROM Usuario u WHERE u.cpf = ?1")
-	Integer getIdUserByCpf(String cpf);
+	Optional<Integer> getIdUserByCpf(String cpf);
+
+	@Query("Select u.idUsuario FROM Usuario u WHERE u.email = ?1")
+	Optional<Integer> getByEmail(String email);
 }
