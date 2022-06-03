@@ -1,64 +1,57 @@
 package com.conture.apiusuario.dto.response;
 
-import com.conture.apiusuario.entity.SituacaoAtual;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.*;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class UsuarioLogadoResponse {
+	@NotNull
+	@Positive
 	private Integer idUsuario;
 
-	@Email
 	@NotBlank
-	@Column(unique=true)
-	@Size(max = 80, message = "O e-mail deve ter no máximo 80 letras")
+	@Email
+	@Size(max = 80)
 	private String email;
 
 	@NotBlank
-	@Size(max = 45, message = "O nome deve ter no máximo 45 letras")
+	@Size(max = 45)
 	private String nome;
 
 	@NotBlank
-	@Size(max = 60, message = "O sobrenome deve ter no máximo 60 letras")
+	@Size(max = 60)
 	private String sobrenome;
 
 	@NotBlank
-	@Size(min = 1, max = 1, message = "O genero deve ter 1 letra")
+	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[F,M,X]")
 	private String genero;
 
 	@Past
 	private Date dataNascimento;
 
 	@NotBlank
-	@Size(min = 1, max = 1, message = "O cpf deve ter 1 letra")
+	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[S,C,$,D,V]")
 	private String estadoCivil;
 
-	// Indica que o atributo receberá automaticamente a data e hora do sistema no momento da criação de um registro
 	@PastOrPresent
 	private Date dataCadastro;
 
 	@NotBlank
-	@Size(min = 1, max = 1, message = "A escolaridade deve ter 1 letra")
+	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[A,I,F,M,S,P,E,D]")
 	private String grauEscolaridade;
 
-	@CPF
 	@NotBlank
-	@Column(unique=true)
-	@Size(min = 11, max = 11, message = "O cpf deve ter 11 letras")
-	@Pattern(regexp = "^[0-9]+$", message = "O CPF aceita apenas números")
+	@CPF
+	@Size(min = 11, max = 11)
+	@Pattern(regexp = "^[0-9]+$")
 	private String cpf;
 
-	@NotNull
 	@NotBlank
 	private String situacaoAtual;
-
 
 	public UsuarioLogadoResponse(
 			Integer idUsuario,
@@ -70,9 +63,8 @@ public class UsuarioLogadoResponse {
 			String estadoCivil,
 			Date dataCadastro,
 			String grauEscolaridade,
-			SituacaoAtual situacaoAtual,
-			String cpf
-
+			String cpf,
+			String situacaoAtual
 	) {
 		this.idUsuario = idUsuario;
 		this.email = email;
@@ -83,8 +75,8 @@ public class UsuarioLogadoResponse {
 		this.estadoCivil = estadoCivil;
 		this.dataCadastro = dataCadastro;
 		this.grauEscolaridade = grauEscolaridade;
-		this.situacaoAtual = situacaoAtual;
 		this.cpf = cpf;
+		this.situacaoAtual = situacaoAtual;
 	}
 
 

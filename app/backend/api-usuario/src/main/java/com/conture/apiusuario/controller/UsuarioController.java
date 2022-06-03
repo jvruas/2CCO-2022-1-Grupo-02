@@ -42,8 +42,11 @@ public class UsuarioController {
 				|| this.usuarioRepository.existsByCpf(novoUsuario.getCpf())
 				|| this.usuarioRepository.existsByEmail(novoUsuario.getEmail())
 		) {
-			return status(400).build();
+			return status(409).build();
 		}
+
+		novoUsuario.setNome(novoUsuario.getNome().trim().toUpperCase());
+		novoUsuario.setSobrenome(novoUsuario.getSobrenome().trim().toUpperCase());
 
 		this.usuarioRepository.save(Usuario.fromPattern(novoUsuario));
 
@@ -53,7 +56,7 @@ public class UsuarioController {
 
 	@PostMapping("/logar")
 	public ResponseEntity<UsuarioLogadoResponse> login(@RequestBody @Valid UsuarioLoginRequest usuario) {
-		Optional<UsuarioLogadoResponse> usuarioPesquisado = this.usuarioRepository.findByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
+		Optional<UsuarioLogadoResponse> usuarioPesquisado = this.usuarioRepository.getByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
 
 		if (usuarioPesquisado.isEmpty()) {
 			return status(404).build();
@@ -99,7 +102,7 @@ public class UsuarioController {
 				GerenciadorUsuario.buscaUsuarioLogado(reporte.getFkReportador());
 
 		if (reportador.isEmpty()
-				|| !this.usuarioRepository.existsById(reporte.getFkReportado())
+				|| !this.usuarioRepository.hasUsuarioById(reporte.getFkReportado())
 				|| !this.tipoReporteRepository.existsById(reporte.getFkTipoReporte())
 		) {
 			return status(401).build();
@@ -110,7 +113,6 @@ public class UsuarioController {
 				reporte.getFkReportado(),
 				reporte.getFkTipoReporte()
 		));
-
 
 		return status(201).build();
 	}
@@ -140,10 +142,8 @@ public class UsuarioController {
 	@DeleteMapping("/{idUsuario}")
 	public ResponseEntity deletarUsuario(
 			@PathVariable @Min(1) Integer idUsuario,
-			@RequestParam @Size(min = 1, max = 1) String motivoDesligamento
+			@RequestParam @Size(min = 1, max = 1) @Pattern(regexp = "[A,T,Q,P,N,X]") String motivoDesligamento
 	) {
-		if (motivoDesligamento.equals(" ")) return status(400).build();
-
 		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(idUsuario);
 
 		if (usuarioLogado.isEmpty()) {
@@ -162,11 +162,13 @@ public class UsuarioController {
 
 	@GetMapping("/nome")
 	public ResponseEntity<List<UsuarioLogadoResponse>> pesquisarUsuarioNome(
-			@RequestParam @Valid String nome
+			@RequestParam String nome
 	) {
-		if (nome.trim().equals("")) return status(400).build();
+		String cleansedNome = nome.trim().toUpperCase();
 
-		List<UsuarioLogadoResponse> listaUsuarioPesquisado = this.usuarioRepository.getByNome(nome.replaceAll(" ", "").toLowerCase());
+		if (cleansedNome.equals("")) return status(400).build();
+
+		List<UsuarioLogadoResponse> listaUsuarioPesquisado = this.usuarioRepository.getByNome(cleansedNome);
 
 		if (listaUsuarioPesquisado.isEmpty()) {
 			return status(204).build();
@@ -178,7 +180,7 @@ public class UsuarioController {
 
 	@GetMapping("/{idUsuario}")
 	public ResponseEntity<UsuarioLogadoResponse> pesquisarUsuarioId(@PathVariable @Min(1) Integer idUsuario) {
-		Optional<UsuarioLogadoResponse> usuario = this.usuarioRepository.getByIdUsuario(idUsuario);
+		Optional<UsuarioLogadoResponse> usuario = this.usuarioRepository.getUsuarioLogadoById(idUsuario);
 
 		if (usuario.isEmpty()) {
 			return status(404).build();

@@ -1,7 +1,6 @@
 package com.conture.apiusuario.entity;
 
 import com.conture.apiusuario.dto.request.UsuarioCadastroRequest;
-import com.conture.apiusuario.dto.request.UsuarioPerfilRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
@@ -43,7 +42,8 @@ public class Usuario {
 
     @NotBlank
     @Size(min = 1, max = 1, message = "O genero deve ter 1 letra")
-    private String genero;
+	@Pattern(regexp = "[F,M,X]", message = "Genero aceita apenas [ F | M | X ] como valores")
+	private String genero;
 
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
@@ -51,7 +51,8 @@ public class Usuario {
 
     @NotBlank
     @Size(min = 1, max = 1, message = "O cpf deve ter 1 letra")
-    private String estadoCivil;
+	@Pattern(regexp = "[S,C,$,D,V]", message = "Estado civil aceita apenas [ S | C | $ | D | V ] como valores")
+	private String estadoCivil;
 
 	@NotBlank
 	@Size(min = 11, max = 11, message = "O telefone deve ter 11 letras")
@@ -70,7 +71,10 @@ public class Usuario {
 
     @NotBlank
     @Size(min = 1, max = 1, message = "A escolaridade deve ter 1 letra")
-    private String grauEscolaridade;
+	@Pattern(regexp = "[A,I,F,M,S,P,E,D]", message = "Grau de escolaridade aceita apenas [ A | I | F | M | S | P | E | D ] como valores")
+	private String grauEscolaridade;
+
+	private Boolean verificado = false;
 
 	@NotNull
 	@JsonIgnore
@@ -99,7 +103,6 @@ public class Usuario {
 			String grauEscolaridade,
 			Integer fkSituacaoAtual
 	) {
-		this.idUsuario = idUsuario;
 		this.email = email;
 		this.senha = senha;
 		this.nome = nome;
@@ -110,15 +113,8 @@ public class Usuario {
 		this.estadoCivil = estadoCivil;
 		this.telefone = telefone;
 		this.cep = cep;
-		this.dataCadastro = dataCadastro;
 		this.grauEscolaridade = grauEscolaridade;
-		this.removido = removido;
-
-		SituacaoAtual situacaoAtual = new SituacaoAtual();
-
-		situacaoAtual.setIdSituacaoAtual(fkSituacaoAtual);
-
-		this.situacaoAtual = situacaoAtual;
+		this.setSituacaoAtual(fkSituacaoAtual);
 	}
 
 	public static Usuario fromPattern(Integer idUsuario) {
@@ -168,6 +164,8 @@ public class Usuario {
 
 	public String getGrauEscolaridade() { return grauEscolaridade; }
 
+	public Boolean isVerificado() { return verificado; }
+
 	public boolean isRemovido() { return removido; }
 
 	public SituacaoAtual getSituacaoAtual() { return situacaoAtual; }
@@ -195,6 +193,8 @@ public class Usuario {
 	public void setCep(String cep) { this.cep = cep; }
 
 	public void setGrauEscolaridade(String grauEscolaridade) { this.grauEscolaridade = grauEscolaridade; }
+
+	public void setVerificado(Boolean verificado) { this.verificado = verificado; }
 
 	public void setRemovido(boolean removido) { this.removido = removido; }
 

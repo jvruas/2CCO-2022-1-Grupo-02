@@ -13,34 +13,35 @@ public class UsuarioCadastroRequest {
 	@NotNull
 	@NotBlank
 	@Email
-	@Size(max = 80, message = "O e-mail deve ter no máximo 80 letras")
+	@Size(max = 80)
 	private String email;
 
 	@NotNull
 	@NotBlank
-	@Size(min = 6, max = 18, message = "A senha deve ter no máximo 18 letras")
+	@Size(min = 6, max = 18)
 	private String senha;
 
 	@NotNull
 	@NotBlank
-	@Size(max = 45, message = "O nome deve ter no máximo 45 letras")
+	@Size(max = 45)
 	private String nome;
 
 	@NotNull
 	@NotBlank
-	@Size(max = 60, message = "O sobrenome deve ter no máximo 60 letras")
+	@Size(max = 60)
 	private String sobrenome;
 
 	@NotNull
 	@NotBlank
 	@CPF
-	@Size(min = 11, max = 11, message = "O cpf deve ter 11 letras")
-	@Pattern(regexp = "^[0-9]+$", message = "O CPF aceita apenas números")
+	@Size(min = 11, max = 11)
+	@Pattern(regexp = "^[0-9]+$")
 	private String cpf;
 
 	@NotNull
 	@NotBlank
-	@Size(min = 1, max = 1, message = "O genero deve ter 1 letra")
+	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[F,M,X]")
 	private String genero;
 
 	@NotNull
@@ -49,28 +50,30 @@ public class UsuarioCadastroRequest {
 
 	@NotNull
 	@NotBlank
-	@Size(min = 1, max = 1, message = "O cpf deve ter 1 letra")
+	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[S,C,$,D,V]")
 	private String estadoCivil;
 
 	@NotNull
 	@NotBlank
-	@Size(min = 11, max = 11, message = "O telefone deve ter 11 letras")
-	@Pattern(regexp = "^[0-9]+$", message = "O telefone aceita apenas números")
+	@Size(min = 11, max = 11)
+	@Pattern(regexp = "^[0-9]+$")
 	private String telefone;
 
 	@NotNull
 	@NotBlank
-	@Size(min = 8, max = 8, message = "O cep deve ter no máximo 8 letras")
-	@Pattern(regexp = "^[0-9]+$", message = "O CEP aceita apenas números")
+	@Size(min = 8, max = 8)
+	@Pattern(regexp = "^[0-9]+$")
 	private String cep;
 
 	@NotNull
 	@NotBlank
-	@Size(min = 1, max = 1, message = "A escolaridade deve ter 1 letra")
+	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[A,I,F,M,S,P,E,D]")
 	private String grauEscolaridade;
 
-
 	@NotNull
+	@Positive
 	private Integer fkSituacaoAtual;
 
 	public String getEmail() {
@@ -120,4 +123,8 @@ public class UsuarioCadastroRequest {
 	public Integer getFkSituacaoAtual() {
 		return fkSituacaoAtual;
 	}
+
+	public void setNome(String nome) { this.nome = nome; }
+
+	public void setSobrenome(String sobrenome) { this.sobrenome = sobrenome; }
 }

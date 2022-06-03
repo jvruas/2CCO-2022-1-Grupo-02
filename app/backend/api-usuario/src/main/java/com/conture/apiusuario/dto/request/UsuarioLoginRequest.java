@@ -2,16 +2,19 @@ package com.conture.apiusuario.dto.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UsuarioLoginRequest {
-	@Email
+	@NotNull
 	@NotBlank
-	@Size(max = 80, message = "O e-mail deve ter no máximo 80 letras")
+	@Email
+	@Size(max = 80)
     private String email;
 
+	@NotNull
 	@NotBlank
-	@Size(max = 18, message = "A senha deve ter no máximo 18 letras")
+	@Size(min=6, max = 18)
     private String senha;
 
 
