@@ -39,17 +39,17 @@ function EsqueciSenha() {
     return (
         <>
             <MenuSimples />
-            <section class="section-esqueci-senha centralizado">
-                <form id="form-esqueci-senha" action="" onsubmit="">
-                    <div class="divisao centralizado">
+            <section className="section-esqueci-senha centralizado">
+                <form id="form-esqueci-senha" action="" >
+                    <div className="divisao centralizado">
                         <h1>ALTERAR SENHA</h1>
                     </div>
 
-                    <div class="divisao input">
+                    <div className="divisao input">
 
-                        <label for="senha">Senha
-                            <div class="tooltip"><img src={iconInfoSenha} alt="Ícone de confirmação" />
-                                <span class="tooltiptext"><b>Dicas para criar uma senha segura:</b>
+                        <label htmlFor="senha">Senha
+                            <div className="tooltip"><img src={iconInfoSenha} alt="Ícone de confirmação" />
+                                <span className="tooltiptext"><b>Dicas para criar uma senha segura:</b>
                                     <br />Use no mínimo 6 caracteres
                                     <br />Combine letras maiúsculas e minúsculas, símbolos e números
                                     <br />Não use informações pessoais
@@ -58,15 +58,15 @@ function EsqueciSenha() {
                         </label>
 
                         <input type="password" name="senha" id="senha" />
-                        <img src={iconSenha} alt="Ícone senha escondida" class="eye" id="eye2" onClick={handleClick} />
+                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye2" onClick={handleClick} />
                     </div>
-                    <div class="divisao input">
-                        <label for="confSenha">Confirmar sua senha</label>
+                    <div className="divisao input">
+                        <label htmlFor="confSenha">Confirmar sua senha</label>
                         <input type="password" name="confSenha" id="senha2" />
-                        <img src={iconSenha} alt="Ícone senha escondida" class="eye" id="eye3"
+                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye3"
                             onClick={handleClick2}/>
                     </div>
-                    <div class="divisao centralizado">
+                    <div className="divisao centralizado">
                         <button className="btn-esqc">
                             <p>SALVAR</p><img src={iconSalvar} alt="Ícone de confirmação" />
                         </button>

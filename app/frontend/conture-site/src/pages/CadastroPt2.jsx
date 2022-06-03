@@ -5,40 +5,83 @@ import imgEtapa from "../html-css-template/imagens/Etapas (1).png"
 import iconSeta from "../html-css-template/imagens/seta 2.png"
 import iconOk from "../html-css-template/imagens/icon-ok.png"
 import { Link } from "react-router-dom";
+import api from "../api.js";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function CadastrarPt2() {
+     const [situacao, setSituacao] = useState([]);
+
+     useEffect(() => {
+         api.get("/situacao-atual").then((resposta) => {
+             console.log(resposta.data)
+             setSituacao(resposta.data)
+         })
+     }, [])
+
+    // React.useEffect(() => {
+    //     api.get("/").then((resposta) => 
+    //     {setPost(resposta.data);});}, []);
+
+    // const data = ({
+    //     email: "igor.picolo@gmail.com",
+    //     senha: "123456",
+    //     nome: "Igor",
+    //     sobrenome: "Picolo",
+    //     cpf: "14873883067",
+    //     genero: "X",
+    //     dataNascimento: "1054336458",
+    //     estadoCivil: "$",
+    //     telefone: "11927316913",
+    //     cep: "76804004",
+    //     grauEscolaridade: "E",
+    //     fkSituacaoAtual: 1
+    // })
+
+    // const handleClick = data => axios.post("http://localhost:8080/usuarios/adicionar", data)
+    //     .then(() => {
+    //         console.log("Deu certo")
+    //     })
+    //     .catch(() => {
+    //         console.log("Deu errado")
+    //     })
+
+
+
+
+
     return (
         <>
             <MenuSimples />
-            <section class="section-cadastro2">
-                <form id="form-cadastro2" action="" onsubmit="">
-                    <div class="divisao centralizado">
+            <section className="section-cadastro2">
+                <form id="form-cadastro2" action="">
+                    <div className="divisao centralizado">
                         <h1>CADASTRO DE USUÁRIO</h1>
                     </div>
-                    <div class="divisao centralizado">
-                        <img class="imp_progresso" src={imgEtapa} alt="Barra de progresso de cadastro" />
+                    <div className="divisao centralizado">
+                        <img className="imp_progresso" src={imgEtapa} alt="Barra de progresso de cadastro" />
                     </div>
-                    <div class="divisao input maior">
-                        <label for="nome">Nome</label>
+                    <div className="divisao input maior">
+                        <label htmlFor="nome">Nome</label>
                         <input type="text" name="nome" />
                     </div>
-                    <div class="divisao input maior">
-                        <label for="sobrenome">Sobrenome</label>
+                    <div className="divisao input maior">
+                        <label htmlFor="sobrenome">Sobrenome</label>
                         <input type="text" name="sobrenome" />
                     </div>
-                    <div class="input_double">
-                        <div class="input menor">
-                            <label for="cpf">CPF</label>
+                    <div className="input_double">
+                        <div className="input menor">
+                            <label htmlFor="cpf">CPF</label>
                             <input type="txt" name="cpf" />
                         </div>
-                        <div class="input menor">
-                            <label for="dataNasc">Data de nascimento</label>
+                        <div className="input menor">
+                            <label htmlFor="dataNasc">Data de nascimento</label>
                             <input type="date" name="dataNasc" />
                         </div>
                     </div>
-                    <div class="input_double">
-                        <div class="input menor">
-                            <label for="genero">Gênero</label>
+                    <div className="input_double">
+                        <div className="input menor">
+                            <label htmlFor="genero">Gênero</label>
                             <select name="genero" id="genero">
                                 <option value=""></option>
                                 <option value="1">Feminino</option>
@@ -46,8 +89,8 @@ function CadastrarPt2() {
                                 <option value="3">Outro</option>
                             </select>
                         </div>
-                        <div class="input menor">
-                            <label for="estadoCivil">Estado civil</label>
+                        <div className="input menor">
+                            <label htmlFor="estadoCivil">Estado civil</label>
                             <select name="estadoCivil" id="estadoCivil">
                                 <option value=""></option>
                                 <option value="1">Solteiro(a)</option>
@@ -57,18 +100,18 @@ function CadastrarPt2() {
                             </select>
                         </div>
                     </div>
-                    <div class="input_double">
-                        <div class="input menor">
-                            <label for="telefone">Telefone</label>
+                    <div className="input_double">
+                        <div className="input menor">
+                            <label htmlFor="telefone">Telefone</label>
                             <input type="text" name="telefone" />
                         </div>
-                        <div class="input menor">
-                            <label for="cep">CEP</label>
+                        <div className="input menor">
+                            <label htmlFor="cep">CEP</label>
                             <input type="text" name="cep" />
                         </div>
                     </div>
-                    <div class="divisao input maior">
-                        <label for="escolaridade">Escolaridade</label>
+                    <div className="divisao input maior">
+                        <label htmlFor="escolaridade">Escolaridade</label>
                         <select name="escolaridade" id="escolaridade">
                             <option value=""></option>
                             <option value="1">Superior completo</option>
@@ -79,19 +122,20 @@ function CadastrarPt2() {
                             <option value="6">Ensino fundamental incompleto</option>
                         </select>
                     </div>
-                    <div class="divisao input maior">
-                        <label for="situacaoAtual">Situação atual</label>
+                    <div className="divisao input maior">
+                        <label htmlFor="situacaoAtual">Situação atual</label>
                         <select name="situacaoAtual" id="situacaoAtual">
                             <option value=""></option>
-                            <option value="1">Estudante</option>
-                            <option value="2">Desempregado</option>
-                            <option value="3">Empregado</option>
-                            <option value="4">Aposentado</option>
+                            {
+                                situacao.map((valor) => (
+                                    <option value={valor.id}>{valor.name}</option>
+                                ))
+                            }
                         </select>
                     </div>
-                    <div class="input_double">
-                        <Link to="/cadastro"><div class="btn btn_voltar"><img src={iconSeta} alt="Ícone de voltar" /><a href="../html/Cadastro1.html">VOLTAR</a></div></Link>
-                        <button class="btn btn_cadastrar">CADASTRAR<img src={iconOk} alt="Ícone de confirmação para cadastrar o usuário" /></button>
+                    <div className="input_double">
+                        <Link to="/cadastro"><div className="btn btn_voltar"><img src={iconSeta} alt="Ícone de voltar" />VOLTAR</div></Link>
+                        <button className="btn btn_cadastrar" onClick="">CADASTRAR<img src={iconOk} alt="Ícone de confirmação para cadastrar o usuário" /></button>
                     </div>
                 </form>
             </section>

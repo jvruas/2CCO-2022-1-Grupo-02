@@ -40,24 +40,24 @@ function CadastrarPt1() {
     return (
         <>
             <MenuSimples />
-            <section class="section-cadastro1">
+            <section className="section-cadastro1">
                 <form id="form-cadastro1" action="../html/Cadastro2.html" method="post">
-                    <div class="divisao centralizado">
+                    <div className="divisao centralizado">
                         <h1>CADASTRO DE USUÁRIO</h1>
                     </div>
-                    <div class="divisao centralizado">
-                        <img class="imp_progresso" src={imgEtapa} alt="Barra de progresso de cadastro" />
+                    <div className="divisao centralizado">
+                        <img className="imp_progresso" src={imgEtapa} alt="Barra de progresso de cadastro" />
                     </div>
-                    <div class="divisao input">
-                        <label for="nome">E-mail</label>
+                    <div className="divisao input">
+                        <label htmlFor="nome">E-mail</label>
                         <input type="email" name="nome" />
                     </div>
 
-                    <div class="divisao input">
+                    <div className="divisao input">
 
-                        <label for="senha">
-                            <div class="tooltip">Senha<img src={iconInfoSenha} alt="Ícone deconfirmação" />
-                                <span class="tooltiptext">
+                        <label htmlFor="senha">
+                            <div className="tooltip">Senha<img src={iconInfoSenha} alt="Ícone deconfirmação" />
+                                <span className="tooltiptext">
                                     <b>Dicas para criar uma senha segura:</b>
                                     <br />Use no mínimo 6 caracteres
                                     <br />Combine letras maiúsculas e minúsculas, símbolos e números
@@ -67,17 +67,17 @@ function CadastrarPt1() {
                         </label>
 
                         <input type="password" name="senha" id="senha" />
-                        <img src={iconSenha} alt="Ícone senha escondida" class="eye" id="eye4"
+                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye4"
                             onClick={handleClick} />
                     </div>
 
-                    <div class="divisao input">
-                        <label for="confSenha">Confirmar senha</label>
+                    <div className="divisao input">
+                        <label htmlFor="confSenha">Confirmar senha</label>
                         <input type="password" name="confSenha" id="confSenha" />
-                        <img src={iconSenha} alt="Ícone senha escondida" class="eye" id="eye5"
+                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye5"
                             onClick={handleClick2} />
                     </div>
-                    <div class="divisao direita">
+                    <div className="divisao direita">
                         <Link className="link" to="/finalizar-cadastro"><button className="btn-cadastro1" type="submit">PRÓXIMO<img src={iconSeta} alt="Ícone de próximo" /></button></Link>
                     </div>
 
