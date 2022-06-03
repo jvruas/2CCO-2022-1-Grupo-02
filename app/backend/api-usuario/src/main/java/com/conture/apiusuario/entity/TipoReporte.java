@@ -2,6 +2,7 @@ package com.conture.apiusuario.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -10,9 +11,11 @@ public class TipoReporte {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTipoReporte;
 
+	@NotNull
 	@NotBlank
 	@Size(max = 45, message = "O tipo de reporte deve ter no máximo 45 letras")
     private String nome;
+
 
 	public TipoReporte() {}
 

@@ -3,10 +3,7 @@ package com.conture.apiusuario.entity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
@@ -15,8 +12,10 @@ public class DesligamentoConta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idDesligamentoConta;
 
+	@NotNull
 	@NotBlank
 	@Size(min = 1, max = 1, message = "O movito do desligamento deve ter 1 letra")
+	@Pattern(regexp = "[A,T,Q,P,N,X]")
 	private String motivoDesligamentoConta;
 
 	@PastOrPresent

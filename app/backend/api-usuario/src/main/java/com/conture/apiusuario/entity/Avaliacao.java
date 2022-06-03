@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
 
+// TODO: Passar para a API de produto
 @Entity
 public class Avaliacao {
     @Id
@@ -28,6 +29,7 @@ public class Avaliacao {
 	@NotNull
 	@Positive
 	private Integer fkMatch;
+
 
 	public Integer getIdAvaliacao() {
 		return idAvaliacao;

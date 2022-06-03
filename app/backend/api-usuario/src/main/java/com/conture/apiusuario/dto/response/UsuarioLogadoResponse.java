@@ -53,6 +53,7 @@ public class UsuarioLogadoResponse {
 	@NotBlank
 	private String situacaoAtual;
 
+
 	public UsuarioLogadoResponse(
 			Integer idUsuario,
 			String email,

@@ -2,6 +2,7 @@ package com.conture.apiusuario.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -10,6 +11,7 @@ public class SituacaoAtual {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idSituacaoAtual;
 
+	@NotNull
 	@NotBlank
     @Size(max = 45, message = "A situação atual deve ter no máximo 45 letras")
     private String nome;
