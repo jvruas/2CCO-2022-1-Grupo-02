@@ -1,13 +1,18 @@
-insert into situacao_atual (id_situacao_atual, nome) values
-              	       (1, 'Estudante'),
-                       (2, 'Desempregado'),
-                       (3, 'Empregado'),
-                       (4, 'Aposentado');
+insert into situacao_atual (nome) values
+              	       ('Aposentado'),
+                       ('Trabalho Formal'),
+                       ('Trabalho Informal'),
+                       ('Incapacitado'),
+                       ('Estudante'),
+                       ('Pensionista'),
+                       ('Desempregado Sem Renda'),
+                       ('Desempregado Com Renda'),
+                       ('Do Lar');
 
-insert into tipo_reporte (id_tipo_reporte, nome) values
-                       (1, 'Assédio'),
-                       (2, 'Discurso de ódio'),
-                       (3, 'Informações do perfil'),
-                       (4, 'Nudez ou atividade sexual'),
-                       (5, 'Produto falso'),
-                       (6, 'Spam');
+insert into tipo_reporte (nome) values
+                       ('Assédio'),
+                       ('Discurso de ódio'),
+                       ('Informações do perfil'),
+                       ('Nudez ou atividade sexual'),
+                       ('Produto falso'),
+                       ('Spam');
