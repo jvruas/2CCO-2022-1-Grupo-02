@@ -8,49 +8,71 @@ import { Link } from "react-router-dom";
 import api from "../api.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Select from "react-select";
 
 function CadastrarPt2() {
-     const [situacao, setSituacao] = useState([]);
+     
+    let dados = [];
 
-     useEffect(() => {
          api.get("/situacao-atual").then((resposta) => {
              console.log(resposta.data)
-             setSituacao(resposta.data)
+             if(resposta.status === 200 ){
+                 resposta.data.forEach(element => {
+                     dados.push({value: element.idSituacaoAtual, label: element.nome});
+                 });
+             }
          })
-     }, [])
+        
+         let situacao;
+         const getSituacao = (event) =>{
+            situacao = event.value;
+            console.log(situacao);
+         }
 
     // React.useEffect(() => {
     //     api.get("/").then((resposta) => 
     //     {setPost(resposta.data);});}, []);
 
-    // const data = ({
-    //     email: "igor.picolo@gmail.com",
-    //     senha: "123456",
-    //     nome: "Igor",
-    //     sobrenome: "Picolo",
-    //     cpf: "14873883067",
-    //     genero: "X",
-    //     dataNascimento: "1054336458",
-    //     estadoCivil: "$",
-    //     telefone: "11927316913",
-    //     cep: "76804004",
-    //     grauEscolaridade: "E",
-    //     fkSituacaoAtual: 1
-    // })
 
-    // const handleClick = data => axios.post("http://localhost:8080/usuarios/adicionar", data)
-    //     .then(() => {
-    //         console.log("Deu certo")
-    //     })
-    //     .catch(() => {
-    //         console.log("Deu errado")
-    //     })
+    const cadastrarUsuario = () =>{
+        let input_nome = document.getElementById("nome");
+        let input_sobrenome = document.getElementById("sobrenome");
+        alert(input_nome.value);
 
+    }
 
+    
 
+    const data = ({
+        email: "igor.picolo@gmail.com",
+        senha: "123456",
+        nome: "Igor",
+        sobrenome: "Picolo",
+        cpf: "14873883067",
+        genero: "X",
+        dataNascimento: "1054336458",
+        estadoCivil: "$",
+        telefone: "11927316913",
+        cep: "76804004",
+        grauEscolaridade: "E",
+        fkSituacaoAtual: 1
 
 
-    return (
+        })
+
+        const handleClick = async () => await api.post("/", data)
+            .then(() => {
+                alert("Deu certo")
+            })
+            .catch(() => {
+                alert("Deu errado")
+            })
+
+
+
+
+
+    return(
         <>
             <MenuSimples />
             <section className="section-cadastro2">
@@ -63,11 +85,11 @@ function CadastrarPt2() {
                     </div>
                     <div className="divisao input maior">
                         <label htmlFor="nome">Nome</label>
-                        <input type="text" name="nome" />
+                        <input id="nome" type="text" name="nome" />
                     </div>
                     <div className="divisao input maior">
                         <label htmlFor="sobrenome">Sobrenome</label>
-                        <input type="text" name="sobrenome" />
+                        <input id="sobrenome" type="text" name="sobrenome" />
                     </div>
                     <div className="input_double">
                         <div className="input menor">
@@ -124,18 +146,21 @@ function CadastrarPt2() {
                     </div>
                     <div className="divisao input maior">
                         <label htmlFor="situacaoAtual">Situação atual</label>
-                        <select name="situacaoAtual" id="situacaoAtual">
+                        {/* <select name="situacaoAtual" id="situacaoAtual">
                             <option value=""></option>
-                            {
+                            { {
                                 situacao.map((valor) => (
                                     <option value={valor.id}>{valor.name}</option>
                                 ))
-                            }
-                        </select>
+                            } }
+                        </select> */}
+                        <Select options={dados} value={this} onChange={(event) => {getSituacao(event)}}>
+                        
+                        </Select>
                     </div>
                     <div className="input_double">
-                        <Link to="/cadastro"><div className="btn btn_voltar"><img src={iconSeta} alt="Ícone de voltar" />VOLTAR</div></Link>
-                        <button className="btn btn_cadastrar" onClick="">CADASTRAR<img src={iconOk} alt="Ícone de confirmação para cadastrar o usuário" /></button>
+                        {/* <Link to="/cadastro"><div className="btn btn_voltar"><img src={iconSeta} alt="Ícone de voltar" />VOLTAR</div></Link> */}
+                        <button className="btn btn_cadastrar" onClick={cadastrarUsuario}>CADASTRAR<img src={iconOk} alt="Ícone de confirmação para cadastrar o usuário" /></button>
                     </div>
                 </form>
             </section>

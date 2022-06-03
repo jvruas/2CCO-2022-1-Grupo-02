@@ -38,12 +38,12 @@ public class UsuarioController {
 
 	@PostMapping
 	public ResponseEntity<Integer> adicionarUsuario(@RequestBody @Valid UsuarioCadastroRequest novoUsuario) {
-		if (!this.situacaoAtualRepository.existsById(novoUsuario.getFkSituacaoAtual())
-				|| this.usuarioRepository.existsByCpf(novoUsuario.getCpf())
-				|| this.usuarioRepository.existsByEmail(novoUsuario.getEmail())
-		) {
-			return status(409).build();
-		}
+//		if (this.situacaoAtualRepository.existsById(novoUsuario.getFkSituacaoAtual())
+//				|| this.usuarioRepository.existsByCpf(novoUsuario.getCpf())
+//				|| this.usuarioRepository.existsByEmail(novoUsuario.getEmail())
+//		) {
+//			return status(409).build();
+//		}
 
 		novoUsuario.setNome(novoUsuario.getNome().trim().toUpperCase());
 		novoUsuario.setSobrenome(novoUsuario.getSobrenome().trim().toUpperCase());
