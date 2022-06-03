@@ -8,40 +8,42 @@ import javax.validation.constraints.*;
 
 public class UsuarioPerfilRequest {
 	@NotNull
-	@Positive
-	private Integer idUsuario;
+	@NotBlank
+	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[F,M,X]")
+	private String genero;
 
 	@NotNull
 	@NotBlank
 	@Size(min = 1, max = 1)
-	private String genero;
-	@NotNull
-	@NotBlank
-	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[S,C,$,D,V]")
 	private String estadoCivil;
+
 	@NotNull
 	@NotBlank
 	@Size(min = 8, max = 8)
 	@Pattern(regexp = "^[0-9]+$")
 	private String cep;
+
 	@NotNull
 	@NotBlank
 	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[A,I,F,M,S,P,E,D]")
 	private String grauEscolaridade;
+
 	@NotNull
 	@NotBlank
 	@Size(min = 11, max = 11)
 	@Pattern(regexp = "^[0-9]+$")
 	private String telefone;
+
 	@NotNull
+	private Boolean verificado;
+
 	@NotNull
 	@Positive
 	private Integer fkSituacaoAtual;
 
-
-	public Integer getIdUsuario() {
-		return idUsuario;
-	}
 
 	public String getGenero() {
 		return genero;
@@ -62,6 +64,8 @@ public class UsuarioPerfilRequest {
 	public String getGrauEscolaridade() {
 		return grauEscolaridade;
 	}
+
+	public Boolean getVerificado() { return verificado; }
 
 	public Integer getFkSituacaoAtual() { return fkSituacaoAtual; }
 }

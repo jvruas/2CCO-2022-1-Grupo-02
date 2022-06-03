@@ -1,11 +1,7 @@
 package com.conture.apiusuario.dto.request;
 
-import com.conture.apiusuario.entity.SituacaoAtual;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
 
@@ -75,6 +71,7 @@ public class UsuarioCadastroRequest {
 	@NotNull
 	@Positive
 	private Integer fkSituacaoAtual;
+
 
 	public String getEmail() {
 		return email;

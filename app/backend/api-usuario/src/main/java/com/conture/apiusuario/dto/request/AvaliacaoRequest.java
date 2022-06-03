@@ -7,8 +7,6 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 public class AvaliacaoRequest {
-
-	// Atributos
 	@NotNull
 	@Positive
 	private Long fkDonatario;
@@ -24,7 +22,7 @@ public class AvaliacaoRequest {
 	@Size(max = 300, message = "O comentario deve ter no máximo 300 letras")
 	private String comentario;
 
-	// Getters
+
 	public Long getFkDoador() {
 		return fkDoador;
 	}
