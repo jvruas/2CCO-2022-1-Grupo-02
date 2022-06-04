@@ -37,12 +37,22 @@ function CadastrarPt2() {
     const cadastrarUsuario = () =>{
         let input_nome = document.getElementById("nome");
         let input_sobrenome = document.getElementById("sobrenome");
+        let input_cpf = document.getElementById("cpf");
+        let input_dataNasc = document.getElementById("dataNasc");
+        let input_genero = document.getElementById("genero");
+        let input_estadoCivil = document.getElementById("estadoCivil");
+        let input_telefone = document.getElementById("telefone");
+        let input_cep = document.getElementById("cep");
+        let input_escolaridade = document.getElementById("escolaridade");
         alert(input_nome.value);
-
+        alert(input_sobrenome.value);
+        alert(input_cpf.value);
+        alert(input_dataNasc.value);
+        alert(input_genero.value);
+        alert(input_estadoCivil.value);
     }
 
     
-
     const data = ({
         email: "igor.picolo@gmail.com",
         senha: "123456",
@@ -56,20 +66,15 @@ function CadastrarPt2() {
         cep: "76804004",
         grauEscolaridade: "E",
         fkSituacaoAtual: 1
-
-
         })
 
-        const handleClick = async () => await api.post("/", data)
+        const handleClick = async () => await api.post("/", cadastrarUsuario())
             .then(() => {
                 alert("Deu certo")
             })
             .catch(() => {
                 alert("Deu errado")
             })
-
-
-
 
 
     return(
@@ -94,17 +99,17 @@ function CadastrarPt2() {
                     <div className="input_double">
                         <div className="input menor">
                             <label htmlFor="cpf">CPF</label>
-                            <input type="txt" name="cpf" />
+                            <input id="cpf" type="txt" name="cpf" />
                         </div>
                         <div className="input menor">
                             <label htmlFor="dataNasc">Data de nascimento</label>
-                            <input type="date" name="dataNasc" />
+                            <input id="dataNasc" type="date" name="dataNasc" />
                         </div>
                     </div>
                     <div className="input_double">
                         <div className="input menor">
                             <label htmlFor="genero">Gênero</label>
-                            <select name="genero" id="genero">
+                            <select  name="genero" id="genero">
                                 <option value=""></option>
                                 <option value="1">Feminino</option>
                                 <option value="2">Masculino</option>
@@ -113,7 +118,7 @@ function CadastrarPt2() {
                         </div>
                         <div className="input menor">
                             <label htmlFor="estadoCivil">Estado civil</label>
-                            <select name="estadoCivil" id="estadoCivil">
+                            <select  name="estadoCivil" id="estadoCivil">
                                 <option value=""></option>
                                 <option value="1">Solteiro(a)</option>
                                 <option value="2">Casado(a)</option>
@@ -125,11 +130,11 @@ function CadastrarPt2() {
                     <div className="input_double">
                         <div className="input menor">
                             <label htmlFor="telefone">Telefone</label>
-                            <input type="text" name="telefone" />
+                            <input id="" type="text" name="telefone" />
                         </div>
                         <div className="input menor">
                             <label htmlFor="cep">CEP</label>
-                            <input type="text" name="cep" />
+                            <input id="cep" type="text" name="cep" />
                         </div>
                     </div>
                     <div className="divisao input maior">
@@ -160,7 +165,7 @@ function CadastrarPt2() {
                     </div>
                     <div className="input_double">
                         {/* <Link to="/cadastro"><div className="btn btn_voltar"><img src={iconSeta} alt="Ícone de voltar" />VOLTAR</div></Link> */}
-                        <button className="btn btn_cadastrar" onClick={cadastrarUsuario}>CADASTRAR<img src={iconOk} alt="Ícone de confirmação para cadastrar o usuário" /></button>
+                        <button className="btn btn_cadastrar" onClick={handleClick}>CADASTRAR<img src={iconOk} alt="Ícone de confirmação para cadastrar o usuário" /></button>
                     </div>
                 </form>
             </section>

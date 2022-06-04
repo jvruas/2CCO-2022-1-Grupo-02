@@ -1,4 +1,5 @@
 insert into situacao_atual (nome) values
+              	       ('Todas situações atuais'),
               	       ('Aposentado'),
                        ('Trabalho Formal'),
                        ('Trabalho Informal'),
