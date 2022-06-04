@@ -8,19 +8,41 @@ import javax.validation.constraints.*;
 
 @Entity
 public class CategoriaProduto {
-
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	private Long idCategoriaProduto;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idCategoriaProduto;
 
 	@NotNull
 	@NotBlank
-	@Size(min = 2 , max = 45)
+	@Size(max = 45)
 	private String nome;
 
-	public Long getIdCategoriaProduto() { return idCategoriaProduto; }
 
-	public String getNome() { return nome; }
+	public CategoriaProduto() {
+	}
 
-	public void setNome(String nome) { this.nome = nome; }
+	private CategoriaProduto(Integer idCategoriaProduto) {
+		this.idCategoriaProduto = idCategoriaProduto;
+	}
+
+
+	public static CategoriaProduto fromPattern(Integer idCategoriaProduto) {
+		return new CategoriaProduto(idCategoriaProduto);
+	}
+
+	public Integer getIdCategoriaProduto() {
+		return idCategoriaProduto;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setIdCategoriaProduto(Integer idCategoriaProduto) {
+		this.idCategoriaProduto = idCategoriaProduto;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 }

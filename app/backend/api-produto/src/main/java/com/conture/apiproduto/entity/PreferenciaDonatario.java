@@ -1,66 +1,72 @@
 package com.conture.apiproduto.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 public class PreferenciaDonatario {
-	@NotNull
-	@Positive
-	private Long fkDoador;
-
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	private Long fkDoacao;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idPreferenciaDonatario;
 
-	@NotBlank
 	@NotNull
+	@NotBlank
+	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[F,M,X]")
 	private String genero;
 
-	@NotBlank
 	@NotNull
+	@NotBlank
+	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[J,A,I,X]")
 	private String faixaEtaria;
 
-	@NotBlank
 	@NotNull
+	@NotBlank
+	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[S,C,$,D,V,X]")
 	private String estadoCivil;
 
-	@NotBlank
 	@NotNull
+	@NotBlank
+	@Size(min = 1, max = 1)
+	@Pattern(regexp = "[A,I,F,M,S,P,E,D,X]")
 	private String grauEscolaridade;
 
 	@NotNull
 	@Positive
-	private Long fkSituacaoAtual;
+	private Integer fkSituacaoAtual;
 
-	public Long getFkDoador() { return fkDoador; }
+	@NotNull
+	@OneToOne
+	private ProdutoDoacao produtoDoacao;
 
-	public Long getFkDoacao() { return fkDoacao; }
 
-	public String getGenero() { return genero; }
+	public Integer getIdPreferenciaDonatario() {
+		return idPreferenciaDonatario;
+	}
 
-	public String getFaixaEtaria() { return faixaEtaria; }
+	public String getGenero() {
+		return genero;
+	}
 
-	public String getEstadoCivil() { return estadoCivil; }
+	public String getFaixaEtaria() {
+		return faixaEtaria;
+	}
 
-	public String getGrauEscolaridade() { return grauEscolaridade; }
+	public String getEstadoCivil() {
+		return estadoCivil;
+	}
 
-	public Long getFkSituacaoAtual() { return fkSituacaoAtual; }
+	public String getGrauEscolaridade() {
+		return grauEscolaridade;
+	}
 
-	public void setFkDoador(Long fkDoador) { this.fkDoador = fkDoador; }
+	public Integer getFkSituacaoAtual() {
+		return fkSituacaoAtual;
+	}
 
-	public void setGenero(String genero) { this.genero = genero; }
-
-	public void setFaixaEtaria(String faixaEtaria) { this.faixaEtaria = faixaEtaria; }
-
-	public void setEstadoCivil(String estadoCivil) { this.estadoCivil = estadoCivil; }
-
-	public void setGrauEscolaridade(String grauEscolaridade) { this.grauEscolaridade = grauEscolaridade; }
-
-	public void setFkSituacaoAtual(Long fkSituacaoAtual) { this.fkSituacaoAtual = fkSituacaoAtual; }
+	public ProdutoDoacao getProdutoDoacao() {
+		return produtoDoacao;
+	}
 }

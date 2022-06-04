@@ -38,15 +38,9 @@ public class UsuarioController {
 
 	@PostMapping
 	public ResponseEntity<Integer> adicionarUsuario(@RequestBody @Valid UsuarioCadastroRequest novoUsuario) {
-
-//		if (this.situacaoAtualRepository.existsById(novoUsuario.getFkSituacaoAtual())
-//				|| this.usuarioRepository.existsByCpf(novoUsuario.getCpf())
-//				|| this.usuarioRepository.existsByEmail(novoUsuario.getEmail())
-//		) {
-//			return status(409).build();
-//		}
-
-		if (!this.situacaoAtualRepository.existsById(novoUsuario.getFkSituacaoAtual())) {
+		if (!this.situacaoAtualRepository.existsById(novoUsuario.getFkSituacaoAtual())
+				|| novoUsuario.getFkSituacaoAtual() == 1
+		) {
 			return status(400).build();
 		}
 
@@ -55,7 +49,6 @@ public class UsuarioController {
 		) {
 			return status(409).build();
 		}
-
 
 		novoUsuario.setNome(novoUsuario.getNome().trim().toUpperCase());
 		novoUsuario.setSobrenome(novoUsuario.getSobrenome().trim().toUpperCase());
@@ -97,11 +90,18 @@ public class UsuarioController {
 
 
 	@GetMapping("/{idUsuario}/login")
-	public ResponseEntity<UsuarioLogadoResponse> existsUsuarioLogado(@RequestParam @Min(1) Integer idUsuario) {
+	public ResponseEntity existsUsuarioLogado(
+			@PathVariable @Min(1) Integer idUsuario,
+			@RequestParam @Size(min = 2, max = 7) @Pattern(regexp = "(usuario)|(id)") String responseType
+	) {
 		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(idUsuario);
 
 		if (usuarioLogado.isEmpty()) {
 			return status(404).build();
+		}
+
+		if (responseType.equals("id")) {
+			return status(200).body(usuarioLogado.get().getIdUsuario());
 		}
 
 		return status(200).body(usuarioLogado.get());
@@ -292,7 +292,9 @@ public class UsuarioController {
 			@PathVariable @Min(1) Integer idUsuario,
 			@RequestBody @Valid UsuarioPerfilRequest usuarioPerfil
 	) {
-		if (!this.situacaoAtualRepository.existsById(usuarioPerfil.getFkSituacaoAtual())) {
+		if (!this.situacaoAtualRepository.existsById(usuarioPerfil.getFkSituacaoAtual())
+				|| usuarioPerfil.getFkSituacaoAtual() == 1
+		) {
 			return status(400).build();
 		}
 

@@ -4,8 +4,8 @@ import com.conture.apiproduto.entity.CategoriaProduto;
 import com.conture.apiproduto.entity.ProdutoDoacao;
 import com.conture.apiproduto.repository.CategoriaProdutoRepository;
 import com.conture.apiproduto.repository.ProdutoRepository;
-import com.conture.apiproduto.rest.usuario.ClienteUsuario;
-import com.conture.apiproduto.rest.usuario.UsuarioResposta;
+import com.conture.apiproduto.service.UsuarioService;
+import com.conture.apiproduto.service.UsuarioResposta;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ public class Txt {
 			byte[] importacao,
 			CategoriaProdutoRepository repositoryCategoria,
 			ProdutoRepository repositoryProduto,
-			ClienteUsuario repositoryUsuario
+			UsuarioService repositoryUsuario
 	) {
 		BufferedReader entrada = null;
 		Long fkUsuario;

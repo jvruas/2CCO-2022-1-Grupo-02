@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProdutoRepository extends JpaRepository<ProdutoDoacao, Long>{
+public interface ProdutoRepository extends JpaRepository<ProdutoDoacao, Integer>{
 	Optional<ProdutoDoacao> findByIdProdutoDoacaoAndUsuarioIdUsuario(Long idProdutoDoacao, Integer idUsuario);
 
 	@Query("SELECT p FROM ProdutoDoacao p WHERE lower(p.nome) LIKE lower(concat('%', ?1, '%'))")

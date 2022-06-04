@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface MatchRepository extends JpaRepository<Match, Long> {
+public interface MatchRepository extends JpaRepository<Match, Integer> {
 	List<Match> findByFkDoadorAndFkProdutoDoacao(Long fkDoador, Long fkProdutoDoacao);
 
 	Long countByFkDoadorAndFkProdutoDoacao(Long fkDoador, Long fkProdutoDoacao);

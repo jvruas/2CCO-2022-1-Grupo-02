@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface CategoriaProdutoRepository extends JpaRepository<CategoriaProduto, Long> {
+public interface CategoriaProdutoRepository extends JpaRepository<CategoriaProduto, Integer> {
 	Optional<CategoriaProduto> findByNomeIgnoreCase(String nome);
 }

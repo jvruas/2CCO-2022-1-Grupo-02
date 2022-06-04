@@ -1,26 +1,21 @@
 package com.conture.apiproduto.controller;
 
 import com.conture.apiproduto.dto.request.*;
-import com.conture.apiproduto.rest.usuario.ClienteUsuario;
-import com.conture.apiproduto.rest.usuario.UsuarioResposta;
+import com.conture.apiproduto.repository.*;
+import com.conture.apiproduto.service.UsuarioService;
+import com.conture.apiproduto.service.UsuarioResposta;
 import com.conture.apiproduto.utility.*;
 import com.conture.apiproduto.entity.CategoriaProduto;
 import com.conture.apiproduto.entity.Match;
 import com.conture.apiproduto.entity.PreferenciaDonatario;
 import com.conture.apiproduto.entity.ProdutoDoacao;
-import com.conture.apiproduto.repository.CategoriaProdutoRepository;
-import com.conture.apiproduto.repository.MatchRepository;
-import com.conture.apiproduto.repository.PreferenciaDonatarioRepository;
-import com.conture.apiproduto.repository.ProdutoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +24,10 @@ import java.util.Optional;
 @RequestMapping("/produtos")
 public class ProdutoController {
 	@Autowired
-	private ProdutoRepository 	produtoRepository;
+	private ProdutoRepository produtoRepository;
+
+	@Autowired
+	private ImagemProdutoDoacaoRepository imagemProdutoDoacaoRepository;
 
 	@Autowired
 	private PreferenciaDonatarioRepository preferenciaRepository;
@@ -39,16 +37,21 @@ public class ProdutoController {
 
 	@Autowired
 	private CategoriaProdutoRepository categoriaRepository;
-	PilhaObj<String> pilhaHistorico = new PilhaObj<>(10);
 
 	@Autowired
-	private ClienteUsuario clienteUsuarioApi;
+	private AvaliacaoRepository avaliacaoRepository;
+
+	@Autowired
+	private UsuarioService usuarioService;
+
+	PilhaObj<String> pilhaHistorico = new PilhaObj<>(10);
+
 
 	@PostMapping("/{fkDoador}")
 	public ResponseEntity adicionarProduto(@PathVariable Integer fkDoador, @RequestBody @Valid ProdutoDoacaoRequest produtoRequest) {
 
 		ProdutoDoacao produto = new ProdutoDoacao();
-		UsuarioResposta usuario = clienteUsuarioApi.getUsuario(fkDoador);
+		UsuarioResposta usuario = usuarioService.getUsuario(fkDoador);
 
 		produto.setUsuario(usuario);
 		produto.setNome(produtoRequest.getNome());
@@ -153,7 +156,7 @@ public class ProdutoController {
 		pilhaHistorico.push(nome);
 
 		return ResponseEntity.status(200).body(listaProduto);
-}
+	}
 
 	@GetMapping("/historico")
 	public ResponseEntity listarHistorico() {
@@ -300,19 +303,19 @@ public class ProdutoController {
 	public ResponseEntity postImportacao(@RequestBody byte[] importacao) {
 		Txt importarTxt = new Txt();
 
-		if (importarTxt.leArquivoTxt(importacao, categoriaRepository, produtoRepository, clienteUsuarioApi)){
+		if (importarTxt.leArquivoTxt(importacao, categoriaRepository, produtoRepository, usuarioService)) {
 			return ResponseEntity.status(201).build();
 		}
 		return ResponseEntity.status(404).build();
 	}
 
 	@GetMapping("/exportacao")
-	public ResponseEntity getExportacao(){
+	public ResponseEntity getExportacao() {
 		Txt exportarTxt = new Txt();
-		 List<ProdutoDoacao> listaProduto;
-		 listaProduto = produtoRepository.findAll();
+		List<ProdutoDoacao> listaProduto;
+		listaProduto = produtoRepository.findAll();
 
-		if (exportarTxt.gravaArquivoTxt(listaProduto)){
+		if (exportarTxt.gravaArquivoTxt(listaProduto)) {
 			return ResponseEntity.status(201).build();
 		}
 

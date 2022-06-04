@@ -1,4 +1,4 @@
-package com.conture.apiproduto.rest.usuario;
+package com.conture.apiproduto.service;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

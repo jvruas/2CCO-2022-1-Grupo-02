@@ -1,34 +1,20 @@
 package com.conture.apiproduto.entity;
 
-import com.conture.apiproduto.rest.usuario.UsuarioResposta;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 public class Match {
-
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idMatch;
 
-
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	private UsuarioResposta fkDoador;
-
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	private ProdutoDoacao fkProdutoDoacao;
-
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	private UsuarioResposta fkDonatario;
-
-	@NotNull
-	@Positive
-	@Max(100)
-	@Min(0)
+	@PositiveOrZero
+	@DecimalMax("100")
+	@DecimalMin("0")
 	private Double matchPorcentagem;
 
 	@PastOrPresent
@@ -36,46 +22,74 @@ public class Match {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataInteresse;
 
-	@NotBlank
 	@NotNull
-	@Size(min = 1,max = 1 )
-	private String status;
+	private boolean status;
 
-	public UsuarioResposta getFkDoador() { return fkDoador; }
+	@NotNull
+	private boolean visualizado;
 
-	public Double getMatchPorcentagem() { return matchPorcentagem; }
+	@NotNull
+	@ManyToOne
+	private ProdutoDoacao produtoDoacao;
 
-	public UsuarioResposta getFkDonatario() { return fkDonatario; }
+	@NotNull
+	@Positive
+	private Integer fkDonatario;
 
-	public Date getDataInteresse() {return this.dataInteresse;}
 
-	public String getStatus() {
+	public Integer getIdMatch() {
+		return idMatch;
+	}
+
+	public Double getMatchPorcentagem() {
+		return matchPorcentagem;
+	}
+
+	public Date getDataInteresse() {
+		return dataInteresse;
+	}
+
+	public boolean isStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public boolean isVisualizado() {
+		return visualizado;
+	}
+
+	public ProdutoDoacao getProdutoDoacao() {
+		return produtoDoacao;
+	}
+
+	public Integer getFkDonatario() {
+		return fkDonatario;
+	}
+
+	public void setIdMatch(Integer idMatch) {
+		this.idMatch = idMatch;
+	}
+
+	public void setMatchPorcentagem(Double matchPorcentagem) {
+		this.matchPorcentagem = matchPorcentagem;
+	}
+
+	public void setDataInteresse(Date dataInteresse) {
+		this.dataInteresse = dataInteresse;
+	}
+
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
-	public void setFkDoador(UsuarioResposta fkDoador) { this.fkDoador = fkDoador; }
-
-	public void setFkDonatario(UsuarioResposta fkDonatario) {this.fkDonatario = fkDonatario;}
-
-	public void setMatchPorcentagem(Double matchPorcentagem) { this.matchPorcentagem = matchPorcentagem; }
-
-	public ProdutoDoacao getFkProdutoDoacao() {
-		return fkProdutoDoacao;
+	public void setVisualizado(boolean visualizado) {
+		this.visualizado = visualizado;
 	}
 
-	public void setFkProdutoDoacao(ProdutoDoacao fkProdutoDoacao) {
-		this.fkProdutoDoacao = fkProdutoDoacao;
+	public void setProdutoDoacao(ProdutoDoacao produtoDoacao) {
+		this.produtoDoacao = produtoDoacao;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setFkDonatario(Integer fkDonatario) {
+		this.fkDonatario = fkDonatario;
 	}
 }
