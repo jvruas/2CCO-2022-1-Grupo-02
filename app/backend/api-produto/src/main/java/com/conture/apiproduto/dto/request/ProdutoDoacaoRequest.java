@@ -24,10 +24,6 @@ public class ProdutoDoacaoRequest {
 	private String descricao;
 
 	@NotNull
-//	@Column(length = 16_777_216)
-	private byte[] imagemPrincipal;
-
-	@NotNull
 	private Boolean defeito;
 
 	@NotNull
@@ -39,7 +35,7 @@ public class ProdutoDoacaoRequest {
 
 	@NotNull
 	@Positive
-	private Integer fkDoador;
+	private Integer idDoador;
 
 
 	public ProdutoDoacaoRequest(
@@ -47,7 +43,6 @@ public class ProdutoDoacaoRequest {
 			String marca,
 			String modelo,
 			String descricao,
-			@NotNull byte[] imagemPrincipal,
 			Boolean defeito,
 			Boolean entrega,
 			Integer fkCategoriaProduto,
@@ -57,11 +52,10 @@ public class ProdutoDoacaoRequest {
 		this.marca = marca;
 		this.modelo = modelo;
 		this.descricao = descricao;
-		this.imagemPrincipal = imagemPrincipal;
 		this.defeito = defeito;
 		this.entrega = entrega;
 		this.fkCategoriaProduto = fkCategoriaProduto;
-		this.fkDoador = fkDoador;
+		this.idDoador = fkDoador;
 	}
 
 
@@ -81,10 +75,6 @@ public class ProdutoDoacaoRequest {
 		return descricao;
 	}
 
-	public byte[] getImagemPrincipal() {
-		return imagemPrincipal;
-	}
-
 	public Boolean getDefeito() {
 		return defeito;
 	}
@@ -97,7 +87,7 @@ public class ProdutoDoacaoRequest {
 		return fkCategoriaProduto;
 	}
 
-	public Integer getFkDoador() {
-		return fkDoador;
+	public Integer getIdDoador() {
+		return idDoador;
 	}
 }

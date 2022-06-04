@@ -1,5 +1,6 @@
 package com.conture.apiproduto.entity;
 
+import com.conture.apiproduto.dto.request.ProdutoDoacaoRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -33,7 +34,6 @@ public class ProdutoDoacao {
 	@Size(max = 255)
 	private String descricao;
 
-	@NotNull
 	@JsonIgnore
 	@Column(length = 16_777_216)
 	private byte[] imagemPrincipal;
@@ -70,6 +70,24 @@ public class ProdutoDoacao {
 	@Positive
 	private Integer fkDoador;
 
+
+	public ProdutoDoacao() {}
+
+	private ProdutoDoacao(ProdutoDoacaoRequest produtoDoacaoRequest) {
+		this.nome = produtoDoacaoRequest.getNome();
+		this.marca = produtoDoacaoRequest.getMarca();
+		this.modelo = produtoDoacaoRequest.getModelo();
+		this.descricao = produtoDoacaoRequest.getDescricao();
+		this.defeito = produtoDoacaoRequest.getDefeito();
+		this.entrega = produtoDoacaoRequest.getEntrega();
+		this.setCategoriaProduto(produtoDoacaoRequest.getFkCategoriaProduto());
+		this.fkDoador = produtoDoacaoRequest.getIdDoador();
+	}
+
+
+	public static ProdutoDoacao fromPattern (ProdutoDoacaoRequest produtoDoacaoRequest) {
+		return new ProdutoDoacao(produtoDoacaoRequest);
+	}
 
 	public Integer getIdProdutoDoacao() {
 		return idProdutoDoacao;
@@ -183,7 +201,8 @@ public class ProdutoDoacao {
 		this.removido = removido;
 	}
 
-	public void setCategoriaProduto(CategoriaProduto categoriaProduto) {
+	public void setCategoriaProduto(Integer fkCategoriaProduto) {
+		CategoriaProduto categoriaProduto = CategoriaProduto.fromPattern(fkCategoriaProduto);
 		this.categoriaProduto = categoriaProduto;
 	}
 

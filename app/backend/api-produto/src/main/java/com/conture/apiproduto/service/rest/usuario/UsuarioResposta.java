@@ -1,14 +1,10 @@
-package com.conture.apiproduto.service;
+package com.conture.apiproduto.service.rest.usuario;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
 
-@Entity
 public class UsuarioResposta {
-
-	@Id
-	private Integer idUsuario;
 	private String email;
 	private String senha;
 	private String nome;
@@ -23,9 +19,37 @@ public class UsuarioResposta {
 	private String grauEscolaridade;
 	private boolean removido;
 
-	public Integer getIdUsuario() {
-		return idUsuario;
+
+	public UsuarioResposta(
+			String email,
+			String senha,
+			String nome,
+			String sobrenome,
+			String cpf,
+			String genero,
+			Date dataNascimento,
+			String estadoCivil,
+			String telefone,
+			String cep,
+			Date dataCadastro,
+			String grauEscolaridade,
+			boolean removido
+	) {
+		this.email = email;
+		this.senha = senha;
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.cpf = cpf;
+		this.genero = genero;
+		this.dataNascimento = dataNascimento;
+		this.estadoCivil = estadoCivil;
+		this.telefone = telefone;
+		this.cep = cep;
+		this.dataCadastro = dataCadastro;
+		this.grauEscolaridade = grauEscolaridade;
+		this.removido = removido;
 	}
+
 
 	public String getEmail() {
 		return email;
@@ -80,22 +104,5 @@ public class UsuarioResposta {
 	}
 
 	public UsuarioResposta() {
-	}
-
-	public UsuarioResposta(Integer idUsuario, String email, String senha, String nome, String sobrenome, String cpf, String genero, Date dataNascimento, String estadoCivil, String telefone, String cep, Date dataCadastro, String grauEscolaridade, boolean removido) {
-		this.idUsuario = idUsuario;
-		this.email = email;
-		this.senha = senha;
-		this.nome = nome;
-		this.sobrenome = sobrenome;
-		this.cpf = cpf;
-		this.genero = genero;
-		this.dataNascimento = dataNascimento;
-		this.estadoCivil = estadoCivil;
-		this.telefone = telefone;
-		this.cep = cep;
-		this.dataCadastro = dataCadastro;
-		this.grauEscolaridade = grauEscolaridade;
-		this.removido = removido;
 	}
 }
