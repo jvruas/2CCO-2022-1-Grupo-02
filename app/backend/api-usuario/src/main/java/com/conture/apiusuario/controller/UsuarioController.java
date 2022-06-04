@@ -251,6 +251,15 @@ public class UsuarioController {
 		return status(200).body(lista);
 	}
 
+	@GetMapping("/situacao-atual/{idSituacaoAtual}")
+	public ResponseEntity<Integer> getSituacaoAtual(@PathVariable @Min(1) Integer idSituacaoAtual) {
+		if (!this.situacaoAtualRepository.existsById(idSituacaoAtual)) {
+			return status(404).build();
+		}
+
+		return status(200).body(idSituacaoAtual);
+	}
+
 	// TODO: Passar para a API de produto
 //	@GetMapping("/avaliacoes")
 //	public ResponseEntity listarAvaliacoes(@RequestParam Integer fkDoador) {

@@ -1,6 +1,7 @@
 package com.conture.apiproduto.controller;
 
 import com.conture.apiproduto.dto.request.*;
+import com.conture.apiproduto.entity.PreferenciaDonatario;
 import com.conture.apiproduto.repository.*;
 import com.conture.apiproduto.service.rest.usuario.UsuarioService;
 import com.conture.apiproduto.utility.*;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
 import static org.springframework.http.ResponseEntity.*;
+import static org.springframework.http.ResponseEntity.status;
 
 @CrossOrigin
 @RestController
@@ -60,6 +62,7 @@ public class ProdutoController {
 		return status(201).body(this.produtoRepository.findTop1ByRemovidoFalseAndStatusFalseOrderByIdProdutoDoacaoDesc().get().getIdProdutoDoacao());
 	}
 
+
 	@PostMapping(value = "/{idProduto}/imagem-principal", consumes = "image/jpeg")
 	public ResponseEntity adicionarImagemPrincipalProduto(
 			@PathVariable @Min(1) Integer idProduto,
@@ -81,6 +84,10 @@ public class ProdutoController {
 		try {
 			Integer idDoador = this.usuarioService.getIdUsuarioLogado(idDoadorRequest);
 		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+
 			return status(401).build();
 		}
 
@@ -88,13 +95,25 @@ public class ProdutoController {
 		return status(201).build();
 	}
 
-//	@PostMapping("/preferencia")
-//	public ResponseEntity adicionarPreferenciaDonatario(@RequestBody @Valid PreferenciaDonatario preferencia) {
-//		preferenciaRepository.save(preferencia);
-//		return ResponseEntity.status(201).build();
-//	}
+	@PostMapping("/preferencia")
+	public ResponseEntity adicionarPreferenciaDonatario(@RequestBody @Valid PreferenciaDonatarioRequest preferenciaDonatario) {
+		if (!this.produtoRepository.hasById(preferenciaDonatario.getFkProdutoDoacao())) {
+			return status(404).build();
+		}
+
+		if (this.preferenciaRepository.existsByProdutoDoacaoIdProdutoDoacao(preferenciaDonatario.getFkProdutoDoacao())) {
+			return status(409).build();
+		}
+
+//		if () {
 //
-//
+//		}
+
+		this.preferenciaRepository.save(PreferenciaDonatario.fromPattern(preferenciaDonatario));
+		return ResponseEntity.status(201).build();
+	}
+
+
 ////	@PostMapping("/match")
 ////	public ResponseEntity adicionarMatch(@RequestBody @Valid MatchRequest matchRequest) {
 ////

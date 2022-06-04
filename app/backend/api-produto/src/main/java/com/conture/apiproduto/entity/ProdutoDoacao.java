@@ -73,6 +73,10 @@ public class ProdutoDoacao {
 
 	public ProdutoDoacao() {}
 
+	private ProdutoDoacao(Integer idProdutoDoacao) {
+		this.idProdutoDoacao = idProdutoDoacao;
+	}
+
 	private ProdutoDoacao(ProdutoDoacaoRequest produtoDoacaoRequest) {
 		this.nome = produtoDoacaoRequest.getNome();
 		this.marca = produtoDoacaoRequest.getMarca();
@@ -84,6 +88,10 @@ public class ProdutoDoacao {
 		this.fkDoador = produtoDoacaoRequest.getIdDoador();
 	}
 
+
+	public static ProdutoDoacao fromPattern(Integer idProdutoDoacao) {
+		return new ProdutoDoacao(idProdutoDoacao);
+	}
 
 	public static ProdutoDoacao fromPattern (ProdutoDoacaoRequest produtoDoacaoRequest) {
 		return new ProdutoDoacao(produtoDoacaoRequest);

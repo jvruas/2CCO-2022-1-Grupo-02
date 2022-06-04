@@ -1,5 +1,7 @@
 package com.conture.apiproduto.entity;
 
+import com.conture.apiproduto.dto.request.PreferenciaDonatarioRequest;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -42,6 +44,37 @@ public class PreferenciaDonatario {
 	private ProdutoDoacao produtoDoacao;
 
 
+	public PreferenciaDonatario() {
+	}
+
+	private PreferenciaDonatario(
+			String genero,
+			String faixaEtaria,
+			String estadoCivil,
+			String grauEscolaridade,
+			Integer fkSituacaoAtual,
+			Integer fkProdutoDoacao
+	) {
+		this.genero = genero;
+		this.faixaEtaria = faixaEtaria;
+		this.estadoCivil = estadoCivil;
+		this.grauEscolaridade = grauEscolaridade;
+		this.fkSituacaoAtual = fkSituacaoAtual;
+		this.setProdutoDoacao(fkProdutoDoacao);
+	}
+
+
+	public static PreferenciaDonatario fromPattern(PreferenciaDonatarioRequest preferenciaDonatarioRequest) {
+		return new PreferenciaDonatario(
+				preferenciaDonatarioRequest.getGenero(),
+				preferenciaDonatarioRequest.getFaixaEtaria(),
+				preferenciaDonatarioRequest.getEstadoCivil(),
+				preferenciaDonatarioRequest.getGrauEscolaridade(),
+				preferenciaDonatarioRequest.getFkSituacaoAtual(),
+				preferenciaDonatarioRequest.getFkProdutoDoacao()
+		);
+	}
+
 	public Integer getIdPreferenciaDonatario() {
 		return idPreferenciaDonatario;
 	}
@@ -68,5 +101,33 @@ public class PreferenciaDonatario {
 
 	public ProdutoDoacao getProdutoDoacao() {
 		return produtoDoacao;
+	}
+
+	public void setIdPreferenciaDonatario(Integer idPreferenciaDonatario) {
+		this.idPreferenciaDonatario = idPreferenciaDonatario;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public void setFaixaEtaria(String faixaEtaria) {
+		this.faixaEtaria = faixaEtaria;
+	}
+
+	public void setEstadoCivil(String estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+	public void setGrauEscolaridade(String grauEscolaridade) {
+		this.grauEscolaridade = grauEscolaridade;
+	}
+
+	public void setFkSituacaoAtual(Integer fkSituacaoAtual) {
+		this.fkSituacaoAtual = fkSituacaoAtual;
+	}
+
+	public void setProdutoDoacao(Integer fkProdutoDoacao) {
+		this.produtoDoacao = ProdutoDoacao.fromPattern(fkProdutoDoacao);
 	}
 }

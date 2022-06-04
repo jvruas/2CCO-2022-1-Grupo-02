@@ -4,4 +4,6 @@ import com.conture.apiproduto.entity.PreferenciaDonatario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PreferenciaDonatarioRepository extends JpaRepository<PreferenciaDonatario, Integer> {
+
+	boolean existsByProdutoDoacaoIdProdutoDoacao(Integer idProdutoDoacao);
 }
