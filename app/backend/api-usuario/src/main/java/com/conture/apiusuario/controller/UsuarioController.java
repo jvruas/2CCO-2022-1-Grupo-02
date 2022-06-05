@@ -36,6 +36,7 @@ public class UsuarioController {
 	FilaObj<Avaliacao> filaAvaliacao = new FilaObj<>(20);
 
 
+//	TODO:TESTES
 	@PostMapping
 	public ResponseEntity<Integer> adicionarUsuario(@RequestBody @Valid UsuarioCadastroRequest novoUsuario) {
 		if (!this.situacaoAtualRepository.existsById(novoUsuario.getFkSituacaoAtual())
@@ -58,7 +59,7 @@ public class UsuarioController {
 		return status(201).body(this.usuarioRepository.getIdUserByCpf(novoUsuario.getCpf()).get());
 	}
 
-
+//TODO:TESTES
 	@PostMapping("/login")
 	public ResponseEntity<UsuarioLogadoResponse> login(@RequestBody @Valid UsuarioLoginRequest usuario) {
 		Optional<UsuarioLogadoResponse> usuarioPesquisado = this.usuarioRepository.getByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
@@ -79,6 +80,8 @@ public class UsuarioController {
 	}
 
 
+
+	//TODO:
 	@DeleteMapping("/{idUsuario}/login")
 	public ResponseEntity logoff(@PathVariable @Min(1) Integer idUsuario) {
 		if (!GerenciadorUsuario.logoff(idUsuario)) {
@@ -89,6 +92,7 @@ public class UsuarioController {
 	}
 
 
+	//TODO:
 	@GetMapping("/{idUsuario}/login")
 	public ResponseEntity existsUsuarioLogado(
 			@PathVariable @Min(1) Integer idUsuario,
@@ -151,6 +155,7 @@ public class UsuarioController {
 //	}
 
 
+	//TODO:
 	@DeleteMapping()
 	public ResponseEntity deletarUsuario(
 			@RequestBody @Valid UsuarioLoginRequest usuarioRequest,
@@ -272,7 +277,7 @@ public class UsuarioController {
 //		return ResponseEntity.status(200).body(this.filaAvaliacao);
 //	}
 
-
+// TODO:
 	@PatchMapping("/senha")
 	public ResponseEntity atualizarSenha(@RequestBody @Valid UsuarioSenhaRequest usuarioSenha) {
 		Optional<Usuario> usuario = this.usuarioRepository.findById(usuarioSenha.getIdUsuario());

@@ -17,3 +17,7 @@ insert into tipo_reporte (nome) values
                        ('Nudez ou atividade sexual'),
                        ('Produto falso'),
                        ('Spam');
+
+
+insert into usuario (CEP,CPF,DATA_NASCIMENTO,EMAIL,ESTADO_CIVIL,GENERO,GRAU_ESCOLARIDADE,REMOVIDO,NOME,SENHA,SOBRENOME,TELEFONE,SITUACAO_ATUAL_ID_SITUACAO_ATUAL)values
+('17450970','46002259880','2003-04-10','playk.games@outlook.com','S','M','A','Igor','igor1234','Sérgio','11973484561',4);
