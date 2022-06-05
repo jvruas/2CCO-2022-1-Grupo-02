@@ -29,9 +29,21 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
 	@Transactional
 	@Modifying
 	void updateAllStatusByIdProduto(Integer idProdutoDoacao);
+
+
+	@Query("select count(m) from Match m where m.produtoDoacao.idProdutoDoacao = ?1 and m.produtoDoacao.removido = false")
+	Long countByIdProduto(Integer idProdutoDoacao);
+
+	@Query("select count(m) from Match m where m.produtoDoacao.fkDoador = ?1 and m.visualizado = false and m.produtoDoacao.removido = false and m.produtoDoacao.status = false")
+	Long countByVisualizadoFalseAndIdDoador(Integer idDoador);
+
+
+	@Query("update Match m set m.status = true where m.fkDonatario = ?2 and m.produtoDoacao.idProdutoDoacao = ?1 and m.produtoDoacao.removido = false and m.produtoDoacao.status = false")
+	@Transactional
+	@Modifying
+	void updateStatusTrueByIdProdutoAndIdDonatario(Integer idProdutoDoacao, Integer idDonatario);
 	//	List<Match> findByFkDoadorAndFkProdutoDoacao(Integer fkDoador, Integer fkProdutoDoacao);
 //
-//	Long countByFkDoadorAndFkProdutoDoacao(Integer fkDoador, Integer fkProdutoDoacao);
 //
 //	@Transactional
 //	@Modifying

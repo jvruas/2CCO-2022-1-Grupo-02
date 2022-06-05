@@ -21,10 +21,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.time.Instant;
+import java.util.*;
 
 import static org.springframework.http.ResponseEntity.status;
 
@@ -88,7 +86,7 @@ public class ProdutoController {
 			return status(400).build();
 		}
 
-		if (!this.produtoRepository.hasByIdAndFkDoador(idProduto, idDoadorRequest)) {
+		if (!this.produtoRepository.hasByStatusFalseAndRemovidoFalseAndIdAndFkDoador(idProduto, idDoadorRequest)) {
 			return status(404).build();
 		}
 
@@ -121,7 +119,7 @@ public class ProdutoController {
 			return status(400).build();
 		}
 
-		if (!this.produtoRepository.hasByIdAndFkDoador(idProduto, idDoadorRequest)) {
+		if (!this.produtoRepository.hasByStatusFalseAndRemovidoFalseAndIdAndFkDoador(idProduto, idDoadorRequest)) {
 			return status(404).build();
 		}
 
@@ -229,6 +227,7 @@ public class ProdutoController {
 		return status(200).body(listaCategoria);
 	}
 
+
 //	@GetMapping("/nome/categoria")
 //	public ResponseEntity listarProdutoCategoria(@RequestParam String categoria) {
 //
@@ -269,6 +268,7 @@ public class ProdutoController {
 //
 //		return ResponseEntity.status(200).body(produtosResponse);
 //	}
+
 
 	@GetMapping("/nome")
 	public ResponseEntity<List<ProdutoDoacaoResponse>> pesquisarProduto(@RequestParam @NotNull @Size(min = 1, max = 165) String nome) {
@@ -365,7 +365,7 @@ public class ProdutoController {
 			@PathVariable @NotNull @Min(1) Integer idProduto,
 			@RequestParam(name = "idDoador") @NotNull @Min(1) Integer idDoadorRequest
 	) {
-		if (!this.produtoRepository.hasByIdAndFkDoador(idProduto, idDoadorRequest)) {
+		if (!this.produtoRepository.hasByStatusFalseAndRemovidoFalseAndIdAndFkDoador(idProduto, idDoadorRequest)) {
 			return status(404).build();
 		}
 
@@ -390,19 +390,60 @@ public class ProdutoController {
 		return status(200).body(listaMatch);
 	}
 
-//	@GetMapping("/match/quantidade")
-//	public ResponseEntity contarMatch(@RequestParam Long fkDoador, @RequestParam Long fkProdutoDoacao) {
-//
-//		Long contador = matchRepository.countByFkDoadorAndFkProdutoDoacao(fkDoador, fkProdutoDoacao);
-//		return ResponseEntity.status(200).body(contador);
-//	}
+
+	@GetMapping("/{idProduto}/match/quantidade-total")
+	public ResponseEntity<Long> contarTotalMatch(
+			@PathVariable @NotNull @Min(1) Integer idProduto,
+			@RequestParam(name = "idDoador") @NotNull @Min(1) Integer idDoadorRequest
+	) {
+		if (!this.produtoRepository.hasByStatusRemovidoFalseAndIdAndFkDoador(idProduto, idDoadorRequest)) {
+			return status(404).build();
+		}
+
+		try {
+			Integer idDoador = this.usuarioService.getIdUsuarioLogado(idDoadorRequest);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+
+			return status(401).build();
+		}
+
+		Long quantidadeMatch = this.matchRepository.countByIdProduto(idProduto);
+		return ResponseEntity.status(200).body(quantidadeMatch);
+	}
+
+
+	@GetMapping("/match/quantidade-nao-visualizada")
+	public ResponseEntity<Long> contarMatchNaoVisualizado(
+			@RequestParam(name = "idDoador") @NotNull @Min(1) Integer idDoadorRequest
+	) {
+		if (!this.produtoRepository.hasByIdDoador(idDoadorRequest)) {
+			return status(204).build();
+		}
+
+		try {
+			Integer idDoador = this.usuarioService.getIdUsuarioLogado(idDoadorRequest);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+
+			return status(401).build();
+		}
+
+		Long quantidadeMatch = this.matchRepository.countByVisualizadoFalseAndIdDoador(idDoadorRequest);
+		return ResponseEntity.status(200).body(quantidadeMatch);
+	}
+
 
 	@DeleteMapping("/{idProduto}")
 	public ResponseEntity deletarProduto(
 			@PathVariable @NotNull @Min(1) Integer idProduto,
 			@RequestParam(name = "idDoador") @NotNull @Min(1) Integer idDoadorRequest
 	) {
-		if (!this.produtoRepository.hasByIdAndFkDoador(idProduto, idDoadorRequest)) {
+		if (!this.produtoRepository.hasByStatusFalseAndRemovidoFalseAndIdAndFkDoador(idProduto, idDoadorRequest)) {
 			return status(404).build();
 		}
 
@@ -420,21 +461,37 @@ public class ProdutoController {
 		return status(200).build();
 	}
 
-////	@PatchMapping()
-////	public ResponseEntity concluirDoacao(@RequestParam Long fkDoador, @RequestParam Long idProdutoDoacao) {
-////		Optional<ProdutoDoacao> produto = produtoRepository.findByIdProdutoDoacaoAndUsuarioIdUsuario(idProdutoDoacao, fkDoador);
-////		if (produto.isEmpty()) {
-////			return ResponseEntity.status(404).build();
-////		}
-////
-////		if (produto.get().isStatus()) {
-////			return ResponseEntity.status(406).build();
-////		}
-////
-////		produtoRepository.updateProdutoDoacaoConcluido(fkDoador, idProdutoDoacao, Date.from(Instant.now()));
-////		return ResponseEntity.status(200).build();
-////	}
-//
+
+	// Date.from(Instant.now()
+	@PatchMapping("/{idProduto}")
+	public ResponseEntity concluirDoacao(
+			@PathVariable @NotNull @Min(1) Integer idProduto,
+			@RequestParam(name = "idDonatario") @NotNull @Min(1) Integer idDonatarioRequest
+	) {
+		if (!this.produtoRepository.hasById(idProduto)) {
+			return status(404).build();
+		}
+
+		if (this.produtoRepository.getFkDoadorById(idProduto) == idDonatarioRequest) {
+			return status(403).build();
+		}
+
+		try {
+			Integer idDonatario = this.usuarioService.getIdUsuarioLogado(idDonatarioRequest);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+
+			return status(401).build();
+		}
+
+		this.matchRepository.updateStatusTrueByIdProdutoAndIdDonatario(idProduto, idDonatarioRequest);
+		
+
+		return status(200).build();
+	}
+
 //	@DeleteMapping("/match")
 //	public ResponseEntity deletarMatch(@RequestBody @Valid MatchIdentifierRequest matchIdentifier) {
 //		Optional<Match> match = matchRepository.findByFkDoadorAndFkProdutoDoacaoAndFkDonatario(matchIdentifier.getFkDoador(), matchIdentifier.getFkProdutoDoacao(), matchIdentifier.getFkDonatario());
