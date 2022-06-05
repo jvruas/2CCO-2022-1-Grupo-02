@@ -558,16 +558,16 @@ public class ProdutoController {
 	}
 
 
-//	@GetMapping("/exportacao")
-//	public ResponseEntity getExportacao() {
-//		Txt exportarTxt = new Txt();
-//		List<ProdutoDoacao> listaProduto;
-//		listaProduto = produtoRepository.findAll();
-//
-//		if (exportarTxt.gravaArquivoTxt(listaProduto)) {
-//			return ResponseEntity.status(201).build();
-//		}
-//
-//		return ResponseEntity.status(404).build();
-//	}
+	@GetMapping("/exportacao")
+	public ResponseEntity getExportacao() {
+		Txt exportarTxt = new Txt();
+		List<ProdutoDoacao> listaProduto;
+		listaProduto = this.produtoRepository.findAll();
+
+		if (exportarTxt.gravaArquivoTxt(listaProduto, this.usuarioClient)) {
+			return ResponseEntity.status(201).build();
+		}
+
+		return ResponseEntity.status(404).build();
+	}
 }
