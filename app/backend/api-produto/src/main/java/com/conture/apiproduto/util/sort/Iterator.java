@@ -1,4 +1,4 @@
-package com.conture.apiproduto.util;
+package com.conture.apiproduto.util.sort;
 
 public interface Iterator<T> {
 

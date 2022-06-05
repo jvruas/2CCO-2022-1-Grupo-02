@@ -1,4 +1,4 @@
-package com.conture.apiproduto.util;
+package com.conture.apiproduto.util.sort;
 
 import com.conture.apiproduto.model.dto.response.ProdutoDoacaoResponse;
 

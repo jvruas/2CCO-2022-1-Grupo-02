@@ -16,6 +16,9 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
 
 	Optional<Match> findTop1ByStatusFalseAndVisualizadoFalseAndProdutoDoacaoIdProdutoDoacaoAndFkDonatarioOrderByIdMatchDesc(Integer idProdutoDoacao, Integer fkDonatario);
 
+	@Query("select m.idMatch from Match m where m.fkDonatario = ?2 and m.status = false and m.produtoDoacao.idProdutoDoacao = ?1 and m.produtoDoacao.removido = false and m.produtoDoacao.status = false")
+	Optional<Integer> getIdMatchByIdProdutoAndIdDonatario(Integer idProdutoDoacao, Integer idDonatario);
+
 	@Query("select new com.conture.apiproduto.model.dto.response.ProdutoDoacaoResponse(m.produtoDoacao.nome, m.produtoDoacao.marca, m.produtoDoacao.modelo, m.produtoDoacao.descricao, m.produtoDoacao.defeito, m.produtoDoacao.entrega, m.produtoDoacao.quantidadeVisualizacao, m.produtoDoacao.dataCriacao, m.produtoDoacao.dataConclusao, m.produtoDoacao.status, m.produtoDoacao.categoriaProduto.nome, m.produtoDoacao.fkDoador) from Match m where m.status = false and m.produtoDoacao.status = false and m.produtoDoacao.removido = false and m.fkDonatario = ?1 order by m.dataInteresse desc")
 	List<ProdutoDoacaoResponse> getAllByStatusAndamento(Integer fkDonatario);
 
@@ -38,23 +41,8 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
 	Long countByVisualizadoFalseAndIdDoador(Integer idDoador);
 
 
-	@Query("update Match m set m.status = true where m.fkDonatario = ?2 and m.produtoDoacao.idProdutoDoacao = ?1 and m.produtoDoacao.removido = false and m.produtoDoacao.status = false")
+	@Query("update Match m set m.status = true where m.idMatch = ?1")
 	@Transactional
 	@Modifying
-	void updateStatusTrueByIdProdutoAndIdDonatario(Integer idProdutoDoacao, Integer idDonatario);
-	//	List<Match> findByFkDoadorAndFkProdutoDoacao(Integer fkDoador, Integer fkProdutoDoacao);
-//
-//
-//	@Transactional
-//	@Modifying
-//	void deleteByFkDoadorAndFkProdutoDoacaoAndFkDonatario(Integer fkDoador, Integer fkProdutoDoacao, Integer fkDonatario);
-//
-//	Optional<Match> findByFkDoadorAndFkProdutoDoacaoAndFkDonatario(Long fkDoador, Long fkProdutoDoacao, Long fkDonatario);
-//
-//	@Transactional
-//	@Modifying
-//	@Query("update Match m set m.status =?4 where m.fkDoador = ?1 and m.fkProdutoDoacao = ?2 and m.fkDonatario = ?3")
-//	void updateMatchSetStatus(Long fkDoador, Long fkProdutoDoacao, Long fkDonatario, String status);
-//
-//	List<Match> findByFkDoadorAndStatus(Long fkDoador, String status);
+	void updateStatusTrueById(Integer idMatch);
 }
