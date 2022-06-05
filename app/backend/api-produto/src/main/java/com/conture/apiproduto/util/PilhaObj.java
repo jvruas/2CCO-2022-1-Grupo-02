@@ -1,9 +1,6 @@
-package com.conture.apiproduto.utility;
+package com.conture.apiproduto.util;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PilhaObj<T> {
 	private int top;
@@ -30,15 +27,21 @@ public class PilhaObj<T> {
 
 	}
 
-	public void  push (T obj){
-		if(!isFull()){
-			stack[++top] = obj;
-		}else{
-			System.out.println("Pilha cheia");
+	private void shiftLeftArray() {
+		for (int i = 0; i < this.top; i++) {
+			this.stack[i] = this.stack[i + 1];
+		}
+		this.top--;
+	}
+
+	public void push (T obj){
+		if(this.isFull()){
+			this.shiftLeftArray();
 		}
 
-
+		this.stack[++this.top] = obj;
 	}
+
 	public T  pop (){
 		if(!isEmpty()){
 			return stack[top--];
@@ -74,6 +77,4 @@ public class PilhaObj<T> {
 		}
 		return pilhaReturn;
 	}
-
-
 }

@@ -1,6 +1,6 @@
-package com.conture.apiproduto.entity;
+package com.conture.apiproduto.model.entity;
 
-import com.conture.apiproduto.dto.request.ProdutoDoacaoRequest;
+import com.conture.apiproduto.model.dto.request.ProdutoDoacaoRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 

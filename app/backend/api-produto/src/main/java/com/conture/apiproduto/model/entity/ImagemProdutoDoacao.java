@@ -1,4 +1,4 @@
-package com.conture.apiproduto.entity;
+package com.conture.apiproduto.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,6 +21,25 @@ public class ImagemProdutoDoacao {
 	private ProdutoDoacao produtoDoacao;
 
 
+	public ImagemProdutoDoacao() {
+	}
+
+	private ImagemProdutoDoacao(
+			Integer fkProdutoDoacao,
+			@NotNull byte[] imagem
+	) {
+		this.setProdutoDoacao(fkProdutoDoacao);
+		this.imagem = imagem;
+	}
+
+
+	public static ImagemProdutoDoacao fromPattern(
+			Integer fkProdutoDoacao,
+			@NotNull byte[] imagem
+	) {
+		return new ImagemProdutoDoacao(fkProdutoDoacao, imagem);
+	}
+
 	public Integer getIdImagemProdutoDoacao() {
 		return idImagemProdutoDoacao;
 	}
@@ -41,7 +60,7 @@ public class ImagemProdutoDoacao {
 		this.imagem = imagem;
 	}
 
-	public void setProdutoDoacao(ProdutoDoacao produtoDoacao) {
-		this.produtoDoacao = produtoDoacao;
+	public void setProdutoDoacao(Integer fkProdutoDoacao) {
+		this.produtoDoacao = ProdutoDoacao.fromPattern(fkProdutoDoacao);
 	}
 }

@@ -1,11 +1,5 @@
-package com.conture.apiproduto.dto.request;
+package com.conture.apiproduto.model.dto.request;
 
-import com.conture.apiproduto.entity.ProdutoDoacao;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.*;
 
 public class PreferenciaDonatarioRequest {
@@ -41,7 +35,7 @@ public class PreferenciaDonatarioRequest {
 	@Positive
 	private Integer fkProdutoDoacao;
 
-	
+
 	public String getGenero() {
 		return genero;
 	}

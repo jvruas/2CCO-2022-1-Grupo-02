@@ -1,6 +1,6 @@
-package com.conture.apiproduto.utility;
+package com.conture.apiproduto.util;
 
-import com.conture.apiproduto.entity.ProdutoDoacao;
+import com.conture.apiproduto.model.entity.ProdutoDoacao;
 
 import java.util.List;
 

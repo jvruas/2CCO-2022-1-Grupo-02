@@ -1,6 +1,4 @@
-package com.conture.apiproduto.utility;
-
-import java.util.Optional;
+package com.conture.apiproduto.util;
 
 public interface Iterator<T> {
 

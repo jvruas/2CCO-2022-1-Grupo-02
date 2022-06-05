@@ -1,4 +1,4 @@
-package com.conture.apiproduto.dto.request;
+package com.conture.apiproduto.model.dto.request;
 
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package com.conture.apiproduto.dto.request;
+package com.conture.apiproduto.model.dto.request;
 
 import javax.validation.constraints.*;
 
@@ -89,5 +89,21 @@ public class ProdutoDoacaoRequest {
 
 	public Integer getIdDoador() {
 		return idDoador;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 }

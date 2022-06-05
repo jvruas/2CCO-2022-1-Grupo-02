@@ -1,6 +1,6 @@
-package com.conture.apiproduto.entity;
+package com.conture.apiproduto.model.entity;
 
-import com.conture.apiproduto.dto.request.PreferenciaDonatarioRequest;
+import com.conture.apiproduto.model.dto.request.PreferenciaDonatarioRequest;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;

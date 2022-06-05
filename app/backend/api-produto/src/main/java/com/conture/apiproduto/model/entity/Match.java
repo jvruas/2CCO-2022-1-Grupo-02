@@ -1,4 +1,4 @@
-package com.conture.apiproduto.entity;
+package com.conture.apiproduto.model.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -36,6 +36,25 @@ public class Match {
 	@Positive
 	private Integer fkDonatario;
 
+
+	public Match() {
+	}
+
+	private Match(
+			Integer fkProdutoDoacao,
+			Integer fkDonatario
+	) {
+		this.setProdutoDoacao(fkProdutoDoacao);
+		this.fkDonatario = fkDonatario;
+	}
+
+
+	public static Match fromPattern(
+			Integer fkProdutoDoacao,
+			Integer fkDonatario
+	) {
+		return new Match(fkProdutoDoacao, fkDonatario);
+	}
 
 	public Integer getIdMatch() {
 		return idMatch;
@@ -85,8 +104,8 @@ public class Match {
 		this.visualizado = visualizado;
 	}
 
-	public void setProdutoDoacao(ProdutoDoacao produtoDoacao) {
-		this.produtoDoacao = produtoDoacao;
+	public void setProdutoDoacao(Integer fkProdutoDoacao) {
+		this.produtoDoacao = ProdutoDoacao.fromPattern(fkProdutoDoacao);
 	}
 
 	public void setFkDonatario(Integer fkDonatario) {
