@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 public class UsuarioResposta {
+	private Integer idUsuario;
 	private String email;
 	private String senha;
 	private String nome;
@@ -21,6 +22,7 @@ public class UsuarioResposta {
 
 
 	public UsuarioResposta(
+			Integer idUsuario,
 			String email,
 			String senha,
 			String nome,
@@ -35,6 +37,7 @@ public class UsuarioResposta {
 			String grauEscolaridade,
 			boolean removido
 	) {
+		this.idUsuario = idUsuario;
 		this.email = email;
 		this.senha = senha;
 		this.nome = nome;
@@ -50,6 +53,10 @@ public class UsuarioResposta {
 		this.removido = removido;
 	}
 
+
+	public Integer getIdUsuario() {
+		return idUsuario;
+	}
 
 	public String getEmail() {
 		return email;

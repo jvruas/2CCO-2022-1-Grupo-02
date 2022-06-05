@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.Optional;
 @FeignClient(value = "usuario", url = "http://localhost:8080/usuarios")
 public interface UsuarioClient {
+	@GetMapping("/{idUsuario}")
+	Optional<UsuarioResposta> getUsuarioById(@PathVariable Integer idUsuario);
+
 	@GetMapping("/{idUsuario}/login?responseType=usuario")
 	Optional<UsuarioResposta> getUsuarioLogado(@PathVariable Integer idUsuario);
 

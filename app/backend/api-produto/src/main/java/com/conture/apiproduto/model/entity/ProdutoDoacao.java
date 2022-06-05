@@ -88,6 +88,27 @@ public class ProdutoDoacao {
 		this.fkDoador = produtoDoacaoRequest.getIdDoador();
 	}
 
+	private ProdutoDoacao(
+			Integer fkDoador,
+			String nome,
+			String marca,
+			String modelo,
+			String descricao,
+			Boolean defeito,
+			Boolean entrega,
+			CategoriaProduto categoriaProduto
+
+	) {
+		this.fkDoador = fkDoador;
+		this.nome = nome;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.descricao = descricao;
+		this.defeito = defeito;
+		this.entrega = entrega;
+		this.categoriaProduto = categoriaProduto;
+	}
+
 
 	public static ProdutoDoacao fromPattern(Integer idProdutoDoacao) {
 		return new ProdutoDoacao(idProdutoDoacao);
@@ -95,6 +116,29 @@ public class ProdutoDoacao {
 
 	public static ProdutoDoacao fromPattern (ProdutoDoacaoRequest produtoDoacaoRequest) {
 		return new ProdutoDoacao(produtoDoacaoRequest);
+	}
+
+	public static ProdutoDoacao fromPattern(
+			Integer fkDoador,
+			String nome,
+			String marca,
+			String modelo,
+			String descricao,
+			Boolean defeito,
+			Boolean entrega,
+			CategoriaProduto categoriaProduto
+
+	) {
+		return new ProdutoDoacao(
+				fkDoador,
+				nome,
+				marca,
+				modelo,
+				descricao,
+				defeito,
+				entrega,
+				categoriaProduto
+		);
 	}
 
 	public Integer getIdProdutoDoacao() {

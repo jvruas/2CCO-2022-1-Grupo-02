@@ -10,6 +10,7 @@ import com.conture.apiproduto.api.rest.usuario.UsuarioClient;
 import com.conture.apiproduto.service.MatchService;
 
 import com.conture.apiproduto.util.collection.PilhaObj;
+import com.conture.apiproduto.util.file.Txt;
 import com.conture.apiproduto.util.sort.Iterator;
 import com.conture.apiproduto.util.sort.SortDateAscending;
 import com.conture.apiproduto.util.sort.AscendingListIterator;
@@ -545,16 +546,18 @@ public class ProdutoController {
 	}
 
 
-//	@PostMapping(value = "/importacao", consumes = "text/txt")
-//	public ResponseEntity postImportacao(@RequestBody byte[] importacao) {
-//		Txt importarTxt = new Txt();
-//
-//		if (importarTxt.leArquivoTxt(importacao, categoriaRepository, produtoRepository, usuarioService)) {
-//			return ResponseEntity.status(201).build();
-//		}
-//		return ResponseEntity.status(404).build();
-//	}
-//
+	@PostMapping(value = "/importacao", consumes = "text/txt")
+	public ResponseEntity postImportacao(@RequestBody byte[] importacao) {
+		Txt importarTxt = new Txt();
+
+		if (importarTxt.leArquivoTxt(importacao, this.categoriaRepository, this.produtoRepository, this.usuarioClient)) {
+			return ResponseEntity.status(201).build();
+		}
+
+		return ResponseEntity.status(404).build();
+	}
+
+
 //	@GetMapping("/exportacao")
 //	public ResponseEntity getExportacao() {
 //		Txt exportarTxt = new Txt();
