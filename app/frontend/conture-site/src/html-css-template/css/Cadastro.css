@@ -1,6 +1,5 @@
 .section-cadastro1{
     width: 100%;
-    height: calc(100vh - 90px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,23 +62,12 @@ label img{
     padding-left: 10px;
 }
 
-label, button, input{
+label, button, input, select{
     font-size: 16px;
 }
 
-.link{
-    width: 178px;
-    height: 44px;
-    background-color: var(--verde-btn);
-    border: none;
-    border-radius: 3px;
-    color: #fff;
-    font-weight: 600;
-    margin-top: 5%
-}
-
 .btn-cadastro1{
-    width: 100%;
+    width: 178px;
     height: 44px;
     display: flex;
     justify-content: space-evenly;
@@ -91,7 +79,70 @@ label, button, input{
     border-radius: 3px;
 }
 
-.link:hover{
+.btn-cadastro1:hover{
+    background-color: var(--verde-btn-hover);
+}
+
+#form-cadastro2{
+    margin-top: 25px;
+    width: 466px;
+    height: 850px;
+    display: none;
+    grid-template-rows: 65px 55px 90px 90px 90px 90px 90px 90px 90px 100px;
+}
+
+input, select{
+    height: 44px;
+    border: 1px solid #A6A6A6;
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.maior{
+    width: 100%;
+}
+
+.menor{
+    width: 45%;
+}
+
+.input_double{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn{
+    width: 178px;
+    height: 44px;
+    border: none;
+    border-radius: 3px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+a{
+    color: #000000;
+}
+
+.btn_voltar{
+    background-color: var(--cinza-btn);
+    border: 1px solid var(--cinza-btn-border);
+}
+
+.btn_voltar:hover{
+    background-color: var(--cinza-btn-hover);
+}
+
+.btn_cadastrar{
+    color: #FFFFFF;
+    background-color: var(--verde-btn);
+}
+
+.btn_cadastrar:hover{
     background-color: var(--verde-btn-hover);
 }
 
@@ -123,7 +174,11 @@ label, button, input{
 
 
 @media (max-width: 500px){
-    #form-cadastro1{
+    #form-cadastro1, #form-cadastro2{
         width: 90%;
     }
+    .btn{
+        width: 150px;
+    }
 }
+

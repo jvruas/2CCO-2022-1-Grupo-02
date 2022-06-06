@@ -8,29 +8,63 @@ import iconSalvar from "../html-css-template/imagens/folder-plus.png"
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
 
+function dataUsuarioSenha() {
+    return {
+        idUsuario: "",
+        senhaAtual: "",
+        senhaNova: ""
+    }
+}
+
 function EsqueciSenha() {
 
-    const handleClick = () => {
+    // Função para chamar o endPoint para logar o usuário
+    const [valuesUsuarioSenha, setValuesUsuarioSenha] = useState(dataUsuarioSenha)
+
+    function handleChangeUser(event) {
+        const { value, name } = event.target
+        setValuesUsuarioSenha({ ...valuesUsuarioSenha, [name]: value, })
+        console.log(valuesUsuarioSenha)
+    }
+
+    function handleSubmit(event) {
+        event.preventDefault()
+        let json = {
+            email: valuesUsuarioSenha.email,
+            senha: valuesUsuarioSenha.senha
+        }
+        console.log(json)
+        api.post("/login", json, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((resposta) => {
+            alert("Logado")
+            console.log(resposta.status)
+        }).catch((error) => { console.log(error) })
+    }
+
+    const ocultarSenha = () => {
         var senha = document.getElementById("senha");
         var img = document.getElementById("eye2");
         if (senha.type == "password") {
             senha.type = "text";
             img.src = iconOpen;
-        } 
-        else{
+        }
+        else {
             senha.type = "password";
             img.src = iconClose;
         }
     }
 
-    const handleClick2 = () => {
+    const ocultarSenha2 = () => {
         var senha2 = document.getElementById("senha2");
         var img2 = document.getElementById("eye3");
         if (senha2.type == "password") {
             senha2.type = "text";
             img2.src = iconOpen;
         }
-        else{
+        else {
             senha2.type = "password";
             img2.src = iconClose;
         }
@@ -58,13 +92,13 @@ function EsqueciSenha() {
                         </label>
 
                         <input type="password" name="senha" id="senha" />
-                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye2" onClick={handleClick} />
+                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye2" onClick={ocultarSenha} />
                     </div>
                     <div className="divisao input">
                         <label htmlFor="confSenha">Confirmar sua senha</label>
                         <input type="password" name="confSenha" id="senha2" />
                         <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye3"
-                            onClick={handleClick2}/>
+                            onClick={ocultarSenha2} />
                     </div>
                     <div className="divisao centralizado">
                         <button className="btn-esqc">

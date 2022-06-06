@@ -6,11 +6,48 @@ import iconSenha from "../html-css-template/imagens/eye-slash-closed.png"
 import iconOk from "../html-css-template/imagens/icon-ok.png"
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../api.js";
+
+function dataUsuarioLogin() {
+    return {
+        email: "",
+        senha: ""
+    }
+}
 
 function Login() {
 
-    const handleClick = () => {
+
+    // Função para chamar o endPoint para logar o usuário
+    const [valuesUsuarioLogin, setValuesUsuarioLogin] = useState(dataUsuarioLogin)
+
+    function handleChangeUser(event) {
+        const { value, name } = event.target
+        setValuesUsuarioLogin({ ...valuesUsuarioLogin, [name]: value, })
+        console.log(valuesUsuarioLogin)
+    }
+
+    function handleSubmit(event) {
+        event.preventDefault()
+        let json = {
+            email: valuesUsuarioLogin.email,
+            senha: valuesUsuarioLogin.senha
+        }
+        console.log(json)
+        api.post("/login", json, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((resposta) => {
+            alert("Logado")
+            console.log(resposta.status)
+        }).catch((error) => { console.log(error) })
+    }
+
+
+    const ocultarSenha = () => {
         var senha = document.getElementById("senha");
         var img = document.getElementById("eye");
         if (senha.type == "password") {
@@ -33,18 +70,18 @@ function Login() {
                     </div>
                     <div className="divisao input">
                         <label htmlFor="nome">E-mail</label>
-                        <input type="email" name="nome" />
+                        <input id="email" type="email" name="email" size="80" maxLength="80" value={valuesUsuarioLogin.email} required onChange={handleChangeUser} />
                     </div>
                     <div className="divisao input">
                         <label htmlFor="senha">Senha</label>
-                        <input type="password" name="senha" id="senha" />
-                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye" onClick={handleClick} />
+                        <input id="senha" type="password" name="senha" size="18" maxLength="18" minLength="6" value={valuesUsuarioLogin.senha} required onChange={handleChangeUser} />
+                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye" onClick={ocultarSenha} />
                     </div>
                     <div className="divisao">
                         <Link className="link-esqc" to="/email-esqueci-senha">Esqueceu sua senha?</Link>
                     </div>
                     <div className="divisao centralizado">
-                        <button className="btn-login"><p>ENTRAR</p><img src={iconOk} alt="Ícone de confirmação" /></button>
+                        <button className="btn-login" type="submit" onClick={handleSubmit}><p>ENTRAR</p><img src={iconOk} alt="Ícone de confirmação" /></button>
                     </div>
 
                 </form>
