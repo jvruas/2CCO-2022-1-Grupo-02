@@ -211,7 +211,7 @@ public class ProdutoController {
 	}
 
 
-	//	@PostMapping("/avaliacao")
+//	@PostMapping("/avaliacao")
 //	public ResponseEntity avaliarUsuario(@RequestBody @Valid AvaliacaoRequest avaliacao){
 //		Optional<Usuario> avaliado = Optional.ofNullable(usuarioRepository.findByIdUsuario(avaliacao.getFkDoador()));
 //		Optional<UsuarioLogadoResponse> avaliador = GerenciadorUsuario.buscaUsuarioLogado(avaliacao.getFkDonatario());
@@ -232,7 +232,7 @@ public class ProdutoController {
 //	}
 
 
-	//	@GetMapping("/avaliacoes")
+//	@GetMapping("/avaliacoes")
 //	public ResponseEntity listarAvaliacoes(@RequestParam Integer fkDoador) {
 //		List<Avaliacao> lista = this.avaliacaoRepository.findByFkDoador(fkDoador);
 //
