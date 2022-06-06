@@ -206,6 +206,20 @@ public class UsuarioController {
 		return status(200).body(idUsuario.get());
 	}
 
+	@GetMapping("/cpf")
+	public ResponseEntity<Integer> pesquisarUsuarioCpf(@RequestParam @Size(min = 11, max = 11) @Pattern(regexp = "[^[0-9]+$]") String cpf) {
+		if (cpf.trim().equals("")) {
+			return status(400).build();
+		}
+
+		Optional<Integer> idUsuario = this.usuarioRepository.getByCpf(cpf);
+
+		if (idUsuario.isEmpty()) {
+			return status(404).build();
+		}
+
+		return status(200).body(idUsuario.get());
+	}
 
 	@GetMapping("/tipos-de-reporte")
 	public ResponseEntity<List<TipoReporte>> listarTiposReporte() {
@@ -280,7 +294,6 @@ public class UsuarioController {
 
 		return status(200).build();
 	}
-
 
 	@PutMapping("/{idUsuario}/perfil")
 	public ResponseEntity atualizarPerfil(
