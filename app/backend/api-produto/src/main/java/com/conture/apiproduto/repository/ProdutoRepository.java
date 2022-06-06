@@ -18,6 +18,12 @@ public interface ProdutoRepository extends JpaRepository<ProdutoDoacao, Integer>
 	@Query("select case when count(p) = 1 then true else false end from ProdutoDoacao p where p.idProdutoDoacao = ?1 and p.removido = false and p.status = false")
 	boolean hasById(Integer idProdutoDoacao);
 
+	@Query("select case when count(p) = 1 then true else false end from ProdutoDoacao p where p.idProdutoDoacao = ?1 and p.fkDoador = ?2 and p.removido = false and p.status = false")
+	boolean hasByIdAndIdDoador(Integer idProdutoDoacao, Integer idDoador);
+
+	@Query("select case when count(p) = 1 then true else false end from ProdutoDoacao p where p.idProdutoDoacao = ?1 and p.removido = false and p.status = true")
+	boolean hasDoadoById(Integer idProdutoDoacao);
+
 	@Query("select case when count(p) >= 1 then true else false end from ProdutoDoacao p where p.fkDoador = ?1 and p.removido = false and p.status = false")
 	boolean hasByIdDoador(Integer idDoador);
 
@@ -29,6 +35,9 @@ public interface ProdutoRepository extends JpaRepository<ProdutoDoacao, Integer>
 
 	@Query("select p.fkDoador from ProdutoDoacao p where p.idProdutoDoacao = ?1 and p.removido = false and p.status = false")
 	Integer getFkDoadorById(Integer idProdutoDoacao);
+
+	@Query("select p.fkDoador from ProdutoDoacao p where p.idProdutoDoacao = ?1 and p.removido = false and p.status = true")
+	Integer getFkDoadorByDoadoTrueAndId(Integer idProdutoDoacao);
 
 	@Query("select p.quantidadeVisualizacao from ProdutoDoacao p where p.idProdutoDoacao = ?1 and p.removido = false and p.status = false")
 	Optional<Integer> getQuantidadeVisualizacaoById(Integer idProdutoDoacao);

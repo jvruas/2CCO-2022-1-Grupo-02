@@ -1,5 +1,7 @@
 package com.conture.apiproduto.controller;
 
+import com.conture.apiproduto.model.dto.request.AvaliacaoRequest;
+import com.conture.apiproduto.model.dto.response.AvaliacaoResponse;
 import com.conture.apiproduto.model.dto.response.MatchResponse;
 import com.conture.apiproduto.model.dto.response.ProdutoDoacaoResponse;
 import com.conture.apiproduto.model.entity.*;
@@ -58,7 +60,7 @@ public class ProdutoController {
 
 	PilhaObj<String> pilhaHistorico = new PilhaObj<>(10);
 
-	FilaObj<Avaliacao> filaAvaliacao = new FilaObj<>(20);
+	FilaObj<AvaliacaoResponse> filaAvaliacao = new FilaObj<>(20);
 
 
 	@PostMapping()
@@ -211,37 +213,60 @@ public class ProdutoController {
 	}
 
 
-//	@PostMapping("/avaliacao")
-//	public ResponseEntity avaliarUsuario(@RequestBody @Valid AvaliacaoRequest avaliacao){
-//		Optional<Usuario> avaliado = Optional.ofNullable(usuarioRepository.findByIdUsuario(avaliacao.getFkDoador()));
-//		Optional<UsuarioLogadoResponse> avaliador = GerenciadorUsuario.buscaUsuarioLogado(avaliacao.getFkDonatario());
-//
-//		//if(avaliado.isEmpty() || avaliador.isEmpty()){
-//		//	return ResponseEntity.status(404).build();
-//		//}
-//
-//		Avaliacao novaAvaliacao = new Avaliacao();
-//		novaAvaliacao.setFkDoador(avaliacao.getFkDoador());
-//		novaAvaliacao.setFkDonatario(avaliacao.getFkDonatario());
-//		novaAvaliacao.setValor(avaliacao.getValor());
-//		novaAvaliacao.setComentario(avaliacao.getComentario());
-//
-//
-//		this.avaliacaoRepository.save(novaAvaliacao);
-//		return ResponseEntity.status(200).build();
-//	}
+	@PostMapping("/{idProduto}/avaliacao")
+	public ResponseEntity<Integer> adicionarAvaliacao(
+			@PathVariable @NotNull @Min(1) Integer idProduto,
+			@RequestParam(name = "idDonatario") @NotNull @Min(1) Integer idDonatarioRequest,
+			@RequestBody @Valid AvaliacaoRequest avaliacao
+	) {
+		if (!this.produtoRepository.hasDoadoById(idProduto)) {
+			return status(404).build();
+		}
+
+		if (this.produtoRepository.getFkDoadorByDoadoTrueAndId(idProduto) == idDonatarioRequest) {
+			return status(403).build();
+		}
+
+		Optional<Integer> idMatch = this.matchRepository.getIdMatchDoadoByIdProdutoAndIdDonatario(idProduto, idDonatarioRequest);
+
+		if (idMatch.isEmpty()) {
+			return status(404).build();
+		}
+
+		if(this.avaliacaoRepository.hasByIdMatch(idMatch.get())) {
+			return status(409).build();
+		}
+
+		try {
+			Integer idDonatario = this.usuarioClient.getIdUsuarioLogado(idDonatarioRequest);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+
+			return status(401).build();
+		}
+
+		this.avaliacaoRepository.save(Avaliacao.fromPattern(avaliacao, idMatch.get()));
+		return status(201).body(this.avaliacaoRepository.findTop1ByMatchIdMatchAndMatchStatusTrueOrderByIdAvaliacaoDesc(idMatch.get()).get().getIdAvaliacao());
+	}
 
 
-//	@GetMapping("/avaliacoes")
-//	public ResponseEntity listarAvaliacoes(@RequestParam Integer fkDoador) {
-//		List<Avaliacao> lista = this.avaliacaoRepository.findByFkDoador(fkDoador);
-//
-//		for (int i = 0; i < lista.size(); i++) {
-//			this.filaAvaliacao.insert(lista.get(i));
-//		}
-//
-//		return ResponseEntity.status(200).body(this.filaAvaliacao);
-//	}
+	// TODO: Precisa de melhoras.
+	@GetMapping("/avaliacao")
+	public ResponseEntity<FilaObj> listarAvaliacao(@RequestParam @NotNull @Min(1) Integer idDoador) {
+		List<AvaliacaoResponse> listaAvaliacaoResponse = this.avaliacaoRepository.getAllByIdDoador(idDoador);
+
+		if (listaAvaliacaoResponse.isEmpty()) {
+			return status(204).build();
+		}
+
+		for (int i = 0; i < listaAvaliacaoResponse.size(); i++) {
+			this.filaAvaliacao.insert(listaAvaliacaoResponse.get(i));
+		}
+
+		return ResponseEntity.status(200).body(this.filaAvaliacao);
+	}
 
 
 	@GetMapping("/{idProduto}")
@@ -501,13 +526,14 @@ public class ProdutoController {
 	@PatchMapping("/{idProduto}")
 	public ResponseEntity concluirDoacao(
 			@PathVariable @NotNull @Min(1) Integer idProduto,
+			@RequestParam(name = "idDoador") @NotNull @Min(1) Integer idDoadorRequest,
 			@RequestParam(name = "idDonatario") @NotNull @Min(1) Integer idDonatarioRequest
 	) {
-		if (!this.produtoRepository.hasById(idProduto)) {
+		if (!this.produtoRepository.hasByIdAndIdDoador(idProduto, idDoadorRequest)) {
 			return status(404).build();
 		}
 
-		if (this.produtoRepository.getFkDoadorById(idProduto) == idDonatarioRequest) {
+		if (idDoadorRequest == idDonatarioRequest) {
 			return status(403).build();
 		}
 
@@ -518,7 +544,7 @@ public class ProdutoController {
 		}
 
 		try {
-			Integer idDonatario = this.usuarioClient.getIdUsuarioLogado(idDonatarioRequest);
+			Integer idDoador = this.usuarioClient.getIdUsuarioLogado(idDoadorRequest);
 		} catch (FeignException response) {
 			if (response.status() == -1) { // Service Unavailable
 				return status(503).build();

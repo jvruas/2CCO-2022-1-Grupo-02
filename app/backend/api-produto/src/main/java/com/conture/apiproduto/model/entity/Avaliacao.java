@@ -1,5 +1,6 @@
 package com.conture.apiproduto.model.entity;
 
+import com.conture.apiproduto.model.dto.request.AvaliacaoRequest;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -17,7 +18,6 @@ public class Avaliacao {
 	@Min(1)
 	private Integer valor;
 
-	@NotBlank
 	@Size(max = 300)
 	private String comentario;
 
@@ -29,6 +29,31 @@ public class Avaliacao {
 	@OneToOne
 	private Match match;
 
+
+	public Avaliacao() {
+	}
+
+	private Avaliacao(
+			Integer valor,
+			String comentario,
+			Integer fkMatch
+	) {
+		this.valor = valor;
+		this.comentario = comentario;
+		this.setMatch(fkMatch);
+	}
+
+
+	public static Avaliacao fromPattern(
+			AvaliacaoRequest avaliacaoRequest,
+			Integer fkMatch
+	) {
+		return new Avaliacao(
+				avaliacaoRequest.getValor(),
+				avaliacaoRequest.getComentario(),
+				fkMatch
+		);
+	}
 
 	public Integer getIdAvaliacao() {
 		return idAvaliacao;
@@ -66,7 +91,7 @@ public class Avaliacao {
 		this.data = data;
 	}
 
-	public void setMatch(Match match) {
-		this.match = match;
+	public void setMatch(Integer fkMatch) {
+		this.match = Match.fromPattern(fkMatch);
 	}
 }

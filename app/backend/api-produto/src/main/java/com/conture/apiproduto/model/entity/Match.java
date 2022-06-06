@@ -40,6 +40,10 @@ public class Match {
 	public Match() {
 	}
 
+	private Match(Integer idMatch) {
+		this.idMatch = idMatch;
+	}
+
 	private Match(
 			Integer fkProdutoDoacao,
 			Integer fkDonatario
@@ -48,6 +52,10 @@ public class Match {
 		this.fkDonatario = fkDonatario;
 	}
 
+
+	public static Match fromPattern(Integer idMatch) {
+		return new Match(idMatch);
+	}
 
 	public static Match fromPattern(
 			Integer fkProdutoDoacao,
