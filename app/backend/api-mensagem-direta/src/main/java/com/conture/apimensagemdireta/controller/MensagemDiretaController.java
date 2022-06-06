@@ -38,6 +38,10 @@ public class MensagemDiretaController {
 	@PostMapping
 	public ResponseEntity<Integer> adicionarMensagem(@RequestBody @Valid MensagemRequest mensagemRequest) {
 
+		if(mensagemRequest.getFkUsuarioRemetente() == mensagemRequest.getFkUsuarioDestinatario()){
+			return status(400).build();
+		}
+
 		try {
 			Integer fkRemetente = this.usuarioClient.getIdUsuarioLogado(mensagemRequest.getFkUsuarioRemetente());
 		} catch (FeignException response) {
@@ -48,7 +52,7 @@ public class MensagemDiretaController {
 		}
 
 		try {
-			Optional<UsuarioResposta> usuarioFkUsurio = this.usuarioClient.getUsuarioById(mensagemRequest.getFkUsuarioDestinatario());
+			Optional<UsuarioResposta> usuarioFkDestinatario = this.usuarioClient.getUsuarioById(mensagemRequest.getFkUsuarioDestinatario());
 		} catch (FeignException response) {
 			if (response.status() == -1) { // Service Unavailable
 				return status(503).build();
@@ -81,11 +85,38 @@ public class MensagemDiretaController {
 	public ResponseEntity<List<MensagemResponse>> listarMensagens(@RequestParam @NotNull @Min(1) Integer fkUsuarioRemetente,
 																  @RequestParam @NotNull @Min(1) Integer fkUsuarioDonatario) {
 
+		try {
+			Optional<UsuarioResposta> usuarioFkRemetente = this.usuarioClient.getUsuarioById(fkUsuarioRemetente);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+			return status(404).build();
+		}
+
+		try {
+			Optional<UsuarioResposta> usuarioFkDestinatario = this.usuarioClient.getUsuarioById(fkUsuarioDonatario);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+			return status(404).build();
+		}
+
+		try {
+			Integer fkDonatario = this.usuarioClient.getIdUsuarioLogado(fkUsuarioDonatario);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+			return status(401).build();
+		}
+
 		Optional<ChatDireto> chatDireto1 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(fkUsuarioRemetente, fkUsuarioDonatario);
 		Optional<ChatDireto> chatDireto2 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(fkUsuarioDonatario, fkUsuarioRemetente);
 
 		if (chatDireto1.isEmpty() && chatDireto2.isEmpty()) {
-			return status(400).build();
+			return status(404).build();
 		}
 
 		List<Mensagem> mensagens = this.repositoryMensagem.acharPorFkChatDiretoOrderByDataDesc(chatDireto1.get(), chatDireto2.get());
@@ -106,9 +137,27 @@ public class MensagemDiretaController {
 	}
 
 	@GetMapping("/nao-visualizado")
-	public ResponseEntity existeMensagemNaoVisualizada(@RequestParam @NotNull @Min(1) Integer fkUsuarioRemetente) {
+	public ResponseEntity existeMensagemNaoVisualizada(@RequestParam @NotNull @Min(1) Integer fkUsuarioDestinatario) {
 
-		List<ChatDireto> chats = repositoryChatDireto.findByFkUsuarioRemetente(fkUsuarioRemetente);
+		try {
+			Optional<UsuarioResposta> usuarioFkDestinatario = this.usuarioClient.getUsuarioById(fkUsuarioDestinatario);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+			return status(404).build();
+		}
+
+		try {
+			Integer fkRemetente = this.usuarioClient.getIdUsuarioLogado(fkUsuarioDestinatario);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+			return status(401).build();
+		}
+
+		List<ChatDireto> chats = repositoryChatDireto.findByFkUsuarioRemetente(fkUsuarioDestinatario);
 
 		List<Mensagem> mensagemFalse = new ArrayList<>();
 
