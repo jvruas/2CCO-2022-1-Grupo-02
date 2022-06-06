@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import iconOk from "../html-css-template/imagens/icon-ok.png"
 import api from "../api.js";
 import { useEffect, useState } from "react";
-import Select from "react-select";
+
 
 
 function dataUsuario() {
@@ -286,7 +286,7 @@ function Cadastro() {
                 </div>
             </form>
         </>
-    );
+    )
 }
 
 export default Cadastro;

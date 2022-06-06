@@ -19,6 +19,7 @@ function PopUp() {
             }
         }).then((resposta) => {
             alert("Existe")
+            console.log(resposta.data)
             console.log(resposta.status)
         }).catch((error) => { console.log(error) })
     }
@@ -47,7 +48,7 @@ function PopUp() {
                 </div>
             </section>
         </>
-    );
+    )
 }
 
 export default PopUp;

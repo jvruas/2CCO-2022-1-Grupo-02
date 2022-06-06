@@ -1,0 +1,27 @@
+.section-feed{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+}
+
+.section-feed h1{
+    font-size: 30px;
+}
+
+.gif-construcao{
+    width: 600px;
+}
+
+button{
+    margin-top: 25px;
+    width: 250px;
+    height: 44px;
+    color: #FFFFFF;
+    font-weight: 600;
+    background-color: var(--referencia);
+    border: none;
+    border-radius: 3px;
+}

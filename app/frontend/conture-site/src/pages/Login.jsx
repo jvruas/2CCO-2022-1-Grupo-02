@@ -1,7 +1,6 @@
 import MenuSimples from "../components/MenuSimples";
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/Login.css'
-import '../html-css-template/js/Login.js'
 import iconSenha from "../html-css-template/imagens/eye-slash-closed.png"
 import iconOk from "../html-css-template/imagens/icon-ok.png"
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"
@@ -29,12 +28,35 @@ function Login() {
         console.log(valuesUsuarioLogin)
     }
 
+    // function handleSubmit(event) {
+    //     event.preventDefault()
+    //     let json = {
+    //         email: valuesUsuarioLogin.email,
+    //         senha: valuesUsuarioLogin.senha
+    //     }
+    //     console.log(json)
+    //     api.post("/login", json, {
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         }
+    //     }).then((resposta) => {
+    //         alert("Logado")
+    //         console.log(resposta.status)
+    //     }).catch((error) => { console.log(error) })
+    // }
+
+    
     function handleSubmit(event) {
         event.preventDefault()
         let json = {
             email: valuesUsuarioLogin.email,
             senha: valuesUsuarioLogin.senha
         }
+
+        if(json.email === "" || json.senha){
+            alert("Preencha os campos acima")
+        }
+
         console.log(json)
         api.post("/login", json, {
             headers: {
@@ -90,7 +112,7 @@ function Login() {
                 </div>
             </section>
         </>
-    );
+    )
 }
 
 export default Login;

@@ -262,6 +262,25 @@ public class UsuarioController {
 		return status(200).build();
 	}
 
+	@PatchMapping("/esqueci-senha")
+	public ResponseEntity atualizarEsqueciSenha(@RequestParam @Min(1) Integer idUsuario,
+												@RequestParam @Size(min = 6, max = 18) String novaSenha) {
+
+		Optional<Usuario> usuario = this.usuarioRepository.getUsuarioById(idUsuario);
+
+		if (usuario.isEmpty()) {
+			return status(404).build();
+		}
+
+		if (usuario.get().getSenha().equals(novaSenha)){
+			return status(409).build();
+		}
+
+		this.usuarioRepository.updateSenha(idUsuario, novaSenha);
+
+		return status(200).build();
+	}
+
 
 	@PutMapping("/{idUsuario}/perfil")
 	public ResponseEntity atualizarPerfil(
