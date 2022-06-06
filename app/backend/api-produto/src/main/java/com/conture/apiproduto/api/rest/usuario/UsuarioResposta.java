@@ -1,7 +1,5 @@
 package com.conture.apiproduto.api.rest.usuario;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.Date;
 
 public class UsuarioResposta {

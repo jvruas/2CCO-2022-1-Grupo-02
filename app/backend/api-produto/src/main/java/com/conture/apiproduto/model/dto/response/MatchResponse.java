@@ -1,8 +1,5 @@
 package com.conture.apiproduto.model.dto.response;
 
-import com.conture.apiproduto.model.entity.ProdutoDoacao;
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;

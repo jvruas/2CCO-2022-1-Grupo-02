@@ -4,7 +4,6 @@ import com.conture.apiusuario.dto.request.*;
 import com.conture.apiusuario.entity.*;
 import com.conture.apiusuario.repository.*;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
-import com.conture.apiusuario.utility.FilaObj;
 import com.conture.apiusuario.utility.GerenciadorUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +19,6 @@ import static org.springframework.http.ResponseEntity.*;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 	@Autowired
-	private AvaliacaoRepository avaliacaoRepository;
-	@Autowired
 	private ReporteRepository reporteRepository;
 	@Autowired
 	private SituacaoAtualRepository situacaoAtualRepository;
@@ -33,7 +30,6 @@ public class UsuarioController {
 	private ImagemUsuarioRepository imagemUsuarioRepository;
 	@Autowired
 	private DesligamentoContaRepository desligamentoContaRepository;
-	FilaObj<Avaliacao> filaAvaliacao = new FilaObj<>(20);
 
 
 //	TODO:TESTES
@@ -133,29 +129,7 @@ public class UsuarioController {
 		return status(201).build();
 	}
 
-	// TODO: Passar para a API de produto
-//	@PostMapping("/avaliacao")
-//	public ResponseEntity avaliarUsuario(@RequestBody @Valid AvaliacaoRequest avaliacao){
-//		Optional<Usuario> avaliado = Optional.ofNullable(usuarioRepository.findByIdUsuario(avaliacao.getFkDoador()));
-//		Optional<UsuarioLogadoResponse> avaliador = GerenciadorUsuario.buscaUsuarioLogado(avaliacao.getFkDonatario());
-//
-//		//if(avaliado.isEmpty() || avaliador.isEmpty()){
-//		//	return ResponseEntity.status(404).build();
-//		//}
-//
-//		Avaliacao novaAvaliacao = new Avaliacao();
-//		novaAvaliacao.setFkDoador(avaliacao.getFkDoador());
-//		novaAvaliacao.setFkDonatario(avaliacao.getFkDonatario());
-//		novaAvaliacao.setValor(avaliacao.getValor());
-//		novaAvaliacao.setComentario(avaliacao.getComentario());
-//
-//
-//		this.avaliacaoRepository.save(novaAvaliacao);
-//		return ResponseEntity.status(200).build();
-//	}
 
-
-	//TODO:
 	@DeleteMapping()
 	public ResponseEntity deletarUsuario(
 			@RequestBody @Valid UsuarioLoginRequest usuarioRequest,
@@ -265,19 +239,7 @@ public class UsuarioController {
 		return status(200).body(idSituacaoAtual);
 	}
 
-	// TODO: Passar para a API de produto
-//	@GetMapping("/avaliacoes")
-//	public ResponseEntity listarAvaliacoes(@RequestParam Integer fkDoador) {
-//		List<Avaliacao> lista = this.avaliacaoRepository.findByFkDoador(fkDoador);
-//
-//		for (int i = 0; i < lista.size(); i++) {
-//			this.filaAvaliacao.insert(lista.get(i));
-//		}
-//
-//		return ResponseEntity.status(200).body(this.filaAvaliacao);
-//	}
 
-// TODO:
 	@PatchMapping("/senha")
 	public ResponseEntity atualizarSenha(@RequestBody @Valid UsuarioSenhaRequest usuarioSenha) {
 		Optional<Usuario> usuario = this.usuarioRepository.findById(usuarioSenha.getIdUsuario());

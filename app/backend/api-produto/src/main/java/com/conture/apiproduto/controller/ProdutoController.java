@@ -9,6 +9,7 @@ import com.conture.apiproduto.repository.*;
 import com.conture.apiproduto.api.rest.usuario.UsuarioClient;
 import com.conture.apiproduto.service.MatchService;
 
+import com.conture.apiproduto.util.collection.FilaObj;
 import com.conture.apiproduto.util.collection.PilhaObj;
 import com.conture.apiproduto.util.file.Txt;
 import com.conture.apiproduto.util.sort.Iterator;
@@ -47,15 +48,17 @@ public class ProdutoController {
 	private MatchRepository matchRepository;
 
 	@Autowired
-	private CategoriaProdutoRepository categoriaRepository;
+	private AvaliacaoRepository avaliacaoRepository;
 
 	@Autowired
-	private AvaliacaoRepository avaliacaoRepository;
+	private CategoriaProdutoRepository categoriaRepository;
 
 	@Autowired
 	private UsuarioClient usuarioClient;
 
 	PilhaObj<String> pilhaHistorico = new PilhaObj<>(10);
+
+	FilaObj<Avaliacao> filaAvaliacao = new FilaObj<>(20);
 
 
 	@PostMapping()
@@ -206,6 +209,39 @@ public class ProdutoController {
 		this.matchRepository.save(match);
 		return status(201).body(this.matchRepository.findTop1ByStatusFalseAndVisualizadoFalseAndProdutoDoacaoIdProdutoDoacaoAndFkDonatarioOrderByIdMatchDesc(idProduto, idDonatarioRequest).get().getIdMatch());
 	}
+
+
+	//	@PostMapping("/avaliacao")
+//	public ResponseEntity avaliarUsuario(@RequestBody @Valid AvaliacaoRequest avaliacao){
+//		Optional<Usuario> avaliado = Optional.ofNullable(usuarioRepository.findByIdUsuario(avaliacao.getFkDoador()));
+//		Optional<UsuarioLogadoResponse> avaliador = GerenciadorUsuario.buscaUsuarioLogado(avaliacao.getFkDonatario());
+//
+//		//if(avaliado.isEmpty() || avaliador.isEmpty()){
+//		//	return ResponseEntity.status(404).build();
+//		//}
+//
+//		Avaliacao novaAvaliacao = new Avaliacao();
+//		novaAvaliacao.setFkDoador(avaliacao.getFkDoador());
+//		novaAvaliacao.setFkDonatario(avaliacao.getFkDonatario());
+//		novaAvaliacao.setValor(avaliacao.getValor());
+//		novaAvaliacao.setComentario(avaliacao.getComentario());
+//
+//
+//		this.avaliacaoRepository.save(novaAvaliacao);
+//		return ResponseEntity.status(200).build();
+//	}
+
+
+	//	@GetMapping("/avaliacoes")
+//	public ResponseEntity listarAvaliacoes(@RequestParam Integer fkDoador) {
+//		List<Avaliacao> lista = this.avaliacaoRepository.findByFkDoador(fkDoador);
+//
+//		for (int i = 0; i < lista.size(); i++) {
+//			this.filaAvaliacao.insert(lista.get(i));
+//		}
+//
+//		return ResponseEntity.status(200).body(this.filaAvaliacao);
+//	}
 
 
 	@GetMapping("/{idProduto}")
