@@ -1,5 +1,7 @@
 package com.conture.apimensagemdireta.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -20,6 +22,7 @@ public class MensagemRequest {
     @Size(min = 1, max = 200, message = "O tamanho mínimo da mensagem é 1 caractere e o máximo de 200")
     private String mensagem;
 
+	@JsonIgnore
     private boolean visualizacao;
 
     // Construtor
