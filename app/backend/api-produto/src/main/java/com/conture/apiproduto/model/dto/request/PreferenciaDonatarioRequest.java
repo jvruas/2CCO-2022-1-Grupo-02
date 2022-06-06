@@ -1,14 +1,8 @@
-package com.conture.apiproduto.entity;
+package com.conture.apiproduto.model.dto.request;
 
-import javax.persistence.*;
 import javax.validation.constraints.*;
 
-@Entity
-public class PreferenciaDonatario {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer idPreferenciaDonatario;
-
+public class PreferenciaDonatarioRequest {
 	@NotNull
 	@NotBlank
 	@Size(min = 1, max = 1)
@@ -38,13 +32,9 @@ public class PreferenciaDonatario {
 	private Integer fkSituacaoAtual;
 
 	@NotNull
-	@OneToOne
-	private ProdutoDoacao produtoDoacao;
+	@Positive
+	private Integer fkProdutoDoacao;
 
-
-	public Integer getIdPreferenciaDonatario() {
-		return idPreferenciaDonatario;
-	}
 
 	public String getGenero() {
 		return genero;
@@ -66,7 +56,7 @@ public class PreferenciaDonatario {
 		return fkSituacaoAtual;
 	}
 
-	public ProdutoDoacao getProdutoDoacao() {
-		return produtoDoacao;
+	public Integer getFkProdutoDoacao() {
+		return fkProdutoDoacao;
 	}
 }

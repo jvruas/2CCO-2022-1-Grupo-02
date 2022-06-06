@@ -4,7 +4,6 @@ import com.conture.apiusuario.dto.request.*;
 import com.conture.apiusuario.entity.*;
 import com.conture.apiusuario.repository.*;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
-import com.conture.apiusuario.utility.FilaObj;
 import com.conture.apiusuario.utility.GerenciadorUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +19,6 @@ import static org.springframework.http.ResponseEntity.*;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 	@Autowired
-	private AvaliacaoRepository avaliacaoRepository;
-	@Autowired
 	private ReporteRepository reporteRepository;
 	@Autowired
 	private SituacaoAtualRepository situacaoAtualRepository;
@@ -33,9 +30,9 @@ public class UsuarioController {
 	private ImagemUsuarioRepository imagemUsuarioRepository;
 	@Autowired
 	private DesligamentoContaRepository desligamentoContaRepository;
-	FilaObj<Avaliacao> filaAvaliacao = new FilaObj<>(20);
 
 
+//	TODO:TESTES
 	@PostMapping
 	public ResponseEntity<Integer> adicionarUsuario(@RequestBody @Valid UsuarioCadastroRequest novoUsuario) {
 		if (!this.situacaoAtualRepository.existsById(novoUsuario.getFkSituacaoAtual())
@@ -58,7 +55,7 @@ public class UsuarioController {
 		return status(201).body(this.usuarioRepository.getIdUserByCpf(novoUsuario.getCpf()).get());
 	}
 
-
+//TODO:TESTES
 	@PostMapping("/login")
 	public ResponseEntity<UsuarioLogadoResponse> login(@RequestBody @Valid UsuarioLoginRequest usuario) {
 		Optional<UsuarioLogadoResponse> usuarioPesquisado = this.usuarioRepository.getByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
@@ -79,6 +76,8 @@ public class UsuarioController {
 	}
 
 
+
+	//TODO:
 	@DeleteMapping("/{idUsuario}/login")
 	public ResponseEntity logoff(@PathVariable @Min(1) Integer idUsuario) {
 		if (!GerenciadorUsuario.logoff(idUsuario)) {
@@ -89,6 +88,7 @@ public class UsuarioController {
 	}
 
 
+	//TODO:
 	@GetMapping("/{idUsuario}/login")
 	public ResponseEntity existsUsuarioLogado(
 			@PathVariable @Min(1) Integer idUsuario,
@@ -128,27 +128,6 @@ public class UsuarioController {
 
 		return status(201).build();
 	}
-
-	// TODO: Passar para a API de produto
-//	@PostMapping("/avaliacao")
-//	public ResponseEntity avaliarUsuario(@RequestBody @Valid AvaliacaoRequest avaliacao){
-//		Optional<Usuario> avaliado = Optional.ofNullable(usuarioRepository.findByIdUsuario(avaliacao.getFkDoador()));
-//		Optional<UsuarioLogadoResponse> avaliador = GerenciadorUsuario.buscaUsuarioLogado(avaliacao.getFkDonatario());
-//
-//		//if(avaliado.isEmpty() || avaliador.isEmpty()){
-//		//	return ResponseEntity.status(404).build();
-//		//}
-//
-//		Avaliacao novaAvaliacao = new Avaliacao();
-//		novaAvaliacao.setFkDoador(avaliacao.getFkDoador());
-//		novaAvaliacao.setFkDonatario(avaliacao.getFkDonatario());
-//		novaAvaliacao.setValor(avaliacao.getValor());
-//		novaAvaliacao.setComentario(avaliacao.getComentario());
-//
-//
-//		this.avaliacaoRepository.save(novaAvaliacao);
-//		return ResponseEntity.status(200).build();
-//	}
 
 
 	@DeleteMapping()
@@ -251,17 +230,14 @@ public class UsuarioController {
 		return status(200).body(lista);
 	}
 
-	// TODO: Passar para a API de produto
-//	@GetMapping("/avaliacoes")
-//	public ResponseEntity listarAvaliacoes(@RequestParam Integer fkDoador) {
-//		List<Avaliacao> lista = this.avaliacaoRepository.findByFkDoador(fkDoador);
-//
-//		for (int i = 0; i < lista.size(); i++) {
-//			this.filaAvaliacao.insert(lista.get(i));
-//		}
-//
-//		return ResponseEntity.status(200).body(this.filaAvaliacao);
-//	}
+	@GetMapping("/situacao-atual/{idSituacaoAtual}")
+	public ResponseEntity<Integer> getSituacaoAtual(@PathVariable @Min(1) Integer idSituacaoAtual) {
+		if (!this.situacaoAtualRepository.existsById(idSituacaoAtual)) {
+			return status(404).build();
+		}
+
+		return status(200).body(idSituacaoAtual);
+	}
 
 
 	@PatchMapping("/senha")

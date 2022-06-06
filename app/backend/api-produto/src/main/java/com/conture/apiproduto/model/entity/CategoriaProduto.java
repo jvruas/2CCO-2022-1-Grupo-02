@@ -1,4 +1,4 @@
-package com.conture.apiproduto.entity;
+package com.conture.apiproduto.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

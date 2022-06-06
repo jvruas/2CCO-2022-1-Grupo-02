@@ -1,5 +1,6 @@
 package com.conture.apiusuario.repository;
 
+import com.conture.apiusuario.dto.request.UsuarioCadastroRequest;
 import com.conture.apiusuario.entity.Usuario;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+
+	UsuarioCadastroRequest findByIdUsuario(Integer idUsuario);
 	@Query("select new com.conture.apiusuario.dto.response.UsuarioLogadoResponse(u.idUsuario, u.email, u.nome, u.sobrenome, u.genero, u.dataNascimento, u.estadoCivil, u.dataCadastro, u.grauEscolaridade, u.cpf, u.situacaoAtual.nome) from Usuario u where u.email = ?1 and u.senha = ?2")
 	Optional<UsuarioLogadoResponse> getByEmailAndSenha(String email, String senha);
 
