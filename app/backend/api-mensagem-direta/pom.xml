@@ -52,9 +52,29 @@
 					<artifactId>springdoc-openapi-ui</artifactId>
 					<version>1.6.4</version>
 			</dependency>
+			<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-openfeign</artifactId>
+			</dependency>
+			<dependency>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-starter-openfeign</artifactId>
+			</dependency>
 	</dependencies>
 
-	<build>
+		<dependencyManagement>
+				<dependencies>
+						<dependency>
+								<groupId>org.springframework.cloud</groupId>
+								<artifactId>spring-cloud-dependencies</artifactId>
+								<version>2021.0.2</version>
+								<type>pom</type>
+								<scope>import</scope>
+						</dependency>
+				</dependencies>
+		</dependencyManagement>
+
+		<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

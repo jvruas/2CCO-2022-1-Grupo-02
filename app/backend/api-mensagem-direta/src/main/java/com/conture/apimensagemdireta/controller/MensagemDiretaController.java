@@ -1,11 +1,14 @@
 package com.conture.apimensagemdireta.controller;
 
+import com.conture.apimensagemdireta.api.rest.usuario.UsuarioClient;
+import com.conture.apimensagemdireta.api.rest.usuario.UsuarioResposta;
 import com.conture.apimensagemdireta.dto.request.MensagemRequest;
 import com.conture.apimensagemdireta.dto.response.MensagemResponse;
 import com.conture.apimensagemdireta.entity.ChatDireto;
 import com.conture.apimensagemdireta.entity.Mensagem;
 import com.conture.apimensagemdireta.repository.ChatDiretoRepository;
 import com.conture.apimensagemdireta.repository.MensagemRepository;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,8 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.http.ResponseEntity.*;
 
 @RestController
 @RequestMapping("/mensagem-direta")
@@ -25,9 +30,31 @@ public class MensagemDiretaController {
     @Autowired
     private MensagemRepository repositoryMensagem;
 
+	@Autowired
+	private UsuarioClient usuarioClient;
+
     @PostMapping
     public ResponseEntity<Integer> adicionarMensagem(@RequestBody @Valid MensagemRequest mensagemRequest){
-        Mensagem mensagem = new Mensagem();
+
+		try {
+			Integer fkRemetente = this.usuarioClient.getIdUsuarioLogado(mensagemRequest.getFkUsuarioRemetente());
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+			return status(401).build();
+		}
+
+		try {
+			Optional<UsuarioResposta> usuarioFkUsurio = this.usuarioClient.getUsuarioById(mensagemRequest.getFkUsuarioDestinatario());
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+			return status(404).build();
+		}
+
+		Mensagem mensagem = new Mensagem();
 
         Optional<ChatDireto> chatDireto = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(mensagemRequest.getFkUsuarioRemetente(), mensagemRequest.getFkUsuarioDestinatario());
 
@@ -44,7 +71,7 @@ public class MensagemDiretaController {
         mensagem.setMensagem(mensagemRequest.getMensagem());
 
         repositoryMensagem.save(mensagem);
-        return ResponseEntity.status(201).body(mensagem.getIdMensagem());
+        return status(201).body(mensagem.getIdMensagem());
     }
 
 
@@ -56,14 +83,14 @@ public class MensagemDiretaController {
         Optional<ChatDireto> chatDireto2 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(fkUsuarioDonatario, fkUsuarioRemetente);
 
         if (chatDireto1.isEmpty() && chatDireto2.isEmpty()) {
-            return ResponseEntity.status(400).build();
+            return status(400).build();
         }
 
         List<Mensagem> mensagens = this.repositoryMensagem.acharPorFkChatDiretoOrderByDataDesc(chatDireto1.get(), chatDireto2.get());
         List<MensagemResponse> mensagemResponse = new ArrayList<>();
 
         if(mensagens.isEmpty()){
-            return ResponseEntity.status(204).build();
+            return status(204).build();
         }else{
             for(Mensagem m : mensagens){
                 if(m.getFkChatDireto().getFkUsuarioRemetente() == fkUsuarioRemetente){
@@ -72,12 +99,12 @@ public class MensagemDiretaController {
                 }
                 mensagemResponse.add(m.converterMsgResponse(m));
             }
-            return ResponseEntity.status(200).body(mensagemResponse);
+            return status(200).body(mensagemResponse);
         }
     }
 
     @GetMapping("/nao-visualizado")
-    public ResponseEntity<Boolean> existeMensagemNaoVisualizada(@RequestParam Integer fkUsuarioRemetente){
+    public ResponseEntity existeMensagemNaoVisualizada(@RequestParam Integer fkUsuarioRemetente){
 
         List<ChatDireto> chats = repositoryChatDireto.findByFkUsuarioRemetente(fkUsuarioRemetente);
 
@@ -87,11 +114,11 @@ public class MensagemDiretaController {
             mensagemFalse = repositoryMensagem.findByFkChatDiretoAndVisualizado(chats.get(i), false);
 
             if(mensagemFalse.isEmpty()){
-                return ResponseEntity.status(204).body(false);
+                return status(204).build();
             }
         }
 
-        return ResponseEntity.status(200).body(true);
+        return status(200).build();
     }
 
 }
