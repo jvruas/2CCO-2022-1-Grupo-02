@@ -32,14 +32,14 @@ class MensagemDiretaControllerTest {
 	@MockBean
 	private ChatDiretoRepository repositoryChatDireto;
 
-//    @Test
-//    @DisplayName("")
-//    void adicionarMensagemRetorna201() {
-//		when(mensagemRepository.findByFkChatDiretoAndVisualizado(1,false).thenReturn(new MensagemRequest()));
-//		MensagemRequest  m = mensagemRepository.findByFkChatDiretoAndVisualizado(1,false);
-//		ResponseEntity response = mensagemDiretaController.adicionarMensagem(m);
-//		assertEquals(201, response.getStatusCodeValue());
-//    }
+    @Test
+    @DisplayName("")
+    void adicionarMensagemRetorna201() {
+		when(mensagemRepository.findByFkChatDiretoAndVisualizado(1,false).thenReturn(new MensagemRequest()));
+		MensagemRequest  m = mensagemRepository.findByFkChatDiretoAndVisualizado(1,false);
+		ResponseEntity response = mensagemDiretaController.adicionarMensagem(m);
+		assertEquals(201, response.getStatusCodeValue());
+    }
 
     @Test
     @DisplayName("Retorna 400 quando não encontra nenhum chat")
