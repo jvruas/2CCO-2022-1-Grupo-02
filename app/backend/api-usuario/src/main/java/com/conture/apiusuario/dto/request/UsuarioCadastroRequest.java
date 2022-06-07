@@ -124,4 +124,45 @@ public class UsuarioCadastroRequest {
 	public void setNome(String nome) { this.nome = nome; }
 
 	public void setSobrenome(String sobrenome) { this.sobrenome = sobrenome; }
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public void setEstadoCivil(String estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public void setGrauEscolaridade(String grauEscolaridade) {
+		this.grauEscolaridade = grauEscolaridade;
+	}
+
+	public void setFkSituacaoAtual(Integer fkSituacaoAtual) {
+		this.fkSituacaoAtual = fkSituacaoAtual;
+	}
 }
