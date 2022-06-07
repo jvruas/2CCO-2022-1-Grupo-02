@@ -10,7 +10,7 @@ import iconSeta2 from "../html-css-template/imagens/seta 2.png"
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
 import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import iconOk from "../html-css-template/imagens/icon-ok.png"
 import api from "../api.js";
 import { useEffect, useState } from "react";
@@ -70,6 +70,8 @@ function Cadastro() {
         console.log(epoch(input_dataNasc.value))
     }
 
+    const navegar = useNavigate();
+
     function handleSubmit(event) {
         var input_dataNasc = document.getElementById("dataNasc");
         event.preventDefault()
@@ -87,14 +89,38 @@ function Cadastro() {
             grauEscolaridade: valuesUsuario.grauEscolaridade,
             fkSituacaoAtual: valuesUsuario.fkSituacaoAtual
         }
-        console.log(json)
-        api.post("/", json, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((resposta) => {
-                 console.log(resposta.status)
-        }).catch((error) => { console.log(error) })
+        
+        if(valuesUsuario.nome == "" || valuesUsuario.sobrenome == "" || valuesUsuario.cpf == "" || valuesUsuario.genero == "" || input_dataNasc.value == "" || valuesUsuario.estadoCivil == "" || valuesUsuario.telefone == "" || valuesUsuario.cep == "" || valuesUsuario.grauEscolaridade == "" || valuesUsuario.fkSituacaoAtual == ""){
+            document.getElementById("alerta-img2").style.display = "flex"
+            document.getElementById("msg-alerta2").innerHTML = `Preencha os campos vazios`
+        }else if(valuesUsuario.cpf.length < 11){
+            document.getElementById("alerta-img2").style.display = "flex"
+            document.getElementById("msg-alerta2").innerHTML = `CPF inválido`
+        }else if(valuesUsuario.telefone.length < 11){
+            document.getElementById("alerta-img2").style.display = "flex"
+            document.getElementById("msg-alerta2").innerHTML = `Telefone inválido`
+        }else if(valuesUsuario.cep.length < 8){
+            document.getElementById("alerta-img2").style.display = "flex"
+            document.getElementById("msg-alerta2").innerHTML = `CEP inválido`
+        }else{
+            api.post("/", json, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((resposta) => {
+                    console.log(resposta.status)
+                    navegar("/")
+            }).catch((error) => { 
+                console.log(error)
+                if(error.status == "409"){
+                    document.getElementById("alerta-img2").style.display = "flex"
+                    document.getElementById("msg-alerta2").innerHTML = `E-mail ou CPF já está sendo utilizado`
+                }else if(error.status == "400"){
+                    document.getElementById("alerta-img2").style.display = "flex"
+                    document.getElementById("msg-alerta2").innerHTML = `Os campos CPF, Telefone e CEP não podem conter - e .`
+                }
+            })
+        }
     }
 
     // Função para mudar o formulário de cadastro
@@ -107,13 +133,20 @@ function Cadastro() {
         var input_senha = document.getElementById("senha");
         var input_confSenha = document.getElementById("confSenha");
 
-        if (input_senha.value != input_confSenha.value) {
-            alert("As senhas não correspondem")
+        if(input_email.value == "" || input_senha.value == "" || input_confSenha.value == ""){
+            document.getElementById("alerta-img").style.display = "flex"
+            document.getElementById("msg-alerta").innerHTML = `Preencha os campos vazios`
+        } else if (input_senha.value != input_confSenha.value) {
+            document.getElementById("alerta-img").style.display = "flex"
+            document.getElementById("msg-alerta").innerHTML = `As senhas não correspondem`
         } else if ((input_senha.value).length < 6) {
-            alert("A senha deve ter mais que 6 caracteres")
-        } else if ((input_email.value).search("@") == -1) {
-            alert("E-mail inválido")
+            document.getElementById("alerta-img").style.display = "flex"
+            document.getElementById("msg-alerta").innerHTML = `A senha deve ter mais que 6 caracteres`
         } else {
+            document.getElementById("alerta-img").style.display = "none"
+            document.getElementById("msg-alerta").innerHTML = ``
+            document.getElementById("alerta-img2").style.display = "none"
+            document.getElementById("msg-alerta2").innerHTML = ``
             if (form1.style.display == "grid") {
                 form1.style.display = "none"
                 form2.style.display = "grid"
@@ -170,7 +203,6 @@ function Cadastro() {
                     </div>
 
                     <div className="divisao input">
-
                         <label htmlFor="senha">
                             <div className="tooltip">Senha<img src={iconInfoSenha} alt="Ícone deconfirmação" />
                                 <span className="tooltiptext">
@@ -181,17 +213,18 @@ function Cadastro() {
                                 </span>
                             </div>
                         </label>
-
                         <input id="senha" type="password" name="senha" size="18" maxLength="18" minLength="6" value={valuesUsuario.senha} required onChange={handleChangeUser} />
                         <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye4"
                             onClick={ocultarSenha} />
                     </div>
-
                     <div className="divisao input">
                         <label htmlFor="confSenha">Confirmar senha</label>
                         <input type="password" name="confSenha" id="confSenha" />
                         <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye5"
                             onClick={ocultarSenha2} />
+                    </div>
+                    <div id="alerta" className="coluna">
+                        <img src={iconError} id="alerta-img"/><p id="msg-alerta"></p>
                     </div>
                     <div className="divisao direita">
                         <button className="btn-cadastro1" type="button" onClick={mostrarForm}>PRÓXIMO<img src={iconSeta} alt="Ícone de próximo" /></button>
@@ -278,6 +311,9 @@ function Cadastro() {
                                 ))
                             }
                         </select>
+                    </div>
+                    <div id="alerta" className="coluna">
+                        <img src={iconError} id="alerta-img2"/><p id="msg-alerta2"></p>
                     </div>
                     <div className="input_double">
                         <button className="btn btn_voltar" type="button" onClick={mostrarForm}><img src={iconSeta2} alt="Ícone de voltar" /><p>VOLTAR</p></button>

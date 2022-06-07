@@ -11,7 +11,7 @@
     width: 466px;
     height: 470;
     display: grid;
-    grid-template-rows: 65px 55px 90px 90px 90px 80px;
+    grid-template-rows: 65px 55px 90px 90px 90px 20px 60px;
 }
 
 .divisao{
@@ -50,6 +50,24 @@ h1{
     font-size: 22px;
 }
 
+.coluna{
+    display: flex;
+    align-items: flex-end;
+}
+
+.coluna p{
+    color: red;
+    font-weight: 600;
+    padding-left: 10px;
+}
+
+.coluna img{
+    /* display: none; */
+    width: 20px;
+    height: 20px;
+    color: red;
+}
+
 .eye{
     width: 16px;
     height: 16px;
@@ -86,9 +104,9 @@ label, button, input, select{
 #form-cadastro2{
     margin-top: 25px;
     width: 466px;
-    height: 850px;
+    height: 920px;
     display: none;
-    grid-template-rows: 65px 55px 90px 90px 90px 90px 90px 90px 90px 100px;
+    grid-template-rows: 65px 55px 90px 90px 90px 90px 90px 90px 90px 30px 50px;
 }
 
 input, select{
@@ -129,6 +147,7 @@ a{
 }
 
 .btn_voltar{
+    color: #000000;
     background-color: var(--cinza-btn);
     border: 1px solid var(--cinza-btn-border);
 }

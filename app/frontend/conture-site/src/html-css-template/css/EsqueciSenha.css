@@ -9,7 +9,7 @@
     width: 466px;
     height: 400px;
     display: grid;
-    grid-template-rows: 80px 90px 90px 140px;
+    grid-template-rows: 80px 90px 90px 40px 100px;
 }
 
 .divisao{
@@ -21,6 +21,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+.coluna{
+    display: flex;
+    align-items: flex-end;
+}
+
+.coluna p{
+    color: red;
+    font-weight: 600;
+    padding-left: 10px;
+}
+
+.coluna img{
+    /* display: none; */
+    width: 20px;
+    height: 20px;
+    color: red;
 }
 
 .input{

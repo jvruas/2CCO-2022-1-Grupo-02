@@ -5,8 +5,9 @@ import iconSenha from "../html-css-template/imagens/eye-slash-closed.png"
 import iconOk from "../html-css-template/imagens/icon-ok.png"
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
+import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api.js";
 
 function dataUsuarioLogin() {
@@ -28,23 +29,7 @@ function Login() {
         console.log(valuesUsuarioLogin)
     }
 
-    // function handleSubmit(event) {
-    //     event.preventDefault()
-    //     let json = {
-    //         email: valuesUsuarioLogin.email,
-    //         senha: valuesUsuarioLogin.senha
-    //     }
-    //     console.log(json)
-    //     api.post("/login", json, {
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     }).then((resposta) => {
-    //         alert("Logado")
-    //         console.log(resposta.status)
-    //     }).catch((error) => { console.log(error) })
-    // }
-
+    const navegar = useNavigate();
     
     function handleSubmit(event) {
         event.preventDefault()
@@ -53,21 +38,30 @@ function Login() {
             senha: valuesUsuarioLogin.senha
         }
 
-        if(json.email === "" || json.senha){
-            alert("Preencha os campos acima")
-        }
-
         console.log(json)
         api.post("/login", json, {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((resposta) => {
-            alert("Logado")
             console.log(resposta.status)
-        }).catch((error) => { console.log(error) })
+            console.log(resposta.data.idUsuario)
+            sessionStorage.setItem('idUsuarioLogado', resposta.data.idUsuario)
+            navegar("/feed")
+        }).catch((error) => { 
+            if(error.status == "409"){
+                navegar("/feed")
+            }else{
+                if(valuesUsuarioLogin.email == "" || valuesUsuarioLogin.senha == ""){
+                    document.getElementById("alerta-img").style.display = "flex"
+                    document.getElementById("msg-alerta").innerHTML = `Preencha os campos vazios`
+                }else{
+                    document.getElementById("alerta-img").style.display = "flex"
+                    document.getElementById("msg-alerta").innerHTML = `Usuário ou senha inválida`
+                }      
+            }
+         })
     }
-
 
     const ocultarSenha = () => {
         var senha = document.getElementById("senha");
@@ -101,6 +95,9 @@ function Login() {
                     </div>
                     <div className="divisao">
                         <Link className="link-esqc" to="/email-esqueci-senha">Esqueceu sua senha?</Link>
+                    </div>
+                    <div id="alerta" className="coluna">
+                        <img src={iconError} id="alerta-img"/><p id="msg-alerta"></p>
                     </div>
                     <div className="divisao centralizado">
                         <button className="btn-login" type="submit" onClick={handleSubmit}><p>ENTRAR</p><img src={iconOk} alt="Ícone de confirmação" /></button>
