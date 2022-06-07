@@ -33,4 +33,16 @@ public class UsuarioSenhaRequest {
 	public String getSenhaNova() {
 		return senhaNova;
 	}
+
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+	public void setSenhaAtual(String senhaAtual) {
+		this.senhaAtual = senhaAtual;
+	}
+
+	public void setSenhaNova(String senhaNova) {
+		this.senhaNova = senhaNova;
+	}
 }
