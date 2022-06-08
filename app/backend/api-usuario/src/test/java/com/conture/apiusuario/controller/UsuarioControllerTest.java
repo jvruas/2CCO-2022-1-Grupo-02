@@ -4,16 +4,19 @@ import com.conture.apiusuario.dto.request.UsuarioCadastroRequest;
 import com.conture.apiusuario.dto.request.UsuarioLoginRequest;
 import com.conture.apiusuario.dto.request.UsuarioSenhaRequest;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
+import com.conture.apiusuario.entity.TipoReporte;
 import com.conture.apiusuario.entity.Usuario;
 import com.conture.apiusuario.repository.*;
 import com.conture.apiusuario.utility.GerenciadorUsuario;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -80,20 +83,23 @@ class UsuarioControllerTest {
 		return u;
 	}
 
-//	private UsuarioLogadoResponse createUsuarioLogado(){
-//		UsuarioLogadoResponse u = new UsuarioLogadoResponse();
-//		u.setSituacaoAtual("D");
-//		u.setGenero("M");
-//		u.setEstadoCivil("S");
-//		u.setGrauEscolaridade("A");
-//		u.setDataNascimento(new Date());
-//		u.setEmail("teste@hotmail.com");
-//		u.setCpf("46002259880");
-//		u.setNome("Igor");
-//		u.setSobrenome("Sérgio");
-//
-//		return u;
-//	}
+	private UsuarioLogadoResponse createUsuarioLogado(){
+		UsuarioLogadoResponse u = new UsuarioLogadoResponse(
+				1,
+				"teste@hotmail.com",
+				"Igor",
+				"Sérgio",
+				"M",
+				new Date(),
+				"S",
+				new Date(),
+				"A",
+				"46002259881",
+				"D"
+				);
+
+		return u;
+	}
 
 	@Test
 	@DisplayName("Verificando se o resultado irá retornar 404")
@@ -105,19 +111,8 @@ class UsuarioControllerTest {
 		assertEquals(404, response.getStatusCodeValue());
 	}
 
-
-//	@Test
-//	@DisplayName("Verificando se o resultado irá retornar 201")
-//	void loginRetorno201() {
-//		Usuario u = createUsuarioLogado();
-//		when(usuarioRepository.getByEmailAndSenha("teste@hotmail.com", "teste1234")).thenReturn(Optional.of(u)));
-//		ResponseEntity<UsuarioLogadoResponse> response = controller.login(mock(UsuarioLoginRequest.class));
-//		assertEquals(201, response.getStatusCodeValue());
-//	}
-
-
 	@Test
-	@DisplayName("Vericando se usuário está deslogado retorna 404")
+	@DisplayName("Vericando se usuario está deslogado retorna 404")
 	void logoffRetorna404() {
 		Usuario u = mock(Usuario.class);
 		Optional<UsuarioLogadoResponse> usuarioLogado = (GerenciadorUsuario.buscaUsuarioLogado(u.getIdUsuario()));
@@ -127,18 +122,9 @@ class UsuarioControllerTest {
 		assertEquals(404, response.getStatusCodeValue());
 	}
 
-	@Test
-	@DisplayName("Vericando se usuário está deslogao retorna 200")
-	void logoffRetorna200() {
-		UsuarioCadastroRequest user= createUsuarioLogoff();
-		when(usuarioRepository.findByIdUsuario(1)).thenReturn(user);
-		ResponseEntity<UsuarioLogadoResponse> response = controller.logoff(1);
-		assertEquals(200, response.getStatusCodeValue());
-	}
-
 
 	@Test
-	@DisplayName("Verificando se usuário deslogado retorna 404")
+	@DisplayName("Verificando se usuario deslogado retorna 404")
 	void existsUsuarioLogado404() {
 		Usuario u = mock(Usuario.class);
 		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(u.getIdUsuario());
@@ -149,30 +135,6 @@ class UsuarioControllerTest {
 	}
 
 
-//	@Test
-//	@DisplayName("Verificando se usuário está logado 200")
-//	void existsUsuarioLogado200() {
-//		Usuario u = new Usuario();
-//		u.setSituacaoAtual(1);
-//		u.setCep("08071080");
-//		u.setGenero("Masculino");
-//		u.setEstadoCivil("Solteiro");
-//		u.setTelefone("11973484561");
-//		u.setVerificado(false);
-//		u.setGrauEscolaridade("Ensino medio");
-//		u.setDataNascimento(new Date());
-//		u.setEmail("dfsjdfnkjdfs@gmail.com");
-//		u.setCpf("46002259880");
-//		u.setNome("Igor");
-//		u.setSobrenome("Sérgio");
-//		u.setRemovido(false);
-//		u.setSenha("teste1234");
-//		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(u.getIdUsuario());
-//		when(usuarioRepository.findByIdUsuario(1)).thenReturn(Optional.of(u));
-//		ResponseEntity response = controller.login(mock(UsuarioLoginRequest.class));
-//		assertEquals(200, response.getStatusCodeValue());
-//	}
-
 
 	@Test
 	@DisplayName("Verificando se irá retornar 404 quando passar como null")
@@ -181,20 +143,6 @@ class UsuarioControllerTest {
 		ResponseEntity response = controller.deletarUsuario(mock(UsuarioLoginRequest.class),"S");
 		assertEquals(404, response.getStatusCodeValue());
 	}
-
-//	@Test
-//	@DisplayName("Verificando se irá retornar 403 quando passar como null")
-//	void deletarUsuario403() {
-//		 Usuario usuario = new Usuario();
-//		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(usuario.getIdUsuario());
-//
-//		when(usuarioRepository.getByEmailAndSenha(usuarioLogado.get().getEmail(),"dssdadsa")).thenReturn(Optional.ofNullable(null));
-//
-//		ResponseEntity response = controller.deletarUsuario(Optional.of(mock(UsuarioLogadoResponse)) ,"S");
-//
-//		assertEquals(403, response.getStatusCodeValue());
-//
-//	}
 
 	@Test
 	@DisplayName("Verificar se irá retornar 404 caso lista esteja vazia")
@@ -206,29 +154,58 @@ class UsuarioControllerTest {
 	}
 
 
-	@Test
-	@DisplayName("Verificar se irá retornar 403 caso Ids não sejam compativeis")
-	void atualizarSenha403() {
 
-		UsuarioSenhaRequest usuarioSenha = new UsuarioSenhaRequest();
-		Optional<Usuario> usuario = this.usuarioRepository.findById(usuarioSenha.getIdUsuario());
-		when(!usuario.get().getSenha().equals(usuarioSenha.getSenhaAtual()));
-		ResponseEntity response = controller.atualizarSenha(mock(UsuarioSenhaRequest.class));
-		assertEquals(403, response.getStatusCodeValue());
+
+
+
+	@Test
+	@DisplayName("Verificar se irá retornar 200 caso retorne um usuário pela pesquisa do email")
+	void pesquisarUsuarioIdPeloEmailRetorna200() {
+
+
+		when(usuarioRepository.getByEmail("teste@hotmail.com")).thenReturn(Optional.of(1));
+		ResponseEntity<Integer> response = controller.pesquisarUsuarioEmail("teste@hotmail.com");
+		assertEquals(200, response.getStatusCodeValue());
+
 	}
 
 	@Test
-	@DisplayName("Verificar se irá retornar 409 caso lista esteja vazia")
-	void atualizarSenha409() {
-		UsuarioSenhaRequest usuarioSenha = new UsuarioSenhaRequest();
-		usuarioSenha.setIdUsuario(1);
-		usuarioSenha.setSenhaAtual("senha1234");
-		usuarioSenha.setSenhaNova("senha12345");
+	@DisplayName("Verificar se irá retornar 404 caso retorne um usuário pela pesquisa do email")
+	void pesquisarUsuarioIdPeloEmailRetorna404() {
 
-		Optional<Usuario> usuario = this.usuarioRepository.findById(usuarioSenha.getIdUsuario());
-		ResponseEntity response = controller.atualizarSenha(usuarioSenha);
-		assertEquals(409, response.getStatusCodeValue());
+
+		when(usuarioRepository.getByEmail("teste@hotmail.com")).thenReturn(Optional.of(1));
+		ResponseEntity<Integer> response = controller.pesquisarUsuarioEmail("testi@hotmail.com");
+		assertEquals(404, response.getStatusCodeValue());
+
 	}
 
+	@Test
+	@DisplayName("Verificar se irá retornar 200 caso encontre um cpf")
+	void pesquisarUsuarioCpfRetorna200() {
 
+		when(usuarioRepository.getByCpf("46002259881")).thenReturn(Optional.of(1));
+		ResponseEntity<Integer> response = controller.pesquisarUsuarioCpf("46002259881");
+		assertEquals(200, response.getStatusCodeValue());
+	}
+
+	@Test
+	@DisplayName("Verificar se irá retornar 404 caso não encontre um cpf")
+	void pesquisarUsuarioCpfRetorna404() {
+
+		when(usuarioRepository.getByCpf("46002259881")).thenReturn(Optional.of(1));
+		ResponseEntity<Integer> response = controller.pesquisarUsuarioCpf("46002259882");
+		assertEquals(404, response.getStatusCodeValue());
+	}
+
+//	@Test
+//	@DisplayName("Verificar se irá retornar 200 caso ache o tipo de report")
+//	void listarTiposReporteRetorna200() {
+//
+//		List< TipoReporte> lista = new ArrayList<>();
+//		when(usuarioRepository.findAll()).thenReturn(lista);
+//		ResponseEntity<Integer> response = controller.pesquisarUsuarioCpf("46002259881");
+//		assertEquals(200, response.getStatusCodeValue());
+//
+//	}
 }

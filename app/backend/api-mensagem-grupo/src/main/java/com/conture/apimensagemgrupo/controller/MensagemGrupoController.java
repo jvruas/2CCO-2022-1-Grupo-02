@@ -88,38 +88,4 @@ public class MensagemGrupoController {
 		return status(200).body(listaGrupo);
 	}
 
-
-//    @GetMapping("/grupo")
-//    public ResponseEntity listarMensagemGrupo(
-//            @RequestParam Integer fkDoador,
-//            @RequestParam Integer fkProdutoDoacao
-//    ) {
-//        List<Pergunta> perguntaList = this.mensagemGrupoRepository.findByFkDoadorAndFkProdutoDoacaoOrderByDataAsc(fkDoador, fkProdutoDoacao);
-//
-//        if (perguntaList.isEmpty()) {
-//            return ResponseEntity.status(204).build();
-//        }
-//
-//
-//
-//        List<List<Object>> groupChatList = new ArrayList();
-//
-//        for (int i = 0; i < perguntaList.size(); i++) {
-//            List<Object> topicList = new ArrayList();
-//
-//            topicList.add(perguntaList.get(i));
-//
-//            List<Pergunta> respostaList = this.mensagemGrupoRepository.findByIdPerguntaOrderByDataDesc(perguntaList.get(i).getIdPergunta());
-//
-//            if (respostaList.isEmpty()) {
-//                continue;
-//            }
-//
-//            topicList.add(respostaList);
-//
-//            groupChatList.add(topicList);
-//        }
-//
-//        return ResponseEntity.status(200).body(groupChatList);
-//    }
 }

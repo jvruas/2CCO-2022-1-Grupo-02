@@ -28,15 +28,6 @@ class MensagemGrupoControllerTest {
 	private MensagemGrupoRepository mensagemGrupoRepository;
 
 
-//	@Test
-//	@DisplayName("Verificando se irá voltar status 204")
-//	void listarMensagensString() {
-//		MensagemGrupo m1 = mock(MensagemGrupo.class);
-//		List<MensagemGrupo> resposta = List.of(m1);
-//
-//		assertEquals(204, resposta.getStatusCodeValue());
-//		assertNull(resposta.getBody());
-//	}
 
 
 	@Test
@@ -48,14 +39,6 @@ class MensagemGrupoControllerTest {
 		assertEquals(201, response.getStatusCodeValue());
 	}
 
-//	@Test
-//	@DisplayName("Verificando se irá voltar status 401")
-//	void adicionarMensagemIraRetornar401() {
-//		when(mensagemGrupoRepository.findByIdMensagemGrupoAndFkProdutoDoacao(1,1)).thenReturn(new MensagemGrupo());
-//		List<MensagemGrupo>  m = mensagemGrupoRepository.findByIdMensagemGrupoAndFkProdutoDoacao(1,2);
-//		ResponseEntity response = controller.adicionarPergunta(m);
-//		assertEquals(401, response.getStatusCodeValue());
-//	}
 
 	@Test
 	@DisplayName("Verificando se irá voltar status 200")
