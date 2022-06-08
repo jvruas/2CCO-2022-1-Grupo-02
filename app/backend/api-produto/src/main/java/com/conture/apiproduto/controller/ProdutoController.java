@@ -72,6 +72,10 @@ public class ProdutoController {
 		try {
 			Integer idDoador = this.usuarioClient.getIdUsuarioLogado(produtoRequest.getIdDoador());
 		} catch (FeignException response) {
+			if (response.status() == -1) {
+				return status(503).build();
+			}
+
 			return status(401).build();
 		}
 
