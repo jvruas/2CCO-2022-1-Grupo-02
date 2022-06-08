@@ -1,7 +1,7 @@
-package com.conture.apimensagemgrupo.controle;
+package com.conture.apimensagemgrupo.controller;
 
 import com.conture.apimensagemgrupo.dto.requests.MensagemGrupoRequest;
-import com.conture.apimensagemgrupo.entidade.MensagemGrupo;
+import com.conture.apimensagemgrupo.entity.MensagemGrupo;
 import com.conture.apimensagemgrupo.repository.MensagemGrupoRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

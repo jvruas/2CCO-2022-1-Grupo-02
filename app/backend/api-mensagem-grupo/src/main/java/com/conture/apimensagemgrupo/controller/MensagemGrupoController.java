@@ -1,8 +1,10 @@
-package com.conture.apimensagemgrupo.controle;
+package com.conture.apimensagemgrupo.controller;
 
+import com.conture.apimensagemgrupo.api.rest.produto.ProdutoClient;
+import com.conture.apimensagemgrupo.api.rest.usuario.UsuarioClient;
 import com.conture.apimensagemgrupo.dto.requests.MensagemGrupoRequest;
 import com.conture.apimensagemgrupo.dto.response.MensagemGrupoResponse;
-import com.conture.apimensagemgrupo.entidade.MensagemGrupo;
+import com.conture.apimensagemgrupo.entity.MensagemGrupo;
 import com.conture.apimensagemgrupo.repository.MensagemGrupoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,11 @@ public class MensagemGrupoController {
     @Autowired
     private MensagemGrupoRepository mensagemGrupoRepository;
 
+	@Autowired
+	private UsuarioClient usuarioClient;
+
+	@Autowired
+	private ProdutoClient produtoClient;
 
     @PostMapping()
     public ResponseEntity adicionarPergunta(@RequestBody @Valid MensagemGrupoRequest mensagem) {

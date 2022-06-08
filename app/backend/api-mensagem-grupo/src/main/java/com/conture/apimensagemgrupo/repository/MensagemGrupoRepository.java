@@ -2,7 +2,7 @@ package com.conture.apimensagemgrupo.repository;
 
 import com.conture.apimensagemgrupo.dto.requests.MensagemGrupoRequest;
 import com.conture.apimensagemgrupo.dto.response.MensagemGrupoResponse;
-import com.conture.apimensagemgrupo.entidade.MensagemGrupo;
+import com.conture.apimensagemgrupo.entity.MensagemGrupo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

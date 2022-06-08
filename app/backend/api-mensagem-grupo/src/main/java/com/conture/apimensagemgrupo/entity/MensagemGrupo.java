@@ -1,6 +1,5 @@
-package com.conture.apimensagemgrupo.entidade;
+package com.conture.apimensagemgrupo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;

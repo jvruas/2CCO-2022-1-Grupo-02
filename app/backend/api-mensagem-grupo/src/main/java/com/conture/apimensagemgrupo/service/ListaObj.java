@@ -1,4 +1,4 @@
-package com.conture.apimensagemgrupo.servicos;
+package com.conture.apimensagemgrupo.service;
 
 public class ListaObj<T> {
 

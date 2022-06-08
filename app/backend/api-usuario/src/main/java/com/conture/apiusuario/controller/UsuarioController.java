@@ -276,7 +276,8 @@ public class UsuarioController {
 		return status(200).build();
 	}
 
-	@PatchMapping("/esqueci-senha")
+	@PatchMapping("/atualizar-senha")
+	@CrossOrigin(allowedHeaders = "*")
 	public ResponseEntity atualizarEsqueciSenha(@RequestParam @Min(1) Integer idUsuario,
 												@RequestParam @Size(min = 6, max = 18) String novaSenha) {
 
