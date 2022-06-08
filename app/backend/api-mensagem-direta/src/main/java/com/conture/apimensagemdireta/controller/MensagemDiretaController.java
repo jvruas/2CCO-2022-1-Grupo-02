@@ -36,7 +36,8 @@ public class MensagemDiretaController {
 	private UsuarioClient usuarioClient;
 
 	@PostMapping
-	public ResponseEntity<Integer> adicionarMensagem(@RequestBody @Valid MensagemRequest mensagemRequest) {
+	public ResponseEntity<Integer> adicionarMensagem(
+			@RequestBody @Valid MensagemRequest mensagemRequest) {
 
 		if(mensagemRequest.getFkUsuarioRemetente() == mensagemRequest.getFkUsuarioDestinatario()){
 			return status(400).build();

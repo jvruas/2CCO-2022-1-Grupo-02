@@ -1,5 +1,7 @@
 package com.conture.apimensagemgrupo.controller;
 
+import com.conture.apimensagemgrupo.api.rest.produto.ProdutoClient;
+import com.conture.apimensagemgrupo.api.rest.usuario.UsuarioClient;
 import com.conture.apimensagemgrupo.dto.requests.MensagemGrupoRequest;
 import com.conture.apimensagemgrupo.entity.MensagemGrupo;
 import com.conture.apimensagemgrupo.repository.MensagemGrupoRepository;
@@ -20,6 +22,11 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(classes = {MensagemGrupoController.class})
 class MensagemGrupoControllerTest {
 
+	@MockBean
+	ProdutoClient produtoClient;
+
+	@MockBean
+	UsuarioClient usuarioClient;
 
 	@Autowired
 	MensagemGrupoController controller;

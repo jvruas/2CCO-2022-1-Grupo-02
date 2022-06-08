@@ -102,7 +102,7 @@ class UsuarioControllerTest {
 	}
 
 	@Test
-	@DisplayName("Verificando se o resultado irá retornar 404")
+	@DisplayName("Verificando se o resultado ira retornar 404")
 	void loginRetorno404() {
 
 		when(usuarioRepository.getByEmailAndSenha("teste@hotmail.com", "teste1234")).thenReturn(Optional.ofNullable(null));
@@ -137,7 +137,7 @@ class UsuarioControllerTest {
 
 
 	@Test
-	@DisplayName("Verificando se irá retornar 404 quando passar como null")
+	@DisplayName("Verificando se ira retornar 404 quando passar como null")
 	void deletarUsuario404() {
 		when(usuarioRepository.getByEmailAndSenha("teste@hotmail.com", "teste1234")).thenReturn(Optional.ofNullable(null));
 		ResponseEntity response = controller.deletarUsuario(mock(UsuarioLoginRequest.class),"S");
@@ -145,7 +145,7 @@ class UsuarioControllerTest {
 	}
 
 	@Test
-	@DisplayName("Verificar se irá retornar 404 caso lista esteja vazia")
+	@DisplayName("Verificar se ira retornar 404 caso lista esteja vazia")
 	void atualizarSenha404() {
 		when(usuarioRepository.findById(1)).thenReturn(Optional.ofNullable(null));
 		ResponseEntity response = controller.atualizarSenha(mock(UsuarioSenhaRequest.class));
@@ -159,7 +159,7 @@ class UsuarioControllerTest {
 
 
 	@Test
-	@DisplayName("Verificar se irá retornar 200 caso retorne um usuário pela pesquisa do email")
+	@DisplayName("Verificar se ira retornar 200 caso retorne um usuario pela pesquisa do email")
 	void pesquisarUsuarioIdPeloEmailRetorna200() {
 
 
@@ -170,7 +170,7 @@ class UsuarioControllerTest {
 	}
 
 	@Test
-	@DisplayName("Verificar se irá retornar 404 caso retorne um usuário pela pesquisa do email")
+	@DisplayName("Verificar se ira retornar 404 caso retorne um usuario pela pesquisa do email")
 	void pesquisarUsuarioIdPeloEmailRetorna404() {
 
 
@@ -181,7 +181,7 @@ class UsuarioControllerTest {
 	}
 
 	@Test
-	@DisplayName("Verificar se irá retornar 200 caso encontre um cpf")
+	@DisplayName("Verificar se ira retornar 200 caso encontre um cpf")
 	void pesquisarUsuarioCpfRetorna200() {
 
 		when(usuarioRepository.getByCpf("46002259881")).thenReturn(Optional.of(1));
@@ -190,7 +190,7 @@ class UsuarioControllerTest {
 	}
 
 	@Test
-	@DisplayName("Verificar se irá retornar 404 caso não encontre um cpf")
+	@DisplayName("Verificar se ira retornar 404 caso não encontre um cpf")
 	void pesquisarUsuarioCpfRetorna404() {
 
 		when(usuarioRepository.getByCpf("46002259881")).thenReturn(Optional.of(1));
@@ -198,14 +198,4 @@ class UsuarioControllerTest {
 		assertEquals(404, response.getStatusCodeValue());
 	}
 
-//	@Test
-//	@DisplayName("Verificar se irá retornar 200 caso ache o tipo de report")
-//	void listarTiposReporteRetorna200() {
-//
-//		List< TipoReporte> lista = new ArrayList<>();
-//		when(usuarioRepository.findAll()).thenReturn(lista);
-//		ResponseEntity<Integer> response = controller.pesquisarUsuarioCpf("46002259881");
-//		assertEquals(200, response.getStatusCodeValue());
-//
-//	}
 }
