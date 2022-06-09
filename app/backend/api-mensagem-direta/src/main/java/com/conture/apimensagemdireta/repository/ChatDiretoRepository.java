@@ -10,5 +10,5 @@ public interface ChatDiretoRepository extends JpaRepository<ChatDireto, Integer>
 
     Optional<ChatDireto> findByFkUsuarioRemetenteAndFkUsuarioDestinatario(Integer fkUsuarioRemetente, Integer fkUsuarioDestinatario);
 
-    List<ChatDireto> findByFkUsuarioRemetente(Integer fkUsuarioRemetente);
+    List<ChatDireto> findByFkUsuarioDestinatario(Integer fkUsuarioDestinatario);
 }

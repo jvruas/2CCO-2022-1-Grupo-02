@@ -158,7 +158,7 @@ public class MensagemDiretaController {
 			return status(401).build();
 		}
 
-		List<ChatDireto> chats = repositoryChatDireto.findByFkUsuarioRemetente(fkUsuarioDestinatario);
+		List<ChatDireto> chats = repositoryChatDireto.findByFkUsuarioDestinatario(fkUsuarioDestinatario);
 
 		List<Mensagem> mensagemFalse = new ArrayList<>();
 
