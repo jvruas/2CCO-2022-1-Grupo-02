@@ -38,9 +38,7 @@ class MensagemDiretaControllerTest {
 
 	@MockBean
 	private ChatDiretoRepository repositoryChatDireto;
-
 	ChatDireto c = new ChatDireto(
-
 	);
 
 	private ChatDireto createChat() {
@@ -50,42 +48,44 @@ class MensagemDiretaControllerTest {
 	chat.setFkUsuarioRemetente(1);
 	return chat;
 	}
+
 	private MensagemRequest createMensagem(){
 		MensagemRequest mensagemRequest = new MensagemRequest(1,1,"Este é um teste");
-
 		return mensagemRequest;
 	}
 
+	@Test
+	@DisplayName("Retorna 400 quando nao encontra nenhum chat")
+	void listarMensagensRetorna400() {
+		MensagemRequest m = createMensagem();
+		ResponseEntity<Integer> response = mensagemDiretaController.adicionarMensagem (m);
+		assertEquals(400, response.getStatusCodeValue());
+	}
 
-    @Test
-    @DisplayName("Retorna 204 quando não encontra nenhuma mensagem")
-    void listarMensagensRetorna204() {
+	@Test
+	@DisplayName("Retorna 204 quando nao encontra nenhuma mensagem de acordo com UsuarioRemetente e Destinatario")
+	void listarMensagensRetorna204() {
 		when(repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(1, 2)).thenReturn(Optional.of(new ChatDireto()));
 		when(repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(2, 1)).thenReturn(Optional.of(new ChatDireto()));
 		ResponseEntity<List<MensagemResponse>> response = mensagemDiretaController.listarMensagens (1,2);
-
 		assertEquals(204, response.getStatusCodeValue());
-    }
+	}
 
+	@Test
+	@DisplayName("Retorna 204 e false quando nao e encontrada nenhuma mensagem nao visualizada")
+			void existeMensagemVisualizadaRetorna204() {
+		when(repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(1, 2)).thenReturn(Optional.of(new ChatDireto()));
+		when(repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(2, 1)).thenReturn(Optional.of(new ChatDireto()));
+		ResponseEntity<List<MensagemResponse>> response = mensagemDiretaController.listarMensagens (1,2);
+		assertEquals(204, response.getStatusCodeValue());
+	}
 
-// FIXME: Resolve ae
-//    @Test
-//    @DisplayName("Retorna 204 e false quando não é encontrada nenhuma mensagem não visualizada")
-//    void existeMensagemVisualizadaRetorna204() {
-//
-//		when(repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(2, 1)).thenReturn(Optional.of(new ChatDireto()));
-//		ResponseEntity<List<MensagemResponse>> response = mensagemDiretaController.listarMensagens (1,2);
-//
-//		assertEquals(204, response.getStatusCodeValue());
-//    }
-
-    @Test
-    @DisplayName("Retorna 200 e true quando é encontrada mensagens não visualizada")
-    void existeMensagemNaoVisualizadaRetorna200() {
+	@Test
+	@DisplayName("Retorna 200 e true quando e encontrada mensagens nao visualizada")
+	void existeMensagemNaoVisualizadaRetorna200() {
 		MensagemRequest m = createMensagem();
 		ResponseEntity response = mensagemDiretaController.existeMensagemNaoVisualizada(m.getFkUsuarioDestinatario());
 		assertEquals(200, response.getStatusCodeValue());
-    }
-
+	}
 
 }
