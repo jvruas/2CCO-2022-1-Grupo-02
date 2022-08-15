@@ -14,6 +14,7 @@ import com.conture.apiproduto.service.MatchService;
 import com.conture.apiproduto.util.collection.FilaObj;
 import com.conture.apiproduto.util.collection.PilhaObj;
 import com.conture.apiproduto.util.file.Txt;
+import com.conture.apiproduto.util.sort.Filter;
 import com.conture.apiproduto.util.sort.Iterator;
 import com.conture.apiproduto.util.sort.SortDateAscending;
 import com.conture.apiproduto.util.sort.AscendingListIterator;
@@ -237,7 +238,7 @@ public class ProdutoController {
 			return status(404).build();
 		}
 
-		if(this.avaliacaoRepository.hasByIdMatch(idMatch.get())) {
+		if (this.avaliacaoRepository.hasByIdMatch(idMatch.get())) {
 			return status(409).build();
 		}
 
@@ -314,16 +315,11 @@ public class ProdutoController {
 			return status(204).build();
 		}
 
-		List<ProdutoDoacaoResponse> listaProdutoResponse = new ArrayList();
-
 		Iterator<ProdutoDoacaoResponse> iterator = new AscendingListIterator(listaProduto);
 
-		while (iterator.hasNext()) {
-			ProdutoDoacaoResponse currentProdutoDoacao = iterator.getNext();
-			if (currentProdutoDoacao.getCategoriaProduto().equalsIgnoreCase(categoriaProduto.get().getNome())) {
-				listaProdutoResponse.add(currentProdutoDoacao);
-			}
-		}
+		List<ProdutoDoacaoResponse> listaProdutoResponse = new ArrayList();
+
+		listaProdutoResponse = Filter.filtroNomeProduto(iterator, categoriaProduto.get().getNome(), listaProdutoResponse);
 
 		if (listaProdutoResponse.isEmpty()) {
 			return status(204).build();
