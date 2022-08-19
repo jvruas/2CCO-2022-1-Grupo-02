@@ -126,19 +126,25 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: red;
 }
 
 
-#div_usuario img{
+#img_foto{
     height: 40px;
     width: 40px;
     border-radius: 50%;
     object-fit: cover;
 }
 
+#div_usuario p{
+    font-size: 16px;
+    color: #FFF;
+}
 
-
+#img_seta{
+    height: 12px;
+    width: 13px;
+}
 
 
 #div_icones{
@@ -174,6 +180,40 @@
 #btn_doacao img{
     height: 16px;
     width: 16px;
+}
+
+#header_inferior{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #5C337F;
+}
+
+#div_produto{
+    height: 100%;
+    width: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#div_produto button{
+    background-color: #5C337F;
+    border: none;
+}
+
+#header_inferior h2{
+    font-size: 16px;
+    color: #FFF;
+}
+
+#div_categorias{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 
