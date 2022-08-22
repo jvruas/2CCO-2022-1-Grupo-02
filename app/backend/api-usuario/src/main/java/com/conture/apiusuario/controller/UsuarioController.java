@@ -4,6 +4,7 @@ import com.conture.apiusuario.dto.request.*;
 import com.conture.apiusuario.entity.*;
 import com.conture.apiusuario.repository.*;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
+import com.conture.apiusuario.utility.Email;
 import com.conture.apiusuario.utility.GerenciadorUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 import static org.springframework.http.ResponseEntity.*;
@@ -30,6 +32,8 @@ public class UsuarioController {
 	private ImagemUsuarioRepository imagemUsuarioRepository;
 	@Autowired
 	private DesligamentoContaRepository desligamentoContaRepository;
+
+	private Email email = new Email();
 
 
 //	TODO:TESTES
@@ -232,6 +236,31 @@ public class UsuarioController {
 		return status(200).body(lista);
 	}
 
+	@PostMapping("conta/validacao-email")
+	public ResponseEntity enviarEmail(@RequestParam String emailDestinatario,
+									  @RequestParam Integer idUsuario) throws FileNotFoundException {
+		Usuario usuario = usuarioRepository.getById(idUsuario);
+		if (usuario.getVerificado()){
+			return status(400).body("usuario ja validado");
+		}
+		String codigo = email.gerarCodigo();
+		usuario.setCodigo(codigo);
+		String corpoEmail = email.gerarEmail(codigo);
+		email.sendEmail(corpoEmail, emailDestinatario);
+		return status(200).build();
+	}
+
+	@PostMapping("conta/validacao-codigo")
+	public ResponseEntity validarUsuario(@RequestParam Integer idUsuario,
+										 @RequestParam String codigo){
+		Usuario usuario = usuarioRepository.getById(idUsuario);
+		String codigoGerado = usuario.getCodigo();
+		if (codigoGerado.equals(codigo)){
+			usuario.setVerificado(true);
+			return status(200).build();
+		}
+		return status(400).build();
+	}
 
 	@GetMapping("/situacao-atual")
 	public ResponseEntity<List<SituacaoAtual>> listarSituacaoAtual() {

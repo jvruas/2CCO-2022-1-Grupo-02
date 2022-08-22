@@ -74,6 +74,8 @@ public class Usuario {
 	@Pattern(regexp = "[A,I,F,M,S,P,E,D]", message = "Grau de escolaridade aceita apenas [ A | I | F | M | S | P | E | D ] como valores")
 	private String grauEscolaridade;
 
+	private String codigo;
+
 	private Boolean verificado = false;
 
 	@NotNull
@@ -137,6 +139,18 @@ public class Usuario {
 				novoUsuario.getGrauEscolaridade(),
 				novoUsuario.getFkSituacaoAtual()
 		);
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public Boolean getVerificado() {
+		return verificado;
 	}
 
 	public Integer getIdUsuario() { return idUsuario; }
