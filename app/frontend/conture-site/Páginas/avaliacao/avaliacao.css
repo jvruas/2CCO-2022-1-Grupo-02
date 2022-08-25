@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+*{
+    /* height: 100%; */
+    margin: 0;
+    font-family: 'Tajawal', sans-serif;
+}
+
+#avaliacao{
+    height: 143px;
+    width: 80%;
+    background-color: aqua;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#avaliacao_sup{
+    height: 55%;
+    width: 100%;
+    display: flex;
+    background-color: blue;
+}
+
+#ava_esq{
+height: 100%;
+width: 60px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-around;
+background-color: blueviolet;
+}
+
+#ava_esq img{
+height: 50px;
+width: 50px;
+border-radius: 50px;
+}
+#ava_esq p{
+    font-size: 18px;
+    font-weight: lighter;
+}
+
+#ava_dir{
+    height: 100%;
+    width: 150px;
+    background-color: aquamarine;
+}
+

@@ -40,7 +40,7 @@
     border-top-right-radius: 10px;
 }
 
-#historico_sup div{
+#historico_sup div{ 
     height: 100%;
     width: 20%;
     display: flex;
