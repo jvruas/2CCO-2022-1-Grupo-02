@@ -6,47 +6,54 @@
     font-family: 'Tajawal', sans-serif;
 }
 
-#avaliacao{
+.avaliacao{
     height: 143px;
     width: 80%;
     background-color: aqua;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 60px;
 }
 
-#avaliacao_sup{
+.avaliacao_sup{
     height: 55%;
     width: 100%;
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     background-color: blue;
 }
-/* #container_perfil{
+
+.container_perfil{
     height: 100%;
-    width: 100%;
-    background-color: red;
-} */
+    width: 210px;
+    display: flex;
+    flex-direction: row;
 
-#ava_esq{
-height: 100%;
-width: 60px;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: space-between;
-background-color: blueviolet;
+    background-color: brown;    
 }
 
-#ava_esq img{
-height: 50px;
-width: 50px;
-border-radius: 50px;
+.ava_esq{
+    height: 100%;
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: blueviolet;
 }
-#ava_esq p{
+
+.ava_esq img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+}
+.ava_esq p{
     font-size: 18px;
     font-weight: lighter;
 }
 
-#ava_dir{
+.ava_dir{
     height: 100%;
     width: 150px;
     display: flex;
@@ -54,14 +61,24 @@ border-radius: 50px;
     justify-content: space-between;
     background-color: aquamarine;
 }
-#ava_dir div{
+.informacaoes{
     height: 50%;
     width: 100%;
     background-color: blueviolet;
 }
 
-#ava_dir img{
-    height: 20px;
-    width: 70%;
+.estrela{
+    height: 30px;
+    width: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: cadetblue;
+}
+
+.data{
+    position: relative;
+    top: 58px;
 }
 
