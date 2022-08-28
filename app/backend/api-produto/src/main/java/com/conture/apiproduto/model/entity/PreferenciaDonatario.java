@@ -14,12 +14,6 @@ public class PreferenciaDonatario {
 	@NotNull
 	@NotBlank
 	@Size(min = 1, max = 1)
-	@Pattern(regexp = "[F,M,X]")
-	private String genero;
-
-	@NotNull
-	@NotBlank
-	@Size(min = 1, max = 1)
 	@Pattern(regexp = "[J,A,I,X]")
 	private String faixaEtaria;
 
@@ -48,14 +42,12 @@ public class PreferenciaDonatario {
 	}
 
 	private PreferenciaDonatario(
-			String genero,
 			String faixaEtaria,
 			String estadoCivil,
 			String grauEscolaridade,
 			Integer fkSituacaoAtual,
 			Integer fkProdutoDoacao
 	) {
-		this.genero = genero;
 		this.faixaEtaria = faixaEtaria;
 		this.estadoCivil = estadoCivil;
 		this.grauEscolaridade = grauEscolaridade;
@@ -66,7 +58,6 @@ public class PreferenciaDonatario {
 
 	public static PreferenciaDonatario fromPattern(PreferenciaDonatarioRequest preferenciaDonatarioRequest) {
 		return new PreferenciaDonatario(
-				preferenciaDonatarioRequest.getGenero(),
 				preferenciaDonatarioRequest.getFaixaEtaria(),
 				preferenciaDonatarioRequest.getEstadoCivil(),
 				preferenciaDonatarioRequest.getGrauEscolaridade(),
@@ -79,9 +70,6 @@ public class PreferenciaDonatario {
 		return idPreferenciaDonatario;
 	}
 
-	public String getGenero() {
-		return genero;
-	}
 
 	public String getFaixaEtaria() {
 		return faixaEtaria;
@@ -105,10 +93,6 @@ public class PreferenciaDonatario {
 
 	public void setIdPreferenciaDonatario(Integer idPreferenciaDonatario) {
 		this.idPreferenciaDonatario = idPreferenciaDonatario;
-	}
-
-	public void setGenero(String genero) {
-		this.genero = genero;
 	}
 
 	public void setFaixaEtaria(String faixaEtaria) {

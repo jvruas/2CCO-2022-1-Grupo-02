@@ -1,0 +1,78 @@
+
+K
+java:S3740À"/Provide the parametrized type for this generic.(Áàƒœùÿÿÿÿ
+F
+java:S3740ç"/Provide the parametrized type for this generic.(Û¸Êğ
+M
+java:S3740ü"/Provide the parametrized type for this generic.(™Ú³£8®Ò†ø©0
+F
+java:S3740÷"/Provide the parametrized type for this generic.(™¨Ş
+F
+java:S3740"/Provide the parametrized type for this generic.(ÓÒà€
+K
+java:S3740µ"/Provide the parametrized type for this generic.(¤ûşÿÿÿÿ
+F
+java:S3740Ô"/Provide the parametrized type for this generic.(³ä³ô
+F
+java:S3740ä"/Provide the parametrized type for this generic.(‹ƒÒ¹
+F
+java:S3740ğ"/Provide the parametrized type for this generic.(Ìš“­
+S
+java:S4973˜"<Strings and Boxed types should be compared using "equals()".(œÂÊœ
+R
+java:S1854J"<Remove this useless assignment to local variable "idDoador".(¡‰íƒ
+C
+java:S1481J"-Remove this unused "idDoador" local variable.(¡‰íƒ
+W
+java:S1854p"<Remove this useless assignment to local variable "idDoador".(¾Ó‡¾øÿÿÿÿ
+H
+java:S1481p"-Remove this unused "idDoador" local variable.(¾Ó‡¾øÿÿÿÿ
+X
+java:S1854‘"<Remove this useless assignment to local variable "idDoador".(¾Ó‡¾øÿÿÿÿ
+I
+java:S1481‘"-Remove this unused "idDoador" local variable.(¾Ó‡¾øÿÿÿÿ
+Z
+java:S1854ª"CRemove this useless assignment to local variable "idSituacaoAtual".(Æ‘ÌĞ
+K
+java:S1481ª"4Remove this unused "idSituacaoAtual" local variable.(Æ‘ÌĞ
+V
+java:S1854Ê"?Remove this useless assignment to local variable "idDonatario".(“æ‡Ì
+G
+java:S1481Ê"0Remove this unused "idDonatario" local variable.(“æ‡Ì
+H
+java:S1135Õ"2Complete the task associated to this TODO comment.(Ü”ÏH
+V
+java:S1854ö"?Remove this useless assignment to local variable "idDonatario".(“æ‡Ì
+G
+java:S1481ö"0Remove this unused "idDonatario" local variable.(“æ‡Ì
+I
+java:S1135„"2Complete the task associated to this TODO comment.(û›ÍÌ
+N
+java:S1135à"2Complete the task associated to this TODO comment.(Êé’®ıÿÿÿÿ
+=	java:S131ş""Add a default case to this switch.(²‹›Øüÿÿÿÿ
+X
+java:S1854²"<Remove this useless assignment to local variable "idDoador".(¾Ó‡¾øÿÿÿÿ
+I
+java:S1481²"-Remove this unused "idDoador" local variable.(¾Ó‡¾øÿÿÿÿ
+X
+java:S1854Ñ"<Remove this useless assignment to local variable "idDoador".(¾Ó‡¾øÿÿÿÿ
+I
+java:S1481Ñ"-Remove this unused "idDoador" local variable.(¾Ó‡¾øÿÿÿÿ
+X
+java:S1854è"<Remove this useless assignment to local variable "idDoador".(¾Ó‡¾øÿÿÿÿ
+I
+java:S1481è"-Remove this unused "idDoador" local variable.(¾Ó‡¾øÿÿÿÿ
+X
+java:S1854€"<Remove this useless assignment to local variable "idDoador".(¾Ó‡¾øÿÿÿÿ
+I
+java:S1481€"-Remove this unused "idDoador" local variable.(¾Ó‡¾øÿÿÿÿ
+X
+java:S1854£"<Remove this useless assignment to local variable "idDoador".(¾Ó‡¾øÿÿÿÿ
+I
+java:S1481£"-Remove this unused "idDoador" local variable.(¾Ó‡¾øÿÿÿÿ
+V
+java:S1854Ä"?Remove this useless assignment to local variable "idDonatario".(“æ‡Ì
+I
+java:S1135³"2Complete the task associated to this TODO comment.(ŞÜßã
+G
+java:S1481Ä"0Remove this unused "idDonatario" local variable.(“æ‡Ì
