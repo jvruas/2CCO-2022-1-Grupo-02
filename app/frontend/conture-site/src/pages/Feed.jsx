@@ -23,6 +23,7 @@ function Feed(){
 
     return(
         <>
+
             <section className="section-feed">
             <img src={gifConstrucao} id="gif-contrucao" className="gif-construcao" alt="Gif de dois personagens desenvolvendo site"/>
             <h1>SITE EM DESENVOLVIMENTO</h1>
