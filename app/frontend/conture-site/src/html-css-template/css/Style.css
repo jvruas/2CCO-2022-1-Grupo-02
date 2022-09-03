@@ -25,7 +25,7 @@
 
 
 .container-banner{
-    width: 80%;
+    width: 90%;
     margin: auto;
     margin-top: 5%;
     margin-bottom: 5%;
@@ -37,7 +37,7 @@
 
 .title-feed{
     font-size: 18px;
-    margin-left: 2%;
+    margin-left: 5%;
     margin-top: 2%;
 }
 /*Header simples*/
