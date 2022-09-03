@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif, roboto;
+    text-decoration: none;
+        
+}
+
+:root{
+    --verde-btn: #369F64;
+    --verde-btn-hover: #308354;
+    --referencia: #7724BE;
+    --cinza-btn: #E5E5E5;
+    --cinza-btn-hover: #9F9F9F;
+    --cinza-btn-border: #C4C4C4;
+}
+
+::-webkit-scrollbar{
+    display: none;
+} 
+
+
+#menu{
+    margin-top: 100px;
+    height: 40px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto; 
+    border-bottom: black 2px solid;
+   
+}
+
+
+#sub-menu{
+    height: 40px;
+    width:550px;
+    display: flex;
+    justify-content: left ;
+    align-items: center;
+}
+
+#sub-menu div{
+    margin: auto;
+}
+
+#menu p{
+    font-size: 18px;
+}

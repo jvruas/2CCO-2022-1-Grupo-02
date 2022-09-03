@@ -1,20 +1,16 @@
-import '../html-css-template/css/HistoricoMaior.css'
+import '../html-css-template/css/HistoricoMenor.css'
 
-function HistoricoMaior(){
+function HistoricoMenor(){
     (
         <>
         <div class="historico">
         <div class="historico_sup">
             <div>Tipo</div>
             <div>Tipo equipamento</div>
-            <div>Equipamento</div>
-            <div>Negociante</div>
             <div>Data</div>
         </div>
 
         <div class="historico_inf">
-            <div>exemplo</div>
-            <div> exemplo</div>
             <div>exemplo</div>
             <div> exemplo</div>
             <div>10/04/2003</div>
@@ -23,4 +19,4 @@ function HistoricoMaior(){
     </>
     );
 }
-export default HistoricoMaior;
+export default HistoricoMenor;
