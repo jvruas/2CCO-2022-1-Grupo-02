@@ -1,36 +1,160 @@
+import Carousel from "../components/Carousel";
+
+
+import Header from "../components/Header"
+import Footer from "../components/Footer"
+import Produto from "../components/Produto";
+import Anuncio from "../components/Anuncio";
+
 import '../html-css-template/css/Style.css'
-import '../html-css-template/css/Feed.css'
-import gifConstrucao from "../html-css-template/imagens/construcao.gif"
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../api.js";
 
-function Feed(){
+export default function App() {
+  return (
+<>
+<Header></Header>
 
-    const navegar = useNavigate();
+<Anuncio></Anuncio>
 
-    function handleSubmit(event) {
-        event.preventDefault()
-        let param = sessionStorage.getItem('idUsuarioLogado')
-        api.delete(`/${param}/login`, {
-        }).then((resposta) => {
-            console.log(resposta.status)
-            navegar("/")
-        }).catch((error) => { 
-            console.log(error)
-        })
-    }
+<h2 className="title-feed">Notebook</h2>
 
-    return(
-        <>
+<Carousel 
+    card1={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card2={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card3={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card4={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card5={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card6={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>} 
+    card7={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card8={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card9={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card10={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+/>
 
-            <section className="section-feed">
-            <img src={gifConstrucao} id="gif-contrucao" className="gif-construcao" alt="Gif de dois personagens desenvolvendo site"/>
-            <h1>SITE EM DESENVOLVIMENTO</h1>
-            <button type="button" onClick={handleSubmit}>Retornar para página de login</button>
-            </section>
-        </>
-    )
+<h2 className="title-feed">Celular</h2>
+
+<Carousel 
+    card1={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card2={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card3={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card4={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card5={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card6={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>} 
+    card7={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card8={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card9={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card10={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+/>
+
+
+<h2 className="title-feed">Tablet</h2>
+
+<Carousel 
+    card1={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card2={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card3={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card4={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card5={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card6={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>} 
+    card7={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card8={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card9={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+    card10={<Produto
+        visualizacao="427"
+        texto="Notebook Lenovo Ideapad A120"
+    ></Produto>}
+/>
+
+<Footer></Footer>
+
+</>
+
+
+  );
 }
-
-export default Feed;
