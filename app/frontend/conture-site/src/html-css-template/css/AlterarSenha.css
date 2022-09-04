@@ -1,0 +1,141 @@
+@import url('https://fonas.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+section{
+    height: 575px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid{
+    height: 100%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#as-parte-um{
+    height: 495px;
+    width: 25%;
+    border: 1px solid #AFAFAF;
+}
+
+.as-opcao{
+    height: 55px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10%;
+    font-size: 16px;
+    color: #FFFFFF;
+    background-color: #5C337F;
+}
+
+.as-opcao:hover{
+    transition: background-color .7s;
+    background-color: #613a83;
+}
+
+.as-opcao-selecionada{
+    font-weight: 600;
+    background-color: #4E3069;
+}
+
+#as-parte-dois{
+    height: 495px;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #AFAFAF;
+}
+
+.as-titulo{
+    height: 22%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.as-titulo h2{
+    font-size: 24px;
+}
+
+.as-campos{
+    height: 51%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.as-campo{
+    height: 33%;
+}
+
+.as-campos input{
+    height: 44px;
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #AFAFAF;
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    outline: 0; 
+}
+
+.as-campos label{
+    font-size: 16px;
+}
+
+.eye{
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: -30px;
+    left: 95%;
+}
+
+.as-aviso{
+    height: 5%;
+    width: 80%;
+}
+
+.as-btns{
+    height: 22%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.as-btns button{
+    height: 44px;
+    width: 179px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 3px;
+    color: #FFFFFF;
+    border: none;
+    background-color: #369F64;
+}
+
+.as-btns button:hover{
+    background-color: #308354;
+}

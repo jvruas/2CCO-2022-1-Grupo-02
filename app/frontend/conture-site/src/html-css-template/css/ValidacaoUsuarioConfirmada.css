@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+section{
+    height: 575px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid{
+    height: 100%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#vlc-parte-um{
+    height: 495px;
+    width: 25%;
+    border: 1px solid #AFAFAF;
+}
+
+.vlc-opcao{
+    height: 55px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10%;
+    font-size: 16px;
+    color: #FFFFFF;
+    background-color: #5C337F;
+}
+
+.vlc-opcao:hover{
+    transition: background-color .7s;
+    background-color: #613a83;
+}
+
+.vlc-opcao-selecionada{
+    font-weight: 600;
+    background-color: #4E3069;
+}
+
+#vlc-parte-dois{
+    height: 495px;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #AFAFAF;
+}
+
+.vlc-titulo{
+    height: 22%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vlc-titulo h2{
+    font-size: 24px;
+}
+
+.vlc-mensagem{
+    height: 50%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.vlc-imagem{
+    height: 120px;
+    width: 120px;
+}
+
+.vlc-icon{
+    height: 19px;
+    width: 19px;
+}
+
+.vlc-btns{
+    height: 22%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+}
+
+.vlc-btns button{
+    height: 44px;
+    width: 179px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 3px;
+    color: #000000;
+    border: 1px solid #AFAFAF;
+    background-color: #FFFFFF;
+}
+
+.vlc-btns button:hover{
+    border: 1px solid #C4C4C4;
+    background-color: #C4C4C4;
+}

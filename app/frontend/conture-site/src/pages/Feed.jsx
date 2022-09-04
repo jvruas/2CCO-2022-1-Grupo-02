@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api.js";
 
-function Feed(){
+function Feed() {
 
     const navegar = useNavigate();
 
@@ -16,18 +16,17 @@ function Feed(){
         }).then((resposta) => {
             console.log(resposta.status)
             navegar("/")
-        }).catch((error) => { 
+        }).catch((error) => {
             console.log(error)
         })
     }
 
-    return(
+    return (
         <>
-
             <section className="section-feed">
-            <img src={gifConstrucao} id="gif-contrucao" className="gif-construcao" alt="Gif de dois personagens desenvolvendo site"/>
-            <h1>SITE EM DESENVOLVIMENTO</h1>
-            <button type="button" onClick={handleSubmit}>Retornar para página de login</button>
+                <img src={gifConstrucao} id="gif-contrucao" className="gif-construcao" alt="Gif de dois personagens desenvolvendo site" />
+                <h1>SITE EM DESENVOLVIMENTO</h1>
+                <button type="button" onClick={handleSubmit}>Retornar para página de login</button>
             </section>
         </>
     )

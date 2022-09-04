@@ -45,22 +45,6 @@ function EsqueciSenha() {
         }
     }
 
-    // function validar(){
-    //     var input_senha = document.getElementById("senha");
-    //     var input_senha2 = document.getElementById("senha2");
-
-    //     if (input_senha.value != input_senha2.value) {
-    //         document.getElementById("alerta-img").style.display = "flex"
-    //         document.getElementById("msg-alerta").innerHTML = `As senhas não correspondem`
-    //     } else if ((input_senha.value).length >= 1 && (input_senha.value).length < 6) {
-    //         document.getElementById("alerta-img").style.display = "flex"
-    //         document.getElementById("msg-alerta").innerHTML = `A senha deve ter mais que 6 caracteres`
-    //     } else if (input_senha.value == "" || input_senha2.value == ""){
-    //         document.getElementById("alerta-img").style.display = "flex"
-    //         document.getElementById("msg-alerta").innerHTML = `Preencha os campos vazios`
-    //     }
-    // }
-
     const ocultarSenha = () => {
         var senha = document.getElementById("senha");
         var img = document.getElementById("eye2");

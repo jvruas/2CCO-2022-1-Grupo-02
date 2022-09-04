@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+section{
+    height: 575px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid{
+    height: 100%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#ep-parte-um{
+    height: 495px;
+    width: 25%;
+    border: 1px solid #AFAFAF;
+}
+
+.ep-opcao{
+    height: 55px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10%;
+    font-size: 16px;
+    color: #FFFFFF;
+    background-color: #5C337F;
+}
+
+.ep-opcao:hover{
+    transition: background-color .7s;
+    background-color: #613a83;
+}
+
+.ep-opcao-selecionada{
+    font-weight: 600;
+    background-color: #4E3069;
+}
+
+#ep-parte-dois{
+    height: 495px;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #AFAFAF;
+}
+
+.ep-titulo{
+    height: 22%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ep-titulo h2{
+    font-size: 24px;
+}
+
+.ep-campos{
+    height: 53%;
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    column-gap: 15%;
+    row-gap: 20px;
+}
+
+.ep-campos select, .ep-campos input{
+    height: 44px;
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #AFAFAF;
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    outline: 0; 
+}
+
+.ep-campos label{
+    font-size: 16px;
+}
+
+.ep-campo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.ep-btns{
+    height: 25%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ep-btns button, .ep-btns div{
+    height: 44px;
+    width: 179px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 3px;
+}
+
+.ep-btns div{
+    border: 1px solid red;
+    background-color: #FFFFFF;
+}
+
+.ep-btns a{
+    color: red;
+}
+
+.ep-btns div:hover{
+    border: 1px solid red;
+    background-color: #F44545;
+}
+
+.ep-btns a:hover{
+    color: #FFFFFF;
+}
+
+.ep-btns button{
+    color: #FFFFFF;
+    border: none;
+    background-color: #369F64;
+}
+
+.ep-btns button:hover{
+    background-color: #308354;
+}

@@ -4,6 +4,12 @@ import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import PopUp from "./pages/PopUp";
 import Feed from "./pages/Feed";
+import MensagemDireta from "./pages/MensagemDireta";
+import ValidacaoUsuario from "./pages/ValidacaoUsuario";
+import ValidacaoUsuarioConfirmada from "./pages/ValidacaoUsuarioConfirmada";
+import AlterarSenha from "./pages/AlterarSenha";
+import EditarPerfil from "./pages/EditarPerfil";
+import DesabilitarPerfil from "./pages/DesabilitarPerfil";
 
 function Rotas() {
     return (
@@ -14,6 +20,12 @@ function Rotas() {
                 <Route path="/esqueci-senha" element={<EsqueciSenha/>} />
                 <Route path="/cadastro" element={<Cadastro/>} />
                 <Route path="/feed" element={<Feed/>} />
+                <Route path="/mensagem-direta" element={<MensagemDireta/>} />
+                <Route path="/validacao-usuario" element={<ValidacaoUsuario/>} />
+                <Route path="/validacao-usuario-confirmada" element={<ValidacaoUsuarioConfirmada/>} />
+                <Route path="/alterar-senha" element={<AlterarSenha/>} />
+                <Route path="/editar-perfil" element={<EditarPerfil/>} />
+                <Route path="/desabilitar-perfil" element={<DesabilitarPerfil/>} />
             </Routes>
         </BrowserRouter>
     );
