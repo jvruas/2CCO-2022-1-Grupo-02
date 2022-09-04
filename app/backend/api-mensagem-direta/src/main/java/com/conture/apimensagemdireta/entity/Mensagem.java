@@ -29,7 +29,8 @@ public class Mensagem {
     private String mensagem;
 
     @ManyToOne
-        private ChatDireto fkChatDireto;
+	@JoinColumn(name="fk_chat_direto")
+	private ChatDireto fkChatDireto;
 
     public MensagemResponse converterMsgResponse(Mensagem m) {
         return new MensagemResponse(m.isVisualizado(), m.getData(), m.getMensagem(), m.getFkChatDireto().getFkUsuarioRemetente());

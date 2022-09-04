@@ -35,6 +35,7 @@ public class PreferenciaDonatario {
 
 	@NotNull
 	@OneToOne
+	@JoinColumn(name="fk_produto_doacao")
 	private ProdutoDoacao produtoDoacao;
 
 

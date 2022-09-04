@@ -20,14 +20,17 @@ public class Reporte {
 
 	@NotNull
 	@ManyToOne
+	@JoinColumn(name="fk_reportador")
 	private Usuario reportador;
 
 	@NotNull
 	@ManyToOne
+	@JoinColumn(name="fk_reportado")
 	private Usuario reportado;
 
 	@NotNull
 	@ManyToOne
+	@JoinColumn(name="fk_tipo_reporte")
     private TipoReporte tipoReporte;
 
 

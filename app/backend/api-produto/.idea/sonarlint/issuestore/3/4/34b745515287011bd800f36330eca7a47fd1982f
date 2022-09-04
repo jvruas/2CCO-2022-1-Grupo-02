@@ -1,8 +1,14 @@
 
+M
+java:S3740†"/Provide the parametrized type for this generic.(·ÜÇÃ8é—ğÎ°0
+M
+java:S3740¾"/Provide the parametrized type for this generic.(öŸ×¬8ì—ğÎ°0
 K
 java:S3740À"/Provide the parametrized type for this generic.(Áàƒœùÿÿÿÿ
 F
 java:S3740ç"/Provide the parametrized type for this generic.(Û¸Êğ
+M
+java:S3740è"/Provide the parametrized type for this generic.(‹Ş™Ÿ8î—ğÎ°0
 M
 java:S3740ü"/Provide the parametrized type for this generic.(™Ú³£8®Ò†ø©0
 F
@@ -17,8 +23,26 @@ F
 java:S3740ä"/Provide the parametrized type for this generic.(‹ƒÒ¹
 F
 java:S3740ğ"/Provide the parametrized type for this generic.(Ìš“­
+M
+java:S5411ç"*Use the primitive boolean expression here.(¶¾©¥ıÿÿÿÿ8˜ğÎ°0
+G
+java:S5411õ"*Use the primitive boolean expression here.(ı€ƒ8‚˜ğÎ°0
+_
+java:S4973Á"<Strings and Boxed types should be compared using "equals()".(•°£šÿÿÿÿÿ8ˆ˜ğÎ°0
+Z
+java:S4973ç"<Strings and Boxed types should be compared using "equals()".(äÎŠˆ8‰˜ğÎ°0
 S
 java:S4973˜"<Strings and Boxed types should be compared using "equals()".(œÂÊœ
+m
+java:S3655Y"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(Çö¼½8ã™ğÎ°0
+s
+java:S3655´"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ìîåèÿÿÿÿÿ8ã™ğÎ°0
+n
+java:S3655€"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(Û¸¨¿8ä™ğÎ°0
+s
+java:S3655›"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(¹Ëˆıÿÿÿÿ8å™ğÎ°0
+n
+java:S3655Ù"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ŞŞ—ú8æ™ğÎ°0
 R
 java:S1854J"<Remove this useless assignment to local variable "idDoador".(¡‰íƒ
 C

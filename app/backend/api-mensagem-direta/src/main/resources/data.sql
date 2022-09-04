@@ -3,7 +3,7 @@ insert into chat_direto (FK_USUARIO_DESTINATARIO, FK_USUARIO_REMETENTE) values
                         (2,3),
                         (3,4);
 
-insert into mensagem(DATA,MENSAGEM,VISUALIZADO,FK_CHAT_DIRETO_ID_CHAT_DIRETO) values
+insert into mensagem(DATA,MENSAGEM,VISUALIZADO,FK_CHAT_DIRETO) values
                     ('2022-10-01T14:50:27.886+00:00','Boa Tarde!!',true,1),
                     ('2022-10-01T14:55:27.886+00:00','Bom Tarde, gostou do notebook?',true,1),
                     ('2022-08-01T14:50:27.886+00:00','Qual é o tipo da entrada do carregador?',true,2),

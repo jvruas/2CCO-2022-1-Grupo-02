@@ -27,6 +27,7 @@ public class ImagemUsuario {
 
 	@NotNull
 	@ManyToOne
+	@JoinColumn(name="fk_usuario")
 	private Usuario usuario;
 
 

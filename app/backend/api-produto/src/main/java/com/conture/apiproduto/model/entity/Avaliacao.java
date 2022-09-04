@@ -27,6 +27,7 @@ public class Avaliacao {
 	private Date data;
 
 	@OneToOne
+	@JoinColumn(name="fk_match")
 	private Match match;
 
 

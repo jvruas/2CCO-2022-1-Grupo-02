@@ -32,7 +32,7 @@ public class MensagemGrupo {
 
 
 	@ManyToOne
-	@JoinColumn(name = "fk_mensagem_principal_id_mensagem_grupo")
+	@JoinColumn(name="fk_mensagem_principal")
 	private MensagemGrupo fkMensagemPrincipal;
 
 	public MensagemGrupo getFkMensagemPrincipal() {

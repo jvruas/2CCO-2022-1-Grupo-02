@@ -25,6 +25,7 @@ public class DesligamentoConta {
 
 	@NotNull
 	@ManyToOne
+	@JoinColumn(name="fk_usuario")
 	private Usuario usuario;
 
 

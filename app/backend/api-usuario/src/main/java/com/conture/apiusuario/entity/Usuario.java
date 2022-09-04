@@ -74,6 +74,7 @@ public class Usuario {
 	@Pattern(regexp = "[A,I,F,M,S,P,E,D]", message = "Grau de escolaridade aceita apenas [ A | I | F | M | S | P | E | D ] como valores")
 	private String grauEscolaridade;
 
+	@Transient
 	private String codigo;
 
 	private Boolean verificado = false;
@@ -83,6 +84,7 @@ public class Usuario {
 	private boolean removido;
 
 	@ManyToOne()
+	@JoinColumn(name="fk_situacao_atual")
 	private SituacaoAtual situacaoAtual;
 
 

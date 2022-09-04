@@ -64,6 +64,7 @@ public class ProdutoDoacao {
 
 	@NotNull
 	@ManyToOne
+	@JoinColumn(name="fk_categoria_produto")
 	private CategoriaProduto categoriaProduto;
 
 	@NotNull

@@ -18,6 +18,7 @@ public class ImagemProdutoDoacao {
 
 	@NotNull
 	@ManyToOne
+	@JoinColumn(name="fk_produto_doacao")
 	private ProdutoDoacao produtoDoacao;
 
 

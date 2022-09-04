@@ -7,6 +7,7 @@ import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "match_doacao")
 public class Match {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +31,7 @@ public class Match {
 
 	@NotNull
 	@ManyToOne
+	@JoinColumn(name="fk_produto_doacao")
 	private ProdutoDoacao produtoDoacao;
 
 	@NotNull
