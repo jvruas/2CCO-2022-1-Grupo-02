@@ -7,7 +7,6 @@ function Perfil() {
 
     return (
         <>
-            <body>
                 <div id="perfil">
                     <div id="perfil_imagem">
                         <img src="imagem_fundo.jpg" alt="" />
@@ -41,7 +40,6 @@ function Perfil() {
                         </div>
                     </div>
                 </div>
-            </body>
         </>
     );
 }

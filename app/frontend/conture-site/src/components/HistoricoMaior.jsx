@@ -1,7 +1,7 @@
 import '../html-css-template/css/HistoricoMaior.css'
 
 function HistoricoMaior(){
-    (
+    return (
         <>
         <div class="historico">
         <div class="historico_sup">
