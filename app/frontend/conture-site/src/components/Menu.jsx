@@ -2,7 +2,6 @@ import '../html-css-template/css/Menu.css'
 
 function Menu(){
     (
-        <>
     <div id="menu">
     <div id="sub-menu">
     <div>
@@ -14,10 +13,8 @@ function Menu(){
     <div>
         <p>Avaliações</p>
     </div>
-    
-</div>
-</div>
-</>
+    </div>
+    </div>
   );
 }
 export default Menu;

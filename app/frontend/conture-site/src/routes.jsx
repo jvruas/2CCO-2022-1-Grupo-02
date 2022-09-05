@@ -10,6 +10,7 @@ import ValidacaoUsuarioConfirmada from "./pages/ValidacaoUsuarioConfirmada";
 import AlterarSenha from "./pages/AlterarSenha";
 import EditarPerfil from "./pages/EditarPerfil";
 import DesabilitarPerfil from "./pages/DesabilitarPerfil";
+import HistoricoDonatario from "./pages/HistoricoDonatario";
 
 function Rotas() {
     return (
@@ -26,6 +27,7 @@ function Rotas() {
                 <Route path="/alterar-senha" element={<AlterarSenha/>} />
                 <Route path="/editar-perfil" element={<EditarPerfil/>} />
                 <Route path="/desabilitar-perfil" element={<DesabilitarPerfil/>} />
+                <Route path="/HistoricoDonatario" element={<HistoricoDonatario/>} />
             </Routes>
         </BrowserRouter>
     );
