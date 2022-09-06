@@ -8,7 +8,7 @@
 
 .avaliacao{
     height: 143px;
-    width: 80%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 60px;
@@ -42,6 +42,7 @@
     height: 50px;
     width: 50px;
     border-radius: 50px;
+    fill: ;
 }
 
 .ava_esq p{
@@ -88,7 +89,6 @@
     align-items: center;
     justify-content: start;
     border-bottom: black 2px solid;
-    background-color: red;
 }
 
 .avaliação_inf p{

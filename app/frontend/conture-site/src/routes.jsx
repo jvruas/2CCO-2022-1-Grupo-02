@@ -11,7 +11,9 @@ import AlterarSenha from "./pages/AlterarSenha";
 import EditarPerfil from "./pages/EditarPerfil";
 import DesabilitarPerfil from "./pages/DesabilitarPerfil";
 import HistoricoPessoal from "./pages/HistoricoPessoal";
-import Historico from "./pages/HistoricoPessoal";
+import Historico from "./pages/Historico";
+import Disponivel from "./pages/Disponivel";
+import Avaliacao from "./pages/Avaliacao";
 
 function Rotas() {
     return (
@@ -30,6 +32,8 @@ function Rotas() {
                 <Route path="/desabilitar-perfil" element={<DesabilitarPerfil/>} />
                 <Route path="/HistoricoPessoal" element={<HistoricoPessoal/>} />
                 <Route path="/Historico" element={<Historico/>} />
+                <Route path="/Disponivel" element={<Disponivel/>} />
+                <Route path="/Avaliacao" element={<Avaliacao/>} />
             </Routes>
         </BrowserRouter>
     );

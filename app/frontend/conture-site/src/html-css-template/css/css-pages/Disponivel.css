@@ -1,0 +1,45 @@
+@import url('https://fonas.googleapis.com/css2?family=Tajawal&display=swap');
+
+*{
+    font-family: 'Tajawal', sans-serif;
+    margin: 0;
+}
+
+section{
+    height: 1150px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.conteiner{
+    height: 600px;
+    width: 80%;
+    background-color: aqua;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.div_sup{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: blue;
+}
+
+.div_inf{
+    height: 100%;
+    width: 90%;
+    overflow: scroll;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+     justify-content: left;
+    flex-wrap: wrap;
+}
