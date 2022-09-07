@@ -1,7 +1,7 @@
 import '../html-css-template/css/HistoricoMenor.css'
 
 function HistoricoMenor(){
-    (
+   return (
         <>
         <div class="historico">
         <div class="historico_sup">
@@ -9,7 +9,6 @@ function HistoricoMenor(){
             <div>Tipo equipamento</div>
             <div>Data</div>
         </div>
-
         <div class="historico_inf">
             <div>exemplo</div>
             <div> exemplo</div>

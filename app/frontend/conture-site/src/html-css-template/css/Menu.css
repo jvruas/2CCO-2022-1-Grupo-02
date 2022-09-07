@@ -27,24 +27,22 @@
     margin-top: 100px;
     height: 40px;
     width: 80%;
-    margin-left: auto;
-    margin-right: auto; 
     border-bottom: black 2px solid;
+    display: flex;
+
 }
 
 
-#sub-menu{
+.sub-menu{
     height: 40px;
-    width:550px;
+    width:20%;
     display: flex;
     justify-content: left ;
     align-items: center;
-}
-
-#sub-menu div{
-    margin: auto;
+    text-align: left;
 }
 
 #menu p{
+    
     font-size: 18px;
 }

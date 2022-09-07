@@ -10,7 +10,10 @@ import ValidacaoUsuarioConfirmada from "./pages/ValidacaoUsuarioConfirmada";
 import AlterarSenha from "./pages/AlterarSenha";
 import EditarPerfil from "./pages/EditarPerfil";
 import DesabilitarPerfil from "./pages/DesabilitarPerfil";
-import HistoricoDonatario from "./pages/HistoricoDonatario";
+import HistoricoPessoal from "./pages/HistoricoPessoal";
+import Historico from "./pages/Historico";
+import Disponivel from "./pages/Disponivel";
+import Avaliacao from "./pages/Avaliacao";
 
 function Rotas() {
     return (
@@ -27,7 +30,10 @@ function Rotas() {
                 <Route path="/alterar-senha" element={<AlterarSenha/>} />
                 <Route path="/editar-perfil" element={<EditarPerfil/>} />
                 <Route path="/desabilitar-perfil" element={<DesabilitarPerfil/>} />
-                <Route path="/HistoricoDonatario" element={<HistoricoDonatario/>} />
+                <Route path="/HistoricoPessoal" element={<HistoricoPessoal/>} />
+                <Route path="/Historico" element={<Historico/>} />
+                <Route path="/Disponivel" element={<Disponivel/>} />
+                <Route path="/Avaliacao" element={<Avaliacao/>} />
             </Routes>
         </BrowserRouter>
     );

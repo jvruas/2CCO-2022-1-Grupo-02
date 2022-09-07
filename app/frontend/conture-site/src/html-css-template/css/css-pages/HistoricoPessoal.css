@@ -1,0 +1,64 @@
+@import url('https://fonas.googleapis.com/css2?family=Tajawal&display=swap');
+
+*{
+    font-family: 'Tajawal', sans-serif;
+    margin: 0;
+}
+
+section{
+    height: 1100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#conteiner{
+    height: auto;
+    width: 80%;
+    margin-top: 15px;
+}
+
+#div_sup{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+}
+
+#div_filtro{
+    height: 100%;
+    width: 310px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+#select_opcoes{
+    width: 228px;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1;
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#select_opcoes option{
+    height: 30px;
+    border: 1px solid #cbcbcb;
+    padding-left: 17px;
+    padding-top: 12px;
+}
+
+.div_historicos{
+    height: 560px;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    overflow: scroll;
+}

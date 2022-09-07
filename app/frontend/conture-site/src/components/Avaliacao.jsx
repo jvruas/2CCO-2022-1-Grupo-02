@@ -1,8 +1,8 @@
 import estrela from '../html-css-template/imagens/Star 7.svg';
-import estrela from '../html-css-template/imagens/foto.jpg';
-import '../html-css-template/css/Circulo.css'
+import foto from '../html-css-template/imagens/foto.jpg';
+import '../html-css-template/css/avaliacao.css'
 
-function avaliacao() {
+function Avaliacao() {
 
     return (
         <>
@@ -10,7 +10,7 @@ function avaliacao() {
         <div class="avaliacao_sup">
             <div class="container_perfil">
                 <div class="ava_esq">
-                    <img src={foto} alt=""/>
+                    <img className='' src={foto} alt=""/>
                     <p>5.0</p>
                 </div>
                 <div class="ava_dir">
@@ -38,17 +38,7 @@ function avaliacao() {
                 facere.
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, rem aut provident exercitationem
                 ipsum
-                fugiat repellendus ratione ex facere quasi quod illum labore impedit ea cupiditate adipisci dignissimos
-                veniam amet!
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga consectetur architecto impedit quisquam?
-                Aliquid, ab suscipit autem ea ad odio modi eos obcaecati voluptates incidunt, ipsum corrupti culpa ipsam
-                repudiandae.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum provident dolorum explicabo ratione,
-                recusandae perspiciatis, repellat quas unde magni aspernatur ipsam. In optio ipsa amet architecto
-                blanditiis doloremque deleniti quos?
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perferendis architecto consequatur nulla
-                necessitatibus qui cum culpa et vero molestiae quisquam porro nemo accusamus perspiciatis aperiam quo
-                obcaecati dolorem, corrupti quasi?
+                
             </p>
         </div>
     </div>
@@ -56,4 +46,4 @@ function avaliacao() {
     );
 }
 
-export default Nota;
+export default Avaliacao;

@@ -23,8 +23,6 @@
 
 #perfil{
     margin-top: 30px;
-    margin-left: auto;
-    margin-right: auto; 
     height: 262px;
     width: 80%;
 }
@@ -95,8 +93,8 @@
 }
 
 #perfil_texto img{
-    height: 14px;
-    width: 14px;
+    height: 16px;
+    width: 16px;
 }
 
 
