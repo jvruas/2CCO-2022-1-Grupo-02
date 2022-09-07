@@ -3,7 +3,7 @@ import Header from "../components/Header"
 import Perfil from "../components/Perfil"
 import MenuPerfil from "../components/MenuHistorico"
 import '../html-css-template/css/Style.css'
-import '../html-css-template/css/css-pages/HistoricoPessoal.css'
+import '../html-css-template/css/HistoricoPessoalPage.css'
 import Footer from "../components/Footer"
 import Historico from "../components/HistoricoMenor"
 

@@ -1,8 +1,7 @@
 import Header from "../components/Header"
 import Perfil from "../components/Perfil"
 import MenuPerfil from "../components/MenuDisponivel"
-// import '../html-css-template/css/Style.css'
-import '../html-css-template/css/css-pages/Disponivel.css'
+import '../html-css-template/css/ProdutoDisponivelPage.css'
 import Footer from "../components/Footer"
 import Card from "../components/Produto"
 

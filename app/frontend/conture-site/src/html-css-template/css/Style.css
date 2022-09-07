@@ -191,6 +191,11 @@ footer {
     width: 20px;
 }
 
+.he-link-img{
+    height: 24px;
+    width: 20px;
+}
+
 #btn_doacao {
     height: 44px;
     width: 148px;
@@ -323,12 +328,42 @@ footer {
     background-color: #7724BE;
 }
 
-.he-link{
+#menuzinho-logado{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 90%;
+    width: 100%;
+    top: -5%;
+}
+
+#menuzinho-logado button{
+    height: 35px;
+    width: 90%;
+    border: none;
+    border-radius: 3px;
+    background-color: #7724BE;
+}
+
+.he-link-p{
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.he-link-p:hover{
+    font-size: 14.5px;
+    font-weight: bolder;
+}
+
+.he-link-btn{
     color: #FFFFFF;
     font-size: 14px;
     font-weight: bold;
 }
 
-#menuzinho-deslogado button:hover{
+#menuzinho-deslogado button:hover, #menuzinho-logado button:hover{
     background-color: #2F0E4C;
 }

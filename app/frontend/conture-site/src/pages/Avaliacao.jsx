@@ -2,7 +2,7 @@ import Header from "../components/Header"
 import Perfil from "../components/Perfil"
 import MenuPerfil from "../components/MenuAvaliacao"
 import '../html-css-template/css/Style.css'
-import '../html-css-template/css/css-pages/Avaliacao.css'
+import '../html-css-template/css/AvaliacaoPage.css'
 import Footer from "../components/Footer"
 import Nota from "../components/Nota"
 import Comentarios from "../components/Avaliacao"

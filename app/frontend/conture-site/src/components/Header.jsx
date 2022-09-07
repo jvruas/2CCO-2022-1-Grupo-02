@@ -26,7 +26,7 @@ function Header() {
             <header id="header_completo">
                 <div id="header_sup">
                     <div class="container_completo">
-                        <img src={logo} alt="" class="logo" />
+                        <Link to="/"><img src={logo} alt="Logo Conture" className="logo" /></Link>
                         <div id="input_pesquisar">
                             <input type="text" />
                             <button>
@@ -43,27 +43,25 @@ function Header() {
                                     </div>
                                     {/* <div id="menuzinho-deslogado">
                                         <div className="mn-parte-um">
-                                            <button><Link className="he-link" to="/login">Entrar</Link></button>
+                                            <button><Link className="he-link-btn" to="/login">Entrar</Link></button>
                                         </div>
                                         <div className="mn-parte-dois">
                                             <p>Não é cadastrado ainda?</p>
-                                            <button><Link className="he-link" to="/cadastro">Cadastre-se</Link></button>
+                                            <button><Link className="he-link-btn" to="/cadastro">Cadastre-se</Link></button>
                                         </div>
                                     </div> */}
 
                                     <div id="menuzinho-logado">
-
-                                        <p><Link to="/disponivel">Minha conta</Link></p>
-                                        <p><Link to="/editar-perfil">Minha conta</Link>Configurações</p>
-                                        <button><Link className="he-link" to="/">SAIR</Link></button>
-
+                                        <p><Link className="he-link-p" to="/disponivel">Minha conta</Link></p>
+                                        <p><Link className="he-link-p" to="/editar-perfil">Configurações</Link></p>
+                                        <button><Link className="he-link-btn" to="/">SAIR</Link></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div id="div_icones">
                             <img src={interesse} alt="" />
-                            <img src={mensagem} alt="" />
+                            <Link class="he-link-img" to="/mensagem-direta"><img src={mensagem} alt="" /></Link>
                             <img src={notificacao} alt="" />
                         </div>
                         <button id="btn_doacao">
