@@ -1,6 +1,6 @@
 import Header from "../components/Header"
 import Perfil from "../components/Perfil"
-import MenuPerfil from "../components/MenuPerfil"
+import MenuPerfil from "../components/MenuDisponivel"
 // import '../html-css-template/css/Style.css'
 import '../html-css-template/css/css-pages/Disponivel.css'
 import Footer from "../components/Footer"
@@ -16,7 +16,7 @@ function Disponivel() {
                 <MenuPerfil></MenuPerfil>
 
                 <div className="conteiner-produto">
-                    <div className="div_sup"><b><p>Disponiveis</p></b></div>
+                    <div className="div_sup"><b><p>Disponíveis</p></b></div>
                     <div className="div_inf">
                         <div className="div_card">
                             <Card></Card>
