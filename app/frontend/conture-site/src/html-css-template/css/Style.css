@@ -7,10 +7,9 @@
     box-sizing: border-box;
     font-family: Tajawal;
     text-decoration: none;
-        
 }
 
-:root{
+:root {
     --verde-btn: #369F64;
     --verde-btn-hover: #308354;
     --referencia: #7724BE;
@@ -19,29 +18,30 @@
     --cinza-btn-border: #C4C4C4;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
     display: none;
-} 
+}
 
 
-.container-banner{
+.container-banner {
     width: 90%;
     margin: auto;
     margin-top: 5%;
     margin-bottom: 5%;
 }
 
-.container-banner img{
+.container-banner img {
     width: 100%;
 }
 
-.title-feed{
+.title-feed {
     font-size: 18px;
     margin-left: 5%;
     margin-top: 2%;
 }
+
 /*Header simples*/
-header{
+header {
     height: 90px;
     width: 100%;
     display: flex;
@@ -63,7 +63,7 @@ header{
     height: 64px;
 }
 
-.img_acessibilidade{
+.img_acessibilidade {
     position: fixed;
     margin-left: 94%;
     margin-top: 15%;
@@ -78,11 +78,11 @@ footer {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 70px;    
+    height: 70px;
     font-size: 12px;
 }
 
-#texto_footer{
+#texto_footer {
     height: 35px;
     width: 100%;
     display: flex;
@@ -92,7 +92,7 @@ footer {
 }
 
 /*Header completo*/
-#header_completo{
+#header_completo {
     height: 157px;
     width: 100%;
     display: flex;
@@ -100,7 +100,7 @@ footer {
     align-items: center;
 }
 
-#header_sup{
+#header_sup {
     height: 118px;
     width: 100%;
     display: flex;
@@ -117,7 +117,7 @@ footer {
     justify-content: space-between;
 }
 
-#input_pesquisar{
+#input_pesquisar {
     height: 44px;
     width: 438px;
     border-radius: 10px;
@@ -125,7 +125,7 @@ footer {
 
 }
 
-#input_pesquisar input{
+#input_pesquisar input {
     height: 100%;
     width: 400px;
     font-size: 14px;
@@ -134,13 +134,13 @@ footer {
     padding-left: 10px;
 }
 
-#input_pesquisar input:focus{
-    box-shadow: 0 0 0 0 ;
+#input_pesquisar input:focus {
+    box-shadow: 0 0 0 0;
     border: none 0;
-    outline: 0; 
+    outline: 0;
 }
 
-#input_pesquisar button{
+#input_pesquisar button {
     height: 100%;
     width: 38px;
     border-radius: 0px 10px 10px 0px;
@@ -148,12 +148,12 @@ footer {
     background-color: #FFF;
 }
 
-#input_pesquisar img{
+#input_pesquisar img {
     height: 20px;
     width: 19px;
 }
 
-#div_usuario{
+#div_usuario {
     height: 44px;
     width: 155px;
     display: flex;
@@ -161,24 +161,24 @@ footer {
     justify-content: space-between;
 }
 
-#img_foto{
+#img_foto {
     height: 40px;
     width: 40px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-#div_usuario p{
+#div_usuario p {
     font-size: 16px;
     color: #FFF;
 }
 
-#img_seta{
+#img_seta {
     height: 12px;
     width: 13px;
 }
 
-#div_icones{
+#div_icones {
     height: 44px;
     width: 108px;
     display: flex;
@@ -186,12 +186,12 @@ footer {
     justify-content: space-between;
 }
 
-#div_icones img{
+#div_icones img {
     height: 24px;
     width: 20px;
 }
 
-#btn_doacao{
+#btn_doacao {
     height: 44px;
     width: 148px;
     border-radius: 5px;
@@ -202,18 +202,24 @@ footer {
     justify-content: space-evenly;
 }
 
-#btn_doacao p{
+#btn_doacao:hover {
+    transition: background-color 0.5s;
+    background-color: #308354;
+}
+
+
+#btn_doacao p {
     font-size: 14px;
     font-weight: bold;
     color: #FFF;
 }
 
-#btn_doacao img{
+#btn_doacao img {
     height: 16px;
     width: 16px;
 }
 
-#header_inferior{
+#header_inferior {
     height: 40px;
     width: 100%;
     display: flex;
@@ -223,7 +229,7 @@ footer {
     color: #FFF;
 }
 
-#div_produto{
+#div_produto {
     height: 100%;
     width: 25%;
     display: flex;
@@ -233,7 +239,7 @@ footer {
     padding-left: 6.5%;
 }
 
-#div_produtos{
+#div_produtos {
     height: 100%;
     width: 75%;
     display: flex;
@@ -242,6 +248,41 @@ footer {
     background-color: #5C337F;
 }
 
-#div_produtos p{
+#div_produtos p {
     padding-left: 3%;
 }
+
+/*Tooltip*/
+.tooltip{
+    position: relative;
+    height: 100px;
+    width: 100px;
+    top: -70px;
+    left: 55%;
+    background-color: #308354;
+}
+
+
+/* .tooltip{
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 380px;
+    height: 90px;
+    background-color: #EBFFF4;
+    color: #000000;
+    font-size: 14px;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    Position the tooltip
+    
+} */
+
+/* .img_seta:hover span, #img_seta:hover .tooltip{
+    visibility: visible;
+} */

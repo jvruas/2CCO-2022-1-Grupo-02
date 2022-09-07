@@ -31,7 +31,7 @@ function ValidacaoUsuario() {
                             <p>Um e-mail com um código de verificação sera enviado para <b><span>yan••••••••@gmail.com</span></b></p>
                         </div>
                         <div className="vl-campos">
-                            <label for="codigo-validacao">Coloque o código</label>
+                            <label htmlFor="codigo-validacao">Coloque o código</label>
                             <input type="text" name="codigo-validacao" id="codigo-validacao" />
                         </div>
                         <div className="vl-aviso">

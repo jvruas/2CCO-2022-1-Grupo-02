@@ -78,7 +78,6 @@ function Login() {
 
     return (
         <>
-    
             <MenuSimples />
             <section className="section-login centralizado">
                 <form id="form-login" action="">

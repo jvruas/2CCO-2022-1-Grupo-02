@@ -68,17 +68,17 @@ function AlterarSenha() {
                         </div>
                         <div className="as-campos">
                             <div className="as-campo">
-                                <label for="senha-desabilitar">Insira sua senha</label>
+                                <label htmlFor="senha-desabilitar">Insira sua senha</label>
                                 <input type="password" name="senha-desabilitar" className="senha-desabilitar" id="senha" />
                                 <img src={iconClose} alt="" className="eye" id="eye1" onClick={ocultarSenha} />
                             </div>
                             <div className="as-campo">
-                                <label for="senha-desabilitar">Insira sua senha</label>
+                                <label htmlFor="senha-desabilitar">Insira sua senha</label>
                                 <input type="password" name="senha-desabilitar" className="senha-desabilitar" id="senha2" />
                                 <img src={iconClose} alt="" className="eye" id="eye2" onClick={ocultarSenha2} />
                             </div>
                             <div className="as-campo">
-                                <label for="senha-desabilitar">Insira sua senha</label>
+                                <label htmlFor="senha-desabilitar">Insira sua senha</label>
                                 <input type="password" name="senha-desabilitar" className="senha-desabilitar" id="senha3" />
                                 <img src={iconClose} alt="" className="eye" id="eye3" onClick={ocultarSenha3} />
                             </div>
