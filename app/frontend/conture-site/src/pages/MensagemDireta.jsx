@@ -13,7 +13,7 @@ function MensagemDireta() {
     return (
         <>
             <Header />
-            <section>
+            <section id="md-section">
                 <div className="grid">
                     <div id="md-parte-um">
                         <div id="md-pequisa">

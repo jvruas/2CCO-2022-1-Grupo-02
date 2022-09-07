@@ -45,11 +45,11 @@ function DesabilitarPerfil() {
                             <p>Olá <span>Yan</span>,<br />
                                 Você tem certeza que gostaria desativar sua conta permanentemente?</p>
                             <div className="dc-campo">
-                                <label for="motivo-desabilitar">Por que você está desativando sua conta?</label>
+                                <label htmlFor="motivo-desabilitar">Por que você está desativando sua conta?</label>
                                 <select name="motivo-desabilitar" id="motivo-desabilitar"></select>
                             </div>
                             <div className="dc-campo">
-                                <label for="senha">Insira sua senha</label>
+                                <label htmlFor="senha">Insira sua senha</label>
                                 <input type="password" name="senha-desabilitar" className="senha-desabilitar" id="senha" />
                                 <img src={iconClose} alt="" className="eye" id="eye1" onClick={ocultarSenha} />
                             </div>

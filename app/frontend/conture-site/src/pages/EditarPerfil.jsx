@@ -29,28 +29,28 @@ function EditarPerfil() {
                         </div>
                         <div className="ep-campos">
                             <div className="ep-campo">
-                                <label for="estado-civil">Estado civil</label>
+                                <label htmlFor="estado-civil">Estado civil</label>
                                 <select name="estado-civil" id="estado-civil"></select>
                             </div>
                             <div className="ep-campo">
-                                <label for="telefone">Telefone</label>
+                                <label htmlFor="telefone">Telefone</label>
                                 <input type="tel" name="telefone" id="telefone" />
                             </div>
                             <div className="ep-campo">
-                                <label for="genero">Gênero</label>
+                                <label htmlFor="genero">Gênero</label>
                                 <select name="genero" id="genero"></select>
                             </div>
                             <div className="ep-campo">
-                                <label for="cep">CEP</label>
+                                <label htmlFor="cep">CEP</label>
                                 <input type="text" name="cep" id="cep" />
 
                             </div>
                             <div className="ep-campo">
-                                <label for="escolaridade">Escolaridade</label>
+                                <label htmlFor="escolaridade">Escolaridade</label>
                                 <select name="escolaridade" id="escolaridade"></select>
                             </div>
                             <div className="ep-campo">
-                                <label for="situacao-atual">Situação atual</label>
+                                <label htmlFor="situacao-atual">Situação atual</label>
                                 <select name="situacao-atual" id="situacao-atual"></select>
                             </div>
                         </div>

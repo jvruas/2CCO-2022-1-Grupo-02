@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
 
-*{
-    /* height: 100%; */
+/*Reset*/
+* {
     margin: 0;
-    font-family: 'Tajawal', sans-serif;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
 }
 
 .container-produto{
