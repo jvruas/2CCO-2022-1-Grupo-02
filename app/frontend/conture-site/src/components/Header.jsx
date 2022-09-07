@@ -23,7 +23,7 @@ function Header() {
                 </div>
                 <div id="div_usuario">
                     <img src={perfil} alt="" id="img_foto"/>
-                    <p>Cleiton</p>
+                    <p>Yan</p>
                     <img src={setaBaixo} alt="" id="img_seta"/>
                 </div>
                 <div id="div_icones">
@@ -35,6 +35,7 @@ function Header() {
                     <p>DOAR PRODUTO</p>
                     <img src={adicionarProduto} alt=""/>
                 </button>
+                
             </div>
         </div>
         <div id="header_inferior">

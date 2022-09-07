@@ -1,6 +1,7 @@
 import logo from '../html-css-template/imagens/logo-conture.png'
 import foto from '../html-css-template/imagens/foto.jpg';
 import estrela from '../html-css-template/imagens/Star 16.svg';
+import imgPerfil from '../html-css-template/imagens/imagem_fundo.jpg';
 import '../html-css-template/css/Perfil.css'
 
 function Perfil() {
@@ -9,7 +10,7 @@ function Perfil() {
         <>
                 <div id="perfil">
                     <div id="perfil_imagem">
-                        <img src="imagem_fundo.jpg" alt="" />
+                        <img src={imgPerfil} alt="" />
                     </div>
                     <div id="perfil_inf">
                         <div id="perfil_informacao">

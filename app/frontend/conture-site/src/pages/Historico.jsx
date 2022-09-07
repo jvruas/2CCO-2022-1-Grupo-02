@@ -12,7 +12,6 @@ import Historico from "../components/HistoricoMenor"
 function HistoricoDonatario() {
     return (
         <>
-           
                 <Header></Header>
                  <section>
                 <Perfil></Perfil>

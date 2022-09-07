@@ -5,8 +5,8 @@
     margin: 0;
 }
 
-section{
-    height: 1150px;
+.section{
+    height: 1000px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -14,10 +14,9 @@ section{
     justify-content: center;
 }
 
-.conteiner{
-    height: 600px;
+.conteiner-produto{
+    height: 450px;
     width: 80%;
-    background-color: aqua;
     margin-top: 15px;
     display: flex;
     flex-direction: column;
@@ -30,16 +29,23 @@ section{
     width: 100%;
     display: flex;
     align-items: center;
-    background-color: blue;
+    font-size: 18px;
 }
 
 .div_inf{
-    height: 100%;
-    width: 90%;
+    height: 400px;
+    width: 100%;
     overflow: scroll;
     display: flex;
     align-items: flex-start;
     flex-direction: row;
      justify-content: left;
     flex-wrap: wrap;
+}
+
+.div_card{
+    height: 300px;
+    width: 100%;
+    display:grid;
+    grid-template-columns:25% 25% 25% 25%;
 }

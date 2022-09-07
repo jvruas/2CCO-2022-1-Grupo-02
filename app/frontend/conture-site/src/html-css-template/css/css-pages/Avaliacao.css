@@ -6,7 +6,7 @@
 }
 
 section{
-    height: 1200px;
+    height: 1350px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -17,7 +17,7 @@ section{
 .conteiner-avaliacao{
     height: 800px;
     width: 80%;
-    background-color: aqua;
+
 }
 
 .div_superior{
@@ -25,7 +25,8 @@ section{
     width: 100%;
     display: flex;
     align-items: center;
-    background-color: blue;
+    font-size: 18px;
+    
 }
 
 .div_inferior{
@@ -34,4 +35,14 @@ section{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.comentarios{
+    height: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: scroll;
 }

@@ -17,11 +17,14 @@ function Avaliacao() {
                 <Perfil></Perfil>
                 <MenuPerfil></MenuPerfil>
                 <div className="conteiner-avaliacao">
-                    <div className="div_superior"><p>Avaliação</p></div>
+                    <div className="div_superior"><b><p>Avaliação</p></b></div>
                     <div className="div_inferior">
                         <Nota></Nota>
                     </div>
                     <div className="comentarios">
+                    <Comentarios></Comentarios>
+                    <Comentarios></Comentarios>
+                    <Comentarios></Comentarios>
                     <Comentarios></Comentarios>
                     <Comentarios></Comentarios>
                     </div>

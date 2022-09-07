@@ -6,7 +6,7 @@
 }
 
 section{
-    height: 1300px;
+    height: 1100px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -26,6 +26,7 @@ section{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    font-size: 18px;
 }
 
 #div_filtro{
@@ -34,7 +35,7 @@ section{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 26px;
+
 }
 
 #select_opcoes{
@@ -58,6 +59,6 @@ section{
     height: 560px;
     width: 100%;
     margin-top: 50px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     overflow: scroll;
 }
