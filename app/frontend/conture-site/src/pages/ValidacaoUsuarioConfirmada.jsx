@@ -9,7 +9,7 @@ function ValidacaoUsuarioConfirmada() {
     return (
         <>
             <Header />
-            <section>
+            <section id="vlc-section">
                 <div className="grid">
                     <div id="vlc-parte-um">
                         <div className="vlc-opcao">

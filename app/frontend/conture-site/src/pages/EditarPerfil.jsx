@@ -10,7 +10,7 @@ function EditarPerfil() {
     return (
         <>
             <Header />
-            <section>
+            <section id="ep-section">
                 <div className="grid">
                     <div id="ep-parte-um">
                         <div className="ep-opcao ep-opcao-selecionada">

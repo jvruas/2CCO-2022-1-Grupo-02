@@ -19,21 +19,21 @@ function Rotas() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="*" element={<Login/>} />
+                <Route path="/login" element={<Login/>} />
                 <Route path="/email-esqueci-senha" element={<PopUp/>} />
                 <Route path="/esqueci-senha" element={<EsqueciSenha/>} />
                 <Route path="/cadastro" element={<Cadastro/>} />
-                <Route path="/feed" element={<Feed/>} />
+                <Route path="*" element={<Feed/>} />
                 <Route path="/mensagem-direta" element={<MensagemDireta/>} />
                 <Route path="/validacao-usuario" element={<ValidacaoUsuario/>} />
                 <Route path="/validacao-usuario-confirmada" element={<ValidacaoUsuarioConfirmada/>} />
                 <Route path="/alterar-senha" element={<AlterarSenha/>} />
                 <Route path="/editar-perfil" element={<EditarPerfil/>} />
                 <Route path="/desabilitar-perfil" element={<DesabilitarPerfil/>} />
-                <Route path="/HistoricoPessoal" element={<HistoricoPessoal/>} />
-                <Route path="/Historico" element={<Historico/>} />
-                <Route path="/Disponivel" element={<Disponivel/>} />
-                <Route path="/Avaliacao" element={<Avaliacao/>} />
+                <Route path="/historico-pessoal" element={<HistoricoPessoal/>} />
+                <Route path="/historico" element={<Historico/>} />
+                <Route path="/disponivel" element={<Disponivel/>} />
+                <Route path="/avaliacao" element={<Avaliacao/>} />
             </Routes>
         </BrowserRouter>
     );

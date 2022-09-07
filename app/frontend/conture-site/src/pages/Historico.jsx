@@ -12,8 +12,8 @@ import Historico from "../components/HistoricoMenor"
 function HistoricoDonatario() {
     return (
         <>
-                <Header></Header>
-                 <section>
+            <Header></Header>
+            <section id="hp-section">
                 <Perfil></Perfil>
                 <MenuPerfil></MenuPerfil>
                 <div id="conteiner">
@@ -40,8 +40,8 @@ function HistoricoDonatario() {
                         <Historico></Historico>
                     </div>
                 </div>
-                </section>
-                <Footer></Footer>
+            </section>
+            <Footer></Footer>
         </>
     )
 }

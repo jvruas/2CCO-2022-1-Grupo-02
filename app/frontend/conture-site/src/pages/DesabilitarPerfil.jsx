@@ -23,7 +23,7 @@ function DesabilitarPerfil() {
     return (
         <>
             <Header />
-            <section>
+            <section id="dc-section">
                 <div className="grid">
                     <div id="dc-parte-um">
                         <div className="dc-opcao dc-opcao-selecionada">

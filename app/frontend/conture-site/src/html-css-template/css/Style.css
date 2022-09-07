@@ -168,7 +168,7 @@ footer {
     object-fit: cover;
 }
 
-#div_usuario p {
+#nome_usuario {
     font-size: 16px;
     color: #FFF;
 }
@@ -206,7 +206,6 @@ footer {
     transition: background-color 0.5s;
     background-color: #308354;
 }
-
 
 #btn_doacao p {
     font-size: 14px;
@@ -253,36 +252,83 @@ footer {
 }
 
 /*Tooltip*/
-.tooltip{
+#he-tooltip {
+    visibility: hidden;
     position: relative;
-    height: 100px;
-    width: 100px;
-    top: -70px;
-    left: 55%;
+    height: 0;
+    width: 0;
     background-color: #308354;
 }
 
-
-/* .tooltip{
+.menuzinho {
     position: relative;
-    display: inline-block;
+    height: 146px;
+    width: 173px;
+    top: 30px;
+    left: -170px;
+    border: 1px solid #DADADA;
+    background-color: #FFFFFF;
 }
 
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 380px;
-    height: 90px;
-    background-color: #EBFFF4;
-    color: #000000;
+#triangulo-para-cima {
+    position: relative;
+    width: 0; 
+    height: 0; 
+    top: -10%;
+    left: 78.5%;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 15px solid #FFFFFF;
+  }
+
+#menuzinho-deslogado{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 90%;
+    width: 100%;
+    top: -5%;
+}
+
+#menuzinho-deslogado div{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mn-parte-um{
+    height: 40%;
+    justify-content: center;
+    border-bottom: 1px solid #000000;
+}
+
+.mn-parte-dois{
+    height: 60%;
+    justify-content: space-evenly;
+}
+
+.mn-parte-dois p{
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#menuzinho-deslogado button{
+    height: 35px;
+    width: 100%;
+    border: none;
+    border-radius: 3px;
+    background-color: #7724BE;
+}
+
+.he-link{
+    color: #FFFFFF;
     font-size: 14px;
-    text-align: left;
-    border-radius: 6px;
-    padding: 5px 0;
+    font-weight: bold;
+}
 
-    Position the tooltip
-    
-} */
-
-/* .img_seta:hover span, #img_seta:hover .tooltip{
-    visibility: visible;
-} */
+#menuzinho-deslogado button:hover{
+    background-color: #2F0E4C;
+}

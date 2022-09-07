@@ -7,8 +7,20 @@ import mensagem from '../html-css-template/imagens/Icon mensagem.svg';
 import notificacao from '../html-css-template/imagens/Icon notificação.svg';
 import adicionarProduto from '../html-css-template/imagens/Subtract.svg';
 import '../html-css-template/css/Style.css'
+import { Link } from "react-router-dom";
 
 function Header() {
+
+    const mostrarMenu = () => {
+        var menu = document.getElementById("he-tooltip");
+        if (menu.style.visibility == "hidden") {
+            menu.style.visibility = "visible";
+        }
+        else {
+            menu.style.visibility = "hidden";
+        }
+    }
+
     return (
         <>
             <header id="header_completo">
@@ -23,8 +35,31 @@ function Header() {
                         </div>
                         <div id="div_usuario">
                             <img src={perfil} alt="" id="img_foto" />
-                            <p>Cleiton</p>
-                            <img src={setaBaixo} alt="" className="img_seta" />
+                            <p id="nome_usuario">Cleiton</p>
+                            <img src={setaBaixo} alt="" className="img_seta" id="seta_menu" onClick={mostrarMenu} />
+                            <div id="he-tooltip">
+                                <div className="menuzinho">
+                                    <div id="triangulo-para-cima">
+                                    </div>
+                                    {/* <div id="menuzinho-deslogado">
+                                        <div className="mn-parte-um">
+                                            <button><Link className="he-link" to="/login">Entrar</Link></button>
+                                        </div>
+                                        <div className="mn-parte-dois">
+                                            <p>Não é cadastrado ainda?</p>
+                                            <button><Link className="he-link" to="/cadastro">Cadastre-se</Link></button>
+                                        </div>
+                                    </div> */}
+
+                                    <div id="menuzinho-logado">
+
+                                        <p><Link to="/disponivel">Minha conta</Link></p>
+                                        <p><Link to="/editar-perfil">Minha conta</Link>Configurações</p>
+                                        <button><Link className="he-link" to="/">SAIR</Link></button>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div id="div_icones">
                             <img src={interesse} alt="" />
@@ -51,6 +86,7 @@ function Header() {
                 </div>
 
             </header>
+
         </>
     );
 }

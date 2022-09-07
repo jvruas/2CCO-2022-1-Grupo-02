@@ -8,7 +8,7 @@ function ValidacaoUsuario() {
     return (
         <>
             <Header />
-            <section>
+            <section id="vl-section">
                 <div className="grid">
                     <div id="vl-parte-um">
                         <div className="vl-opcao">

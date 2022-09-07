@@ -14,7 +14,7 @@ function HistoricoDonatario() {
         <>
            
                 <Header></Header>
-                 <section>
+                 <section id="hp-section">
                 <Perfil></Perfil>
                 <MenuPerfil></MenuPerfil>
                 <div id="conteiner">

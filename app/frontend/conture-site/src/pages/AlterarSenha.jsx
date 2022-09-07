@@ -49,7 +49,7 @@ function AlterarSenha() {
     return (
         <>
             <Header />
-            <section>
+            <section id="as-section">
                 <div className="grid">
                     <div id="as-parte-um">
                         <div className="as-opcao">
