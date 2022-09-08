@@ -12,8 +12,8 @@ import EditarPerfil from "./pages/EditarPerfil";
 import DesabilitarPerfil from "./pages/DesabilitarPerfil";
 import HistoricoPessoal from "./pages/HistoricoPessoal";
 import Historico from "./pages/Historico";
-import Disponivel from "./pages/Disponivel";
-import Avaliacao from "./pages/Avaliacao";
+import Disponivel from "./pages/DisponivelPessoal";
+import Avaliacao from "./pages/AvaliacaoPessoal";
 import CadastroProduto from "./pages/CadastroProduto";
 
 function Rotas() {

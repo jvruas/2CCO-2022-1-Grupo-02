@@ -1,4 +1,5 @@
 import '../../html-css-template/css/MensagemDireta.css';
+import fotoPatricia from "../../html-css-template/imagens/patricia.jpg"
 
 function Chat() {
 
@@ -6,7 +7,7 @@ function Chat() {
         <>
             <div className="md-chat">
                 <div className="identificacao">
-                    <img src="../img/foto.jpg" alt="" id="md-chats-foto" />
+                    <img src={fotoPatricia} alt="" id="md-chats-foto" />
                     <div>
                         <h4>Patrícia</h4>
                         <p>#0002</p>

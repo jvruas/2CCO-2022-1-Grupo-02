@@ -1,6 +1,7 @@
+
 import Header from "../components/Header"
 import Perfil from "../components/Perfil"
-import MenuPerfil from "../components/MenuHistorico"
+import MenuPerfil from "../components/MenuHistoricoPessoal"
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/HistoricoPessoalPage.css'
 import Footer from "../components/Footer"
@@ -11,7 +12,6 @@ import Historico from "../components/HistoricoMaior"
 function HistoricoDonatario() {
     return (
         <>
-           
                 <Header></Header>
                  <section id="hp-section">
                 <Perfil></Perfil>
@@ -36,8 +36,7 @@ function HistoricoDonatario() {
                         <Historico></Historico>
                         <Historico></Historico>
                         <Historico></Historico>
-                        <Historico></Historico>
-                        <Historico></Historico>
+                        
                     </div>
                 </div>
                 </section>

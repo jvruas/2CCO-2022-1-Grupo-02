@@ -3,28 +3,9 @@ import foto from '../html-css-template/imagens/foto.jpg';
 import estrela from '../html-css-template/imagens/Star 16.svg';
 import imgPerfil from '../html-css-template/imagens/imagem_fundo.jpg';
 import '../html-css-template/css/Perfil.css'
-import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import apiUsuario from "../apiUsuario.js";
+import report from '../html-css-template/imagens/report.svg'
 
-function Perfil() {
-
-    const navegar = useNavigate();
-
-    const [usuario, setUsuario] = useState([]);
-    // const [usuarioImg, setUsuarioImg] = useState([]);
-
-    useEffect(() => {
-        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-        apiUsuario.get(`/${idUsuario}`).then((resposta) => {
-            try {
-                console.log(resposta.data)
-                setUsuario(resposta.data)
-            } catch (error) {
-                console.log(error)
-            }
-        })
-    }, [])
+function PerfilSimples() {
 
     return (
         <>
@@ -41,7 +22,7 @@ function Perfil() {
                                 <div id="perfil_texto">
                                     <div class="inf">
                                         <b>
-                                            <p>{usuario.nome}</p>
+                                            <p>Yan</p>
                                         </b>
                                         <p>#0001</p>
                                     </div>
@@ -55,9 +36,7 @@ function Perfil() {
                                     </div>
                                 </div>
                             </div>
-                            <button>
-                                CADASTRAR PRODUTO
-                            </button>
+                            <img src={report} alt="" className='img_reporte'/>
                         </div>
                     </div>
                 </div>
@@ -65,4 +44,4 @@ function Perfil() {
     );
 }
 
-export default Perfil;
+export default PerfilSimples;

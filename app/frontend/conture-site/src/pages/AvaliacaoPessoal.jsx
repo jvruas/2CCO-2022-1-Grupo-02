@@ -1,6 +1,6 @@
 import Header from "../components/Header"
-import Perfil from "../components/PerfilSimples"
-import MenuPerfil from "../components/MenuAvaliacao"
+import Perfil from "../components/Perfil"
+import MenuPerfil from "../components/MenuAvaliacaoPessoal"
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/AvaliacaoPage.css'
 import Footer from "../components/Footer"
@@ -9,7 +9,7 @@ import Comentarios from "../components/Avaliacao"
 
 
 
-function Avaliacao() {
+function AvaliacaoPessoal() {
     return (
         <>
             <Header></Header>
@@ -34,4 +34,4 @@ function Avaliacao() {
     )
 }
 
-export default Avaliacao;
+export default AvaliacaoPessoal;

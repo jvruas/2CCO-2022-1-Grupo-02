@@ -1,6 +1,6 @@
 
 import Header from "../components/Header"
-import Perfil from "../components/Perfil"
+import Perfil from "../components/PerfilSimples"
 import MenuPerfil from "../components/MenuHistorico"
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/HistoricoPessoalPage.css'
@@ -34,10 +34,7 @@ function HistoricoDonatario() {
                     <div className="div_historicos">
                         <Historico></Historico>
                         <Historico></Historico>
-                        <Historico></Historico>
-                        <Historico></Historico>
-                        <Historico></Historico>
-                        <Historico></Historico>
+                        
                     </div>
                 </div>
             </section>

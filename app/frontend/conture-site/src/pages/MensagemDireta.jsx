@@ -6,6 +6,7 @@ import MensagemUsuario from "../components/mensagem-direta/MensagemUsuario";
 import '../html-css-template/css/MensagemDireta.css';
 import iconLupaPreta from "../html-css-template/imagens/icon-lupa-preta.svg"
 import iconSend from "../html-css-template/imagens/icon-send.svg"
+import fotoPatricia from "../html-css-template/imagens/patricia.jpg"
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiUsuario from "../apiUsuario.js";
@@ -37,7 +38,7 @@ function MensagemDireta() {
                     </div>
                     <div id="md-parte-dois">
                         <div id="md-cabecalho">
-                            <img src="../img/foto.jpg" alt="Foto do outro usuário" />
+                            <img src={fotoPatricia} alt="Foto do outro usuário" />
                             <div>
                                 <h3>Patrícia</h3>
                             </div>

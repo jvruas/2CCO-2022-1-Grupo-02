@@ -6,7 +6,7 @@ function Produto(props) {
     return(
         <div className="container-produto">
             <div className="informacoes-produto">
-                <div className="superior"><img alt=""/> <div class="visualizacao"><img src={vector} alt=""/> <p>{props.visualizacao}</p></div></div>
+                <div className="superior"><img src={trash} alt=""/> <div class="visualizacao"><img src={vector} alt=""/> <p>{props.visualizacao}</p></div></div>
                 <div className="meio"><img src={props.foto} alt=""/></div>
                 <div className="inferior"><p>{props.texto}</p></div>
             </div>

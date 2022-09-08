@@ -68,13 +68,13 @@ function CadastroProduto() {
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div>
+                    <div className="ca-preferencia">
+                        <div className="ca-preferencia-titulo">
                             <label htmlFor="">Preferência de doação<span>*</span></label>
                             <input type="checkbox" name="" id="" />
                         </div>
-                        <div>
-                            <div>
+                        <div className="ca-campos-preferencia">
+                            <div className="ca-campos-pref">
                                 <label htmlFor="">Estado civil <span>*</span></label>
                                 <select name="" id=""></select>
                                 <label htmlFor="">Escolaridade <span>*</span></label>
@@ -84,7 +84,7 @@ function CadastroProduto() {
                                 <label htmlFor="">Situação atual <span>*</span></label>
                                 <select name="" id=""></select>
                             </div>
-                            <div>
+                            <div className="ca-pref-btn">
                                 <button>CADASTRAR PRODUTO</button>
                             </div>
                         </div>

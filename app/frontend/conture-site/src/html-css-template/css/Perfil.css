@@ -110,3 +110,15 @@
     position: relative;
     top:56px;
 }
+.img_reporte{
+    height: 15px;
+    width: 15px;
+   
+  
+}
+
+#disp-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

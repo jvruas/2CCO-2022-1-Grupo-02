@@ -284,6 +284,7 @@ public class UsuarioController {
 
 
 	@PatchMapping("/senha")
+	@CrossOrigin(allowedHeaders = "*")
 	public ResponseEntity atualizarSenha(@RequestBody @Valid UsuarioSenhaRequest usuarioSenha) {
 		Optional<Usuario> usuario = this.usuarioRepository.findById(usuarioSenha.getIdUsuario());
 
@@ -326,6 +327,7 @@ public class UsuarioController {
 	}
 
 	@PutMapping("/{idUsuario}/perfil")
+	@CrossOrigin(allowedHeaders = "*")
 	public ResponseEntity atualizarPerfil(
 			@PathVariable @Min(1) Integer idUsuario,
 			@RequestBody @Valid UsuarioPerfilRequest usuarioPerfil
@@ -383,6 +385,7 @@ public class UsuarioController {
 
 
 	@PatchMapping(value = "/{idUsuario}/imagem", consumes = "image/jpeg")
+	@CrossOrigin(allowedHeaders = "*")
 	public ResponseEntity atualizarImagem(
 			@PathVariable @Min(1) Integer idUsuario,
 			@RequestParam @Size(min = 1, max = 1) @Pattern(regexp = "[B,P]") String tipoImagem,

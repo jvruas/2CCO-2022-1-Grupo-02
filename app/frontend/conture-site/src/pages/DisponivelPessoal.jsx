@@ -1,12 +1,12 @@
 import Header from "../components/Header"
-import Perfil from "../components/PerfilSimples"
-import MenuPerfil from "../components/MenuDisponivel"
+import Perfil from "../components/Perfil"
+import MenuPerfil from "../components/MenuDisponivelPessoal"
 import '../html-css-template/css/ProdutoDisponivelPage.css'
 import Footer from "../components/Footer"
-import Card from "../components/ProdutoCop"
+import Card from "../components/ProdutoPessoalCop"
 
 
-function Disponivel() {
+function DisponivelPessoal() {
     return (
         <>
             <Header></Header>
@@ -29,4 +29,4 @@ function Disponivel() {
     )
 }
 
-export default Disponivel;
+export default DisponivelPessoal;

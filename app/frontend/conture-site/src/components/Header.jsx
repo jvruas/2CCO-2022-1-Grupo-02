@@ -83,7 +83,7 @@ function Header() {
     const redirecionarDoar = () => {
         let param = sessionStorage.getItem('logado');
         if(param == "OK"){
-            navegar("/cadastro-produto")
+            navegar("/")
         }else{
             navegar("/login")
         }
