@@ -47,7 +47,6 @@ function Login() {
             console.log(resposta.status)
             console.log(resposta.data.idUsuario)
             sessionStorage.setItem('idUsuarioLogado', resposta.data.idUsuario)
-            sessionStorage.setItem('nomeUsuarioLogado', resposta.data.nomeUsuario)
             sessionStorage.setItem('logado', "OK")
             navegar("/")
         }).catch((error) => { 

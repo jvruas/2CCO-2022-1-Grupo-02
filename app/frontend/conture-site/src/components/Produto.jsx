@@ -3,12 +3,22 @@ import trash from "../html-css-template/imagens/trash 2.svg"
 import vector from "../html-css-template/imagens/Vector.svg"
 
 function Produto(props) {
-    return(
+    return (
         <div class="container-produto">
             <div class="informacoes-produto">
-                <div class="superior"><img src={trash} alt=""/> <div class="visualizacao"><img src={vector} alt=""/> <p>{props.visualizacao}</p></div></div>
-                <div class="meio"><img src={props.foto} alt=""/></div>
-                <div class="inferior"><p>{props.texto}</p></div>
+                <div class="superior">
+                    <img src={trash} alt="" /> 
+                        <div class="visualizacao">
+                            <img src={vector} alt="" /> 
+                            <p>{props.visualizacao}</p>
+                        </div>
+                </div>
+                <div class="meio">
+                    <img src="#" alt="" />
+                </div>
+                <div class="inferior">
+                    <p>{props.nome}</p>
+                </div>
             </div>
         </div>
     );
