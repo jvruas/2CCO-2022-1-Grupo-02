@@ -117,6 +117,20 @@
 .as-aviso{
     height: 5%;
     width: 80%;
+    display: flex;
+}
+
+.as-aviso p{
+    color: red;
+    font-weight: 600;
+    padding-left: 10px;
+}
+
+.as-aviso img{
+    display: none;
+    width: 20px;
+    height: 20px;
+    color: red;
 }
 
 .as-btns{

@@ -3,10 +3,51 @@ import Footer from "../components/Footer";
 import '../html-css-template/css/EditarPerfil.css';
 import iconSalvar from "../html-css-template/imagens/folder-plus.png";
 import iconX from "../html-css-template/imagens/icon-X.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import apiUsuario from "../apiUsuario.js";
+import { useEffect, useState } from "react";
+
+
+function dataUsuario() {
+    return {
+        email: "",
+        senha: "",
+        nome: "",
+        sobrenome: "",
+        cpf: "",
+        genero: "",
+        dataNascimento: "",
+        estadoCivil: "",
+        telefone: "",
+        cep: "",
+        grauEscolaridade: "",
+        fkSituacaoAtual: ""
+    }
+}
 
 function EditarPerfil() {
 
+    const [fkSituacaoAtual, setSituacaoAtual] = useState([]);
+
+    useEffect(() => {
+        apiUsuario.get("/situacao-atual").then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setSituacaoAtual(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
+
+    // Função para chamar o endPoint para cadastrar o usuário
+    const [valuesUsuario, setValuesUsuario] = useState(dataUsuario)
+
+    function handleChangeUser(event) {
+        const { value, name } = event.target
+        setValuesUsuario({ ...valuesUsuario, [name]: value, })
+        console.log(valuesUsuario)
+    }
 
     return (
         <>
@@ -30,29 +71,56 @@ function EditarPerfil() {
                         </div>
                         <div className="ep-campos">
                             <div className="ep-campo">
-                                <label htmlFor="estado-civil">Estado civil</label>
-                                <select name="estado-civil" id="estado-civil"></select>
+                                <label htmlFor="estadoCivil">Estado civil</label>
+                                <select name="estadoCivil" id="estadoCivil" value={valuesUsuario.estadoCivil} required onChange={handleChangeUser}>
+                                    <option value=""></option>
+                                    <option value="S">Solteiro(a)</option>
+                                    <option value="C">Casado(a)</option>
+                                    <option value="D">Divorciado(a)</option>
+                                    <option value="V">Viúvo(a)</option>
+                                </select>
                             </div>
                             <div className="ep-campo">
                                 <label htmlFor="telefone">Telefone</label>
-                                <input type="tel" name="telefone" id="telefone" />
+                                <input id="telefone" type="text" name="telefone" size="11" maxLength="11" minLength="11" pattern="^[0-9]+$" value={valuesUsuario.telefone} required onChange={handleChangeUser} />
                             </div>
                             <div className="ep-campo">
                                 <label htmlFor="genero">Gênero</label>
-                                <select name="genero" id="genero"></select>
+                                <select name="genero" id="genero" value={valuesUsuario.genero} required onChange={handleChangeUser}>
+                                    <option value=""></option>
+                                    <option value="F">Feminino</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="X">Outro</option>
+                                </select>
                             </div>
                             <div className="ep-campo">
                                 <label htmlFor="cep">CEP</label>
-                                <input type="text" name="cep" id="cep" />
-
+                                <input id="cep" type="text" name="cep" size="8" maxLength="8" minLength="8" pattern="^[0-9]+$" value={valuesUsuario.cep} required onChange={handleChangeUser} />
                             </div>
                             <div className="ep-campo">
-                                <label htmlFor="escolaridade">Escolaridade</label>
-                                <select name="escolaridade" id="escolaridade"></select>
+                                <label htmlFor="grauEscolaridade">Escolaridade</label>
+                                <select id="grauEscolaridade" name="grauEscolaridade" value={valuesUsuario.grauEscolaridade} required onChange={handleChangeUser}>
+                                    <option value=""></option>
+                                    <option value="A">Analfabeto</option>
+                                    <option value="I">Educação infantil</option>
+                                    <option value="F">Fundamental</option>
+                                    <option value="M">Médio</option>
+                                    <option value="S">Superior (Graduação)</option>
+                                    <option value="P">Pós-graduação</option>
+                                    <option value="E">Mestrado</option>
+                                    <option value="D">Doutorado</option>
+                                </select>
                             </div>
                             <div className="ep-campo">
-                                <label htmlFor="situacao-atual">Situação atual</label>
-                                <select name="situacao-atual" id="situacao-atual"></select>
+                                <label htmlFor="fkSituacaoAtual">Situação atual</label>
+                                <select name="fkSituacaoAtual" id="fkSituacaoAtual" value={valuesUsuario.fkSituacaoAtual} required onChange={handleChangeUser}>
+                                    <option value=""></option>
+                                    {
+                                        fkSituacaoAtual.map((situacao) => (
+                                            <option value={situacao.idSituacaoAtual}>{situacao.nome}</option>
+                                        ))
+                                    }
+                                </select>
                             </div>
                         </div>
                         <div className="ep-btns">

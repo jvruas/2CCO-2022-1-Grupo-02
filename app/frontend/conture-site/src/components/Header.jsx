@@ -50,6 +50,24 @@ function Header(props) {
         }
     }
 
+    const redirecionarDoar = () => {
+        let param = sessionStorage.getItem('logado');
+        if(param == "OK"){
+            navegar("/cadastro-produto")
+        }else{
+            navegar("/login")
+        }
+    }
+
+    const redirecionarMensagemD = () => {
+        let param = sessionStorage.getItem('logado');
+        if(param == "OK"){
+            navegar("/mensagem-direta")
+        }else{
+            navegar("/login")
+        }
+    }
+
     return (
         <>
             <header id="header_completo">
@@ -88,14 +106,14 @@ function Header(props) {
                             </div>
                         </div>
                         <div id="div_icones">
-                            <img src={interesse} alt="" />
-                            <Link class="he-link-img" to="/mensagem-direta"><img src={mensagem} alt="" /></Link>
-                            <img src={notificacao} alt="" />
+                            <img src={interesse} alt="Ícone de matchs" />
+                            <img src={mensagem} alt="Ícone de mensagem direta" onClick={redirecionarMensagemD}/>
+                            <img src={notificacao} alt="Ícone de notificação" />
                         </div>
-                        <Link to="/cadastro-produto"><button id="btn_doacao">
+                        <button type="button" id="btn_doacao" onClick={redirecionarDoar}>
                             <p>DOAR PRODUTO</p>
                             <img src={adicionarProduto} alt="" />
-                        </button></Link>
+                        </button>
                     </div>
                 </div>
                 <div id="header_inferior">
