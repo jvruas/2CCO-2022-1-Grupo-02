@@ -57,15 +57,6 @@ return(
   swipeable
 >
 {props.card1}
-{props.card2}
-{props.card3}
-{props.card4}
-{props.card5}
-{props.card6}
-{props.card7}
-{props.card8}
-{props.card9}
-{props.card10}
 </CarouselLib>
 );
 }

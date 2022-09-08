@@ -7,7 +7,8 @@ function Produto(props) {
         <div class="container-produto">
             <div class="informacoes-produto">
                 <div class="superior">
-                    <img src={trash} alt="" /> 
+                    <img src={props.imagem}/>
+                    <p>{props.nomeDoador}</p>
                         <div class="visualizacao">
                             <img src={vector} alt="" /> 
                             <p>{props.visualizacao}</p>
