@@ -47,7 +47,15 @@ function DesabilitarPerfil() {
                                 Você tem certeza que gostaria desativar sua conta permanentemente?</p>
                             <div className="dc-campo">
                                 <label htmlFor="motivo-desabilitar">Por que você está desativando sua conta?</label>
-                                <select name="motivo-desabilitar" id="motivo-desabilitar"></select>
+                                <select name="motivo-desabilitar" id="motivo-desabilitar">
+                                    <option value=""></option>
+                                    <option value="">Anúncios em excesso</option>
+                                    <option value="">Preciso dar um tempo</option>
+                                    <option value="">Questões de privacidade</option>
+                                    <option value="">Problemas em utilizar o site</option>
+                                    <option value="">Não consigo achar os eletrônicos que preciso</option>
+                                    <option value="">Outro motivo</option>
+                                </select>
                             </div>
                             <div className="dc-campo">
                                 <label htmlFor="senha">Insira sua senha</label>

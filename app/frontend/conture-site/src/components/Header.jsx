@@ -11,9 +11,34 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiUsuario from "../apiUsuario.js";
 
-function Header(props) {
+function Header() {
 
     const navegar = useNavigate();
+
+    const [usuario, setUsuario] = useState([]);
+    // const [usuarioImg, setUsuarioImg] = useState([]);
+
+    useEffect(() => {
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+        apiUsuario.get(`/?idUsuario=${idUsuario}`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setUsuario(resposta.data)
+                
+            } catch (error) {
+                console.log(error)
+            }
+        })
+
+        // apiUsuario.get(`/?idUsuario=${idUsuario}/imagem`).then((resposta) => {
+        //     try {
+        //         console.log(resposta.data)
+        //         setUsuarioImg(resposta.data)
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // })
+    }, [])
 
     function logoff(event) {
         event.preventDefault()
@@ -81,8 +106,8 @@ function Header(props) {
                             </button>
                         </div>
                         <div id="div_usuario">
-                            <img src={props.imagem} alt="" id="img_foto" />
-                            <p id="nome_usuario">{props.nome}</p>
+                            <img src={perfil} alt="" id="img_foto" />
+                            <p id="nome_usuario">Cleiton</p>
                             <img src={setaBaixo} alt="" className="img_seta" id="seta_menu" onClick={mostrarMenu} />
                             <div id="he-tooltip">
                                 <div className="menuzinho">
