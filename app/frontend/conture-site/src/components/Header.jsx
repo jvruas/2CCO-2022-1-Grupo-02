@@ -1,6 +1,7 @@
 import logo from '../html-css-template/imagens/logo-conture.png';
 import lupa from '../html-css-template/imagens/icon-lupa.png';
-import perfil from '../html-css-template/imagens/foto.jpg';
+import fotoLogado from '../html-css-template/imagens/foto.jpg';
+import fotoDesogado from '../html-css-template/imagens/imagem-deslogado.png';
 import setaBaixo from '../html-css-template/imagens/chevron-down 1.svg';
 import interesse from '../html-css-template/imagens/Interesses.svg';
 import mensagem from '../html-css-template/imagens/Icon mensagem.svg';
@@ -20,25 +21,27 @@ function Header() {
 
     useEffect(() => {
         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-        apiUsuario.get(`/?idUsuario=${idUsuario}`).then((resposta) => {
+        apiUsuario.get(`/${idUsuario}`).then((resposta) => {
             try {
                 console.log(resposta.data)
                 setUsuario(resposta.data)
-                
             } catch (error) {
-                console.log(error)
+                console.log(error)  
             }
         })
-
-        // apiUsuario.get(`/?idUsuario=${idUsuario}/imagem`).then((resposta) => {
-        //     try {
-        //         console.log(resposta.data)
-        //         setUsuarioImg(resposta.data)
-        //     } catch (error) {
-        //         console.log(error)
-        //     }
-        // })
     }, [])
+
+    useEffect(() => {
+        let param = sessionStorage.getItem('logado');
+        if(param == "OK"){
+            document.getElementById("nome_usuario").innerHTML = `${usuario.nome}`; 
+            document.getElementById("img_foto").src = `${fotoLogado}`;   
+        }else{
+            document.getElementById("nome_usuario").innerHTML = "Usuário";  
+            document.getElementById("img_foto").src = `${fotoDesogado}`;
+        }
+    })
+    
 
     function logoff(event) {
         event.preventDefault()
@@ -49,10 +52,12 @@ function Header() {
         }).then((resposta) => {
             console.log(resposta.status)
             menu.style.visibility = "hidden";
-            navegar("/")
+            setInterval(navegar("/"), 0.1);
+            sessionStorage.setItem('idUsuarioLogado', "")
         }).catch((error) => {
             console.log(error)
         })
+        
     }
 
     const mostrarMenu = () => {
@@ -106,8 +111,8 @@ function Header() {
                             </button>
                         </div>
                         <div id="div_usuario">
-                            <img src={perfil} alt="" id="img_foto" />
-                            <p id="nome_usuario">Cleiton</p>
+                            <img src={fotoDesogado} alt="" id="img_foto" />
+                            <p id="nome_usuario">Usuário</p>
                             <img src={setaBaixo} alt="" className="img_seta" id="seta_menu" onClick={mostrarMenu} />
                             <div id="he-tooltip">
                                 <div className="menuzinho">
