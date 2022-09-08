@@ -300,7 +300,7 @@ public class ProdutoController {
 
 	@GetMapping("/categoria")
 	public ResponseEntity<List<ProdutoDoacaoResponse>> listarProdutoCategoria(
-			@RequestParam @NotNull @Min(1) Integer idDoador,
+			//@RequestParam @NotNull @Min(1) Integer idDoador,
 			@RequestParam @NotNull @Min(1) Integer idCategoria
 	) {
 		Optional<CategoriaProduto> categoriaProduto = this.categoriaRepository.findById(idCategoria);
@@ -309,7 +309,7 @@ public class ProdutoController {
 			return status(404).build();
 		}
 
-		List<ProdutoDoacaoResponse> listaProduto = this.produtoRepository.getAllByStatusNaoDoado(idDoador);
+		List<ProdutoDoacaoResponse> listaProduto = this.produtoRepository.getAllByStatusNaoDoadoC();
 
 		if (listaProduto.isEmpty()) {
 			return status(204).build();

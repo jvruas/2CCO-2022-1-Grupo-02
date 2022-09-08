@@ -57,6 +57,9 @@ public interface ProdutoRepository extends JpaRepository<ProdutoDoacao, Integer>
 	@Query("select new com.conture.apiproduto.model.dto.response.ProdutoDoacaoResponse(p.nome, p.marca, p.modelo, p.descricao, p.defeito, p.entrega, p.quantidadeVisualizacao, p.dataCriacao, p.dataConclusao, p.status, p.categoriaProduto.nome, p.fkDoador) from ProdutoDoacao p where p.fkDoador = ?1 and p.status = false and p.removido = false order by p.dataCriacao desc")
 	List<ProdutoDoacaoResponse> getAllByStatusNaoDoado(Integer idDoador);
 
+	@Query("select new com.conture.apiproduto.model.dto.response.ProdutoDoacaoResponse(p.nome, p.marca, p.modelo, p.descricao, p.defeito, p.entrega, p.quantidadeVisualizacao, p.dataCriacao, p.dataConclusao, p.status, p.categoriaProduto.nome, p.fkDoador) from ProdutoDoacao p where p.status = false and p.removido = false order by p.dataCriacao desc")
+	List<ProdutoDoacaoResponse> getAllByStatusNaoDoadoC();
+
 	@Query("update ProdutoDoacao p set p.quantidadeVisualizacao = ?2 where p.idProdutoDoacao = ?1 and p.removido = false and p.status = false")
 	@Transactional
 	@Modifying

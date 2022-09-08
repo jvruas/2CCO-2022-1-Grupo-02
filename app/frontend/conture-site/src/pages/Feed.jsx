@@ -6,6 +6,7 @@ import Anuncio from "../components/Anuncio";
 import '../html-css-template/css/Style.css'
 import { useEffect, useState } from "react";
 import apiProduto from "../apiProduto.js";
+import apiUsuario from "../apiUsuario";
 
 function Feed() {
 
@@ -31,17 +32,45 @@ function Feed() {
     const [produtosCelular, setProdutosCelular] = useState([]);
     const [produtosTablet, setProdutosTablet] = useState([]);
     useEffect(() => {
-            apiProduto.get("/nome?nome=Notebook").then((resposta) => {
+            apiProduto.get("/categoria?idCategoria=1").then((resposta) => {
+                for(let i=0; i<resposta.data.length; i++){
+                    apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
+                        resposta.data[i].nomeDoador=response.data.nome
+                    })
+                    apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
+                    `).then((response) => {
+                        resposta.data[i].imagem="data:image/png;base64,"+response.data
+                    })
+                }
                 setProdutosNote(resposta.data);
+                console.log("resposta.data");
                 console.log(resposta.data);
             })
 
-            apiProduto.get("/nome?nome=Tablet").then((resposta) => {
+            apiProduto.get("/categoria?idCategoria=2").then((resposta) => {
+                for(let i=0; i<resposta.data.length; i++){
+                    apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
+                        resposta.data[i].nomeDoador=response.data.nome
+                    })
+                    apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
+                    `).then((response) => {
+                        resposta.data[i].imagem="data:image/png;base64,"+response.data
+                    })
+                }
                 setProdutosTablet(resposta.data);
                 console.log(resposta.data);
             })
        
-            apiProduto.get("/nome?nome=Celular").then((resposta) => {
+            apiProduto.get("/categoria?idCategoria=3").then((resposta) => {
+                for(let i=0; i<resposta.data.length; i++){
+                    apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
+                        resposta.data[i].nomeDoador=response.data.nome
+                    })
+                    apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
+                    `).then((response) => {
+                        resposta.data[i].imagem="data:image/png;base64,"+response.data
+                    })
+                }
                 setProdutosCelular(resposta.data);
                 console.log(resposta.data);
             })
@@ -61,6 +90,8 @@ function Feed() {
                         <Produto
                             visualizacao={itemProduto.quantidadeVisualizacao}
                             nome={itemProduto.nome}
+                            nomeDoador={itemProduto.nomeDoador}
+                            imagem={itemProduto.imagem}
                         />
                     ))
                 }
@@ -74,6 +105,8 @@ function Feed() {
                         <Produto
                             visualizacao={itemProduto.quantidadeVisualizacao}
                             nome={itemProduto.nome}
+                            nomeDoador={itemProduto.nomeDoador}
+                            imagem={itemProduto.imagem}
                         />
                     ))
                 }
@@ -88,6 +121,8 @@ function Feed() {
                         <Produto
                             visualizacao={itemProduto.quantidadeVisualizacao}
                             nome={itemProduto.nome}
+                            nomeDoador={itemProduto.nomeDoador}
+                            imagem={itemProduto.imagem}
                         />
                     ))
                 }
