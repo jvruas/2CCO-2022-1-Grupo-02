@@ -10,10 +10,10 @@ function MenuDisponivel() {
                     <b><p className='text-bold'>Disponíveis</p></b>
                 </div>
                 <div className='sub-menu'>
-                    <Link to="/HistoricoPessoal"><p>Histórico</p></Link>
+                    <Link to="/historico-pessoal"><p>Histórico</p></Link>
                 </div>
                 <div className='sub-menu'>
-                <Link to="/Avaliacao"><p>Avaliações</p></Link>
+                <Link to="/avaliacao"><p>Avaliações</p></Link>
                 </div>
         </div>
     );

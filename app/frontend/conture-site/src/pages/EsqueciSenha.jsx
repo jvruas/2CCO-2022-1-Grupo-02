@@ -8,7 +8,7 @@ import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
 import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
 import { useNavigate } from "react-router-dom";
-import api from "../api.js";
+import apiUsuario from "../apiUsuario.js";
 
 
 function EsqueciSenha() {
@@ -33,7 +33,7 @@ function EsqueciSenha() {
             document.getElementById("alerta-img").style.display = "flex"
             document.getElementById("msg-alerta").innerHTML = `A senha deve ter mais que 6 caracteres`
         } else {
-            api.patch(`/atualizar-senha?idUsuario=${idUsuario}&novaSenha=${senha.value}`)
+            apiUsuario.patch(`/atualizar-senha?idUsuario=${idUsuario}&novaSenha=${senha.value}`)
             .then((resposta) => {
                 navegar("/")
                 console.log(resposta.status)

@@ -13,7 +13,7 @@ function Avaliacao() {
     return (
         <>
             <Header></Header>
-            <section>
+            <section id="av-section">
                 <Perfil></Perfil>
                 <MenuPerfil></MenuPerfil>
                 <div className="conteiner-avaliacao">

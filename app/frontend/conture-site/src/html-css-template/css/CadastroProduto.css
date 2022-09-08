@@ -1,0 +1,77 @@
+@import url('https://fonas.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+#ca-section{
+    height: 1700px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ca-grid{
+    height: 100%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-color: aqua;
+}
+
+.ca-titulo{
+    height: 112px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-items: start;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.ca-campos-produto{
+    height: 695px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: yellowgreen;  
+}
+
+.ca-campos-fotos{
+    height: 100%;
+    width: 35%;
+    border-right: 1px solid #ABABAB;
+    background-color: aqua;
+}
+
+.ca-campos-info{
+    height: 100%;
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    background-color: blueviolet;
+}
+
+.ca-campos-info-pUm{
+    height: 85%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: azure;
+}
+
+.ca-campos-info-pDois{
+    height: 15%;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+

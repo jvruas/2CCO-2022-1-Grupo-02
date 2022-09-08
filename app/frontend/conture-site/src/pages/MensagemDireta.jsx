@@ -6,13 +6,44 @@ import MensagemUsuario from "../components/mensagem-direta/MensagemUsuario";
 import '../html-css-template/css/MensagemDireta.css';
 import iconLupaPreta from "../html-css-template/imagens/icon-lupa-preta.svg"
 import iconSend from "../html-css-template/imagens/icon-send.svg"
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import apiUsuario from "../apiUsuario.js";
 
 
 function MensagemDireta() {
 
+
+    const navegar = useNavigate();
+
+    const [usuario, setUsuario] = useState([]);
+    const [usuarioImg, setUsuarioImg] = useState([]);
+
+    useEffect(() => {
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado')
+        apiUsuario.get(`/?idUsuario=${idUsuario}`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setUsuario(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+
+        apiUsuario.get(`/?idUsuario=${idUsuario}/imagem`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setUsuarioImg(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
+
+
     return (
         <>
-            <Header />
+            <Header nome={usuario.nome} imagem_usuario={usuarioImg.imagem_usuario}/>
             <section id="md-section">
                 <div className="grid">
                     <div id="md-parte-um">

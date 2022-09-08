@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import '../html-css-template/css/EditarPerfil.css';
 import iconSalvar from "../html-css-template/imagens/folder-plus.png";
 import iconX from "../html-css-template/imagens/icon-X.svg";
+import { Link } from "react-router-dom";
 
 function EditarPerfil() {
 
@@ -14,13 +15,13 @@ function EditarPerfil() {
                 <div className="grid">
                     <div id="ep-parte-um">
                         <div className="ep-opcao ep-opcao-selecionada">
-                            <p>Editar perfil</p>
+                            <Link className="link-p" to="/editar-perfil"><p>Editar perfil</p></Link>
                         </div>
                         <div className="ep-opcao">
-                            <p>Trocar senha</p>
+                            <Link className="link-p" to="/alterar-senha"><p>Trocar senha</p></Link>
                         </div>
                         <div className="ep-opcao">
-                            <p>Validação</p>
+                            <Link className="link-p" to="/validacao-usuario"><p>Validação</p></Link>
                         </div>
                     </div>
                     <div id="ep-parte-dois">
@@ -55,7 +56,7 @@ function EditarPerfil() {
                             </div>
                         </div>
                         <div className="ep-btns">
-                            <a href=""><div>Desabilitar conta<img src={iconX} alt="" /></div></a>
+                            <Link to="/desabilitar-perfil"><div>Desabilitar conta<img src={iconX} alt="" /></div></Link>
                             <button>
                                 <p>SALVAR</p><img src={iconSalvar} alt="Ícone de salvar" />
                             </button>

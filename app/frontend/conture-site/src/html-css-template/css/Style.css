@@ -169,9 +169,11 @@ footer {
 }
 
 #nome_usuario {
+    width: 45px;
     font-size: 16px;
     color: #FFF;
 }
+
 
 #img_seta {
     height: 12px;
@@ -324,6 +326,9 @@ footer {
     height: 35px;
     width: 100%;
     border: none;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
     border-radius: 3px;
     background-color: #7724BE;
 }
@@ -342,6 +347,9 @@ footer {
 #menuzinho-logado button{
     height: 35px;
     width: 90%;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
     border: none;
     border-radius: 3px;
     background-color: #7724BE;

@@ -7,13 +7,13 @@ function MenuHistorico() {
         <div id="menu">
             
                 <div className='sub-menu'>
-                <Link to="/Disponivel"><p>Disponíveis</p></Link>
+                <Link to="/disponivel"><p>Disponíveis</p></Link>
                 </div>
                 <div className='sub-menu'>
                     <b><p className='text-bold'>Histórico</p></b>
                 </div>
                 <div className='sub-menu'>
-                    <Link to="/Avaliacao"><p>Avaliações</p></Link>
+                    <Link to="/avaliacao"><p>Avaliações</p></Link>
                 </div>
         </div>
     );

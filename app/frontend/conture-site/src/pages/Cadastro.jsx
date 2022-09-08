@@ -12,7 +12,7 @@ import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
 import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
 import { Link, useNavigate } from "react-router-dom";
 import iconOk from "../html-css-template/imagens/icon-ok.png"
-import api from "../api.js";
+import apiUsuario from "../apiUsuario.js";
 import { useEffect, useState } from "react";
 
 
@@ -40,7 +40,7 @@ function Cadastro() {
     const [fkSituacaoAtual, setSituacaoAtual] = useState([]);
 
     useEffect(() => {
-        api.get("/situacao-atual").then((resposta) => {
+        apiUsuario.get("/situacao-atual").then((resposta) => {
             try {
                 console.log(resposta.data)
                 setSituacaoAtual(resposta.data)
@@ -103,13 +103,13 @@ function Cadastro() {
             document.getElementById("alerta-img2").style.display = "flex"
             document.getElementById("msg-alerta2").innerHTML = `CEP inválido`
         }else{
-            api.post("/", json, {
+            apiUsuario.post("/", json, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then((resposta) => {
                     console.log(resposta.status)
-                    navegar("/")
+                    navegar("/login")
             }).catch((error) => { 
                 console.log(error)
                 if(error.status == "409"){

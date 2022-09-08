@@ -4,6 +4,7 @@ import '../html-css-template/css/AlterarSenha.css';
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
 import iconSalvar from "../html-css-template/imagens/folder-plus.png"
+import { Link } from "react-router-dom";
 
 function AlterarSenha() {
 
@@ -53,13 +54,13 @@ function AlterarSenha() {
                 <div className="grid">
                     <div id="as-parte-um">
                         <div className="as-opcao">
-                            <p>Editar perfil</p>
+                            <Link className="link-p" to="/editar-perfil"><p>Editar perfil</p></Link>
                         </div>
                         <div className="as-opcao as-opcao-selecionada">
-                            <p>Trocar senha</p>
+                            <Link className="link-p" to="/alterar-senha"><p>Trocar senha</p></Link>
                         </div>
                         <div className="as-opcao">
-                            <p>Validação</p>
+                            <Link className="link-p" to="/validacao-usuario"><p>Validação</p></Link>
                         </div>
                     </div>
                     <div id="as-parte-dois">

@@ -4,7 +4,7 @@ import iconOk from "../html-css-template/imagens/icon-ok.png"
 import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import api from "../api.js";
+import apiUsuario from "../apiUsuario.js";
 
 
 function PopUp() {
@@ -14,7 +14,7 @@ function PopUp() {
     function handleSubmit(event) {
         event.preventDefault()
         let param = document.getElementById("email");
-        api.get("/email", {
+        apiUsuario.get("/email", {
             params: {
                 email: param.value
             }

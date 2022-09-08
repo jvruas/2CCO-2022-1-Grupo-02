@@ -2,6 +2,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import '../html-css-template/css/ValidacaoUsuario.css';
 import IconCheck from "../html-css-template/imagens/icon-check.svg";
+import { Link } from "react-router-dom";
 
 function ValidacaoUsuario() {
 
@@ -12,13 +13,13 @@ function ValidacaoUsuario() {
                 <div className="grid">
                     <div id="vl-parte-um">
                         <div className="vl-opcao">
-                            <p>Editar perfil</p>
+                            <Link className="link-p" to="/editar-perfil"><p>Editar perfil</p></Link>
                         </div>
                         <div className="vl-opcao">
-                            <p>Trocar senha</p>
+                            <Link className="link-p" to="/alterar-senha"><p>Trocar senha</p></Link>
                         </div>
                         <div className="vl-opcao vl-opcao-selecionada">
-                            <p>Validação</p>
+                            <Link className="link-p" to="/validacao-usuario"><p>Validação</p></Link>
                         </div>
                     </div>
                     <div id="vl-parte-dois">

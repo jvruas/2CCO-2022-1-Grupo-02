@@ -8,7 +8,7 @@ import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
 import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../api.js";
+import apiUsuario from "../apiUsuario.js";
 
 function dataUsuarioLogin() {
     return {
@@ -39,7 +39,7 @@ function Login() {
         }
 
         console.log(json)
-        api.post("/login", json, {
+        apiUsuario.post("/login", json, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -47,17 +47,19 @@ function Login() {
             console.log(resposta.status)
             console.log(resposta.data.idUsuario)
             sessionStorage.setItem('idUsuarioLogado', resposta.data.idUsuario)
-            navegar("/feed")
+            sessionStorage.setItem('nomeUsuarioLogado', resposta.data.nomeUsuario)
+            sessionStorage.setItem('logado', "OK")
+            navegar("/")
         }).catch((error) => { 
             if(error.status == "409"){
-                navegar("/feed")
+                navegar("/")
             }else{
                 if(valuesUsuarioLogin.email == "" || valuesUsuarioLogin.senha == ""){
-                    document.getElementById("alerta-img").style.display = "flex"
-                    document.getElementById("msg-alerta").innerHTML = `Preencha os campos vazios`
+                    document.getElementById("alerta-img").style.display = "flex";
+                    document.getElementById("msg-alerta").innerHTML = `Preencha os campos vazios`;
                 }else{
-                    document.getElementById("alerta-img").style.display = "flex"
-                    document.getElementById("msg-alerta").innerHTML = `Usuário ou senha inválida`
+                    document.getElementById("alerta-img").style.display = "flex";
+                    document.getElementById("msg-alerta").innerHTML = `Usuário ou senha inválida`;
                 }      
             }
          })

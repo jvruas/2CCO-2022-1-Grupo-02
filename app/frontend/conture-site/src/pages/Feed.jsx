@@ -4,8 +4,32 @@ import Footer from "../components/Footer"
 import Produto from "../components/Produto";
 import Anuncio from "../components/Anuncio";
 import '../html-css-template/css/Style.css'
+import { useState, useEffect } from "react";
+import apiProduto from '../apiProduto';
 
 function Feed() {
+
+    // const [produtos, setProdutos] = useState([]);
+    const [categorias, setCategoria] = useState([]);
+
+    // useEffect(() => {
+    //     apiProduto.get("/nome?nome=Notebook").then((resposta) => {
+    //         setProdutos(resposta.data);
+    //         console.log(resposta.data);
+    //     })
+    // }, [])
+
+    useEffect(() => {
+        apiProduto.get("/todas-categorias").then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setCategoria(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
+
     return (
         <>
             <Header></Header>

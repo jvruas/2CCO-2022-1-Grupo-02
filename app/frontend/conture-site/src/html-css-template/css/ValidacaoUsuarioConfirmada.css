@@ -43,6 +43,11 @@
     background-color: #5C337F;
 }
 
+.link-p{   
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
 .vlc-opcao:hover{
     transition: background-color .7s;
     background-color: #613a83;

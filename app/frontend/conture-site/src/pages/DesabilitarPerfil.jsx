@@ -4,6 +4,7 @@ import '../html-css-template/css/DesabilitarPerfil.css';
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png";
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png";
 import iconSad from "../html-css-template/imagens/icon-sad.svg";
+import { Link } from "react-router-dom";
 
 function DesabilitarPerfil() {
 
@@ -27,13 +28,13 @@ function DesabilitarPerfil() {
                 <div className="grid">
                     <div id="dc-parte-um">
                         <div className="dc-opcao dc-opcao-selecionada">
-                            <p>Editar perfil</p>
+                            <Link className="link-p" to="/editar-perfil"><p>Editar perfil</p></Link>
                         </div>
                         <div className="dc-opcao">
-                            <p>Trocar senha</p>
+                            <Link className="link-p" to="/alterar-senha"><p>Trocar senha</p></Link>
                         </div>
                         <div className="dc-opcao">
-                            <p>Validação</p>
+                            <Link className="link-p" to="/validacao-usuario"><p>Validação</p></Link>
                         </div>
                     </div>
                     <div id="dc-parte-dois">
@@ -58,7 +59,7 @@ function DesabilitarPerfil() {
                             <p></p>
                         </div>
                         <div className="dc-btns">
-                            <a href=""><div>VOLTAR</div></a>
+                            <Link to="/editar-perfil"><div>VOLTAR</div></Link>
                             <button>
                                 <p>DESABILITAR</p><img src={iconSad} alt="Ícone de tristeza" />
                             </button>

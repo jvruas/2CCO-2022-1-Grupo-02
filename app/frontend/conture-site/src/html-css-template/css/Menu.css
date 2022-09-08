@@ -24,15 +24,13 @@
 
 
 #menu{
-    margin-top: 100px;
+    margin-top: 65px;
     height: 40px;
     width: 80%;
     border-bottom: black 2px solid;
     display: flex;
 
 }
-
-
 .sub-menu{
     height: 40px;
     width:20%;

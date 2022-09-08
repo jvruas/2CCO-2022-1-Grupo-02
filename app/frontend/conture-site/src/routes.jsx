@@ -14,6 +14,7 @@ import HistoricoPessoal from "./pages/HistoricoPessoal";
 import Historico from "./pages/Historico";
 import Disponivel from "./pages/Disponivel";
 import Avaliacao from "./pages/Avaliacao";
+import CadastroProduto from "./pages/CadastroProduto";
 
 function Rotas() {
     return (
@@ -34,6 +35,7 @@ function Rotas() {
                 <Route path="/historico" element={<Historico/>} />
                 <Route path="/disponivel" element={<Disponivel/>} />
                 <Route path="/avaliacao" element={<Avaliacao/>} />
+                <Route path="/cadastro-produto" element={<CadastroProduto/>} />
             </Routes>
         </BrowserRouter>
     );
