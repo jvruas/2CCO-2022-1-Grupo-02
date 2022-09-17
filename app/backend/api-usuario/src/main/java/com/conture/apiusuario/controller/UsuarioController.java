@@ -246,6 +246,7 @@ public class UsuarioController {
 		}
 		String codigo = email.gerarCodigo();
 		usuario.setCodigo(codigo);
+		usuarioRepository.save(usuario);
 		String corpoEmail = email.gerarEmail(codigo);
 		email.sendEmail(corpoEmail, emailDestinatario);
 		return status(200).build();
@@ -258,6 +259,7 @@ public class UsuarioController {
 		String codigoGerado = usuario.getCodigo();
 		if (codigoGerado.equals(codigo)){
 			usuario.setVerificado(true);
+			usuarioRepository.save(usuario);
 			return status(200).build();
 		}
 		return status(400).build();
