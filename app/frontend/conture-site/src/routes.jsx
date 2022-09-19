@@ -15,6 +15,7 @@ import Historico from "./pages/Historico";
 import Disponivel from "./pages/DisponivelPessoal";
 import Avaliacao from "./pages/AvaliacaoPessoal";
 import CadastroProduto from "./pages/CadastroProduto";
+import PopUpFiltro from "./pages/pop-up/PopUpFiltro";
 
 function Rotas() {
     return (
@@ -36,6 +37,7 @@ function Rotas() {
                 <Route path="/disponivel" element={<Disponivel/>} />
                 <Route path="/avaliacao" element={<Avaliacao/>} />
                 <Route path="/cadastro-produto" element={<CadastroProduto/>} />
+                <Route path="/popup" element={<PopUpFiltro/>} />
             </Routes>
         </BrowserRouter>
     );
