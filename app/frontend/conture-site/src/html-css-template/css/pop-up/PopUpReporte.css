@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;
+}
+
+.div_Report{
+    height: 450px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 3px;
+    justify-content: space-between;
+    position: relative;
+}
+
+.div_sup {
+    margin-top: 0;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.div_sup img {
+    height: 20px;
+    width: 20px;
+    position: fixed;
+    left: 370px;
+    top: 10px;
+}
+
+.div_sup p {
+    font-weight: bold;
+}
+
+.div_meio {
+    height: 100px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+
+.div_meio label {
+    margin-left: 10px;
+}
+
+.div_meio input {
+    height: 20px;
+    width: 20px;
+
+}
+
+.div_inf {
+    height: 250px;
+    width: 90%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.div_inf div {
+    height: 33.3px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
