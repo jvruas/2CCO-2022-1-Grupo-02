@@ -1,31 +1,30 @@
-import '../../html-css-template/css/pop-up/PopUpFiltro.css';
-import Filtro from "../../html-css-template/imagens/x-lg 1.svg";
+import '../../html-css-template/css/pop-up/PopUpReporte.css';
+import seta from "../../html-css-template/imagens/arrow.svg";
+import fechar from "../../html-css-template/imagens/x-lg 1.svg";
 
 
-function PopUpFiltro() {
+
+function PopUpReporte() {
     return (
         <>
-            <div className='div_filtro'>
-                <div className='div_sup'><p>Filtrar Produto</p><img src={Filtro} alt="" /></div>
-                <div className='div_meio'>
-                    <div><input type="checkbox" name="horns" />
-                        <label for="horns">Celular</label></div>
-                    <div><input type="checkbox" name="horns" />
-                        <label for="horns">Computador</label></div>
-                    <div><input type="checkbox" name="horns" />
-                        <label for="horns">Headset</label></div>
-                    
-                    <div><input type="checkbox" name="horns" />
-                        <label for="horns">Mouse</label></div>
-                    <div><input type="checkbox" name="horns" />
-                        <label for="horns">Notebook</label></div>
-                        <div><input type="checkbox" name="horns" />
-                        <label for="horns">Tablet</label></div>
+            <div className='div_Report'>
+                <div className='div_sup'><p>Reportar</p><img src={fechar} alt="" /></div>
+                <div className='div_meio'><b><p>Reportar usuário aos admistradores</p></b>
+                    <div><p>Informe aos administradores o que há de errado com esse usuário. Não contaremos
+                        à pessoa que você a denunciou.</p></div>
+                        </div>
+                <div className='div_inf'>
+                    <div><p>Assédio</p><img src={seta} alt="" /></div>
+                    <div><p>Discurso de ódio</p><img src={seta} alt="" /></div>
+                    <div><p>Informações do perfil</p><img src={seta} alt="" /></div>
+                    <div><p>Nudez ou atividade sexual</p><img src={seta} alt="" /></div>
+                    <div><p>Produto falso</p><img src={seta} alt="" /></div>
+                    <div><p>Spam</p><img src={seta} alt="" /></div>
                 </div>
-                <div className='div_sup'><button className='btn_filtrar'>Filtrar</button></div>
+
             </div>
         </>
     )
 }
 
-export default PopUpFiltro;
+export default PopUpReporte;
