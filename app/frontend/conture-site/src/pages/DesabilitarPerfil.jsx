@@ -34,7 +34,7 @@ function DesabilitarPerfil() {
         
         let senha = document.getElementById("senha");
 
-        let json = {
+        let usuario = {
             email: sessionStorage.getItem('idEmailLogado'),
             senha: valuesUsuario.senha
         }
@@ -43,16 +43,21 @@ function DesabilitarPerfil() {
         if (senha.value == "") {
             document.getElementById("msg-alerta").innerHTML = `Preencha os campos vazios`
         }else {
-            apiUsuario.delete(`?motivoDesligamento=${valuesUsuario.motivo}`, json, {
+            apiUsuario.delete(`?motivoDesligamento=${valuesUsuario.motivo}`,  {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                data: {
+                    email: usuario.email,
+                    senha: usuario.senha
+                }
+                
             }).then((resposta) => {
                     // navegar("/")
                     console.log(resposta.status)
+                    console.log("ta caindo");
                 }).catch((error) => {
                     console.log(error)
-                    console.log(json)
                     document.getElementById("msg-alerta").innerHTML = `Erro`
                 })
         }

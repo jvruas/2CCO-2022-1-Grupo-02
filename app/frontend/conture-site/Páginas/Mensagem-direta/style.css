@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+section{
+    height: 657px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid{
+    height: 100%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#md-parte-um{
+    height: 572px;
+    width: 30%;
+    border: 1px solid #AFAFAF;
+}
+
+#md-pequisa{
+    height: 188px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #AFAFAF;
+}
+
+#md-pequisa h2{
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    padding-left: 10%;
+}
+
+#md-pequisa div{
+    height: 40px;
+    width: 80%;
+    display: flex;
+    margin-left: 10%;
+    border: 1px solid #000000;
+}
+
+#md-pequisa input{
+    height: 100%;
+    width: 85%;
+    border: none;
+} 
+
+#md-pequisa input:focus, #md-enviar-mensagem input:focus{
+    box-shadow: 0 0 0 0;
+    border: none;
+    outline: 0; 
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#md-pequisa button{
+    height: 100%;
+    width: 15%;
+    border: none;
+    background-color: #FFFFFF;
+} 
+
+#md-chats{
+    height: 385px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.md-chats-interno{
+    height: 382px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.md-chats-interno div{
+    display: flex;
+}
+
+.scroll{
+    overflow: scroll;
+}
+
+
+
+.md-chat{
+    min-height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #F0F0F0;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.md-chat-selecionado{
+    background-color: #F0F0F0;
+}
+
+.identificacao{
+    height: 51px;
+    width: 70%;
+    margin-left: 10%;
+}
+
+.identificacao img{
+    height: 51px;
+    width: 51px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.identificacao div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 8%;
+}
+
+.md-chat button{
+    margin-right: 10%;
+    background-color: transparent;
+    border: transparent;
+}
+
+#md-chats-icon{
+    height: 16px;
+    width: 16px; 
+}
+
+#md-parte-dois{
+    height: 572px;
+    width: 70%;
+    border: 1px solid #AFAFAF;
+    border-left: 0px;
+}
+
+#md-cabecalho{
+    height: 68px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #F0F0F0;
+}
+
+#md-cabecalho img{
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    margin-left: 3%;
+    object-fit: cover;
+}
+
+#md-cabecalho div{
+    width: 30%;
+    margin-left: 3%;
+}
+
+#md-cabecalho h3, #md-cabecalho p{
+    font-size: 18px;
+}
+
+#md-mensagens{
+    height: 459px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.md-msg-outro{
+    max-width: 60%;
+    text-align: justify;
+    margin: 2% 0 0 3%;
+    padding: 10px 10px 10px 10px;
+    border: 1px solid #7724BE;
+    border-radius: 10px 10px 10px 0;
+}
+
+.md-msg-eu{
+    max-width: 60%;
+    text-align: justify;
+    margin: 2% 0 0 37%;
+    padding: 10px 10px 10px 10px;
+    border: 1px solid #7724BE;
+    border-radius: 10px 10px 0 10px;
+}
+
+.md-msg-eu p{
+    float: right;
+}
+
+
+#md-enviar-mensagem{
+    height: 45px;
+    width: 100%;
+    display: flex;
+    border-top: 1px solid #AFAFAF;
+}
+
+#md-enviar-mensagem input{
+    height: 97%;
+    width: 94%;
+    border: none;
+}
+
+#md-enviar-mensagem button{
+    height: 97%;
+    width: 6%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #7724BE;
+}
+
+#md-enviar-mensagem button:hover{
+    transition: background-color .6s;
+    background-color: #2F0E4C;
+}
+
+#md-enviar-mensagem img{
+    height: 16px;
+    width: 16px;
+}
