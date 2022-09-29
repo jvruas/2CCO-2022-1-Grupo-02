@@ -47,6 +47,7 @@ function Login() {
             console.log(resposta.status)
             console.log(resposta.data.idUsuario)
             sessionStorage.setItem('idUsuarioLogado', resposta.data.idUsuario)
+            sessionStorage.setItem('idEmailLogado', resposta.data.email)
             sessionStorage.setItem('logado', "OK")
             navegar("/")
         }).catch((error) => { 
@@ -92,7 +93,7 @@ function Login() {
                     <div className="divisao input">
                         <label htmlFor="senha">Senha</label>
                         <input id="senha" type="password" name="senha" size="18" maxLength="18" minLength="6" value={valuesUsuarioLogin.senha} required onChange={handleChangeUser} />
-                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye" onClick={ocultarSenha} />
+                        <img src={iconSenha} alt="Ícone senha escondida" className="lo-eye" id="eye" onClick={ocultarSenha} />
                     </div>
                     <div className="divisao">
                         <Link className="link-esqc" to="/email-esqueci-senha">Esqueceu sua senha?</Link>
