@@ -1,6 +1,8 @@
 import logo from '../html-css-template/imagens/logo-conture.png'
 import foto from '../html-css-template/imagens/foto.jpg';
 import estrela from '../html-css-template/imagens/Star 16.svg';
+import fotoLogado from '../html-css-template/imagens/foto.jpg';
+import fotoDeslogado from '../html-css-template/imagens/icone_pessoa.png';
 import imgPerfil from '../html-css-template/imagens/imagem_fundo.jpg';
 import '../html-css-template/css/Perfil.css'
 import { Link, useNavigate } from "react-router-dom";
@@ -36,7 +38,7 @@ function Perfil() {
                         <div id="perfil_informacao">
                             <div id="perfil_conteudo">
                                 <div id="foto">
-                                    <img src={foto} alt="" />
+                                    <img src={fotoDeslogado} alt="" />
                                 </div>
                                 <div id="perfil_texto">
                                     <div class="inf">

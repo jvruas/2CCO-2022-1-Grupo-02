@@ -4,6 +4,7 @@ import estrela from '../html-css-template/imagens/Star 16.svg';
 import imgPerfil from '../html-css-template/imagens/imagem_fundo.jpg';
 import '../html-css-template/css/Perfil.css'
 import report from '../html-css-template/imagens/report.svg'
+import { Link } from "react-router-dom";
 
 function PerfilSimples() {
 
@@ -36,7 +37,7 @@ function PerfilSimples() {
                                     </div>
                                 </div>
                             </div>
-                            <img src={report} alt="" className='img_reporte'/>
+                        <Link to="/popup-reporte" ><img src={report} alt="" className='img_reporte'/></Link>
                         </div>
                     </div>
                 </div>

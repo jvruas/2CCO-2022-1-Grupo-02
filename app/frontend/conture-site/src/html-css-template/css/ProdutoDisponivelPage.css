@@ -24,7 +24,7 @@
     justify-content: center;
 }
 
-.div_sup{
+.div_sup_disp{
     height: 50px;
     width: 100%;
     display: flex;
@@ -33,7 +33,7 @@
     font-size: 18px;
 }
 
-.div_inf{
+.div_inf_disp{
     height: 400px;
     width: 100%;
     overflow: scroll;

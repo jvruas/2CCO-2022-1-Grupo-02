@@ -1,12 +1,13 @@
 import '../../html-css-template/css/pop-up/PopUpFiltro.css';
-import Filtro from "../../html-css-template/imagens/x-lg 1.svg";
+import lixo from "../../html-css-template/imagens/x-lg 1.svg";
+import { Link } from "react-router-dom";
 
 function PopUpFiltro() {
     return (
-        <>
+        <> <section id='filtro'>
             <div className='div_filtro'>
-                <div className='div_sup'><p>Filtrar Produto</p><img src={Filtro} alt="" /></div>
-                <div className='div_meio'>
+                <div className='div_sup_filtro'><p>Filtrar Produto</p><Link to="/disponivel"><img src={lixo} alt="" /></Link></div>
+                <div className='div_meio_filtro'>
                     <div><input type="checkbox" name="horns" />
                         <label for="horns">Celular</label></div>
                     <div><input type="checkbox" name="horns" />
@@ -23,6 +24,7 @@ function PopUpFiltro() {
                 </div>
                 <div className='div_sup'><button className='btn_filtrar'>Filtrar</button></div>
             </div>
+            </section>
         </>
     )
 }

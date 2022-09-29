@@ -12,11 +12,13 @@ import EditarPerfil from "./pages/EditarPerfil";
 import DesabilitarPerfil from "./pages/DesabilitarPerfil";
 import HistoricoPessoal from "./pages/HistoricoPessoal";
 import Historico from "./pages/Historico";
-import Disponivel from "./pages/DisponivelPessoal";
+import Disponivel from "./pages/Disponivel";
+import DisponivelPessoal from "./pages/DisponivelPessoal";
 import Avaliacao from "./pages/AvaliacaoPessoal";
 import CadastroProduto from "./pages/CadastroProduto";
 import PopUpFiltro from "./pages/pop-up/PopUpFiltro";
 import PopUpReporte from "./pages/pop-up/PopUpReporte";
+import PopUpAvaliacao from "./pages/pop-up/PopUpAvaliacao";
 
 function Rotas() {
     return (
@@ -36,10 +38,13 @@ function Rotas() {
                 <Route path="/historico-pessoal" element={<HistoricoPessoal/>} />
                 <Route path="/historico" element={<Historico/>} />
                 <Route path="/disponivel" element={<Disponivel/>} />
+                <Route path="/disponivel-pessoal" element={<DisponivelPessoal/>} />
                 <Route path="/avaliacao" element={<Avaliacao/>} />
                 <Route path="/cadastro-produto" element={<CadastroProduto/>} />
-                <Route path="/popup" element={<PopUpFiltro/>} />
+                <Route path="/popup" element={<PopUp/>} />
                 <Route path="/popup-reporte" element={<PopUpReporte/>} />
+                <Route path="/popup-avaliacao" element={<PopUpAvaliacao/>} />
+                <Route path="/popup-filtro" element={<PopUpFiltro/>} />
             </Routes>
         </BrowserRouter>
     );

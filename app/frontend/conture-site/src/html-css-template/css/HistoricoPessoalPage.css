@@ -49,7 +49,8 @@
 }
 
 #select_opcoes option{
-    height: 30px;
+    height: 200px;
+    width: 228px;
     border: 1px solid #cbcbcb;
     padding-left: 17px;
     padding-top: 12px;
