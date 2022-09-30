@@ -214,13 +214,13 @@ function Cadastro() {
                             </div>
                         </label>
                         <input id="senha" type="password" name="senha" size="18" maxLength="18" minLength="6" value={valuesUsuario.senha} required onChange={handleChangeUser} />
-                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye4"
+                        <img src={iconSenha} alt="Ícone senha escondida" className="ca-eye" id="eye4"
                             onClick={ocultarSenha} />
                     </div>
                     <div className="divisao input">
                         <label htmlFor="confSenha">Confirmar senha</label>
                         <input type="password" name="confSenha" id="confSenha" />
-                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye5"
+                        <img src={iconSenha} alt="Ícone senha escondida" className="ca-eye" id="eye5"
                             onClick={ocultarSenha2} />
                     </div>
                     <div id="alerta" className="coluna">

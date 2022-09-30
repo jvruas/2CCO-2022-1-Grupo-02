@@ -72,12 +72,12 @@ h1{
     font-size: 22px;
 }
 
-.eye{
+.lo-eye{
     width: 16px;
     height: 16px;
     position: relative;
     top: -30px;
-    left: 90%;
+    left: 95%;
 }
 
 label, button, .link-cadastro, input{
@@ -126,5 +126,7 @@ button:hover{
     .btn-login img{
         left: 25%;
     }
-    
+    .lo-eye{
+        left: 90%;
+    }   
 }

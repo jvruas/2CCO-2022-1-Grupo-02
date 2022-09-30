@@ -22,13 +22,12 @@ function AlterarSenha() {
 
     const navegar = useNavigate();
 
-    // Função para chamar o endPoint para cadastrar o usuário
+    // Função para chamar o endPoint para trocar a senha do usuário
     const [valuesUsuario, setValuesUsuario] = useState(dataUsuario)
 
     function handleChangeUser(event) {
         const { value, name } = event.target
         setValuesUsuario({ ...valuesUsuario, [name]: value, })
-        valuesUsuario.idUsuario = sessionStorage.getItem('idUsuarioLogado');
         console.log(valuesUsuario)
     }
 
@@ -39,9 +38,8 @@ function AlterarSenha() {
         let senhaNova = document.getElementById("senha2");
         var input_senha2 = document.getElementById("senha3");
 
-        
         let json = {
-            idUsuario: valuesUsuario.idUsuario,
+            idUsuario: sessionStorage.getItem('idUsuarioLogado'),
             senhaAtual: valuesUsuario.senhaAtual,
             senhaNova: valuesUsuario.senhaNova
         }

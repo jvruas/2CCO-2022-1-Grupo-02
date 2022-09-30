@@ -88,6 +88,7 @@
     align-items: center;
     justify-content: start;
     border-bottom: black 2px solid;
+    background-color: red;
 }
 
 .avaliação_inf p{
