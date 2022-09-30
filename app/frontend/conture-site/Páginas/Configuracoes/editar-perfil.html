@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Header/Style.css">
+    <link rel="stylesheet" href="editar-perfil.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header id="header_completo">
+        <div id="header_sup">
+            <div class="container_completo">
+                <img src="../img/logo-conture.png" alt="" class="logo">
+                <div id="input_pesquisar">
+                    <input type="text">
+                    <button>
+                        <img src="../img/icon-lupa.png" alt="Lupa de pesquisa">
+                    </button>
+                </div>
+                <div id="div_usuario">
+                    <img src="../img/foto.jpg" alt="" id="img_foto">
+                    <p>Cleiton</p>
+                    <img src="../img/chevron-down 1.svg" alt="" id="img_seta">
+                </div>
+                <div id="div_icones">
+                    <img src="../img/Interesses.svg" alt="">
+                    <img src="../img/Icon mensagem.svg" alt="">
+                    <img src="../img/Icon notificação.svg" alt="">
+                </div>
+                <button id="btn_doacao">
+                    <p>DOAR PRODUTO</p>
+                    <img src="../img/Subtract.svg" alt="">
+                </button>
+            </div>
+        </div>
+        <div id="header_inferior">
+            <div id="div_produto">
+                <p>Produtos</p>
+                <img src="../img/chevron-down 1.svg" alt="" id="img_seta">
+            </div>
+            <div id="div_produtos">
+                <p>Notebook</p>
+                <p>Celular</p>
+                <p>Tablet</p>
+                <p>Desktop</p>
+            </div>
+
+        </div>
+    </header>
+
+    <section>
+        <div class="grid">
+            <div id="ep-parte-um">
+                <div class="ep-opcao ep-opcao-selecionada">
+                    <p>Editar perfil</p>
+                </div>
+                <div class="ep-opcao">
+                    <p>Trocar senha</p>
+                </div>
+                <div class="ep-opcao">
+                    <p>Validação</p>
+                </div>
+            </div>
+            <div id="ep-parte-dois">
+                <div class="ep-titulo">
+                    <h2>EDITAR PERFIL</h2>
+                </div>
+                <div class="ep-campos">
+                    <div class="ep-campo">
+                        <label for="estado-civil">Estado civil</label>
+                        <select name="estado-civil" id="estado-civil"></select>
+                    </div>
+                    <div class="ep-campo">
+                        <label for="telefone">Telefone</label>
+                        <input type="tel" name="telefone" id="telefone">
+                    </div>
+                    <div class="ep-campo">
+                        <label for="genero">Gênero</label>
+                        <select name="genero" id="genero"></select>
+                    </div>
+                    <div class="ep-campo">
+                        <label for="cep">CEP</label>
+                        <input type="number" name="cep" id="cep">
+                        
+                    </div>
+                    <div class="ep-campo">
+                        <label for="escolaridade">Escolaridade</label>
+                        <select name="escolaridade" id="escolaridade"></select>
+                    </div>
+                    <div class="ep-campo">
+                        <label for="situacao-atual">Situação atual</label>
+                        <select name="situacao-atual" id="situacao-atual"></select>
+                    </div>
+                </div>
+                <div class="ep-btns">
+                    <a href=""><div>Desabilitar conta<img src="../img/icon-X.svg" alt=""></div></a>
+                    <button>
+                        <p>SALVAR</p><img src="../img/icon-save.svg" alt="">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</body>
+
+</html>

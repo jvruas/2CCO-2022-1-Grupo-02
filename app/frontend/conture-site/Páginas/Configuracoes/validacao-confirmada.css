@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+section{
+    height: 575px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid{
+    height: 100%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#vl-parte-um{
+    height: 495px;
+    width: 25%;
+    border: 1px solid #AFAFAF;
+}
+
+.vl-opcao{
+    height: 55px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10%;
+    font-size: 16px;
+    color: #FFFFFF;
+    background-color: #5C337F;
+}
+
+.vl-opcao:hover{
+    transition: background-color .7s;
+    background-color: #613a83;
+}
+
+.vl-opcao-selecionada{
+    font-weight: 600;
+    background-color: #4E3069;
+}
+
+#vl-parte-dois{
+    height: 495px;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #AFAFAF;
+}
+
+.vl-titulo{
+    height: 22%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vl-titulo h2{
+    font-size: 24px;
+}
+
+.vl-mensagem{
+    height: 50%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.vl-mensagem img{
+    height: 120px;
+    width: 120px;
+}
+
+.vl-btns{
+    height: 22%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+}
+
+.vl-btns button{
+    height: 44px;
+    width: 179px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 3px;
+    color: #000000;
+    border: 1px solid #AFAFAF;
+    background-color: #FFFFFF;
+}

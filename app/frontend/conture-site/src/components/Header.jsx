@@ -54,6 +54,7 @@ function Header() {
             menu.style.visibility = "hidden";
             setInterval(navegar("/"), 0.1);
             sessionStorage.setItem('idUsuarioLogado', "")
+            sessionStorage.setItem('idEmailLogado', "")
         }).catch((error) => {
             console.log(error)
         })

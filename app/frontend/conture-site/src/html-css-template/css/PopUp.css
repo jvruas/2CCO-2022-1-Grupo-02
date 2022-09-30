@@ -37,13 +37,17 @@ h2{
     background:rgba(0,0,0,.4);
 }
 
-.pop_up{
+.pop_up, .pop_up-dois{
     width: 528px;
     height: 387px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #FFFFFF;
+}
+
+.pop_up-dois{
+    display: none;
 }
 
 #popUp{
@@ -91,6 +95,12 @@ h2{
     background-color: var(--verde-btn);
     border: none;
     border-radius: 3px;
+}
+
+@media (max-width: 768px){
+    #esqueceu_senha{
+        background: #FFFFFF;
+    }
 }
 
 @media (max-width: 500px){

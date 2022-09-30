@@ -21,7 +21,9 @@ function PopUp() {
         }).then((resposta) => {
             sessionStorage.setItem('idUsuario', resposta.data)
             console.log(resposta.status)
-            navegar("/esqueci-senha")
+            document.getElementsByClassName("pop_up").style.display = "none"
+            document.getElementsByClassName("pop_up-dois").style.display = "flex"
+            //navegar("/esqueci-senha")
         }).catch((error) => { 
             console.log(error)
             if(param.value == ""){
@@ -51,6 +53,27 @@ function PopUp() {
                             <input id="email" type="email" name="email" size="80" maxLength="80" required />
                         </div>
                         <div id="alerta" className="coluna">
+                            <img src={iconError} id="alerta-img"/><p id="msg-alerta"></p>
+                        </div>
+                        <div className="divisao centralizado">                          
+                            <button className="btn-popUp" type="submit" onClick={handleSubmit}><p>CONFIRMAR</p><img className="icon" src={iconOk} alt="Ícone de confirmação" /></button>
+                        </div>
+                    </form>
+                </div>
+                <div className="pop_up-dois">
+                    <form id="popUp">
+                        <div className="divisao centralizado">
+                            <h2>REDEFINIR A SENHA</h2>
+                            <Link className="link-fechar" to="/login"><img className="btn_fechar" src={iconClosePop} alt="Ícone fechar" /></Link>
+                        </div>
+                        <div className="paragrafo">
+                            <p>Insira o código que foi enviado para seu e-mail para dar continuidade no processo.</p>
+                        </div>
+                        <div className="divisao input">
+                            <label htmlFor="codigo">Código</label>
+                            <input id="codigo" type="text" name="codigo" size="6" maxLength="6" required />
+                        </div>
+                        <div id="alerta-dois" className="coluna">
                             <img src={iconError} id="alerta-img"/><p id="msg-alerta"></p>
                         </div>
                         <div className="divisao centralizado">                          
