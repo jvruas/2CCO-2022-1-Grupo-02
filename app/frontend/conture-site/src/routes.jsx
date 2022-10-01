@@ -17,6 +17,7 @@ import Avaliacao from "./pages/AvaliacaoPessoal";
 import CadastroProduto from "./pages/CadastroProduto";
 import PopUpFiltro from "./pages/pop-up/PopUpFiltro";
 import PopUpReporte from "./pages/pop-up/PopUpReporte";
+import DescricaoProduto from "./pages/DescricaoProduto";
 
 function Rotas() {
     return (
@@ -40,6 +41,7 @@ function Rotas() {
                 <Route path="/cadastro-produto" element={<CadastroProduto/>} />
                 <Route path="/popup" element={<PopUpFiltro/>} />
                 <Route path="/popup-reporte" element={<PopUpReporte/>} />
+                <Route path="/descricao-produto" element={<DescricaoProduto/>} />
             </Routes>
         </BrowserRouter>
     );

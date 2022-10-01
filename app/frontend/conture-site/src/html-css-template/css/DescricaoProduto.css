@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+.container{
+    width: 85%;
+    margin: auto;
+}
+
+.span-crumbs{
+    margin-right: 10px;
+}
+
+.span-crumbs-dad{
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+.div-image{
+    width: 42%;
+    /* height: 70vh; */
+    margin-left: 91.3021px;
+    margin-top: 30px;
+    float: left;
+}
+
+.card-coment{
+    width: 38%;
+    height: 75vh;
+    background-color: bisque;
+    float: right;
+    margin-right: 91.3021px;
+    margin-top: 30px;
+}
+
+.span-product-title{
+    margin-right: auto;
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+.card-descricao{
+    background-color: aqua;
+    height: 120px;
+    width: 42%;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+
+
+
+
+
+.image{
+    background-color: yellow;
+    width: 100%;
+    height: 75vh
+}
+.image2{
+    background-color: blue;
+    width: 100%;
+    height: 75vh
+}
+
+

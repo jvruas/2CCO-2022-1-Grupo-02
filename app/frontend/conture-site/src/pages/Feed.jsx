@@ -84,6 +84,7 @@ function Feed() {
 
             <h2 className="title-feed">Notebook</h2>
             <Carousel
+                qtdItens={4}
                 card1=
                 {
                     produtosNote.map((itemProduto) => (
@@ -99,6 +100,7 @@ function Feed() {
 
             <h2 className="title-feed">Celular</h2>
             <Carousel
+                qtdItens={4}
                 card1=
                 {
                     produtosCelular.map((itemProduto) => (
@@ -115,6 +117,7 @@ function Feed() {
 
             <h2 className="title-feed">Tablet</h2>
             <Carousel
+                qtdItens={4}
                 card1=
                 {
                     produtosTablet.map((itemProduto) => (
