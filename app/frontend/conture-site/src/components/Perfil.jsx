@@ -57,9 +57,7 @@ function Perfil() {
                                     </div>
                                 </div>
                             </div>
-                            <button>
-                                CADASTRAR PRODUTO
-                            </button>
+                            
                         </div>
                     </div>
                 </div>

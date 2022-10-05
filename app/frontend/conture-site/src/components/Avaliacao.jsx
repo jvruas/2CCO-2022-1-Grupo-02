@@ -17,7 +17,7 @@ function Avaliacao() {
                     <div class="informacaoes">
                         <p>Cleiton</p>
                         <p>São Paulo - SP</p>
-                    </div>i
+                    </div>
                     <div class="estrela">
                         <img src={estrela} alt=""/>
                         <img src={estrela} alt=""/>

@@ -3,7 +3,6 @@ import seta from "../../html-css-template/imagens/arrow.svg";
 import fechar from "../../html-css-template/imagens/x-lg 1.svg";
 import FontAwesomeIcon from "react-fontawesome";
 
-
 function PopUpAvaliacao() {
     return (
         <>
