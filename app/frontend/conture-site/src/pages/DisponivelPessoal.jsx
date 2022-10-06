@@ -5,6 +5,7 @@ import '../html-css-template/css/ProdutoDisponivelPage.css'
 import Footer from "../components/Footer"
 import Card from "../components/ProdutoPessoalCop"
 import Filtro from "../html-css-template/imagens/Filtro.svg";
+import { Link } from "react-router-dom";
 
 function DisponivelPessoal() {
     return (
@@ -15,8 +16,8 @@ function DisponivelPessoal() {
                 <MenuPerfil></MenuPerfil>
 
                 <div className="conteiner-produto">
-                <div className="div_sup"><b><p>Disponíveis</p></b> <img src={Filtro} /></div>
-                    <div className="div_inf">
+                <div className="div_sup_disp"><b><p>Disponíveis</p></b> <Link to="/popup-filtro"><img src={Filtro} /></Link></div>
+                    <div className="div_inf_disp">
                         <div className="div_card">
                             <Card></Card>                          
                         </div>

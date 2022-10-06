@@ -89,6 +89,16 @@ function Cadastro() {
             grauEscolaridade: valuesUsuario.grauEscolaridade,
             fkSituacaoAtual: valuesUsuario.fkSituacaoAtual
         }
+
+        fetch(`https://viacep.com.br/ws/${valuesUsuario.cep}/json/`)
+        .then(res => res.json()).then(data => {
+            console.log(data)
+        })
+        .catch((error) => { 
+            console.log(error)
+            document.getElementById("alerta-img2").style.display = "flex"
+            document.getElementById("msg-alerta2").innerHTML = `CEP inválido`
+        })
         
         if(valuesUsuario.nome == "" || valuesUsuario.sobrenome == "" || valuesUsuario.cpf == "" || valuesUsuario.genero == "" || input_dataNasc.value == "" || valuesUsuario.estadoCivil == "" || valuesUsuario.telefone == "" || valuesUsuario.cep == "" || valuesUsuario.grauEscolaridade == "" || valuesUsuario.fkSituacaoAtual == ""){
             document.getElementById("alerta-img2").style.display = "flex"

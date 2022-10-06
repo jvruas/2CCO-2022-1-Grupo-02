@@ -9,21 +9,30 @@
     text-decoration: none;
 }
 
+#filtro{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index:10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:rgba(0,0,0,.4);
+}
+
 .div_filtro {
-    height: 300px;
+    height: 400px;
     width: 300px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     border-radius: 3px;
-    background-color: red;
-    position: relative;
-    
+    background-color: #FFF;
 }
 
 
-.div_sup {
+.div_sup_filtro {
     height: 50px;
     width: 100%;
     display: flex;
@@ -31,35 +40,39 @@
     justify-content: center;
 }
 
-.div_sup img {
+.div_sup_filtro img {
     height: 20px;
     width: 20px;
-    position: fixed;
-    left: 270px;
-    top: 10px;
+    position: relative;
+    top: 0px;
+    left: 80px;
 }
 
-.div_sup p {
+.div_sup_filtro p {
     font-weight: bold;
 }
 
-.div_meio {
-    height: 200px;
+.div_meio_filtro {
+    height: 250px;
     width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+ 
 }
 
-.div_meio div {
-    height: 33.3px;
+.div_meio_filtro div {
+    height: 20px;
     width: 100%;
     display: flex;
     align-items: center;
 }
 
-.div_meio label {
+.div_meio_filtro label {
     margin-left: 10px;
 }
 
-.div_meio input {
+.div_meio_filtro input {
     height: 20px;
     width: 20px;
 

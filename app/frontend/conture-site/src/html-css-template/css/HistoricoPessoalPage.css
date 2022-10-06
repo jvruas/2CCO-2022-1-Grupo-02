@@ -6,7 +6,7 @@
 }
 
 #hp-section{
-    height: 1100px;
+    height: 1120px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -35,7 +35,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
 }
 
 #select_opcoes{
@@ -45,11 +44,12 @@
     line-height: 1;
     border: 1px solid black;
     border-radius: 10px;
-    text-align: center;
+    text-align: center;     
 }
 
 #select_opcoes option{
-    height: 30px;
+    height: 200px;
+    width: 228px;
     border: 1px solid #cbcbcb;
     padding-left: 17px;
     padding-top: 12px;

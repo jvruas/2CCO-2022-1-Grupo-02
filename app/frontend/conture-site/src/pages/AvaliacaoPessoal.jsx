@@ -17,7 +17,7 @@ function AvaliacaoPessoal() {
                 <Perfil/>
                 <MenuPerfil></MenuPerfil>
                 <div className="conteiner-avaliacao">
-                    <div className="div_superior"><b><p>Avaliação</p></b></div>
+                    <div className="div_superior_ava"><b><p>Avaliação</p></b></div>
                     <div className="div_inferior">
                         <Nota></Nota>
                     </div>

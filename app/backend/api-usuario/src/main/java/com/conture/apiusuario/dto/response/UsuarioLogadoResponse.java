@@ -36,6 +36,11 @@ public class UsuarioLogadoResponse {
 	@Pattern(regexp = "[S,C,$,D,V]")
 	private String estadoCivil;
 
+	@NotBlank
+	@Size(min = 8, max = 8)
+	@Pattern(regexp = "^[0-9]+$")
+	private String cep;
+
 	@PastOrPresent
 	private Date dataCadastro;
 
@@ -62,9 +67,11 @@ public class UsuarioLogadoResponse {
 			String genero,
 			Date dataNascimento,
 			String estadoCivil,
+			String cep,
 			Date dataCadastro,
 			String grauEscolaridade,
 			String cpf,
+
 			String situacaoAtual
 	) {
 		this.idUsuario = idUsuario;
@@ -74,9 +81,11 @@ public class UsuarioLogadoResponse {
 		this.genero = genero;
 		this.dataNascimento = dataNascimento;
 		this.estadoCivil = estadoCivil;
+		this.cep = cep;
 		this.dataCadastro = dataCadastro;
 		this.grauEscolaridade = grauEscolaridade;
 		this.cpf = cpf;
+
 		this.situacaoAtual = situacaoAtual;
 	}
 
@@ -113,6 +122,8 @@ public class UsuarioLogadoResponse {
 		return estadoCivil;
 	}
 
+	public String getCep() { return this.cep; }
+
 	public Date getDataCadastro() {
 		return dataCadastro;
 	}
@@ -126,12 +137,12 @@ public class UsuarioLogadoResponse {
 	}
 
 	@Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof UsuarioLogadoResponse)) return false;
-        UsuarioLogadoResponse that = (UsuarioLogadoResponse) object;
-        return this.idUsuario.equals(that.getIdUsuario());
-    }
+	public boolean equals(Object object) {
+		if (this == object) return true;
+		if (!(object instanceof UsuarioLogadoResponse)) return false;
+		UsuarioLogadoResponse that = (UsuarioLogadoResponse) object;
+		return this.idUsuario.equals(that.getIdUsuario());
+	}
 
 	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
@@ -160,6 +171,8 @@ public class UsuarioLogadoResponse {
 	public void setEstadoCivil(String estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
+
+	public void setCep(String cep) { this.cep = cep; }
 
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
