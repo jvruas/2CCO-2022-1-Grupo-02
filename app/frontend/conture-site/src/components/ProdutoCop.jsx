@@ -4,6 +4,8 @@ import vector from "../html-css-template/imagens/Vector.svg"
 import foto from "../html-css-template/imagens/Rectangle 44.svg"
 
 function Produto(props) {
+
+
     return(
         <div className="container-produto">
             <div className="informacoes-produto">
