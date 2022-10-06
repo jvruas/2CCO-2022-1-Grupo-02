@@ -3,8 +3,25 @@ import Footer from "../components/Footer"
 import "../html-css-template/css/DescricaoProduto.css"
 import CarouselProdutos from "../components/CarouselProdutos"
 import Comentarios from "../components/Comentarios"
+import apiProdutos from "../apiProduto"
+import apiUsuario from "../apiUsuario"
+import { useEffect, useState } from "react";
 
 function DescricaoProduto(){
+    const [produto, setProduto] = useState([]);
+    const [usuario, setUsuario] = useState([]);
+
+    useEffect(() => {
+        apiProdutos.get(`/produtos/${sessionStorage.getItem("idProduto")}`).then((resposta) => {
+            setProduto(resposta.data)
+        })
+
+        apiUsuario.get(`/usuarios/${sessionStorage.getItem("idUsuario")}`).then((resposta) => {
+            setUsuario(resposta.data)
+        })
+    })
+
+
     return(
         <>
             <Header></Header>
@@ -29,8 +46,31 @@ function DescricaoProduto(){
                 </span>
             </div>
             
-            <div className="container">
-                <div className="card-descricao">
+            <div className="container more-info-description-product">
+                <div className="block-left">
+                    <div className="card-description">
+                        <div className="title-description">
+                            <b>Descrição</b>
+                        </div>
+                    </div>
+                    <div className="button-i"> 
+                    </div>
+                </div>
+                <div className="card-info-user">
+                    <div className="div-name-user">
+                        <div className="infos-user">
+                            <div className="photo-user">
+                            
+                            </div>
+                            <b className="name-user">Patrícia</b>
+                        </div>
+                    </div>
+                    <div className="div-location-user">
+
+                    </div>
+                    <div className="div-numbers-user">
+
+                    </div>
                 </div>
             </div>
         
