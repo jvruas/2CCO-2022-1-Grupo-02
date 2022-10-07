@@ -129,4 +129,25 @@
     margin-left: 15px;
 }
 
+.text-description{
+    padding-top: 5px;
+    margin-left: 15px;
+}
+
+.div-produtos-doacao{
+    float: left;
+    margin-left: 20px;
+    margin-right: 70px;
+    padding-top: 25px;
+}
+
+.div-produtos-doados{
+    float: left;
+    padding-top: 25px;
+    margin-right: 50px;
+}
+
+.div-cadastro{
+    padding-top: 25px;
+}
 

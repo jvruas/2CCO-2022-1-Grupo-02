@@ -7,19 +7,38 @@ import apiProdutos from "../apiProduto"
 import apiUsuario from "../apiUsuario"
 import { useEffect, useState } from "react";
 
+
+var produtosDoacao = 0;
+var produtosDoados = 0;
+
 function DescricaoProduto(){
     const [produto, setProduto] = useState([]);
     const [usuario, setUsuario] = useState([]);
 
+    
     useEffect(() => {
-        apiProdutos.get(`/produtos/${sessionStorage.getItem("idProduto")}`).then((resposta) => {
+        apiProdutos.get(`/${sessionStorage.getItem("idProduto")}`).then((resposta) => {
             setProduto(resposta.data)
+            console.log(resposta.data)
         })
 
-        apiUsuario.get(`/usuarios/${sessionStorage.getItem("idUsuario")}`).then((resposta) => {
+        apiUsuario.get(`/${sessionStorage.getItem("idDoador")}`).then((resposta) => {
             setUsuario(resposta.data)
+            console.log(resposta.data)
         })
-    })
+
+        apiProdutos.get(`/disponiveis?idDoador=${sessionStorage.getItem("idDoador")}`).then((resposta) => {
+            console.log(resposta.data)
+            for(var i=0;i<resposta.data.length;i++){
+                if(resposta.data[i].dataConclusao==null){
+                    produtosDoacao++;
+                }
+                else{
+                    produtosDoados++;
+                }
+            }
+        })
+    },[])
 
 
     return(
@@ -29,9 +48,9 @@ function DescricaoProduto(){
                 <span class="span-crumbs-dad">
                     <span class="span-crumbs">Produtos</span>
                     <span class="span-crumbs">></span>
-                    <span class="span-crumbs">Notebook</span> 
+                    <span class="span-crumbs">{produto.categoriaProduto}</span> 
                     <span class="span-crumbs">></span>
-                    <span class="span-crumbs"><b>Nome notebook</b></span>
+                    <span class="span-crumbs"><b>{produto.nome}</b></span>
                 </span>
             </div>
 
@@ -42,7 +61,7 @@ function DescricaoProduto(){
 
             <div class="container product-title">
                 <span class="span-product-title">
-                   <b> Nome Notebook - ahhsahs</b>
+                   <b>{produto.nome}</b>
                 </span>
             </div>
             
@@ -51,6 +70,9 @@ function DescricaoProduto(){
                     <div className="card-description">
                         <div className="title-description">
                             <b>Descrição</b>
+                        </div>
+                        <div className="text-description">
+                            <p>{produto.descricao}</p>
                         </div>
                     </div>
                     <div className="button-i"> 
@@ -62,14 +84,25 @@ function DescricaoProduto(){
                             <div className="photo-user">
                             
                             </div>
-                            <b className="name-user">Patrícia</b>
+                            <b className="name-user">{usuario.nome}</b>
                         </div>
                     </div>
                     <div className="div-location-user">
 
                     </div>
                     <div className="div-numbers-user">
-
+                        <div className="div-produtos-doacao">
+                            <h3>Para doação</h3>
+                            <h2>{produtosDoacao}</h2>
+                        </div>
+                        <div className="div-produtos-doados">
+                            <h3>Doados</h3>
+                            <h2>{produtosDoados}</h2>
+                        </div>
+                        <div className="div-cadastro">
+                            <h3>Cadastrado desde</h3>
+                            <h2>{usuario.dataCadastro.substring(0,10)}</h2>
+                        </div>
                     </div>
                 </div>
             </div>
