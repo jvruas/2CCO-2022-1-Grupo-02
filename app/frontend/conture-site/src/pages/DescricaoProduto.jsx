@@ -6,6 +6,7 @@ import Comentarios from "../components/Comentarios"
 import apiProdutos from "../apiProduto"
 import apiUsuario from "../apiUsuario"
 import { useEffect, useState } from "react";
+import apiMensagemGrupo from "../apiMensagemGrupo"
 
 
 var produtosDoacao = 0;
@@ -14,6 +15,7 @@ var produtosDoados = 0;
 function DescricaoProduto(){
     const [produto, setProduto] = useState([]);
     const [usuario, setUsuario] = useState([]);
+    const [mensagem, setMensagem] = useState([]);
 
     
     useEffect(() => {
@@ -25,6 +27,11 @@ function DescricaoProduto(){
         apiUsuario.get(`/${sessionStorage.getItem("idDoador")}`).then((resposta) => {
             setUsuario(resposta.data)
             console.log(resposta.data)
+        })
+
+        apiMensagemGrupo.get(`/${sessionStorage.getItem("idProduto")}`).then((resposta) => {
+            setMensagem(resposta.data)
+            console.log("teste", resposta.data);
         })
 
         apiProdutos.get(`/disponiveis?idDoador=${sessionStorage.getItem("idDoador")}`).then((resposta) => {
@@ -54,6 +61,22 @@ function DescricaoProduto(){
                 </span>
             </div>
 
+            {
+            // console.log("mensagemPrincipal", mensagem[0][0].mensagem)
+            
+            }
+
+            {
+                mensagem.map((itemMensagem) => (
+                    console.log("mensagemPrincipalDoMap", itemMensagem[0].mensagem)
+                ))
+            }
+
+{
+                mensagem.map((itemMensagem) => (
+                    console.log("mensagemRespostaDoMap", itemMensagem)
+                ))
+            }
             
             <CarouselProdutos qtdItens={1}></CarouselProdutos>
             
@@ -101,7 +124,7 @@ function DescricaoProduto(){
                         </div>
                         <div className="div-cadastro">
                             <h3>Cadastrado desde</h3>
-                            <h2>{usuario.dataCadastro.substring(0,10)}</h2>
+                            {/* <h2>{usuario.dataCadastro.substring(0,10)}</h2> */}
                         </div>
                     </div>
                 </div>

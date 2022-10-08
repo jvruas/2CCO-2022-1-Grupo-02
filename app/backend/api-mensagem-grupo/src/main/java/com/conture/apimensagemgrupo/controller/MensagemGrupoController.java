@@ -23,6 +23,7 @@ import static org.springframework.http.ResponseEntity.*;
 
 @RestController
 @RequestMapping("/mensagem-grupo")
+@CrossOrigin(allowedHeaders = "*")
 public class MensagemGrupoController {
 
     @Autowired
@@ -35,7 +36,7 @@ public class MensagemGrupoController {
 	private ProdutoClient produtoClient;
 
     @PostMapping()
-    public ResponseEntity adicionarPergunta(@RequestBody @Valid MensagemGrupoRequest mensagem) {
+    public ResponseEntity adicionarPergunta(@RequestBody MensagemGrupoRequest mensagem) {
 
 		try {
 			Integer fkUsuario = this.usuarioClient.getIdUsuarioLogado(mensagem.getFkUsuario());
@@ -81,8 +82,8 @@ public class MensagemGrupoController {
 		return status(201).build();
     }
 
-	@GetMapping
-	public ResponseEntity<List<Object>> listarMensagens(@RequestParam Integer fkProdutoDoacao){
+	@GetMapping("/{fkProdutoDoacao}")
+		public ResponseEntity<List<Object>> listarMensagens(@PathVariable Integer fkProdutoDoacao){
 
 		try {
 			Optional<ProdutoResposta> fkProduto = this.produtoClient.getProdutoById(fkProdutoDoacao);
