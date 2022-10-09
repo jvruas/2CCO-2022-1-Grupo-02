@@ -34,9 +34,9 @@ import java.util.*;
 
 import static org.springframework.http.ResponseEntity.status;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/produtos")
+@CrossOrigin(allowedHeaders = "*")
 public class ProdutoController {
 	@Autowired
 	private ProdutoRepository produtoRepository;
