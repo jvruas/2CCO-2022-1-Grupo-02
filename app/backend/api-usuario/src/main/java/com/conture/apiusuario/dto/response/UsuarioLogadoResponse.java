@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.Objects;
 
 public class UsuarioLogadoResponse {
 	@NotNull
@@ -142,6 +143,11 @@ public class UsuarioLogadoResponse {
 		if (!(object instanceof UsuarioLogadoResponse)) return false;
 		UsuarioLogadoResponse that = (UsuarioLogadoResponse) object;
 		return this.idUsuario.equals(that.getIdUsuario());
+	}
+
+	@Override
+	public int hashCode() {
+		return this.idUsuario;
 	}
 
 	public void setIdUsuario(Integer idUsuario) {
