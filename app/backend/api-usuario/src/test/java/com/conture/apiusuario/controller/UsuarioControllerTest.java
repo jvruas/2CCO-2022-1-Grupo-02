@@ -83,56 +83,56 @@ class UsuarioControllerTest {
 		return u;
 	}
 
-	private UsuarioLogadoResponse createUsuarioLogado(){
-		UsuarioLogadoResponse u = new UsuarioLogadoResponse(
-				1,
-				"teste@hotmail.com",
-				"Igor",
-				"Sérgio",
-				"M",
-				new Date(),
-				"S",
-				new Date(),
-				"A",
-				"46002259881",
-				"D"
-				);
+//	private UsuarioLogadoResponse createUsuarioLogado(){
+//		UsuarioLogadoResponse u = new UsuarioLogadoResponse(
+//				1,
+//				"teste@hotmail.com",
+//				"Igor",
+//				"Sérgio",
+//				"M",
+//				new Date(),
+//				"S",
+//				new Date(),
+//				"A",
+//				"46002259881",
+//				"D"
+//				);
+//
+//		return u;
+//	}
 
-		return u;
-	}
+//	@Test
+//	@DisplayName("Verificando se o resultado ira retornar 404")
+//	void loginRetorno404() {
+//
+//		when(usuarioRepository.getByEmailAndSenha("teste@hotmail.com", "teste1234")).thenReturn(Optional.ofNullable(null));
+//		ResponseEntity<UsuarioLogadoResponse> response = controller.login(mock(UsuarioLoginRequest.class));
+//
+//		assertEquals(404, response.getStatusCodeValue());
+//	}
 
-	@Test
-	@DisplayName("Verificando se o resultado ira retornar 404")
-	void loginRetorno404() {
-
-		when(usuarioRepository.getByEmailAndSenha("teste@hotmail.com", "teste1234")).thenReturn(Optional.ofNullable(null));
-		ResponseEntity<UsuarioLogadoResponse> response = controller.login(mock(UsuarioLoginRequest.class));
-
-		assertEquals(404, response.getStatusCodeValue());
-	}
-
-	@Test
-	@DisplayName("Vericando se usuario está deslogado retorna 404")
-	void logoffRetorna404() {
-		Usuario u = mock(Usuario.class);
-		Optional<UsuarioLogadoResponse> usuarioLogado = (GerenciadorUsuario.buscaUsuarioLogado(u.getIdUsuario()));
-		ResponseEntity<Integer> usuario = controller.adicionarUsuario(mock(UsuarioCadastroRequest.class));
-		when(usuarioRepository.findByIdUsuario(1)).thenReturn(mock(UsuarioCadastroRequest.class));
-		ResponseEntity<UsuarioLogadoResponse> response = controller.login(mock(UsuarioLoginRequest.class));
-		assertEquals(404, response.getStatusCodeValue());
-	}
+//	@Test
+//	@DisplayName("Vericando se usuario está deslogado retorna 404")
+//	void logoffRetorna404() {
+//		Usuario u = mock(Usuario.class);
+//		Optional<UsuarioLogadoResponse> usuarioLogado = (GerenciadorUsuario.buscaUsuarioLogado(u.getIdUsuario()));
+//		ResponseEntity<Integer> usuario = controller.adicionarUsuario(mock(UsuarioCadastroRequest.class));
+//		when(usuarioRepository.findByIdUsuario(1)).thenReturn(mock(UsuarioCadastroRequest.class));
+//		ResponseEntity<UsuarioLogadoResponse> response = controller.login(mock(UsuarioLoginRequest.class));
+//		assertEquals(404, response.getStatusCodeValue());
+//	}
 
 
-	@Test
-	@DisplayName("Verificando se usuario deslogado retorna 404")
-	void existsUsuarioLogado404() {
-		Usuario u = mock(Usuario.class);
-		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(u.getIdUsuario());
-		ResponseEntity<Integer> usuario = controller.adicionarUsuario(mock(UsuarioCadastroRequest.class));
-		when(usuarioRepository.findByIdUsuario(1)).thenReturn(mock(UsuarioCadastroRequest.class));
-		ResponseEntity response = controller.login(mock(UsuarioLoginRequest.class));
-		assertEquals(404, response.getStatusCodeValue());
-	}
+//	@Test
+//	@DisplayName("Verificando se usuario deslogado retorna 404")
+//	void existsUsuarioLogado404() {
+//		Usuario u = mock(Usuario.class);
+//		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(u.getIdUsuario());
+//		ResponseEntity<Integer> usuario = controller.adicionarUsuario(mock(UsuarioCadastroRequest.class));
+//		when(usuarioRepository.findByIdUsuario(1)).thenReturn(mock(UsuarioCadastroRequest.class));
+//		ResponseEntity response = controller.login(mock(UsuarioLoginRequest.class));
+//		assertEquals(404, response.getStatusCodeValue());
+//	}
 
 
 
