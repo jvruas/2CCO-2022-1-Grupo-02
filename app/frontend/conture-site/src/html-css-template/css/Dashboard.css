@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+.side-bar{
+    background-color: #7724BE;
+    height: 100vh;
+    width: 15%;
+    position: fixed;
+}
+
+.div-image{
+    text-align: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 90px;
+    margin-bottom: 20px;
+}
+
+.div-image img{
+    width: 90px;
+    height: 90px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.div-title{
+    color: white;
+    text-align: center;
+}
