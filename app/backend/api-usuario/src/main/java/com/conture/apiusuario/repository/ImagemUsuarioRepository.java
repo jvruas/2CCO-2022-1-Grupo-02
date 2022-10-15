@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 public interface ImagemUsuarioRepository extends JpaRepository<ImagemUsuario, Integer> {
-
 	void deleteByUsuarioIdUsuario(Integer idUsuario);
 
 	Integer countByUsuarioIdUsuario(Integer idUsuario);

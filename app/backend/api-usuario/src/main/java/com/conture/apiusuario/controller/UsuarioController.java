@@ -4,6 +4,7 @@ import com.conture.apiusuario.dto.request.*;
 import com.conture.apiusuario.entity.*;
 import com.conture.apiusuario.repository.*;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
+import com.conture.apiusuario.services.S3Service;
 import com.conture.apiusuario.utility.Email;
 import com.conture.apiusuario.utility.GerenciadorUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 import static org.springframework.http.ResponseEntity.*;
@@ -34,10 +36,13 @@ public class UsuarioController {
 	@Autowired
 	private DesligamentoContaRepository desligamentoContaRepository;
 
+	@Autowired
+	private S3Service s3Service;
+
 	private Email email = new Email();
 
 
-//	TODO:TESTES
+	//	TODO:TESTES
 	@PostMapping
 	public ResponseEntity<Integer> adicionarUsuario(@RequestBody @Valid UsuarioCadastroRequest novoUsuario) {
 		if (!this.situacaoAtualRepository.existsById(novoUsuario.getFkSituacaoAtual())
@@ -60,7 +65,7 @@ public class UsuarioController {
 		return status(201).body(this.usuarioRepository.getIdUserByCpf(novoUsuario.getCpf()).get());
 	}
 
-//TODO:TESTES
+	//TODO:TESTES
 	@PostMapping("/login")
 	public ResponseEntity<UsuarioLogadoResponse> login(@RequestBody @Valid UsuarioLoginRequest usuario) {
 		Optional<UsuarioLogadoResponse> usuarioPesquisado = this.usuarioRepository.getByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
@@ -79,7 +84,6 @@ public class UsuarioController {
 
 		return status(201).body(usuarioPesquisado.get());
 	}
-
 
 
 	//TODO:
@@ -241,7 +245,7 @@ public class UsuarioController {
 	public ResponseEntity enviarEmail(@RequestParam String emailDestinatario,
 									  @RequestParam Integer idUsuario) throws FileNotFoundException {
 		Usuario usuario = usuarioRepository.getById(idUsuario);
-		if (usuario.getVerificado()){
+		if (usuario.getVerificado()) {
 			return status(400).body("usuario ja validado");
 		}
 		String codigo = email.gerarCodigo();
@@ -254,10 +258,10 @@ public class UsuarioController {
 
 	@PostMapping("conta/validacao-codigo")
 	public ResponseEntity validarUsuario(@RequestParam Integer idUsuario,
-										 @RequestParam String codigo){
+										 @RequestParam String codigo) {
 		Usuario usuario = usuarioRepository.getById(idUsuario);
 		String codigoGerado = usuario.getCodigo();
-		if (codigoGerado.equals(codigo)){
+		if (codigoGerado.equals(codigo)) {
 			usuario.setVerificado(true);
 			usuarioRepository.save(usuario);
 			return status(200).build();
@@ -318,7 +322,7 @@ public class UsuarioController {
 			return status(404).build();
 		}
 
-		if (usuario.get().getSenha().equals(novaSenha)){
+		if (usuario.get().getSenha().equals(novaSenha)) {
 			return status(409).build();
 		}
 
@@ -404,7 +408,6 @@ public class UsuarioController {
 		return status(200).build();
 	}
 
-
 	@GetMapping(value = "/{idUsuario}/imagem", produces = "image/jpeg")
 	public ResponseEntity<byte[]> getImagem(
 			@PathVariable @Min(1) Integer idUsuario,
@@ -419,7 +422,6 @@ public class UsuarioController {
 		return status(200).body(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
 	}
 
-
 	@DeleteMapping("/{idUsuario}/imagem")
 	public ResponseEntity deletarImagem(
 			@PathVariable @Min(1) Integer idUsuario,
@@ -432,6 +434,74 @@ public class UsuarioController {
 		}
 
 		this.imagemUsuarioRepository.deleteById(idImagemUsuario.get());
+
+		return status(200).build();
+	}
+
+
+	//FIXME:--------------------------------------------------------------------
+
+	@PostMapping(value = "/test", consumes = "image/jpeg")
+	public ResponseEntity postImagemS3(
+			@RequestParam String bucketName,
+			@RequestParam String objectName,
+			@RequestBody byte[] image
+	) {
+		if (this.s3Service.existsObject(bucketName, objectName)) {
+			return status(409).build();
+		}
+
+		this.s3Service.putObject(bucketName, objectName, image);
+
+		return status(200).build();
+	}
+
+	@GetMapping(value = "/test", produces = "image/jpeg")
+	public ResponseEntity<byte[]> getImagemS3(
+			@RequestParam String bucketName,
+			@RequestParam String objectName
+	) {
+		if (!this.s3Service.existsObject(bucketName, objectName)) {
+			return status(404).build();
+		}
+
+		byte[] image;
+
+		try {
+			image = this.s3Service.getObject(bucketName, objectName);
+		} catch (IOException ioException) {
+			return status(503).build();
+		}
+
+		return status(200).body(image);
+	}
+
+	@PutMapping(value = "/test", consumes = "image/jpeg")
+	public ResponseEntity putImagemS3(
+			@RequestParam String bucketName,
+			@RequestParam String objectName,
+			@RequestBody byte[] image
+	) {
+		if (!this.s3Service.existsObject(bucketName, objectName)) {
+			return status(404).build();
+		}
+
+		this.s3Service.putObject(bucketName, objectName, image);
+
+		return status(200).build();
+	}
+
+
+	@DeleteMapping("/test")
+	public ResponseEntity deleteImagemS3(
+			@RequestParam String bucketName,
+			@RequestParam String objectName
+	) {
+		if (!this.s3Service.existsObject(bucketName, objectName)) {
+			return status(404).build();
+		}
+
+		this.s3Service.deleteObject(bucketName, objectName);
 
 		return status(200).build();
 	}
