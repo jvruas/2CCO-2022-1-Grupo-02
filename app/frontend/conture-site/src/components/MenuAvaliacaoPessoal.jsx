@@ -10,7 +10,7 @@ function MenuAvalicao() {
             <div id="menu">
 
                 <div className='sub-menu'>
-                    <Link to="/disponivel"><p>Disponíveis</p></Link>
+                    <Link to="/disponivel-pessoal"><p>Disponíveis</p></Link>
                 </div>
                 <div className='sub-menu'>
                     <Link to="/historico-pessoal"><p>Histórico</p></Link>

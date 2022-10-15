@@ -6,20 +6,55 @@ import Footer from "../components/Footer"
 import Card from "../components/ProdutoPessoalCop"
 import Filtro from "../html-css-template/imagens/Filtro.svg";
 import { Link } from "react-router-dom";
-
+import { useState, useEffect } from "react";
+import apiProdutos from "../apiProduto.js"
 function DisponivelPessoal() {
+
+
+    const [produtos, setProdutos] = useState([]);
+    // const [usuarioImg, setUsuarioImg] = useState([]);
+
+    useEffect
+    (() => {
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+        apiProdutos.get(`disponiveis?idDoador=${idUsuario}`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setProdutos(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
+    
+    // useEffect(() =>{
+    //     let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+    //     async function buscarProdutos(){
+    //         const resposta = await apiProdutos.get(`/disponiveis?idDoador=${idUsuario}`);
+    //         setProdutos(resposta.data);
+    //         console.log("OLHA O QUE VEIO DA API!!", resposta.data)
+    //     }       
+    //     buscarProdutos();
+    // }, []);
+
     return (
         <>
             <Header></Header>
             <section id="disp-section">
                 <Perfil></Perfil>
                 <MenuPerfil></MenuPerfil>
-
                 <div className="conteiner-produto">
                 <div className="div_sup_disp"><b><p>Disponíveis</p></b> <Link to="/popup-filtro"><img src={Filtro} /></Link></div>
                     <div className="div_inf_disp">
                         <div className="div_card">
-                            <Card></Card>                          
+                            {produtos.map((prod) => (
+                            <Card 
+                            visualizacao={prod.quantidadeVisualizacao}
+                            nome={prod.nome}
+                             />
+                             
+                            ))}
+                                        
                         </div>
                     </div>
                 </div>

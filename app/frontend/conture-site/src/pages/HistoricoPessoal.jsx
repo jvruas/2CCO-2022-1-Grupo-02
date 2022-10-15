@@ -1,48 +1,113 @@
 
-import Header from "../components/Header"
-import Perfil from "../components/Perfil"
-import MenuPerfil from "../components/MenuHistoricoPessoal"
-import '../html-css-template/css/Style.css'
-import '../html-css-template/css/HistoricoPessoalPage.css'
-import Footer from "../components/Footer"
-import Historico from "../components/HistoricoMaior"
+// import Header from "../components/Header"
+// import Perfil from "../components/Perfil"
+// import MenuPerfil from "../components/MenuHistoricoPessoal"
+// import '../html-css-template/css/Style.css'
+// import '../html-css-template/css/HistoricoPessoalPage.css'
+// import Footer from "../components/Footer"
+// import Historico from "../components/HistoricoMaior"
+// import { useState, useEffect } from "react";
+// import apiProdutos from "../apiProduto"
+
+// function HistoricoDonatario() {
+
+//     const [historico, setHistorico] = useState([]);
+//     const [usuario, setUsuario] = useState([]);
+//     // const [usuarioImg, setUsuarioImg] = useState([]);
+
+//     useEffect(() => {
+//         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+
+//         if(select_opcoes.value == 0){
+//         apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
+//             try {
+//                 console.log(resposta.data)
+//                 setHistorico(resposta.data)
+//             } catch (error) {
+//                 console.log(error)
+//             }
+//         })
+//     }
 
 
+//     if(select_opcoes.value == 0){
+//         apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
+//             try {
+//                 console.log(resposta.data)
+//                 setHistorico(resposta.data)
+//             } catch (error) {
+//                 console.log(error)
+//             }
+//         })
+//     }
 
-function HistoricoDonatario() {
-    return (
-        <>
-                <Header></Header>
-                 <section id="hp-section">
-                <Perfil></Perfil>
-                <MenuPerfil></MenuPerfil>
-                <div id="conteiner">
-                    <div id="div_sup">
-                        <b><p>Histórico</p></b>
 
-                        <div id="div_filtro"><p>Filtrar por</p>
+//     if(select_opcoes.value == 0){
+//         apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
+//             try {
+//                 console.log(resposta.data)
+//                 setHistorico(resposta.data)
+//             } catch (error) {
+//                 console.log(error)
+//             }
+//         })
+//     }
 
-                            <select name="" id="select_opcoes">
-                                <option value="">Todos</option>
-                                <option value="">Processo</option>
-                                <option value="">Doados</option>
-                                <option value="">Recebidos</option>
-                            </select>
-                        </div>
+    
+//     }, [])
 
-                    </div>
-                    <div className="div_historicos">
-                        <Historico></Historico>
-                        <Historico></Historico>
-                        <Historico></Historico>
-                        <Historico></Historico>
+//     useEffect(() => {
+//         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+//         apiUsuario.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
+//             try {
+//                 console.log(resposta.data)
+//                 setUsuario(resposta.data)
+//             } catch (error) {
+//                 console.log(error)
+//             }
+//         })
+//     }, [])
+
+
+//     return (
+//         <>
+//                 <Header></Header>
+//                  <section id="hp-section">
+//                 <Perfil></Perfil>
+//                 <MenuPerfil></MenuPerfil>
+//                 <div id="conteiner">
+//                     <div id="div_sup">
+//                         <b><p>Histórico</p></b>
+
+//                         <div id="div_filtro"><p>Filtrar por</p>
+
+//                             <select name="" id="select_opcoes">
+//                                 <option value="0">Todos</option>
+//                                 <option value="1">Processo</option>
+//                                 <option value="2">Doados</option>
+//                                 <option value="3">Recebidos</option>
+//                             </select>
+//                         </div>
+
+//                     </div>
+//                     <div className="div_historicos">
+//                     {historico.map((historico)=>(
+//                             <Historico 
+//                             tipo={historico.tipo}
+//                             tipoEquipamento={historico.tipoEquipamento}
+//                             equipamento={historico.nome}
+//                             negociante={historico.negociante}
+//                             data={historico.dataConclusao}
+//                              />
+//                             ))}
                         
-                    </div>
-                </div>
-                </section>
-                <Footer></Footer>
-        </>
-    )
-}
+                        
+//                     </div>
+//                 </div>
+//                 </section>
+//                 <Footer></Footer>
+//         </>
+//     )
+// }
 
-export default HistoricoDonatario;
+// export default HistoricoDonatario;
