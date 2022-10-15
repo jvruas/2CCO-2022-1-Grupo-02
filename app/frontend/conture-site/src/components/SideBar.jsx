@@ -8,7 +8,7 @@ function SideBar(){
                 <div className="div-image">
                     <img src={logo} />
                 </div>
-                <div className="div-title">
+                <div className="div-title-side-bar">
                     <b>Administrador</b>
                 </div>
             </div>
