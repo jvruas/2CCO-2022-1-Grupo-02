@@ -9,24 +9,37 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiUsuario from "../apiUsuario.js";
 
+
 function Perfil() {
+
+    const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
     const navegar = useNavigate();
 
     const [usuario, setUsuario] = useState([]);
+    const [endereco, setEndereco] = useState([]);
     // const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect(() => {
         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-        apiUsuario.get(`/${idUsuario}`).then((resposta) => {
+        apiUsuario.get(`/${idUsuario}`).then((usuarioResposta) => {
             try {
-                console.log(resposta.data)
-                setUsuario(resposta.data)
+                console.log(usuarioResposta.data)
+                setUsuario(usuarioResposta.data)
+                fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
+                .then(res => res.json()).then(data => {
+                    console.log(data)
+                    setEndereco(data)
+                })
             } catch (error) {
                 console.log(error)
             }
         })
     }, [])
+
+    
+  let dataCad = new Date(usuario.dataCadastro);
+    
 
     return (
         <>
@@ -41,15 +54,15 @@ function Perfil() {
                                     <img src={fotoDeslogado} alt="" />
                                 </div>
                                 <div id="perfil_texto">
-                                    <div class="inf">
+                                <div class="inf">
                                         <b>
                                             <p>{usuario.nome}</p>
                                         </b>
-                                        <p>#0001</p>
+                                        <p>#0{usuario.idUsuario}</p>
                                     </div>
                                     <div class="inf">
-                                        <p>Guarulhos - SP</p>
-                                        <p>Desde 10/2021</p>
+                                        <p>{endereco.localidade} - {endereco.uf}</p>
+                                        <p>Desde {months[dataCad.getMonth()]}/{dataCad.getFullYear()}</p>
                                     </div>
                                     <div>
                                         <img src={estrela} alt="" />

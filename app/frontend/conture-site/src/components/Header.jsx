@@ -129,7 +129,7 @@ function Header() {
                                         </div>
                                     </div>
                                     <div id="menuzinho-logado">
-                                        <p><Link className="he-link-p" to="/disponivel">Minha conta</Link></p>
+                                        <p><Link className="he-link-p" to="/disponivel-pessoal">Minha conta</Link></p>
                                         <p><Link className="he-link-p" to="/editar-perfil">Configurações</Link></p>
                                         <button type="button" onClick={logoff}>SAIR</button>
                                     </div>

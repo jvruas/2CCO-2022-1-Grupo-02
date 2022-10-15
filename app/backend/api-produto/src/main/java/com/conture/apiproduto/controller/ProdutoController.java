@@ -311,9 +311,9 @@ public class ProdutoController {
 
 		List<ProdutoDoacaoResponse> listaProduto = this.produtoRepository.getAllByStatusNaoDoadoC();
 
-		if (listaProduto.isEmpty()) {
-			return status(204).build();
-		}
+			if (listaProduto.isEmpty()) {
+				return status(204).build();
+			}
 
 		Iterator<ProdutoDoacaoResponse> iterator = new AscendingListIterator(listaProduto);
 

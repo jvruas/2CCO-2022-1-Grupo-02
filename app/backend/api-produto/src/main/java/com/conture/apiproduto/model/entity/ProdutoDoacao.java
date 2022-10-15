@@ -98,7 +98,6 @@ public class ProdutoDoacao {
 			Boolean defeito,
 			Boolean entrega,
 			CategoriaProduto categoriaProduto
-
 	) {
 		this.fkDoador = fkDoador;
 		this.nome = nome;

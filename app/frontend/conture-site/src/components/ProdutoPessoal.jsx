@@ -3,6 +3,9 @@ import trash from "../html-css-template/imagens/trash 2.svg"
 import vector from "../html-css-template/imagens/Vector.svg"
 
 function Produto(props) {
+
+    
+
     return(
         <div className="container-produto">
             <div className="informacoes-produto">

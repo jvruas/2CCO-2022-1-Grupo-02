@@ -14,7 +14,8 @@ import HistoricoPessoal from "./pages/HistoricoPessoal";
 import Historico from "./pages/Historico";
 import Disponivel from "./pages/Disponivel";
 import DisponivelPessoal from "./pages/DisponivelPessoal";
-import Avaliacao from "./pages/AvaliacaoPessoal";
+import Avaliacao from "./pages/Avaliacao";
+import AvaliacaoPessoal from "./pages/AvaliacaoPessoal";
 import CadastroProduto from "./pages/CadastroProduto";
 import PopUpFiltro from "./pages/pop-up/PopUpFiltro";
 import PopUpReporte from "./pages/pop-up/PopUpReporte";
@@ -40,6 +41,7 @@ function Rotas() {
                 <Route path="/disponivel" element={<Disponivel/>} />
                 <Route path="/disponivel-pessoal" element={<DisponivelPessoal/>} />
                 <Route path="/avaliacao" element={<Avaliacao/>} />
+                <Route path="/avaliacao-pessoal" element={<AvaliacaoPessoal/>} />
                 <Route path="/cadastro-produto" element={<CadastroProduto/>} />
                 <Route path="/popup" element={<PopUp/>} />
                 <Route path="/popup-reporte" element={<PopUpReporte/>} />

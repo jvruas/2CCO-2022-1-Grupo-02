@@ -1,6 +1,6 @@
 import '../html-css-template/css/HistoricoMaior.css'
 
-function HistoricoMaior(){
+function HistoricoMaior(props){
     return (
         <>
         <div class="historico">
@@ -13,11 +13,11 @@ function HistoricoMaior(){
         </div>
 
         <div class="historico_inf">
-            <div>exemplo</div>
-            <div> exemplo</div>
-            <div>exemplo</div>
-            <div> exemplo</div>
-            <div>10/04/2003</div>
+            <div>{props.tipo}</div>
+            <div>{props.tipoEquipamento}</div>
+            <div>{props.equipamento}</div>
+            <div>{props.negociante}</div>
+            <div>{props.data}</div>
         </div>
     </div>
     </>

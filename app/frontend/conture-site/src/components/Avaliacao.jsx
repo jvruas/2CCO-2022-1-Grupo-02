@@ -2,7 +2,8 @@ import estrela from '../html-css-template/imagens/Star 7.svg';
 import foto from '../html-css-template/imagens/foto.jpg';
 import '../html-css-template/css/avaliacao.css'
 
-function Avaliacao() {
+
+function Avaliacao(props) {
 
     return (
         <>
@@ -15,8 +16,8 @@ function Avaliacao() {
                 </div>
                 <div class="ava_dir">
                     <div class="informacaoes">
-                        <p>Cleiton</p>
-                        <p>São Paulo - SP</p>
+                        <p>{props.donatario}</p>
+                        <p>{props.cidade} - {props.estado}</p>
                     </div>
                     <div class="estrela">
                         <img src={estrela} alt=""/>
@@ -28,17 +29,10 @@ function Avaliacao() {
 
                 </div>
             </div>
-            <p class="data">25/11/2021</p>
+            <p class="data">{props.data}</p>
         </div>
         <div class="avaliação_inf">
-            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim velit est tempora
-                aperiam soluta ullam
-                incidunt, nulla, voluptate, maxime molestiae recusandae temporibus veniam laudantium eum ea in. Atque,
-                sunt
-                facere.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, rem aut provident exercitationem
-                ipsum
-                
+            <p> {props.comentario}
             </p>
         </div>
     </div>
