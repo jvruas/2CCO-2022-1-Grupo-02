@@ -1,5 +1,6 @@
 package com.conture.apiproduto.controller;
 
+import com.conture.apiproduto.api.rest.usuario.UsuarioResposta;
 import com.conture.apiproduto.model.dto.request.AvaliacaoRequest;
 import com.conture.apiproduto.model.dto.response.AvaliacaoResponse;
 import com.conture.apiproduto.model.dto.response.EstatisticasAvaliacaoResponse;
@@ -12,6 +13,7 @@ import com.conture.apiproduto.repository.*;
 import com.conture.apiproduto.api.rest.usuario.UsuarioClient;
 import com.conture.apiproduto.service.MatchService;
 
+import com.conture.apiproduto.service.S3Service;
 import com.conture.apiproduto.util.collection.FilaObj;
 import com.conture.apiproduto.util.collection.PilhaObj;
 import com.conture.apiproduto.util.file.Txt;
@@ -59,6 +61,9 @@ public class ProdutoController {
 
 	@Autowired
 	private UsuarioClient usuarioClient;
+
+	@Autowired
+	private S3Service s3Service;
 
 	PilhaObj<String> pilhaHistorico = new PilhaObj<>(10);
 
@@ -109,8 +114,10 @@ public class ProdutoController {
 			return status(409).build();
 		}
 
+		Optional<UsuarioResposta> usuario;
+
 		try {
-			Integer idDoador = this.usuarioClient.getIdUsuarioLogado(idDoadorRequest);
+			usuario = this.usuarioClient.getUsuarioLogado(idDoadorRequest);
 		} catch (FeignException response) {
 			if (response.status() == -1) { // Service Unavailable
 				return status(503).build();
@@ -119,7 +126,12 @@ public class ProdutoController {
 			return status(401).build();
 		}
 
-		this.produtoRepository.updateProdutoImagemPrincipal(idProduto, imagemPrincipal);
+		String imageName = String.format("IMG_PP_%d_%s_%s", idProduto, Instant.now().toString(), UUID.nameUUIDFromBytes(usuario.get().getCpf().getBytes()).toString());
+
+		this.s3Service.putObject(imageName, imagemPrincipal);
+
+		this.produtoRepository.updateProdutoImagemPrincipal(idProduto, this.s3Service.getDefaultBucketName(), imageName);
+
 		return status(201).body(idProduto);
 	}
 
@@ -142,8 +154,10 @@ public class ProdutoController {
 			return status(409).build();
 		}
 
+		Optional<UsuarioResposta> usuario;
+
 		try {
-			Integer idDoador = this.usuarioClient.getIdUsuarioLogado(idDoadorRequest);
+			usuario = this.usuarioClient.getUsuarioLogado(idDoadorRequest);;
 		} catch (FeignException response) {
 			if (response.status() == -1) { // Service Unavailable
 				return status(503).build();
@@ -152,7 +166,12 @@ public class ProdutoController {
 			return status(401).build();
 		}
 
-		this.imagemProdutoDoacaoRepository.save(ImagemProdutoDoacao.fromPattern(idProduto, imagem));
+		String imageName = String.format("IMG_PS_%d_%s_%s", idProduto, Instant.now().toString(), UUID.nameUUIDFromBytes(usuario.get().getCpf().getBytes()).toString());
+
+		this.s3Service.putObject(imageName, imagem);
+
+		this.imagemProdutoDoacaoRepository.save(ImagemProdutoDoacao.fromPattern(idProduto, this.s3Service.getDefaultBucketName(), imageName));
+
 		return status(201).body(this.imagemProdutoDoacaoRepository.findTop1ByProdutoDoacaoIdProdutoDoacaoOrderByIdImagemProdutoDoacaoDesc(idProduto).get().getIdImagemProdutoDoacao());
 	}
 
