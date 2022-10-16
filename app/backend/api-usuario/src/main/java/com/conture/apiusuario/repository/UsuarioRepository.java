@@ -51,4 +51,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
 	@Query("Select u.idUsuario FROM Usuario u WHERE u.cpf = ?1")
 	Optional<Integer> getByCpf(String cpf);
+
 }

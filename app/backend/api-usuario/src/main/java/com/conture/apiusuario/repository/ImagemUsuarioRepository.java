@@ -17,8 +17,6 @@ public interface ImagemUsuarioRepository extends JpaRepository<ImagemUsuario, In
 	@Query("select i.idImagemUsuario from ImagemUsuario i where i.usuario = ?1 and i.tipoImagem = ?2")
 	Optional<Integer> getImagemID(Usuario idUsuario, String tipoImagem);
 
-	@Query("update ImagemUsuario i set i.imagemUsuario = ?2 where i.idImagemUsuario = ?1")
-	@Modifying
-	@Transactional
-	void updateImagem(Integer idImagemUsuario, byte[] novaImagem);
+	@Query("select i from ImagemUsuario i where i.usuario = ?1 and i.tipoImagem = ?2")
+	Optional<ImagemUsuario> getImagemByIdUsuarioAndTipoImagem(Usuario idUsuario, String tipoImagem);
 }

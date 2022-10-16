@@ -371,7 +371,9 @@ public class UsuarioController {
 			return status(400).build();
 		}
 
-		if (!this.usuarioRepository.existsById(idUsuario)) {
+		Optional<Usuario> usuario = this.usuarioRepository.getUsuarioById(idUsuario);
+
+		if (usuario.isEmpty()) {
 			return status(404).build();
 		}
 
@@ -381,7 +383,11 @@ public class UsuarioController {
 			return status(409).build();
 		}
 
-		this.imagemUsuarioRepository.save(ImagemUsuario.fromPattern(tipoImagem, novaImagem, idUsuario));
+		String imageName = String.format("%s_%s", tipoImagem, UUID.nameUUIDFromBytes(usuario.get().getCpf().getBytes()).toString());
+
+		this.imagemUsuarioRepository.save(ImagemUsuario.fromPattern(tipoImagem, this.s3Service.getDefaultBucketName(), imageName, idUsuario));
+
+		this.s3Service.putObject(imageName, novaImagem);
 
 		return status(201).build();
 	}
@@ -397,13 +403,13 @@ public class UsuarioController {
 			return status(400).build();
 		}
 
-		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
+		Optional<ImagemUsuario> imagemUsuario = this.imagemUsuarioRepository.getImagemByIdUsuarioAndTipoImagem(Usuario.fromPattern(idUsuario), tipoImagem);
 
-		if (idImagemUsuario.isEmpty()) {
+		if (imagemUsuario.isEmpty()) {
 			return status(404).build();
 		}
 
-		this.imagemUsuarioRepository.updateImagem(idImagemUsuario.get(), novaImagem);
+		this.s3Service.putObject(imagemUsuario.get().getObjectName(), novaImagem);
 
 		return status(200).build();
 	}
@@ -413,62 +419,16 @@ public class UsuarioController {
 			@PathVariable @Min(1) Integer idUsuario,
 			@RequestParam @Size(min = 1, max = 1) @Pattern(regexp = "[B,P]") String tipoImagem
 	) {
-		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
+		Optional<ImagemUsuario> imagemUsuario = this.imagemUsuarioRepository.getImagemByIdUsuarioAndTipoImagem(Usuario.fromPattern(idUsuario), tipoImagem);
 
-		if (idImagemUsuario.isEmpty()) {
-			return status(404).build();
-		}
-
-		return status(200).body(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
-	}
-
-	@DeleteMapping("/{idUsuario}/imagem")
-	public ResponseEntity deletarImagem(
-			@PathVariable @Min(1) Integer idUsuario,
-			@RequestParam @Size(min = 1, max = 1) @Pattern(regexp = "[B,P]") String tipoImagem
-	) {
-		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
-
-		if (idImagemUsuario.isEmpty()) {
-			return status(404).build();
-		}
-
-		this.imagemUsuarioRepository.deleteById(idImagemUsuario.get());
-
-		return status(200).build();
-	}
-
-
-	//FIXME:--------------------------------------------------------------------
-
-	@PostMapping(value = "/test", consumes = "image/jpeg")
-	public ResponseEntity postImagemS3(
-			@RequestParam String bucketName,
-			@RequestParam String objectName,
-			@RequestBody byte[] image
-	) {
-		if (this.s3Service.existsObject(bucketName, objectName)) {
-			return status(409).build();
-		}
-
-		this.s3Service.putObject(bucketName, objectName, image);
-
-		return status(200).build();
-	}
-
-	@GetMapping(value = "/test", produces = "image/jpeg")
-	public ResponseEntity<byte[]> getImagemS3(
-			@RequestParam String bucketName,
-			@RequestParam String objectName
-	) {
-		if (!this.s3Service.existsObject(bucketName, objectName)) {
+		if (imagemUsuario.isEmpty()) {
 			return status(404).build();
 		}
 
 		byte[] image;
 
 		try {
-			image = this.s3Service.getObject(bucketName, objectName);
+			image = this.s3Service.getObject(imagemUsuario.get().getBucketName(), imagemUsuario.get().getObjectName());
 		} catch (IOException ioException) {
 			return status(503).build();
 		}
@@ -476,32 +436,21 @@ public class UsuarioController {
 		return status(200).body(image);
 	}
 
-	@PutMapping(value = "/test", consumes = "image/jpeg")
-	public ResponseEntity putImagemS3(
-			@RequestParam String bucketName,
-			@RequestParam String objectName,
-			@RequestBody byte[] image
+	@DeleteMapping("/{idUsuario}/imagem")
+	public ResponseEntity deletarImagem(
+			@PathVariable @Min(1) Integer idUsuario,
+			@RequestParam @Size(min = 1, max = 1) @Pattern(regexp = "[B,P]") String tipoImagem
 	) {
-		if (!this.s3Service.existsObject(bucketName, objectName)) {
+
+		Optional<ImagemUsuario> imagemUsuario = this.imagemUsuarioRepository.getImagemByIdUsuarioAndTipoImagem(Usuario.fromPattern(idUsuario), tipoImagem);
+
+		if (imagemUsuario.isEmpty()) {
 			return status(404).build();
 		}
 
-		this.s3Service.putObject(bucketName, objectName, image);
+		this.s3Service.deleteObject(imagemUsuario.get().getBucketName(), imagemUsuario.get().getObjectName());
 
-		return status(200).build();
-	}
-
-
-	@DeleteMapping("/test")
-	public ResponseEntity deleteImagemS3(
-			@RequestParam String bucketName,
-			@RequestParam String objectName
-	) {
-		if (!this.s3Service.existsObject(bucketName, objectName)) {
-			return status(404).build();
-		}
-
-		this.s3Service.deleteObject(bucketName, objectName);
+		this.imagemUsuarioRepository.deleteById(imagemUsuario.get().getIdImagemUsuario());
 
 		return status(200).build();
 	}
