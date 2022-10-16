@@ -19,6 +19,7 @@ import CadastroProduto from "./pages/CadastroProduto";
 import PopUpFiltro from "./pages/pop-up/PopUpFiltro";
 import PopUpReporte from "./pages/pop-up/PopUpReporte";
 import DescricaoProduto from "./pages/DescricaoProduto";
+import Dashboard from "./pages/Dashboard";
 
 function Rotas() {
     return (
@@ -44,6 +45,7 @@ function Rotas() {
                 <Route path="/popup" element={<PopUp/>} />
                 <Route path="/popup-reporte" element={<PopUpReporte/>} />
                 <Route path="/descricao-produto" element={<DescricaoProduto/>} />
+                <Route path="/dashboard-admin-bi" element={<Dashboard/>}></Route>
             </Routes>
         </BrowserRouter>
     );
