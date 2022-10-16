@@ -36,7 +36,6 @@ function PerfilSimples() {
         })
     }, [])
 
-
     
   let dataCad = new Date(usuario.dataCadastro);
     

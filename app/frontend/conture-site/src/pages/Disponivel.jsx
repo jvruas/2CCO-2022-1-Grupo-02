@@ -20,7 +20,7 @@ function Disponivel() {
                     <div className="div_sup_disp"><b><p>Disponíveis</p></b> <Link to="/popup-filtro"><img src={Filtro} /></Link></div>
                     <div className="div_inf_disp">
                         <div className="div_card">
-                            <Card></Card>                          
+                            {/* <Card></Card>                           */}
                         </div>
                     </div>
                 </div>

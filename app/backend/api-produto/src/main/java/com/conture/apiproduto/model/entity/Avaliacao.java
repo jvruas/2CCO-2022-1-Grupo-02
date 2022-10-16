@@ -15,7 +15,7 @@ public class Avaliacao {
 
 	@NotNull
 	@Max(5)
-	@Min(1)
+	@Min(0)
 	private Integer valor;
 
 	@Size(max = 300)

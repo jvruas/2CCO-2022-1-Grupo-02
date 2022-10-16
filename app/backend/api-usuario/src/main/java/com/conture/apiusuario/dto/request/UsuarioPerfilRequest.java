@@ -38,9 +38,6 @@ public class UsuarioPerfilRequest {
 	private String telefone;
 
 	@NotNull
-	private Boolean verificado;
-
-	@NotNull
 	@Positive
 	private Integer fkSituacaoAtual;
 
@@ -64,8 +61,6 @@ public class UsuarioPerfilRequest {
 	public String getGrauEscolaridade() {
 		return grauEscolaridade;
 	}
-
-	public Boolean getVerificado() { return verificado; }
 
 	public Integer getFkSituacaoAtual() { return fkSituacaoAtual; }
 }

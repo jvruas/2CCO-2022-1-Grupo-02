@@ -350,7 +350,6 @@ public class UsuarioController {
 		usuario.setCep(usuarioPerfil.getCep());
 		usuario.setGrauEscolaridade(usuarioPerfil.getGrauEscolaridade());
 		usuario.setTelefone(usuarioPerfil.getTelefone());
-		usuario.setVerificado(usuarioPerfil.getVerificado());
 		usuario.setSituacaoAtual(usuarioPerfil.getFkSituacaoAtual());
 
 		this.usuarioRepository.save(usuario);

@@ -2,6 +2,7 @@ package com.conture.apiproduto.controller;
 
 import com.conture.apiproduto.model.dto.request.AvaliacaoRequest;
 import com.conture.apiproduto.model.dto.response.AvaliacaoResponse;
+import com.conture.apiproduto.model.dto.response.EstatisticasAvaliacaoResponse;
 import com.conture.apiproduto.model.dto.response.MatchResponse;
 import com.conture.apiproduto.model.dto.response.ProdutoDoacaoResponse;
 import com.conture.apiproduto.model.entity.*;
@@ -34,9 +35,9 @@ import java.util.*;
 
 import static org.springframework.http.ResponseEntity.status;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/produtos")
+@CrossOrigin(allowedHeaders = "*")
 public class ProdutoController {
 	@Autowired
 	private ProdutoRepository produtoRepository;
@@ -273,6 +274,17 @@ public class ProdutoController {
 		return ResponseEntity.status(200).body(this.filaAvaliacao);
 	}
 
+	@GetMapping("/avaliacao/stats")
+	public ResponseEntity<EstatisticasAvaliacaoResponse> getEstatiscasAvaliacao(@RequestParam @NotNull @Min(1) Integer idDoador) {
+		if (!this.avaliacaoRepository.hasByIdDoador(idDoador)) {
+			return status(404).build();
+		}
+
+		EstatisticasAvaliacaoResponse estatisticasAvaliacao = this.avaliacaoRepository.getStatistcsByIdDoador(idDoador);
+
+		return status(200).body(estatisticasAvaliacao);
+	}
+
 
 	@GetMapping("/{idProduto}")
 	public ResponseEntity<ProdutoDoacaoResponse> pesquisarProdutoId(@PathVariable @NotNull @Min(1) Integer idProduto) {
@@ -311,9 +323,9 @@ public class ProdutoController {
 
 		List<ProdutoDoacaoResponse> listaProduto = this.produtoRepository.getAllByStatusNaoDoadoC();
 
-		if (listaProduto.isEmpty()) {
-			return status(204).build();
-		}
+			if (listaProduto.isEmpty()) {
+				return status(204).build();
+			}
 
 		Iterator<ProdutoDoacaoResponse> iterator = new AscendingListIterator(listaProduto);
 

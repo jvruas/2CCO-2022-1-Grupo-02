@@ -1,4 +1,4 @@
-package com.conture.apiusuario.utility;
+package com.conture.apiusuario.utility.datastructure;
 
 import java.util.ArrayList;
 import java.util.List;
