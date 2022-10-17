@@ -32,7 +32,6 @@ function MensagemDireta() {
                         <div id="md-chats">
                             <div className="md-chats-interno scroll">
                                <Chat/>
-            
                             </div>
                         </div>
                     </div>
