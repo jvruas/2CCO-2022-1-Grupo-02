@@ -17,14 +17,6 @@
     justify-content: center;
 }
 
-.grid{
-    height: 100%;
-    width: 80%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 #ep-parte-um{
     height: 495px;
     width: 25%;
@@ -64,11 +56,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
     border: 1px solid #AFAFAF;
 }
 
 .ep-titulo{
-    height: 22%;
+    height: 18%;
     width: 80%;
     display: flex;
     align-items: center;
@@ -110,8 +103,28 @@
     justify-content: space-evenly;
 }
 
+.ep-aviso{
+    height: 4%;
+    width: 80%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.ep-aviso p{
+    color: red;
+    font-weight: 600;
+    padding-left: 10px;
+}
+
+.ep-aviso img{
+    display: none;
+    width: 20px;
+    height: 20px;
+    color: red;
+}
+
 .ep-btns{
-    height: 25%;
+    height: 15%;
     width: 80%;
     display: flex;
     align-items: center;

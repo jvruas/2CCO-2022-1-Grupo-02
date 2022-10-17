@@ -209,7 +209,6 @@ function Cadastro() {
                     <div className="divisao input">
                         <label htmlFor="email">E-mail</label>
                         <input id="email" type="email" name="email" size="80" maxLength="80" value={valuesUsuario.email} required onChange={handleChangeUser} />
-                        {/* <div>e-mail inválido</div> */}
                     </div>
 
                     <div className="divisao input">
@@ -270,7 +269,7 @@ function Cadastro() {
                         <div className="input menor">
                             <label htmlFor="genero">Gênero</label>
                             <select name="genero" id="genero" value={valuesUsuario.genero} required onChange={handleChangeUser}>
-                                <option value=""></option>
+                                <option value="" selected disabled hidden></option>
                                 <option value="F">Feminino</option>
                                 <option value="M">Masculino</option>
                                 <option value="X">Outro</option>
@@ -279,7 +278,7 @@ function Cadastro() {
                         <div className="input menor">
                             <label htmlFor="estadoCivil">Estado civil</label>
                             <select name="estadoCivil" id="estadoCivil" value={valuesUsuario.estadoCivil} required onChange={handleChangeUser}>
-                                <option value=""></option>
+                                <option value="" selected disabled hidden></option>
                                 <option value="S">Solteiro(a)</option>
                                 <option value="C">Casado(a)</option>
                                 <option value="D">Divorciado(a)</option>
@@ -300,7 +299,7 @@ function Cadastro() {
                     <div className="divisao input maior">
                         <label htmlFor="grauEscolaridade">Escolaridade</label>
                         <select id="grauEscolaridade" name="grauEscolaridade" value={valuesUsuario.grauEscolaridade} required onChange={handleChangeUser}>
-                            <option value=""></option>
+                            <option value="" selected disabled hidden></option>
                             <option value="A">Analfabeto</option>
                             <option value="I">Educação infantil</option>
                             <option value="F">Fundamental</option>
@@ -314,7 +313,7 @@ function Cadastro() {
                     <div className="divisao input maior">
                         <label htmlFor="fkSituacaoAtual">Situação atual</label>
                         <select name="fkSituacaoAtual" id="fkSituacaoAtual" value={valuesUsuario.fkSituacaoAtual} required onChange={handleChangeUser}>
-                            <option value=""></option>
+                            <option value="" selected disabled hidden></option>
                             {
                                 fkSituacaoAtual.map((situacao) => (
                                     <option value={situacao.idSituacaoAtual}>{situacao.nome}</option>
