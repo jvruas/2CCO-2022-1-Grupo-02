@@ -8,9 +8,8 @@ import Filtro from "../html-css-template/imagens/Filtro.svg";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiProdutos from "../apiProduto.js"
+
 function DisponivelPessoal() {
-
-
     const [produtos, setProdutos] = useState([]);
     // const [usuarioImg, setUsuarioImg] = useState([]);
 
@@ -51,6 +50,7 @@ function DisponivelPessoal() {
                             <Card 
                             visualizacao={prod.quantidadeVisualizacao}
                             nome={prod.nome}
+                            idProduto={prod.idProduto}
                              />
                              
                             ))}

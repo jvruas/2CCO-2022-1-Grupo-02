@@ -12,7 +12,7 @@ function Avaliacao(props) {
             <div class="container_perfil">
                 <div class="ava_esq">
                     <img className='' src={foto} alt=""/>
-                    <p>5.0</p>
+                    <p>{props.nota}</p>
                 </div>
                 <div class="ava_dir">
                     <div class="informacaoes">
