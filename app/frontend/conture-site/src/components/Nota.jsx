@@ -9,25 +9,25 @@ function Nota() {
     const [avaliacao, setAvaliacao] = useState([]);
 
 
-    // useEffect
-    // (() => {
-    //     let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-    //     apiProdutos.get(`avaliacao?idDoador=${idUsuario}`).then((resposta) => {
-    //         try {
-    //             console.log(resposta.data)
-    //             setAvaliacao(resposta.data)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     })
-    // }, [])
+    useEffect
+    (() => {
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+        apiProdutos.get(`avaliacao/stats?idDoador=${idUsuario}`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setAvaliacao(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
 
     return (
         <>
             <body>
             <div id="circulo">
         <div class="circulo_informacoes">
-            <p id="nota">{avaliacao.valor}</p>
+            <p id="nota">{avaliacao.mediaAvaliacoes}</p>
             <div class="estrelas_maior">
                 <img src={estrela} alt=""/>
                 <img src={estrela} alt=""/>
@@ -35,7 +35,7 @@ function Nota() {
                 <img src={estrela} alt=""/>
                 <img src={estrela} alt=""/>
             </div>
-            <p id="avaliacoes">3 Avaliações no total</p>
+            <p id="avaliacoes">{avaliacao.quantidadeAvaliacoes} avaliação no total</p>
         </div>
     </div>
             </body>

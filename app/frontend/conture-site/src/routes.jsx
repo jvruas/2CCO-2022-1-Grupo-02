@@ -20,6 +20,7 @@ import CadastroProduto from "./pages/CadastroProduto";
 import PopUpFiltro from "./pages/pop-up/PopUpFiltro";
 import PopUpReporte from "./pages/pop-up/PopUpReporte";
 import PopUpAvaliacao from "./pages/pop-up/PopUpAvaliacao";
+import PopUpDeletar from "./pages/pop-up/PopUpDeletar";
 
 function Rotas() {
     return (
@@ -47,6 +48,7 @@ function Rotas() {
                 <Route path="/popup-reporte" element={<PopUpReporte/>} />
                 <Route path="/popup-avaliacao" element={<PopUpAvaliacao/>} />
                 <Route path="/popup-filtro" element={<PopUpFiltro/>} />
+                <Route path="/popup-deletar" element={<PopUpDeletar/>} />
             </Routes>
         </BrowserRouter>
     );

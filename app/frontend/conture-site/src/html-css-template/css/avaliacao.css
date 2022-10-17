@@ -44,8 +44,8 @@
 .ava_esq img{
     height: 50px;
     width: 50px;
-    border-radius: 50px;
-    
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .ava_esq p{

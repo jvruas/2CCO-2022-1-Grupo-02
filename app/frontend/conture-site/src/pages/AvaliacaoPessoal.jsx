@@ -14,60 +14,54 @@ import apiUsuario from "../apiUsuario.js"
 function AvaliacaoPessoal() {
 
     const [produtos, setProdutos] = useState([]);
+    const [usuario, setUsuario] = useState([]);
+    const [endereco, setEndereco] = useState([]);
 
-
+    // let dataCad = new Date(produtos.data);
     useEffect(() => {
         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-        apiProdutos.get(`avaliacao?idDoador=${idUsuario}`).then((resposta) => {
-        console.log("pppdgdg", resposta.data)
-            setProdutos(resposta.data)
+        apiProdutos.get(`/avaliacao?idDoador=${idUsuario}`).then((resposta) => {
             
-            
-
-            //     try {
-
+            console.log("pppdgdg", resposta.data.fila)
+                setProdutos(resposta.data.fila)
+                
+            // try {
             // } catch (error) {
             //     console.log(error)
             // }
         })
 
-    //     apiUsuario.get(`${idUsuario}`).then((usuarioResposta) => {
-    //         console.log(usuarioResposta.data)
-    //         setProdutos(usuarioResposta.data)
-    //         fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
-    //         .then(res => res.json()).then(data => {
-    //             console.log(data)
-    //             setProdutos(data)
-    //             console.log("aaaaaaaaaa",data)
-    //         })
     
-    // })
+        //     apiUsuario.get(`${produtos.fkDonatario}`).then((usuarioResposta) => {
+        //         console.log(usuarioResposta.data)
+        //         setUsuario(usuarioResposta.data)
+        //         fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
+        //         .then(res => res.json()).then(data => {
+        //             console.log(data)
+        //             setEndereco(data)
+        //             console.log("aaaaaaaaaa",data)
+        //         })
+
+        // })
 
     }, [])
+    
 
+    useEffect
+    (() => {
+        apiUsuario.get(`${produtos.fkDonatario}`).then((usuarioResposta) => {
+            console.log(usuarioResposta.data)
+            setUsuario(usuarioResposta.data)
+            fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
+            .then(res => res.json()).then(data => {
+                console.log(data)
+                setEndereco(data)
+                console.log("aaaaaaaaaa",data)
+            })
 
+    })
 
-
-    // useEffect
-    // (() => {
-    //     let idUsuario = produtos.fkDonatario;
-    //     apiUsuario.get(`${idUsuario}`).then((usuarioResposta) => {
-    //         try {
-    //             console.log(usuarioResposta.data)
-    //             setUsuario(usuarioResposta.data)
-    //             // setAvaliacao(usuarioResposta.data)
-    //             fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
-    //             .then(res => res.json()).then(data => {
-    //                 console.log(data)
-    //                 setEndereco(data)
-    //                 // setAvaliacao(data)
-    //                 // console.log("teste", avaliacao)
-    //             })
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     })
-    // }, [])
+    }, [])
 
 
     return (
@@ -84,13 +78,14 @@ function AvaliacaoPessoal() {
                     </div>
                     <div className="comentarios">
                         {produtos.map((ava) => (
-                            <Comentarios
+                            <Comentarios key={ava.idProduto}
                                 nota={ava.valor}
                                 comentario={ava.comentario}
-                                // donatario={ava.nome}
-                                // cidade={ava.localidade}
-                                // estado={ava.uf}
-                                data={ava.data}
+                                donatario={usuario.nome}
+                                cidade={endereco.localidade}
+                                estado={endereco.uf}
+                                data={ava.dataCad}
+                                
                             />
                         ))}
 
