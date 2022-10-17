@@ -29,9 +29,9 @@ function ValidacaoUsuario() {
     function confirmacaoValidacao(event) {
         event.preventDefault()
 
-        let codigo = document.getElementById("codigo-validacao");
+        var codigo = document.getElementById("codigo-validacao");
 
-        apiUsuario.post(`conta/validacao-codigo?idUsuario=${usuarioLogado.idUsuario}&codigo=${codigo}`, {
+        apiUsuario.post(`conta/validacao-codigo?idUsuario=${usuarioLogado.idUsuario}&codigo=${codigo.value}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -76,7 +76,7 @@ function ValidacaoUsuario() {
                             <p></p>
                         </div>
                         <div className="vl-btns">
-                            <button>
+                            <button type="button" onClick={confirmacaoValidacao}>
                                 <p>CONFIRMAR</p><img src={IconCheck} alt="Ícone confirmar" />
                             </button>
                         </div>
