@@ -3,9 +3,15 @@ import Footer from "../components/Footer";
 import '../html-css-template/css/ValidacaoUsuarioConfirmada.css';
 import ImagemValidado from "../html-css-template/imagens/imagem-validado.svg";
 import IconComemoracao from "../html-css-template/imagens/icon-comemoracao.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function ValidacaoUsuarioConfirmada() {
+
+    const navegar = useNavigate();
+
+    function redirecionar(){
+        navegar("/")
+    }
 
     return (
         <>
@@ -34,7 +40,7 @@ function ValidacaoUsuarioConfirmada() {
                             <p>Obrigado por validar sua conta <span>Yan </span><img src={IconComemoracao} alt="" className="vlc-icon" /></p>
                         </div>
                         <div className="vlc-btns">
-                            <button>
+                            <button type="button" onClick={redirecionar}>
                                 Voltar para a Home
                             </button>
                         </div>

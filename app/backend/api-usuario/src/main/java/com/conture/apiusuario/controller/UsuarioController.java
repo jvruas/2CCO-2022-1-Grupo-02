@@ -37,7 +37,7 @@ public class UsuarioController {
 	private Email email = new Email();
 
 
-//	TODO:TESTES
+	//	TODO:TESTES
 	@PostMapping
 	public ResponseEntity<Integer> adicionarUsuario(@RequestBody @Valid UsuarioCadastroRequest novoUsuario) {
 		if (!this.situacaoAtualRepository.existsById(novoUsuario.getFkSituacaoAtual())
@@ -60,7 +60,7 @@ public class UsuarioController {
 		return status(201).body(this.usuarioRepository.getIdUserByCpf(novoUsuario.getCpf()).get());
 	}
 
-//TODO:TESTES
+	//TODO:TESTES
 	@PostMapping("/login")
 	public ResponseEntity<UsuarioLogadoResponse> login(@RequestBody @Valid UsuarioLoginRequest usuario) {
 		Optional<UsuarioLogadoResponse> usuarioPesquisado = this.usuarioRepository.getByEmailAndSenha(usuario.getEmail(), usuario.getSenha());
