@@ -3,22 +3,20 @@ import fechar from "../../html-css-template/imagens/x-lg 1.svg";
 import { Link, useNavigate } from "react-router-dom";
 import apiProdutos from '../../apiProduto';
 
-function PopUpDeletar() {
+function PopUpDeletar(props) {
 
-    // const navegar = useNavigate();
-
-    // function handleSubmit(event) {
-    //     event.preventDefault()
-    //     let param = document.getElementById("email");
-    //     apiProdutos.delete(`${}`, {
-    //         params: {
-    //             email: param.value
-    //         }
-    //     }).then((resposta) => {
-    //         sessionStorage.setItem('idUsuario', resposta.data)
-    //         console.log(resposta.status)
-    //     })
-    // }
+    const navegar = useNavigate();
+    let produto = sessionStorage.getItem('idProduto');
+    function handleSubmit(event) {
+        event.preventDefault()
+        let param = document.getElementById();
+        apiProdutos.delete(`${produto}`, {
+    
+        }).then((resposta) => {
+            sessionStorage.setItem('idProduto', resposta.data)
+            console.log(resposta.status)
+        })
+    }
 
 
     return (
