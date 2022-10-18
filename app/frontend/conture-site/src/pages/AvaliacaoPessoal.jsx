@@ -17,51 +17,36 @@ function AvaliacaoPessoal() {
     const [usuario, setUsuario] = useState([]);
     const [endereco, setEndereco] = useState([]);
 
-    // let dataCad = new Date(produtos.data);
+    
     useEffect(() => {
         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
         apiProdutos.get(`/avaliacao?idDoador=${idUsuario}`).then((resposta) => {
-            
+
             console.log("pppdgdg", resposta.data.fila)
-                setProdutos(resposta.data.fila)
-                
-            // try {
-            // } catch (error) {
-            //     console.log(error)
-            // }
-        })
-
-    
-        //     apiUsuario.get(`${produtos.fkDonatario}`).then((usuarioResposta) => {
-        //         console.log(usuarioResposta.data)
-        //         setUsuario(usuarioResposta.data)
-        //         fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
-        //         .then(res => res.json()).then(data => {
-        //             console.log(data)
-        //             setEndereco(data)
-        //             console.log("aaaaaaaaaa",data)
-        //         })
-
-        // })
-
-    }, [])
-    
-
-    useEffect
-    (() => {
-        apiUsuario.get(`${produtos.fkDonatario}`).then((usuarioResposta) => {
-            console.log(usuarioResposta.data)
-            setUsuario(usuarioResposta.data)
-            fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
-            .then(res => res.json()).then(data => {
-                console.log(data)
-                setEndereco(data)
-                console.log("aaaaaaaaaa",data)
+            setProdutos(resposta.data.fila)
+            
+            for(let i=0; i<resposta.data.fila.length; i++){
+            apiUsuario.get(`/${resposta.data.fila[i].fkDonatario}`).then((usuarioResposta) => {
+                try {
+                    console.log(usuarioResposta.data)
+                    setUsuario(usuarioResposta.data)
+                    fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
+                    .then(res => res.json()).then(data => {
+                        console.log(data)
+                        setEndereco(data)
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
             })
-
-    })
-
+        }
+            try {
+            } catch (error) {
+                console.log(error)
+            }
+        })
     }, [])
+
 
 
     return (
@@ -77,17 +62,18 @@ function AvaliacaoPessoal() {
                         <Nota></Nota>
                     </div>
                     <div className="comentarios">
-                        {produtos.map((ava) => (
-                            <Comentarios key={ava.idProduto}
+                        {produtos != undefined && produtos.length > 0 ? produtos.map((ava) => (
+                            <Comentarios 
+                           
                                 nota={ava.valor}
                                 comentario={ava.comentario}
                                 donatario={usuario.nome}
                                 cidade={endereco.localidade}
                                 estado={endereco.uf}
-                                data={ava.dataCad}
-                                
+                                dataCon={ava.data}
+
                             />
-                        ))}
+                        )): ""}
 
 
                     </div>

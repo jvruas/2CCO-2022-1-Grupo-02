@@ -1,113 +1,110 @@
 
-// import Header from "../components/Header"
-// import Perfil from "../components/Perfil"
-// import MenuPerfil from "../components/MenuHistoricoPessoal"
-// import '../html-css-template/css/Style.css'
-// import '../html-css-template/css/HistoricoPessoalPage.css'
-// import Footer from "../components/Footer"
-// import Historico from "../components/HistoricoMaior"
-// import { useState, useEffect } from "react";
-// import apiProdutos from "../apiProduto"
+import Header from "../components/Header"
+import Perfil from "../components/Perfil"
+import MenuPerfil from "../components/MenuHistoricoPessoal"
+import '../html-css-template/css/Style.css'
+import '../html-css-template/css/HistoricoPessoalPage.css'
+import Footer from "../components/Footer"
+import Historico from "../components/HistoricoMaior"
+import { useState, useEffect } from "react";
+import apiProdutos from "../apiProduto"
+import apiUsuario from "../apiUsuario"
 
-// function HistoricoDonatario() {
+function HistoricoDonatario() {
 
-//     const [historico, setHistorico] = useState([]);
-//     const [usuario, setUsuario] = useState([]);
-//     // const [usuarioImg, setUsuarioImg] = useState([]);
+    const [historico, setHistorico] = useState([]);
+    const [usuario, setUsuario] = useState([]);
+    useEffect(() => {
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+            apiProdutos.get(`/status?idDoador=${idUsuario}&status=todos`).then((resposta) => {
+            try {
+                console.log("uijhhjh", resposta.data)
+                setHistorico(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+        let dataCad = new Date(historico.dataConclusao);
 
-//     useEffect(() => {
-//         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-
-//         if(select_opcoes.value == 0){
-//         apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
-//             try {
-//                 console.log(resposta.data)
-//                 setHistorico(resposta.data)
-//             } catch (error) {
-//                 console.log(error)
-//             }
-//         })
-//     }
-
-
-//     if(select_opcoes.value == 0){
-//         apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
-//             try {
-//                 console.log(resposta.data)
-//                 setHistorico(resposta.data)
-//             } catch (error) {
-//                 console.log(error)
-//             }
-//         })
-//     }
+    // if(select_opcoes.value == 0){
+    //     apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
+    //         try {
+    //             console.log(resposta.data)
+    //             setHistorico(resposta.data)
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     })
+    // }
 
 
-//     if(select_opcoes.value == 0){
-//         apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
-//             try {
-//                 console.log(resposta.data)
-//                 setHistorico(resposta.data)
-//             } catch (error) {
-//                 console.log(error)
-//             }
-//         })
-//     }
+    // if(select_opcoes.value == 0){
+    //     apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
+    //         try {
+    //             console.log(resposta.data)
+    //             setHistorico(resposta.data)
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     })
+    // }
+
+    apiUsuario.get(`/${idUsuario}`).then((usuarioResposta) => {
+        try {
+            console.log("ofdoidsfodsfoifdsj",usuarioResposta.data)
+            setUsuario(usuarioResposta.data)
+        } catch (error) {
+            console.log(error)
+        }
+    })
+    
+    }, [])
 
     
-//     }, [])
+    // let dataCad = new Date(historico.dataConclusao);
+    // let dataD = dataCad.getDay();
+    // let dataM = dataCad.getMonth();
+    // let dataY = dataCad.getFullYear();
 
-//     useEffect(() => {
-//         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-//         apiUsuario.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
-//             try {
-//                 console.log(resposta.data)
-//                 setUsuario(resposta.data)
-//             } catch (error) {
-//                 console.log(error)
-//             }
-//         })
-//     }, [])
+    return (
+        <>
+                <Header></Header>
+                 <section id="hp-section">
+                <Perfil></Perfil>
+                <MenuPerfil></MenuPerfil>
+                <div id="conteiner">
+                    <div id="div_sup">
+                        <b><p>Histórico</p></b>
 
+                        <div id="div_filtro"><p>Filtrar por</p>
 
-//     return (
-//         <>
-//                 <Header></Header>
-//                  <section id="hp-section">
-//                 <Perfil></Perfil>
-//                 <MenuPerfil></MenuPerfil>
-//                 <div id="conteiner">
-//                     <div id="div_sup">
-//                         <b><p>Histórico</p></b>
+                            <select name="" id="select_opcoes">
+                                <option value="0">Todos</option>
+                                <option value="1">Processo</option>
+                                <option value="2">Doados</option>
+                                <option value="3">Recebidos</option>
+                            </select>
+                        </div>
 
-//                         <div id="div_filtro"><p>Filtrar por</p>
-
-//                             <select name="" id="select_opcoes">
-//                                 <option value="0">Todos</option>
-//                                 <option value="1">Processo</option>
-//                                 <option value="2">Doados</option>
-//                                 <option value="3">Recebidos</option>
-//                             </select>
-//                         </div>
-
-//                     </div>
-//                     <div className="div_historicos">
-//                     {historico.map((historico)=>(
-//                             <Historico 
-//                             tipo={historico.tipo}
-//                             tipoEquipamento={historico.tipoEquipamento}
-//                             equipamento={historico.nome}
-//                             negociante={historico.negociante}
-//                             data={historico.dataConclusao}
-//                              />
-//                             ))}
+                    </div>
+                    <div className="div_historicos">
+                    {historico != undefined && historico.length > 0 ?  historico.map((historico)=>(
+                            <Historico 
+                            tipo={historico.tipo}
+                            tipoEquipamento={historico.categoriaProduto}
+                            equipamento={historico.nome}
+                            negociante={usuario.nome}
+                            dataCon={historico.dataConclusao}
+                             />
+                            )): ""}
                         
                         
-//                     </div>
-//                 </div>
-//                 </section>
-//                 <Footer></Footer>
-//         </>
-//     )
-// }
+                    </div>
+                </div>
+                </section>
+                <Footer></Footer>
+        </>
+    )
+}
 
-// export default HistoricoDonatario;
+export default HistoricoDonatario;

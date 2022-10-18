@@ -1,6 +1,8 @@
 import '../html-css-template/css/HistoricoMaior.css'
 
 function HistoricoMaior(props){
+
+    let dataCad = new Date(props.dataCon);
     return (
         <>
         <div class="historico">
@@ -17,7 +19,8 @@ function HistoricoMaior(props){
             <div>{props.tipoEquipamento}</div>
             <div>{props.equipamento}</div>
             <div>{props.negociante}</div>
-            <div>{props.data}</div>
+            <div>{dataCad.getDate()}/{dataCad.getMonth()}/{dataCad.getFullYear()}
+            </div>
         </div>
     </div>
     </>

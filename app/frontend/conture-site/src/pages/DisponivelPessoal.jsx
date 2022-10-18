@@ -25,16 +25,6 @@ function DisponivelPessoal() {
             }
         })
     }, [])
-    
-    // useEffect(() =>{
-    //     let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-    //     async function buscarProdutos(){
-    //         const resposta = await apiProdutos.get(`/disponiveis?idDoador=${idUsuario}`);
-    //         setProdutos(resposta.data);
-    //         console.log("OLHA O QUE VEIO DA API!!", resposta.data)
-    //     }       
-    //     buscarProdutos();
-    // }, []);
 
     return (
         <>
@@ -46,14 +36,13 @@ function DisponivelPessoal() {
                 <div className="div_sup_disp"><b><p>Disponíveis</p></b> <Link to="/popup-filtro"><img src={Filtro} /></Link></div>
                     <div className="div_inf_disp">
                         <div className="div_card">
-                            {produtos.map((prod) => (
+                            {produtos != undefined && produtos.length > 0 ? produtos.map((prod) => (
                             <Card 
                             visualizacao={prod.quantidadeVisualizacao}
                             nome={prod.nome}
                             idProduto={prod.idProduto}
                              />
-                             
-                            ))}
+                            )): ""}
                                         
                         </div>
                     </div>

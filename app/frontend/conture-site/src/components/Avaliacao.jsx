@@ -5,6 +5,8 @@ import '../html-css-template/css/avaliacao.css'
 
 function Avaliacao(props) {
 
+    let dataCad = new Date(props.dataCon);
+    
     return (
         <>
       <div class="avaliacao">
@@ -12,7 +14,7 @@ function Avaliacao(props) {
             <div class="container_perfil">
                 <div class="ava_esq">
                     <img className='' src={foto} alt=""/>
-                    <p>{props.nota}</p>
+                    <p>{(props.nota).toFixed(1)}</p>
                 </div>
                 <div class="ava_dir">
                     <div class="informacaoes">
@@ -29,7 +31,7 @@ function Avaliacao(props) {
 
                 </div>
             </div>
-            <p class="data">{props.data}</p>
+            <p class="data">{dataCad.getDate()}/{dataCad.getMonth()}/{dataCad.getFullYear()}</p>
         </div>
         <div class="avaliação_inf">
             <p> {props.comentario}

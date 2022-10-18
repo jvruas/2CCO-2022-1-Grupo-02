@@ -16,8 +16,8 @@ INSERT INTO categoria_produto(nome) values
 	('2022-12-08 00:00:00','2022-10-08 00:00:00',false,'Notebook perfeito',false,1,' ','Apple','Apple macbook','Apple macbook',100,false,'f',1);
 
 insert into MATCH_DOACAO (DATA_INTERESSE ,FK_DONATARIO ,MATCH_PORCENTAGEM ,STATUS ,VISUALIZADO ,FK_PRODUTO_DOACAO ) values
+('2022-10-10',2,80.0,true,true,1),
 ('2022-10-10',2,80.0,true,true,1);
-
 insert into avaliacao(COMENTARIO ,DATA ,VALOR ,FK_MATCH ) values('Produto de ótima qualidade, muito bom negociador','2022-10-10',4.9,1);
 
 

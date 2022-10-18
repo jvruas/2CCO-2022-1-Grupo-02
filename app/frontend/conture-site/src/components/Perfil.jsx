@@ -8,6 +8,7 @@ import '../html-css-template/css/Perfil.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiUsuario from "../apiUsuario.js";
+import apiProdutos from "../apiProduto.js";
 
 
 function Perfil() {
@@ -18,6 +19,7 @@ function Perfil() {
 
     const [usuario, setUsuario] = useState([]);
     const [endereco, setEndereco] = useState([]);
+    const [nota, setNota] = useState([]);
     // const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect(() => {
@@ -31,6 +33,18 @@ function Perfil() {
                     console.log(data)
                     setEndereco(data)
                 })
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
+
+    useEffect(() => {
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+        apiProdutos.get(`avaliacao/stats?idDoador=${idUsuario}`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setNota(resposta.data)
             } catch (error) {
                 console.log(error)
             }
@@ -66,7 +80,7 @@ function Perfil() {
                                     </div>
                                     <div>
                                         <img src={estrela} alt="" />
-                                        <p>5.0</p>
+                                        <p>{nota.mediaAvaliacoes}</p>
                                     </div>
                                 </div>
                             </div>
