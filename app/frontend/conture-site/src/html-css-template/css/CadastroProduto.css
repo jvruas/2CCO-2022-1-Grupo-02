@@ -19,7 +19,7 @@
 
 .ca-grid{
     height: 100%;
-    width: 80%;
+    /* width: 80%; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,7 +28,7 @@
 
 .ca-titulo{
     height: 112px;
-    width: 100%;
+    width: 80%;
     display: flex;
     align-items: center;
     justify-items: start;
@@ -38,7 +38,7 @@
 
 .ca-campos-produto{
     height: 695px;
-    width: 100%;
+    width: 80%;
     display: flex;
     align-items: center;
     background-color: yellowgreen;  
@@ -50,6 +50,18 @@
     border-right: 1px solid #ABABAB;
     background-color: aqua;
 }
+
+#foto1{
+    width: 223px;
+    height: 217px;
+    border: 1px dashed #000000;
+}
+/* 
+#foto2, #foto3, #foto4, #foto5{
+    width: 100px;
+    height: 100px;
+    border: 1px dashed #000000;
+} */
 
 .ca-campos-info{
     height: 100%;

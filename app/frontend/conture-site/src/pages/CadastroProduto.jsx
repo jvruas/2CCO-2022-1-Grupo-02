@@ -34,11 +34,11 @@ function CadastroProduto() {
                     <div className="ca-campos-produto">
                         <div className="ca-campos-fotos">
                             <label>Foto</label>
-                            <input type="file" name="" id="" />
-                            <input type="file" name="" id="" />
-                            <input type="file" name="" id="" />
-                            <input type="file" name="" id="" />
-                            <input type="file" name="" id="" />
+                            <input type="file" name="foto1" id="foto1" />
+                            <input type="file" name="foto2" id="foto2" />
+                            <input type="file" name="foto3" id="foto3" />
+                            <input type="file" name="foto4" id="foto4" />
+                            <input type="file" name="foto5" id="foto5" />
                         </div>
                         <div className="ca-campos-info">
                             <div className="ca-campos-info-pUm">

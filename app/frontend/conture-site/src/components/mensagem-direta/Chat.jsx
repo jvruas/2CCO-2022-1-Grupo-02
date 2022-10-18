@@ -15,7 +15,7 @@ function Chat(props) {
                     </div>
                 </div>
                 <button>
-                    <img src={iconLixo} alt="" id="md-chats-icon" />
+                    <img src={iconLixo} alt="Ícone lixo" id="md-chats-icon" />
                 </button>
             </div>
         </>

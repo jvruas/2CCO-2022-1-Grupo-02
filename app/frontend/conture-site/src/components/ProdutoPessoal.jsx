@@ -5,8 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Produto(props) {
 
-    
-
     return(
         <div className="container-produto">
             <div className="informacoes-produto">
