@@ -17,10 +17,11 @@ function DescricaoProduto() {
   const [usuario, setUsuario] = useState([]);
   const [mensagem, setMensagem] = useState([]);
 
-  function dataCadastro(){
-    var data = document.getElementById("data")
-    data.innerHTML=usuario.dataCadastro.substring(0, 10)
-  }
+
+//   function dataCadastro(){
+//     var data = document.getElementById("data")
+//     data.innerHTML=usuario.dataCadastro.substring(0, 10)
+//   }
 
   useEffect(() => {
     apiProdutos
@@ -47,7 +48,9 @@ function DescricaoProduto() {
     apiProdutos
       .get(`/disponiveis?idDoador=${sessionStorage.getItem("idDoador")}`)
       .then((resposta) => {
-        console.log(resposta.data);
+        console.log("TESTE",resposta.data);
+        produtosDoacao=0;
+        produtosDoados=0;
         for (var i = 0; i < resposta.data.length; i++) {
           if (resposta.data[i].dataConclusao == null) {
             produtosDoacao++;
@@ -55,6 +58,8 @@ function DescricaoProduto() {
             produtosDoados++;
           }
         }
+        // produtosDoacao = produtosDoacao/2;
+        // produtosDoados = produtosDoados/2;
       });
   }, []);
   
@@ -78,17 +83,40 @@ function DescricaoProduto() {
         // console.log("mensagemPrincipal", mensagem[0][0].mensagem)
       }
 
-      {mensagem.map((itemMensagem) =>
-        console.log("mensagemPrincipalDoMap", itemMensagem[0].mensagem)
-      )}
-
-      {mensagem.map((itemMensagem) =>
-        console.log("mensagemRespostaDoMap", itemMensagem)
-      )}
+      
 
       <CarouselProdutos qtdItens={1}></CarouselProdutos>
 
-      <Comentarios></Comentarios>
+      
+      <div className="card-coment">
+        <Comentarios
+            mensagemPrincipal={mensagem.map((itemMensagem) =>
+                itemMensagem[0].mensagem  
+            )}
+            mensagemResposta = {mensagem.map((itemMensagem) =>
+                    itemMensagem[1]
+              )}
+        >
+        </Comentarios>
+      </div>
+
+      {/* {mensagem.map((itemMensagem) =>
+        {if(itemMensagem[1]!=undefined) {
+            console.log("DEU CERTO",itemMensagem[1]);
+            const comentario= document.getElementsByClassName("card-coment")
+            comentario.innerHTML=`${<Comentarios
+                mensagemPrincipal={itemMensagem[0].mensagem}
+                mensagemResposta = {itemMensagem[1]}
+            ></Comentarios>}`
+        } else {
+            console.log("DEU ERRO",itemMensagem[0]);
+            const comentario= document.getElementsByClassName("card-coment")
+            comentario.innerHTML=`${<Comentarios
+                mensagemPrincipal={itemMensagem[0].mensagem}
+                mensagemResposta = "{itemMensagem[1]}"
+            ></Comentarios>}`
+        }}
+      )} */}
 
       <div className="container-desc-produto product-title">
         <span className="span-product-title">
@@ -129,7 +157,7 @@ function DescricaoProduto() {
             </div>
             <div className="div-cadastro">
               <h3>Cadastrado desde</h3>
-              <h2 id="data"></h2>
+              <h2 id="data">{produtosDoacao}</h2>
             </div>
           </div>
         </div>
