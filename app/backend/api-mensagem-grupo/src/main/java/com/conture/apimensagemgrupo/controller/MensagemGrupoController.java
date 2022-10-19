@@ -26,8 +26,8 @@ import static org.springframework.http.ResponseEntity.*;
 @CrossOrigin(allowedHeaders = "*")
 public class MensagemGrupoController {
 
-    @Autowired
-    private MensagemGrupoRepository mensagemGrupoRepository;
+	@Autowired
+	private MensagemGrupoRepository mensagemGrupoRepository;
 
 	@Autowired
 	private UsuarioClient usuarioClient;
@@ -61,16 +61,15 @@ public class MensagemGrupoController {
 
 		mensagemGrupo.setMensagem(mensagem.getMensagem());
 		mensagemGrupo.setData(mensagem.getData());
-        mensagemGrupo.setFkUsuario(mensagem.getFkUsuario());
-        mensagemGrupo.setFkProdutoDoacao(mensagem.getFkProdutoDoacao());
-
+		mensagemGrupo.setFkUsuario(mensagem.getFkUsuario());
+		mensagemGrupo.setFkProdutoDoacao(mensagem.getFkProdutoDoacao());
 
 
 		if (mensagem.getFkMensagemPrincipal() != null) {
 			MensagemGrupo mensagemPrincipal = new MensagemGrupo();
 
-			List<MensagemGrupo> m = mensagemGrupoRepository.findByIdMensagemGrupoAndFkProdutoDoacao(mensagem.getFkMensagemPrincipal(),mensagem.getFkProdutoDoacao());
-			if (m.isEmpty()){
+			List<MensagemGrupo> m = mensagemGrupoRepository.findByIdMensagemGrupoAndFkProdutoDoacao(mensagem.getFkMensagemPrincipal(), mensagem.getFkProdutoDoacao());
+			if (m.isEmpty()) {
 				return status(401).build();
 			}
 
@@ -80,7 +79,7 @@ public class MensagemGrupoController {
 
 		mensagemGrupoRepository.save(mensagemGrupo);
 		return status(201).build();
-    }
+	}
 
 	@GetMapping("/{fkProdutoDoacao}")
 		public ResponseEntity<List<Object>> listarMensagens(@PathVariable Integer fkProdutoDoacao){
@@ -101,11 +100,11 @@ public class MensagemGrupoController {
 		}
 
 		for (int i = 0; i < listaPergunta.size(); i++) {
-            List<Object> topicList = new ArrayList();
+			List<Object> topicList = new ArrayList();
 
-            topicList.add(listaPergunta.get(i));
+			topicList.add(listaPergunta.get(i));
 
-            List<MensagemGrupoResponse> listaResposta =
+			List<MensagemGrupoResponse> listaResposta =
 					this.mensagemGrupoRepository.acharMensagemResposta(fkProdutoDoacao, listaPergunta.get(i));
 
 			if (listaResposta.isEmpty()) {
@@ -114,9 +113,9 @@ public class MensagemGrupoController {
 				topicList.add(listaResposta);
 				listaGrupo.add(topicList);
 			}
-        }
+		}
 
-		if (listaGrupo.isEmpty()){
+		if (listaGrupo.isEmpty()) {
 			return status(204).build();
 		}
 

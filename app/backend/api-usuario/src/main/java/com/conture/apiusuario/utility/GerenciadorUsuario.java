@@ -1,37 +1,32 @@
 package com.conture.apiusuario.utility;
 
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
+import com.conture.apiusuario.utility.datastructure.Hashtable;
 
-import java.util.List;
 import java.util.Optional;
 
 public class GerenciadorUsuario {
+	private static Hashtable<UsuarioLogadoResponse> hashTableLogados = new Hashtable<>(10);
 
-    private static ListaObj<UsuarioLogadoResponse> listaLogados = new ListaObj<>(50);
-
-    public static void login(UsuarioLogadoResponse usuario) {
-        listaLogados.adiciona(usuario);
-    }
-
-    public static boolean logoff(Integer idUsuario) {
-        return listaLogados.removeElemento(new UsuarioLogadoResponse(idUsuario, null, null, null, null, null, null, null, null, null, null));
-    }
-
-    public static List<UsuarioLogadoResponse> listarUsuariosLogados() {
-        return listaLogados.transformarEmLista();
-    }
-
-    public static boolean isEmpty() {
-        return listaLogados.getTamanho() == 0;
-    }
-
-	public static Optional<UsuarioLogadoResponse> buscaUsuarioLogado(Integer idUsuario){
-		int indice = listaLogados.busca(new UsuarioLogadoResponse(idUsuario, null, null, null, null, null, null, null, null, null, null));
-
-		if(indice == -1){
-			return Optional.ofNullable(null);
-		}
-		return Optional.ofNullable(listaLogados.getElemento(indice));
+	public static void login(UsuarioLogadoResponse usuario) {
+		hashTableLogados.add(usuario);
 	}
 
+	public static boolean logoff(Integer idUsuario) {
+		return hashTableLogados.remove(new UsuarioLogadoResponse(idUsuario, null, null, null, null, null, null, null, null, null, null, null));
+	}
+
+	public static boolean isEmpty() {
+		return hashTableLogados.isEmpty();
+	}
+
+	public static Optional<UsuarioLogadoResponse> buscaUsuarioLogado(Integer idUsuario) {
+		UsuarioLogadoResponse usuario = hashTableLogados.get(new UsuarioLogadoResponse(idUsuario, null, null, null, null, null, null, null, null, null, null, null));
+
+		if (usuario == null) {
+			return Optional.ofNullable(null);
+		}
+
+		return Optional.of(usuario);
+	}
 }

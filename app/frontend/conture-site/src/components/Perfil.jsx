@@ -1,30 +1,59 @@
 import logo from '../html-css-template/imagens/logo-conture.png'
 import foto from '../html-css-template/imagens/foto.jpg';
 import estrela from '../html-css-template/imagens/Star 16.svg';
+import fotoLogado from '../html-css-template/imagens/foto.jpg';
+import fotoDeslogado from '../html-css-template/imagens/icone_pessoa.png';
 import imgPerfil from '../html-css-template/imagens/imagem_fundo.jpg';
 import '../html-css-template/css/Perfil.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiUsuario from "../apiUsuario.js";
+import apiProdutos from "../apiProduto.js";
+
 
 function Perfil() {
+
+    const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
     const navegar = useNavigate();
 
     const [usuario, setUsuario] = useState([]);
+    const [endereco, setEndereco] = useState([]);
+    const [nota, setNota] = useState([]);
     // const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect(() => {
         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-        apiUsuario.get(`/${idUsuario}`).then((resposta) => {
+        apiUsuario.get(`/${idUsuario}`).then((usuarioResposta) => {
             try {
-                console.log(resposta.data)
-                setUsuario(resposta.data)
+                console.log(usuarioResposta.data)
+                setUsuario(usuarioResposta.data)
+                fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
+                .then(res => res.json()).then(data => {
+                    console.log(data)
+                    setEndereco(data)
+                })
             } catch (error) {
                 console.log(error)
             }
         })
     }, [])
+
+    useEffect(() => {
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+        apiProdutos.get(`avaliacao/stats?idDoador=${idUsuario}`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setNota(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
+
+    
+  let dataCad = new Date(usuario.dataCadastro);
+    
 
     return (
         <>
@@ -36,28 +65,26 @@ function Perfil() {
                         <div id="perfil_informacao">
                             <div id="perfil_conteudo">
                                 <div id="foto">
-                                    <img src={foto} alt="" />
+                                    <img src={fotoDeslogado} alt="" />
                                 </div>
                                 <div id="perfil_texto">
-                                    <div class="inf">
+                                <div class="inf">
                                         <b>
                                             <p>{usuario.nome}</p>
                                         </b>
-                                        <p>#0001</p>
+                                        <p>#0{usuario.idUsuario}</p>
                                     </div>
                                     <div class="inf">
-                                        <p>Guarulhos - SP</p>
-                                        <p>Desde 10/2021</p>
+                                        <p>{endereco.localidade} - {endereco.uf}</p>
+                                        <p>Desde {months[dataCad.getMonth()]}/{dataCad.getFullYear()}</p>
                                     </div>
                                     <div>
                                         <img src={estrela} alt="" />
-                                        <p>5.0</p>
+                                        <p>{nota.mediaAvaliacoes}</p>
                                     </div>
                                 </div>
                             </div>
-                            <button>
-                                CADASTRAR PRODUTO
-                            </button>
+                            
                         </div>
                     </div>
                 </div>

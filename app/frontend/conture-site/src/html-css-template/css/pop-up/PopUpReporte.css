@@ -16,11 +16,23 @@
     flex-direction: column;
     align-items: center;
     border-radius: 3px;
-    justify-content: space-between;
+    justify-content: space-evenly;
     position: relative;
+    background-color: #FFF;
 }
 
-.div_sup {
+#report{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index:10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:rgba(0,0,0,.4);  
+}
+
+.div_superior {
     margin-top: 0;
     height: 50px;
     width: 100%;
@@ -29,19 +41,19 @@
     justify-content: center;
 }
 
-.div_sup img {
+.div_superior img {
     height: 20px;
     width: 20px;
-    position: fixed;
+    position: absolute;
     left: 370px;
     top: 10px;
 }
 
-.div_sup p {
+.div_superior p {
     font-weight: bold;
 }
 
-.div_meio {
+.div_meio_reporte {
     height: 100px;
     width: 90%;
     display: flex;
@@ -51,28 +63,28 @@
 
 
 
-.div_meio label {
+.div_meio_reporte label {
     margin-left: 10px;
 }
 
-.div_meio input {
+.div_meio_reporte input {
     height: 20px;
     width: 20px;
 
 }
 
-.div_inf {
-    height: 250px;
+.div_inf_reporte {
+    height: 240px;
     width: 90%;
     margin-top: 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
 }
 
-.div_inf div {
-    height: 33.3px;
+.div_inf_reporte div {
+    height: 30px;
     width: 100%;
     display: flex;
     align-items: center;

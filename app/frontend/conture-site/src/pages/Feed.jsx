@@ -33,6 +33,7 @@ function Feed() {
     const [produtosTablet, setProdutosTablet] = useState([]);
     useEffect(() => {
             apiProduto.get("/categoria?idCategoria=1").then((resposta) => {
+                console.log("cat1", resposta.data);
                 for(let i=0; i<resposta.data.length; i++){
                     apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
                         resposta.data[i].nomeDoador=response.data.nome
@@ -48,6 +49,7 @@ function Feed() {
             })
 
             apiProduto.get("/categoria?idCategoria=2").then((resposta) => {
+                console.log("cat2", resposta.data);
                 for(let i=0; i<resposta.data.length; i++){
                     apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
                         resposta.data[i].nomeDoador=response.data.nome
@@ -62,6 +64,7 @@ function Feed() {
             })
        
             apiProduto.get("/categoria?idCategoria=3").then((resposta) => {
+                console.log("cat3", resposta.data);
                 for(let i=0; i<resposta.data.length; i++){
                     apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
                         resposta.data[i].nomeDoador=response.data.nome

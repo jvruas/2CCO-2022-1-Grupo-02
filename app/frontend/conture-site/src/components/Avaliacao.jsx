@@ -2,8 +2,11 @@ import estrela from '../html-css-template/imagens/Star 7.svg';
 import foto from '../html-css-template/imagens/foto.jpg';
 import '../html-css-template/css/avaliacao.css'
 
-function Avaliacao() {
 
+function Avaliacao(props) {
+
+    let dataCad = new Date(props.dataCon);
+    
     return (
         <>
       <div class="avaliacao">
@@ -11,13 +14,13 @@ function Avaliacao() {
             <div class="container_perfil">
                 <div class="ava_esq">
                     <img className='' src={foto} alt=""/>
-                    <p>5.0</p>
+                    <p>{(props.nota).toFixed(1)}</p>
                 </div>
                 <div class="ava_dir">
                     <div class="informacaoes">
-                        <p>Cleiton</p>
-                        <p>São Paulo - SP</p>
-                    </div>i
+                        <p>{props.donatario}</p>
+                        <p>{props.cidade} - {props.estado}</p>
+                    </div>
                     <div class="estrela">
                         <img src={estrela} alt=""/>
                         <img src={estrela} alt=""/>
@@ -28,17 +31,10 @@ function Avaliacao() {
 
                 </div>
             </div>
-            <p class="data">25/11/2021</p>
+            <p class="data">{dataCad.getDate()}/{dataCad.getMonth()}/{dataCad.getFullYear()}</p>
         </div>
         <div class="avaliação_inf">
-            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim velit est tempora
-                aperiam soluta ullam
-                incidunt, nulla, voluptate, maxime molestiae recusandae temporibus veniam laudantium eum ea in. Atque,
-                sunt
-                facere.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, rem aut provident exercitationem
-                ipsum
-                
+            <p> {props.comentario}
             </p>
         </div>
     </div>

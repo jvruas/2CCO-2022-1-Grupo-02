@@ -10,7 +10,7 @@
 }
 
 .div_conteiner{
-    height: 400px;
+    height: 300px;
     width: 500px;
     display: flex;
     flex-direction: column;
@@ -21,8 +21,8 @@
     background-color: #FFF;
 }
 
-.div_sup {
-
+.div_sup_deletar {
+margin-top: 50px;
     height: 50px;
     width: 100%;
     display: flex;
@@ -31,7 +31,7 @@
     
 }
 
-.div_sup img {
+.div_sup_deletar img {
     height: 20px;
     width: 20px;
     position: absolute;
@@ -39,12 +39,12 @@
    left: 470px;
 }
 
-.div_sup p {
+.div_sup_deletar p {
     font-weight: bold;
 }
 
 
-.div_avaliacao {
+.div_deletar {
     height: 80px;
     width: 90%;
     display: flex;
@@ -53,7 +53,7 @@
 }
 
 
-.div_inf {
+.div_inf_deletar {
     height: 220px;
     width: 90%;
     margin-top: 10px;
@@ -80,7 +80,7 @@
 
 }
 
-.btn_avaliacao {
+.btn_confirmar {
     height: 30px;
     width: 120px;
     border-radius: 3px;
@@ -92,7 +92,7 @@
 
 }
 
-#avaliacao{
+#deletar{
     width: 100%;
     height: 100%;
     position: fixed;
@@ -102,18 +102,3 @@
     justify-content: center;
     background:rgba(0,0,0,.4);  
 }
-
-
-.estrelas input[type=radio] {
-    display: none;
-  }
-  .estrelas label i.fa{
-    font-size: 2.3em
-  }
-  .estrelas label i.fa:before {
-    content:'\f005';
-    color: #FC0;
-  }
-  .estrelas input[type=radio]:checked ~ label i.fa:before {
-    color: #CCC;
-  }

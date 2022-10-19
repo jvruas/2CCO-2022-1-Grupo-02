@@ -89,6 +89,10 @@
     row-gap: 20px;
 }
 
+.dc-campos span{
+    font-weight: bold;
+}
+
 .dc-campos select, .dc-campos input{
     height: 44px;
     width: 100%;
@@ -115,6 +119,21 @@
 .dc-aviso{
     height: 5%;
     width: 80%;
+    display: flex;
+    align-items: center;
+}
+
+.dc-aviso p{
+    color: red;
+    font-weight: 600;
+    padding-left: 10px;
+}
+
+.dc-aviso img{
+    display: none;
+    width: 20px;
+    height: 20px;
+    color: red;
 }
 
 .dc-btns{
@@ -138,6 +157,11 @@
 .dc-btns div{
     border: 1px solid #C4C4C4;
     background-color: #E5E5E5;
+}
+
+.dc-btns div:hover{
+    border: none;
+    background-color: #C4C4C4;
 }
 
 .dc-btns a{

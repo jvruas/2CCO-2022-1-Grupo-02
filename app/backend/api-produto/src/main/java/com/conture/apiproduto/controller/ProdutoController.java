@@ -1,9 +1,7 @@
 package com.conture.apiproduto.controller;
 
 import com.conture.apiproduto.model.dto.request.AvaliacaoRequest;
-import com.conture.apiproduto.model.dto.response.AvaliacaoResponse;
-import com.conture.apiproduto.model.dto.response.MatchResponse;
-import com.conture.apiproduto.model.dto.response.ProdutoDoacaoResponse;
+import com.conture.apiproduto.model.dto.response.*;
 import com.conture.apiproduto.model.entity.*;
 import com.conture.apiproduto.model.dto.request.PreferenciaDonatarioRequest;
 import com.conture.apiproduto.model.dto.request.ProdutoDoacaoRequest;
@@ -34,9 +32,9 @@ import java.util.*;
 
 import static org.springframework.http.ResponseEntity.status;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/produtos")
+@CrossOrigin(allowedHeaders = "*")
 public class ProdutoController {
 	@Autowired
 	private ProdutoRepository produtoRepository;
@@ -60,9 +58,6 @@ public class ProdutoController {
 	private UsuarioClient usuarioClient;
 
 	PilhaObj<String> pilhaHistorico = new PilhaObj<>(10);
-
-	FilaObj<AvaliacaoResponse> filaAvaliacao = new FilaObj<>(20);
-
 
 	@PostMapping()
 	public ResponseEntity<Integer> adicionarProduto(@RequestBody @Valid ProdutoDoacaoRequest produtoRequest) {
@@ -260,6 +255,7 @@ public class ProdutoController {
 	// TODO: Precisa de melhoras.
 	@GetMapping("/avaliacao")
 	public ResponseEntity<FilaObj> listarAvaliacao(@RequestParam @NotNull @Min(1) Integer idDoador) {
+		FilaObj<AvaliacaoResponse> filaAvaliacao = new FilaObj<>(20);
 		List<AvaliacaoResponse> listaAvaliacaoResponse = this.avaliacaoRepository.getAllByIdDoador(idDoador);
 
 		if (listaAvaliacaoResponse.isEmpty()) {
@@ -267,10 +263,21 @@ public class ProdutoController {
 		}
 
 		for (int i = 0; i < listaAvaliacaoResponse.size(); i++) {
-			this.filaAvaliacao.insert(listaAvaliacaoResponse.get(i));
+			filaAvaliacao.insert(listaAvaliacaoResponse.get(i));
 		}
 
-		return ResponseEntity.status(200).body(this.filaAvaliacao);
+		return ResponseEntity.status(200).body(filaAvaliacao);
+	}
+
+	@GetMapping("/avaliacao/stats")
+	public ResponseEntity<EstatisticasAvaliacaoResponse> getEstatiscasAvaliacao(@RequestParam @NotNull @Min(1) Integer idDoador) {
+		if (!this.avaliacaoRepository.hasByIdDoador(idDoador)) {
+			return status(404).build();
+		}
+
+		EstatisticasAvaliacaoResponse estatisticasAvaliacao = this.avaliacaoRepository.getStatistcsByIdDoador(idDoador);
+
+		return status(200).body(estatisticasAvaliacao);
 	}
 
 
@@ -311,9 +318,9 @@ public class ProdutoController {
 
 		List<ProdutoDoacaoResponse> listaProduto = this.produtoRepository.getAllByStatusNaoDoadoC();
 
-		if (listaProduto.isEmpty()) {
-			return status(204).build();
-		}
+			if (listaProduto.isEmpty()) {
+				return status(204).build();
+			}
 
 		Iterator<ProdutoDoacaoResponse> iterator = new AscendingListIterator(listaProduto);
 
@@ -373,11 +380,11 @@ public class ProdutoController {
 
 
 	@GetMapping("/status")
-	public ResponseEntity<List<ProdutoDoacaoResponse>> filtrarStatusProduto(
+	public ResponseEntity<List<ProdutoDoacaoHistoricoResponse>> filtrarStatusProduto(
 			@RequestParam @NotNull @Min(1) Integer idDoador,
-			@RequestParam @NotNull @Size(min = 5, max = 9) @Pattern(regexp = "(andamento)|(doado)|(recebido)|todos") String status
+			@RequestParam @NotNull @Size(min = 5, max = 9) @Pattern(regexp = "(andamento)|(doado)|(recebido)|(todos)") String status
 	) {
-		List<ProdutoDoacaoResponse> listaProduto = new ArrayList();
+		List<ProdutoDoacaoHistoricoResponse> listaProduto = new ArrayList();
 
 		switch (status) {
 			case "andamento": {

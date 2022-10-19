@@ -4,6 +4,7 @@ import '../html-css-template/css/DesabilitarPerfil.css';
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png";
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png";
 import iconSad from "../html-css-template/imagens/icon-sad.svg";
+import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import apiUsuario from "../apiUsuario.js";
@@ -23,17 +24,18 @@ function DesabilitarPerfil() {
 
     const [valuesUsuario, setValuesUsuario] = useState(dataUsuario)
 
+    /* Função para alterar a constante valuesUsuario conforme o input do usuário */
     function handleChangeUser(event) {
         const { value, name } = event.target
         setValuesUsuario({ ...valuesUsuario, [name]: value, })
         console.log(valuesUsuario)
     }
 
-
-
+    /* Função para chamar o endPoint que desabilita a conta*/
     function handleSubmit(event) {
         event.preventDefault()
 
+        let motivo = document.getElementById("motivo");
         let senha = document.getElementById("senha");
 
         let usuario = {
@@ -41,8 +43,8 @@ function DesabilitarPerfil() {
             senha: valuesUsuario.senha
         }
 
-
-        if (senha.value == "") {
+        if (motivo.value == "" || senha.value == "") {
+            document.getElementById("alerta-img2").style.display = "flex"
             document.getElementById("msg-alerta").innerHTML = `Preencha os campos vazios`
         } else {
             apiUsuario.delete(`?motivoDesligamento=${valuesUsuario.motivo}`, {
@@ -61,11 +63,42 @@ function DesabilitarPerfil() {
                 console.log(resposta.status)
             }).catch((error) => {
                 console.log(error)
-                document.getElementById("msg-alerta").innerHTML = `Erro`
             })
         }
     }
 
+    /* Função para pegar os dados do usuário logado */ 
+    const [usuarioLogado, setUsuario] = useState([]);
+
+    useEffect(() => {
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+        apiUsuario.get(`/${idUsuario}`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setUsuario(resposta.data)
+            } catch (error) {
+                console.log(error)  
+            }
+        })
+    }, [])
+
+    /* Função para enviar o código de validação e enviar o usuário para a página de validação */
+    function validacao(event){
+        event.preventDefault()
+
+        apiUsuario.post(`conta/validacao-email?emailDestinatario=${usuarioLogado.email}&idUsuario=${usuarioLogado.idUsuario}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((resposta) => {
+            navegar("/validacao-usuario")
+            console.log(resposta.status)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    /* Função para mostrar e esconder a senha */
     const ocultarSenha = () => {
         var senha = document.getElementById("senha");
         var img = document.getElementById("eye1");
@@ -91,8 +124,8 @@ function DesabilitarPerfil() {
                         <div className="dc-opcao">
                             <Link className="link-p" to="/alterar-senha"><p>Trocar senha</p></Link>
                         </div>
-                        <div className="dc-opcao">
-                            <Link className="link-p" to="/validacao-usuario"><p>Validação</p></Link>
+                        <div className="dc-opcao" onClick={validacao}>
+                            <p>Validação</p>
                         </div>
                     </div>
                     <div id="dc-parte-dois">
@@ -101,12 +134,12 @@ function DesabilitarPerfil() {
                         </div>
 
                         <div className="dc-campos">
-                            <p>Olá <span>Yan</span>,<br />
+                            <p>Olá <span>{usuarioLogado.nome}</span>,<br />
                                 Você tem certeza que gostaria desativar sua conta permanentemente?</p>
                             <div className="dc-campo">
                                 <label htmlFor="motivo">Por que você está desativando sua conta?</label>
                                 <select name="motivo" id="motivo" value={valuesUsuario.motivo} required onChange={handleChangeUser}>
-                                    <option value=""></option>
+                                    <option value="" selected disabled hidden></option>
                                     <option value="A">Anúncios em excesso</option>
                                     <option value="T">Preciso dar um tempo</option>
                                     <option value="Q">Questões de privacidade</option>
@@ -122,7 +155,7 @@ function DesabilitarPerfil() {
                             </div>
                         </div>
                         <div className="dc-aviso">
-                            <p id="msg-alerta"></p>
+                            <img src={iconError} id="alerta-img2"/><p id="msg-alerta"></p>
                         </div>
                         <div className="dc-btns">
                             <Link to="/editar-perfil"><div>VOLTAR</div></Link>

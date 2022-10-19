@@ -5,7 +5,7 @@ import javax.validation.constraints.*;
 public class AvaliacaoRequest {
 	@NotNull
 	@Max(5)
-	@Min(1)
+	@Min(0)
 	private Integer valor;
 
 	@Size(max = 300)

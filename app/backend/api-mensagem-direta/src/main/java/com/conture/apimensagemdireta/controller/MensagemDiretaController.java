@@ -24,6 +24,7 @@ import static org.springframework.http.ResponseEntity.*;
 
 @RestController
 @RequestMapping("/mensagem-direta")
+@CrossOrigin(allowedHeaders = "*")
 public class MensagemDiretaController {
 
 	@Autowired
