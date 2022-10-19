@@ -21,7 +21,7 @@ function DescricaoProduto() {
   setTimeout(function dataCadastro(){
     var data = document.getElementById("data")
     data.innerHTML=usuario.dataCadastro.substring(0, 10)
-  },100)
+  },500)
   
 
   useEffect(() => {
@@ -95,6 +95,7 @@ function DescricaoProduto() {
             mensagemPrincipal={itemMensagem[0].mensagem}  
             mensagemResposta={itemMensagem[1]}
             index={idx}
+            idMensagemPrincipal={itemMensagem[0].idMensagemGrupo}
         >
         </Comentarios>
         )}
@@ -150,7 +151,7 @@ function DescricaoProduto() {
             </div>
           </div>
           <div className="div-button">
-          <button className="button-i-a"></button>
+          <button className="button-i-a">Tenho Interesse</button>
           </div>
         </div>
         <div className="card-info-user">
