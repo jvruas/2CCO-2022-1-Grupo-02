@@ -38,10 +38,10 @@ function Feed() {
                     apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
                         resposta.data[i].nomeDoador=response.data.nome
                     })
-                    apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
-                    `).then((response) => {
-                        resposta.data[i].imagem="data:image/png;base64,"+response.data
-                    })
+                    // apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
+                    // `).then((response) => {
+                    //     resposta.data[i].imagem="data:image/png;base64,"+response.data
+                    // })
                 }
                 setProdutosNote(resposta.data);
                 console.log("resposta.data");
@@ -54,10 +54,10 @@ function Feed() {
                     apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
                         resposta.data[i].nomeDoador=response.data.nome
                     })
-                    apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
-                    `).then((response) => {
-                        resposta.data[i].imagem="data:image/png;base64,"+response.data
-                    })
+                    // apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
+                    // `).then((response) => {
+                    //     resposta.data[i].imagem="data:image/png;base64,"+response.data
+                    // })
                 }
                 setProdutosTablet(resposta.data);
                 console.log(resposta.data);
@@ -69,10 +69,10 @@ function Feed() {
                     apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
                         resposta.data[i].nomeDoador=response.data.nome
                     })
-                    apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
-                    `).then((response) => {
-                        resposta.data[i].imagem="data:image/png;base64,"+response.data
-                    })
+                    // apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
+                    // `).then((response) => {
+                    //     resposta.data[i].imagem="data:image/png;base64,"+response.data
+                    // })
                 }
                 setProdutosCelular(resposta.data);
                 console.log(resposta.data);
@@ -87,12 +87,17 @@ function Feed() {
 
             <h2 className="title-feed">Notebook</h2>
             <Carousel
+                qtdItens={4}
                 card1=
                 {
                     produtosNote.map((itemProduto) => (
                         <Produto
+                            idProduto={1}
+                            idDoador={itemProduto.fkDoador}
                             visualizacao={itemProduto.quantidadeVisualizacao}
                             nome={itemProduto.nome}
+                            // nomeDoador={itemProduto.nomeDoador}
+                            // imagem={itemProduto.imagem}
                         />
                     ))
                 }
@@ -100,6 +105,7 @@ function Feed() {
 
             <h2 className="title-feed">Celular</h2>
             <Carousel
+                qtdItens={4}
                 card1=
                 {
                     produtosCelular.map((itemProduto) => (
@@ -114,6 +120,7 @@ function Feed() {
 
             <h2 className="title-feed">Tablet</h2>
             <Carousel
+                qtdItens={4}
                 card1=
                 {
                     produtosTablet.map((itemProduto) => (

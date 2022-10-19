@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+.container{
+    width: 85%;
+    margin: auto;
+}
+
+.span-crumbs{
+    margin-right: 10px;
+}
+
+.span-crumbs-dad{
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+.div-image{
+    width: 42%;
+    /* height: 70vh; */
+    margin-left: 91.3021px;
+    margin-top: 30px;
+    float: left;
+}
+
+.card-coment{
+    width: 38%;
+    height: 75vh;
+    background-color: bisque;
+    float: right;
+    margin-right: 91.3021px;
+    margin-top: 30px;
+}
+
+.span-product-title{
+    margin-right: auto;
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+.card-description{
+    background-color: aqua;
+    height: 200px;
+    width: 100%;
+    margin-right: auto;
+    float: left;
+}
+
+.card-info-user{
+    background-color: brown;
+    height: 260px;
+    width: 44.5%;
+    margin-left: auto;
+    float: right;
+}
+
+.block-left{
+    width: 49.5%;
+}
+
+.button-i{
+    background-color: red;
+    height: 40px;
+    width: 180px;
+    margin: auto;
+    margin-top: 220px;
+}
+
+.more-info-description-product{
+    margin-top: 30px;
+    padding-bottom: 30px;
+}
+
+.image{
+    background-color: yellow;
+    width: 100%;
+    height: 75vh
+}
+.image2{
+    background-color: blue;
+    width: 100%;
+    height: 75vh
+}
+
+.div-name-user{
+    background-color: bisque;
+    width: 100%;
+    height: 40%;
+}
+
+.div-location-user{
+    background-color: rebeccapurple;
+    width: 100%;
+    height: 13%;
+}
+
+.div-numbers-user{
+    background-color: gold;
+    width: 100%;
+    height: 47%;
+}
+
+.photo-user{
+    background-color: darkorange;
+    height: 60px;
+    width: 60px;
+    float: left;
+}
+
+.infos-user{
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+.name-user{
+    margin-left: 10px;
+}
+
+.title-description{
+    padding-top: 5px;
+    margin-left: 15px;
+}
+
+.text-description{
+    padding-top: 5px;
+    margin-left: 15px;
+}
+
+.div-produtos-doacao{
+    float: left;
+    margin-left: 20px;
+    margin-right: 70px;
+    padding-top: 25px;
+}
+
+.div-produtos-doados{
+    float: left;
+    padding-top: 25px;
+    margin-right: 50px;
+}
+
+.div-cadastro{
+    padding-top: 25px;
+}
+

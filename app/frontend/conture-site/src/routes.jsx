@@ -21,6 +21,8 @@ import PopUpFiltro from "./pages/pop-up/PopUpFiltro";
 import PopUpReporte from "./pages/pop-up/PopUpReporte";
 import PopUpAvaliacao from "./pages/pop-up/PopUpAvaliacao";
 import PopUpDeletar from "./pages/pop-up/PopUpDeletar";
+import DescricaoProduto from "./pages/DescricaoProduto";
+import Dashboard from "./pages/Dashboard";
 
 function Rotas() {
     return (
@@ -49,6 +51,8 @@ function Rotas() {
                 <Route path="/popup-avaliacao" element={<PopUpAvaliacao/>} />
                 <Route path="/popup-filtro" element={<PopUpFiltro/>} />
                 <Route path="/popup-deletar" element={<PopUpDeletar/>} />
+                <Route path="/descricao-produto" element={<DescricaoProduto/>} />
+                <Route path="/dashboard-admin-bi" element={<Dashboard/>}></Route>
             </Routes>
         </BrowserRouter>
     );

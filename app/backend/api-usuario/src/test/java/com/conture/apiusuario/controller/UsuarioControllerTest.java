@@ -25,15 +25,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = {UsuarioController.class})
+@SpringBootTest(classes = { UsuarioController.class })
 
 class UsuarioControllerTest {
 
 	@Autowired
 	UsuarioController controller;
 
-//	@MockBean
-//	private AvaliacaoRepository avaliacaoRepository;
+	// @MockBean
+	// private AvaliacaoRepository avaliacaoRepository;
 	@MockBean
 	private ReporteRepository reporteRepository;
 	@MockBean
@@ -47,7 +47,7 @@ class UsuarioControllerTest {
 	@MockBean
 	private DesligamentoContaRepository desligamentoContaRepository;
 
-	private Usuario createUsuario(){
+	private Usuario createUsuario() {
 		Usuario u = new Usuario();
 		u.setSituacaoAtual(1);
 		u.setCep("08071080");
@@ -66,7 +66,7 @@ class UsuarioControllerTest {
 		return u;
 	}
 
-	private UsuarioCadastroRequest createUsuarioLogoff(){
+	private UsuarioCadastroRequest createUsuarioLogoff() {
 		UsuarioCadastroRequest u = new UsuarioCadastroRequest();
 		u.setFkSituacaoAtual(1);
 		u.setCep("08071080");
@@ -83,33 +83,23 @@ class UsuarioControllerTest {
 		return u;
 	}
 
-//	private UsuarioLogadoResponse createUsuarioLogado(){
-//		UsuarioLogadoResponse u = new UsuarioLogadoResponse(
-//				1,
-//				"teste@hotmail.com",
-//				"Igor",
-//				"Sérgio",
-//				"M",
-//				new Date(),
-//				"S",
-//				new Date(),
-//				"A",
-//				"46002259881",
-//				"D"
-//				);
-//
-//		return u;
-//	}
+	// // private UsuarioLogadoResponse createUsuarioLogado(){
+	// 	UsuarioLogadoResponse u = new UsuarioLogadoResponse(
+	// 			1,
+	// 			"teste@hotmail.com",
+	// 			"Igor",
+	// 			"Sérgio",
+	// 			"M",
+	// 			new Date(),
+	// 			"S",
+	// 			new Date(),
+	// 			"A",
+	// 			"46002259881",
+	// 			"D"
+	// 			);
 
-//	@Test
-//	@DisplayName("Verificando se o resultado ira retornar 404")
-//	void loginRetorno404() {
-//
-//		when(usuarioRepository.getByEmailAndSenha("teste@hotmail.com", "teste1234")).thenReturn(Optional.ofNullable(null));
-//		ResponseEntity<UsuarioLogadoResponse> response = controller.login(mock(UsuarioLoginRequest.class));
-//
-//		assertEquals(404, response.getStatusCodeValue());
-//	}
+	// 	return u;
+	// }
 
 //	@Test
 //	@DisplayName("Vericando se usuario está deslogado retorna 404")
@@ -123,18 +113,16 @@ class UsuarioControllerTest {
 //	}
 
 
-//	@Test
-//	@DisplayName("Verificando se usuario deslogado retorna 404")
-//	void existsUsuarioLogado404() {
-//		Usuario u = mock(Usuario.class);
-//		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(u.getIdUsuario());
-//		ResponseEntity<Integer> usuario = controller.adicionarUsuario(mock(UsuarioCadastroRequest.class));
-//		when(usuarioRepository.findByIdUsuario(1)).thenReturn(mock(UsuarioCadastroRequest.class));
-//		ResponseEntity response = controller.login(mock(UsuarioLoginRequest.class));
-//		assertEquals(404, response.getStatusCodeValue());
-//	}
-
-
+	@Test
+	@DisplayName("Verificando se usuario deslogado retorna 404")
+	void existsUsuarioLogado404() {
+		Usuario u = mock(Usuario.class);
+		Optional<UsuarioLogadoResponse> usuarioLogado = GerenciadorUsuario.buscaUsuarioLogado(u.getIdUsuario());
+		ResponseEntity<Integer> usuario = controller.adicionarUsuario(mock(UsuarioCadastroRequest.class));
+		when(usuarioRepository.findByIdUsuario(1)).thenReturn(mock(UsuarioCadastroRequest.class));
+		ResponseEntity response = controller.login(mock(UsuarioLoginRequest.class));
+		assertEquals(404, response.getStatusCodeValue());
+	}
 
 	@Test
 	@DisplayName("Verificando se ira retornar 404 quando passar como null")
@@ -152,11 +140,6 @@ class UsuarioControllerTest {
 
 		assertEquals(404, response.getStatusCodeValue());
 	}
-
-
-
-
-
 
 	@Test
 	@DisplayName("Verificar se ira retornar 200 caso retorne um usuario pela pesquisa do email")

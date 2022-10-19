@@ -1,7 +1,8 @@
 import CarouselLib from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import "../html-css-template/css/DescricaoProduto.css"
 
-function Carousel(props){
+function CarouselProdutos(props){
 return(
 <CarouselLib
   additionalTransfrom={0}
@@ -9,7 +10,7 @@ return(
   autoPlaySpeed={3000}
   centerMode={false}
   className=""
-  containerClass="container-with-dots"
+  containerClass="div-image"
   dotListClass=""
   draggable
   focusOnSelect={false}
@@ -56,10 +57,12 @@ return(
   slidesToSlide={3}
   swipeable
 >
-{props.card1}
+
+    <div class="image"></div>
+    <div class="image2"></div>
 </CarouselLib>
 );
 }
 
-export default Carousel;
+export default CarouselProdutos;
 

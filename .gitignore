@@ -273,3 +273,5 @@ fabric.properties
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+app/frontend/conture-site/package-lock.json
