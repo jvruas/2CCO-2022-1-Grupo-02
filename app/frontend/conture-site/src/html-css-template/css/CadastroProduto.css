@@ -6,10 +6,10 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Tajawal;
-    text-decoration: none;     
+    text-decoration: none;
 }
 
-#ca-section{
+#ca-section {
     height: 1700px;
     width: 100%;
     display: flex;
@@ -17,18 +17,16 @@
     justify-content: center;
 }
 
-.ca-grid{
-    height: 100%;
-    width: 80%;
+.ca-grid {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-color: aqua;
 }
 
-.ca-titulo{
+.ca-titulo {
     height: 112px;
-    width: 100%;
+    width: 80%;
     display: flex;
     align-items: center;
     justify-items: start;
@@ -36,46 +34,210 @@
     font-weight: bold;
 }
 
-.ca-campos-produto{
-    height: 695px;
+form {
     width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    background-color: yellowgreen;  
 }
 
-.ca-campos-fotos{
+.ca-campos-produto {
+    height: 695px;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+input,
+textarea {
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.ca-campos-fotos {
     height: 100%;
-    width: 35%;
+    width: 29%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     border-right: 1px solid #ABABAB;
-    background-color: aqua;
 }
 
-.ca-campos-info{
+.ca-fotos {
+    width: 100%;
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+#label-foto1 {
+    width: 80%;
+    height: 217px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #000000;
+}
+
+.ca-quatro-fotos {
+    width: 80%;
+    height: 40%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+}
+
+.ca-quatro-fotos label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #000000;
+}
+
+.ca-campos-fotos img {
+    width: 28px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.ca-campos-info {
     height: 100%;
     width: 65%;
     display: flex;
     flex-direction: column;
-    background-color: blueviolet;
 }
 
-.ca-campos-info-pUm{
+.ca-campos-info-pUm {
     height: 85%;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    background-color: azure;
 }
 
-.ca-campos-info-pDois{
+.ca-campos-info-pDois {
     height: 15%;
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
 }
 
-.ca-preferencia{
-    height: 450px;
+.ca-toggle {
+    width: 70%;
+    margin-top: 10px;
+    display: flex;
+}
+
+.ca-toggle>div {
+    padding-left: 10%;
+}
+
+.ca-preferencia {
+    height: 250px;
+    width: 80%;
+    margin-top: 50px;
+    border-top: 1px solid #ABABAB;
+}
+
+.ca-preferencia-titulo {
+    margin-top: 50px;
+    display: flex;
+}
+
+.ca-campos-preferencia {
+    height: 250px;
     width: 100%;
+    display: flex;
+}
+
+.ca-campos-pref {
+    width: 60%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+}
+
+.ca-campos-pref>div {
+    display: flex;
+    flex-direction: column;
+}
+
+.ca-campos-pref select {
+    width: 80%;
+}
+
+.ca-pref-btn {
+    width: 40%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.ca-pref-btn button {
+    width: 180px;
+    height: 44px;
+    margin-bottom: 30px;
+    color: #FFFFFF;
+    background-color: #7724BE;
+    border: none;
+    border-radius: 3px;
+}
+
+.ca-pref-btn button:hover {
+    background-color: #369F64;
+}
+
+span {
+    font-weight: bold;
+    color: #E01E37;
+}
+
+.ca-preferencia-titulo>div {
+    padding-left: 4%;
+}
+
+.toggle>input {
+    display: none;
+}
+
+.toggle>label {
+    position: relative;
+    display: block;
+    height: 20px;
+    width: 44px;
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggle>label:after {
+    position: absolute;
+    left: 2px;
+    top: 1px;
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 100px;
+    background: #7724BE;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.05);
+    content: '';
+    transition: all 0.3s ease;
+}
+
+.toggle>label:active:after {
+    transform: scale(1.15, 0.85);
+}
+
+.toggle>input:checked~label:after {
+    left: 24px;
+    background-color: #369F64;
 }
