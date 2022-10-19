@@ -1,5 +1,5 @@
 import '../html-css-template/css/PopUp.css'
-import iconClosePop from "../html-css-template/imagens/../imagens/x-lg 1.png"
+import iconClosePop from "../html-css-template/imagens/../imagens/x-lg1.png"
 import iconOk from "../html-css-template/imagens/icon-ok.png"
 import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
 import { Link, useNavigate } from "react-router-dom";

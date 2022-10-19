@@ -1,4 +1,4 @@
-import estrela from '../html-css-template/imagens/Star 3.svg';
+import estrela from '../html-css-template/imagens/star3.svg';
 import '../html-css-template/css/Circulo.css'
 import apiProdutos from '../apiProduto';
 import { useState, useEffect } from "react";
