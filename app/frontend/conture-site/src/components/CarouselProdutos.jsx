@@ -10,7 +10,7 @@ return(
   autoPlaySpeed={3000}
   centerMode={false}
   className=""
-  containerClass="div-image"
+  containerClass="div-image-produto-descricao"
   dotListClass=""
   draggable
   focusOnSelect={false}

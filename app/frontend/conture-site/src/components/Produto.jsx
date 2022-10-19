@@ -15,9 +15,12 @@ function Produto(props) {
     }
     
     return(
-        <div className="container-produto" onClick={DescricaoProdutoRedirect(props.idProduto, props.idDoador)}>
-            <div className="informacoes-produto">
-                <div className="superior"><img alt=""/> <div class="visualizacao"><img src={vector} alt=""/> <p>{props.visualizacao}</p></div></div>
+        <div className="container-produto" 
+        // onClick={DescricaoProdutoRedirect(props.idProduto, props.idDoador)}
+        >
+            <div className="informacoes-produto"
+            >
+                <div className="superior"><img alt=""/><p>{props.nomeDoador}</p> <div class="visualizacao"><img src={vector} alt=""/> <p>{props.visualizacao}</p></div></div>
                 <div className="meio"><img src="" alt=""/></div>
                 <div className="inferior"><p>{props.nome}</p></div>
             </div>

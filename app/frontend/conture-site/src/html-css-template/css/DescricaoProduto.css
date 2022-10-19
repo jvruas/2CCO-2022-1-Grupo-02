@@ -9,7 +9,7 @@
     text-decoration: none;     
 }
 
-.container{
+.container-desc-produto{
     width: 85%;
     margin: auto;
 }
@@ -23,7 +23,15 @@
     margin-top: 20px;
 }
 
-.div-image{
+.div-crumbs{
+    margin-top: 2%;
+}
+
+.product-title{
+    margin-top: 42%;
+}
+
+.div-image-produto-descricao{
     width: 42%;
     /* height: 70vh; */
     margin-left: 91.3021px;
@@ -34,10 +42,79 @@
 .card-coment{
     width: 38%;
     height: 75vh;
-    background-color: bisque;
     float: right;
     margin-right: 91.3021px;
     margin-top: 30px;
+    background: #FFFFFF;
+    border: 0.5px solid rgba(0, 0, 0, 0.32);
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+    position: relative;
+}
+
+.div-coments-description{
+    width: 100%;
+    height: 80%;
+    overflow-y: auto;
+}
+
+.div-title-coment-description{
+    width: 100%;
+    height: 10%;
+    background: #FFFFFF;
+    border: 0.5px solid rgba(0, 0, 0, 0.32);
+    box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 3px 3px;
+}
+
+.title-coment-description{
+    color: #7724BE;
+}
+
+.div-send-coment-description{
+    width: 100%;
+    height: 10%;
+    background: #FFFFFF;
+    border: 0.5px solid rgba(0, 0, 0, 0.32);
+    border-radius: 0px 0px 0px 3px;
+    position: absolute;
+    bottom: 0;
+}
+
+.div-reply-coment-description{
+    height: 6%;
+    width: 15%;
+    margin-left: auto;
+    margin-right: 4%;
+}
+
+.button-reply-coment-description{
+    height: 100%;
+    font-size: 12px;
+    color: #FFFFFF;
+    width: 100%;
+    background: #7724BE;
+    border-radius: 3px;
+    border: none;
+}
+
+.input-send-coment-description{
+    width: 90%;
+    height: 100%;
+    background: #FFFFFF;
+    border: 0.5px solid rgba(0, 0, 0, 0.32);
+    border-radius: 0px 0px 0px 3px;
+    position: absolute;
+    bottom: 0;
+}
+
+.button-send-coment-description{
+    height: 100%;
+    width: 10%;
+    background: #7724BE;
+    border: 0.5px solid rgba(0, 0, 0, 0.32);
+    border-radius: 0px 0px 3px 0px;
+    position: absolute;
+    right: 0;
 }
 
 .span-product-title{
@@ -47,7 +124,10 @@
 }
 
 .card-description{
-    background-color: aqua;
+    background: #FFFFFF;
+    border: 1px solid #ADADAD;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
     height: 200px;
     width: 100%;
     margin-right: auto;
@@ -64,19 +144,49 @@
 
 .block-left{
     width: 49.5%;
+    float: left;
 }
 
-.button-i{
-    background-color: red;
+.button-i-a{
+    background: #369F64;
+    border-radius: 3px;
     height: 40px;
     width: 180px;
-    margin: auto;
-    margin-top: 220px;
+    cursor: pointer;
+    margin-top: 18px;
+    border: none;
+    color: #FFFFFF;
+}
+
+.message-main-description{
+    background: #FFFFFF;
+    border: 1px solid #7724BE;
+    border-radius: 10px 10px 10px 0px;
+    padding: 5px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: 4%;
+    margin-top: 2%;
+}
+
+.message-answer-description{
+    background: #FFFFFF;
+    border: 1px solid #7724BE;
+    border-radius: 10px 10px 10px 0px;
+    padding: 5px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: 4%;
+    margin-top: 2%;
+}
+
+.div-button{
+    text-align: center;
 }
 
 .more-info-description-product{
-    margin-top: 30px;
-    padding-bottom: 30px;
+    margin-top: 40px;
+    margin-bottom: 330px;
 }
 
 .image{
@@ -91,19 +201,26 @@
 }
 
 .div-name-user{
-    background-color: bisque;
     width: 100%;
     height: 40%;
+    background: #FFFFFF;
+    border: 1px solid #ADADAD;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 3px 3px 0px 0px;
 }
 
 .div-location-user{
-    background-color: rebeccapurple;
+    background: #FFFFFF;
+    border: 1px solid #ADADAD;
+    border-radius: 0px;
     width: 100%;
     height: 13%;
 }
 
 .div-numbers-user{
-    background-color: gold;
+    background: #FFFFFF;
+    border: 1px solid #ADADAD;
+    border-radius: 0px 0px 3px 3px;
     width: 100%;
     height: 47%;
 }
