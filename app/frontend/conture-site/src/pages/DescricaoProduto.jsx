@@ -90,11 +90,11 @@ function DescricaoProduto() {
 
       <CardComentarios
       comentarios=
-        {mensagem.map((itemMensagem,idx) =>
+        {mensagem.map((itemMensagem) =>
           <Comentarios
             mensagemPrincipal={itemMensagem[0].mensagem}  
             mensagemResposta={itemMensagem[1]}
-            index={idx}
+            index={itemMensagem[0].idMensagemGrupo}
             idMensagemPrincipal={itemMensagem[0].idMensagemGrupo}
         >
         </Comentarios>

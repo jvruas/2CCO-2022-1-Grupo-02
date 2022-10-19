@@ -1,9 +1,10 @@
 import "../html-css-template/css/DescricaoProduto.css"
 
 function Comentarios(props){
+    const indice = props.index
     setTimeout(function respostas(){
         console.log("esntrou")
-        const resposta = document.getElementById(`div-respostas${props.index}`);
+        const resposta = document.getElementById(`div-respostas${indice}`);
         resposta.innerHTML = " ";
         try {
             for(var i=0; i<props.mensagemResposta.length;i++){
@@ -24,7 +25,7 @@ function Comentarios(props){
             console.log("tudo certo", error)
         }
          
-    },100)
+    },500)
 
     function definitionMessageReply(){
         sessionStorage.setItem("fkMensagemPrincipal",props.idMensagemPrincipal)
@@ -41,7 +42,7 @@ function Comentarios(props){
                 </div>
                 
                 
-                <div id={`div-respostas${props.index}`} ></div>
+                <div id={`div-respostas${indice}`} ></div>
         </>
     )
 }

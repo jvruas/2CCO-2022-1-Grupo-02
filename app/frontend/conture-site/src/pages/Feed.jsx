@@ -89,7 +89,7 @@ function Feed() {
                 {
                     produtosNote.map((itemProduto) => (
                         <Produto
-                            idProduto={1}
+                            idProduto={console.log("aicalica",itemProduto)}
                             idDoador={itemProduto.fkDoador}
                             visualizacao={itemProduto.quantidadeVisualizacao}
                             nome={itemProduto.nome}

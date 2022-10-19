@@ -8,15 +8,15 @@ function Produto(props) {
 
     const navegar = useNavigate();
 
-    function DescricaoProdutoRedirect(idProduto, idDoador){
-        sessionStorage.setItem("idProduto",idProduto);
-        sessionStorage.setItem("idDoador",idDoador);
+    function DescricaoProdutoRedirect(){
+        sessionStorage.setItem("idProduto",props.idProduto);
+        sessionStorage.setItem("idDoador",props.idDoador);
         navegar("/descricao-produto");
     }
     
     return(
         <div className="container-produto" 
-        // onClick={DescricaoProdutoRedirect(props.idProduto, props.idDoador)}
+         onClick={DescricaoProdutoRedirect}
         >
             <div className="informacoes-produto"
             >

@@ -68,6 +68,8 @@
 
 .title-coment-description{
     color: #7724BE;
+    padding-top: 1%;
+    padding-left: 2%;
 }
 
 .div-send-coment-description{
@@ -115,6 +117,10 @@
     border-radius: 0px 0px 3px 0px;
     position: absolute;
     right: 0;
+}
+
+.button-send-coment-description:hover{
+    background: #7724BE;
 }
 
 .span-product-title{
