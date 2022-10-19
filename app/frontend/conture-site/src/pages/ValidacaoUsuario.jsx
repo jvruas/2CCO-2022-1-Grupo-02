@@ -2,6 +2,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import '../html-css-template/css/ValidacaoUsuario.css';
 import IconCheck from "../html-css-template/imagens/icon-check.svg";
+import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import apiUsuario from "../apiUsuario.js";
@@ -31,16 +32,23 @@ function ValidacaoUsuario() {
 
         var codigo = document.getElementById("codigo-validacao");
 
-        apiUsuario.post(`conta/validacao-codigo?idUsuario=${usuarioLogado.idUsuario}&codigo=${codigo.value}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((resposta) => {
-            navegar("/validacao-usuario-confirmada")
-            console.log(resposta.status)
-        }).catch((error) => {
-            console.log(error)
-        })
+        if(codigo.value == ""){
+            document.getElementById("alerta-img2").style.display = "flex"
+            document.getElementById("msg-alerta").innerHTML = `Preencha o campo de código`
+        }else{
+            apiUsuario.post(`conta/validacao-codigo?idUsuario=${usuarioLogado.idUsuario}&codigo=${codigo.value}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((resposta) => {
+                navegar("/validacao-usuario-confirmada")
+                console.log(resposta.status)
+            }).catch((error) => {
+                console.log(error)
+                document.getElementById("alerta-img2").style.display = "flex"
+                document.getElementById("msg-alerta").innerHTML = `Código incorreto`
+            })
+        }        
     }
 
     return (
@@ -73,7 +81,7 @@ function ValidacaoUsuario() {
                             <input type="text" name="codigo-validacao" id="codigo-validacao" />
                         </div>
                         <div className="vl-aviso">
-                            <p></p>
+                            <img src={iconError} id="alerta-img2" /><p id="msg-alerta"></p>
                         </div>
                         <div className="vl-btns">
                             <button type="button" onClick={confirmacaoValidacao}>

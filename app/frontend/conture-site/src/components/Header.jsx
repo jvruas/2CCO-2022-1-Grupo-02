@@ -41,8 +41,16 @@ function Header() {
             document.getElementById("img_foto").src = `${fotoDesogado}`;
         }
     })
-    
 
+    // apiUsuario.get(`/${idUsuario}/imagem`).then((resposta) => {
+    //     try {
+    //         console.log(resposta.data)
+    //         setUsuario(resposta.data)
+    //     } catch (error) {
+    //         console.log(error)  
+    //     }
+    // })
+    
     function logoff(event) {
         event.preventDefault()
         sessionStorage.setItem('logado', "")
@@ -84,7 +92,7 @@ function Header() {
     const redirecionarDoar = () => {
         let param = sessionStorage.getItem('logado');
         if(param == "OK"){
-            navegar("/")
+            navegar("/cadastro-produto")
         }else{
             navegar("/login")
         }
