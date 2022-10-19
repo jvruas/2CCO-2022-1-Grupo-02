@@ -5,7 +5,7 @@ import fotoDesogado from '../html-css-template/imagens/imagem-deslogado.png';
 import setaBaixo from '../html-css-template/imagens/chevron-down1.svg';
 import interesse from '../html-css-template/imagens/interesses.svg';
 import mensagem from '../html-css-template/imagens/icon-mensagem.svg';
-import notificacao from '../html-css-template/imagens/icon-notificação.svg';
+import notificacao from '../html-css-template/imagens/icon-notificacao.svg';
 import adicionarProduto from '../html-css-template/imagens/subtract.svg';
 import '../html-css-template/css/Style.css'
 import { Link, useNavigate } from "react-router-dom";
