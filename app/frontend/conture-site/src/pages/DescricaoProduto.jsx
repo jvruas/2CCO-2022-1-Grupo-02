@@ -8,6 +8,7 @@ import apiUsuario from "../apiUsuario";
 import { useEffect, useState } from "react";
 import apiMensagemGrupo from "../apiMensagemGrupo";
 import Cadastro from "./Cadastro";
+import CardComentarios from "../components/CardComentarios";
 
 var produtosDoacao = 0;
 var produtosDoados = 0;
@@ -17,11 +18,11 @@ function DescricaoProduto() {
   const [usuario, setUsuario] = useState([]);
   const [mensagem, setMensagem] = useState([]);
 
-
-//   function dataCadastro(){
-//     var data = document.getElementById("data")
-//     data.innerHTML=usuario.dataCadastro.substring(0, 10)
-//   }
+  setTimeout(function dataCadastro(){
+    var data = document.getElementById("data")
+    data.innerHTML=usuario.dataCadastro.substring(0, 10)
+  },100)
+  
 
   useEffect(() => {
     apiProdutos
@@ -87,18 +88,32 @@ function DescricaoProduto() {
 
       <CarouselProdutos qtdItens={1}></CarouselProdutos>
 
+      <CardComentarios
+      comentarios=
+        {mensagem.map((itemMensagem,idx) =>
+          <Comentarios
+            mensagemPrincipal={itemMensagem[0].mensagem}  
+            mensagemResposta={itemMensagem[1]}
+            index={idx}
+        >
+        </Comentarios>
+        )}
+      >
+
+      </CardComentarios>
       
-      <div className="card-coment">
-        <Comentarios
+
+      
+
+        {/* <Comentarios
             mensagemPrincipal={mensagem.map((itemMensagem) =>
                 itemMensagem[0].mensagem  
             )}
             mensagemResposta = {mensagem.map((itemMensagem) =>
-                    itemMensagem[1]
+                itemMensagem[1]
               )}
         >
-        </Comentarios>
-      </div>
+        </Comentarios> */}
 
       {/* {mensagem.map((itemMensagem) =>
         {if(itemMensagem[1]!=undefined) {
@@ -157,7 +172,9 @@ function DescricaoProduto() {
             </div>
             <div className="div-cadastro">
               <h3>Cadastrado desde</h3>
-              <h2 id="data">{produtosDoacao}</h2>
+              <h2 id="data">{
+              // usuario.dataCadastro.substring(0, 10)
+              }</h2>
             </div>
           </div>
         </div>

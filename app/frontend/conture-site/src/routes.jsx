@@ -29,6 +29,7 @@ function Rotas() {
                 <Route path="/esqueci-senha" element={<EsqueciSenha/>} />
                 <Route path="/cadastro" element={<Cadastro/>} />
                 <Route path="*" element={<Feed/>} />
+                <Route path="/feed" element={<Feed/>} />
                 <Route path="/mensagem-direta" element={<MensagemDireta/>} />
                 <Route path="/validacao-usuario" element={<ValidacaoUsuario/>} />
                 <Route path="/validacao-usuario-confirmada" element={<ValidacaoUsuarioConfirmada/>} />

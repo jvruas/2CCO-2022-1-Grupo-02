@@ -36,13 +36,13 @@ function Feed() {
                 for(let i=0; i<resposta.data.length; i++){
                     apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
                         resposta.data[i].nomeDoador=response.data.nome
+                        setProdutosNote(resposta.data);
                     })
                     // apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
                     // `).then((response) => {
                     //     resposta.data[i].imagem="data:image/png;base64,"+response.data
                     // })
                 }
-                setProdutosNote(resposta.data);
                 console.log("resposta.data");
                 console.log(resposta.data);
             })
@@ -51,13 +51,13 @@ function Feed() {
                 for(let i=0; i<resposta.data.length; i++){
                     apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
                         resposta.data[i].nomeDoador=response.data.nome
+                        setProdutosTablet(resposta.data);
                     })
                     // apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
                     // `).then((response) => {
                     //     resposta.data[i].imagem="data:image/png;base64,"+response.data
                     // })
                 }
-                setProdutosTablet(resposta.data);
                 console.log(resposta.data);
             })
        
@@ -65,13 +65,13 @@ function Feed() {
                 for(let i=0; i<resposta.data.length; i++){
                     apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
                         resposta.data[i].nomeDoador=response.data.nome
+                        setProdutosCelular(resposta.data);
                     })
                     // apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
                     // `).then((response) => {
                     //     resposta.data[i].imagem="data:image/png;base64,"+response.data
                     // })
                 }
-                setProdutosCelular(resposta.data);
                 console.log(resposta.data);
             })
     }, [])
@@ -93,7 +93,7 @@ function Feed() {
                             idDoador={itemProduto.fkDoador}
                             visualizacao={itemProduto.quantidadeVisualizacao}
                             nome={itemProduto.nome}
-                            // nomeDoador={itemProduto.nomeDoador}
+                            nomeDoador={itemProduto.nomeDoador}
                             // imagem={itemProduto.imagem}
                         />
                     ))
@@ -111,7 +111,7 @@ function Feed() {
                         idDoador={itemProduto.fkDoador}
                         visualizacao={itemProduto.quantidadeVisualizacao}
                         nome={itemProduto.nome}
-                        // nomeDoador={itemProduto.nomeDoador}
+                        nomeDoador={itemProduto.nomeDoador}
                         // imagem={itemProduto.imagem}
                         />
                     ))
@@ -130,7 +130,7 @@ function Feed() {
                         idDoador={itemProduto.fkDoador}
                         visualizacao={itemProduto.quantidadeVisualizacao}
                         nome={itemProduto.nome}
-                        // nomeDoador={itemProduto.nomeDoador}
+                        nomeDoador={itemProduto.nomeDoador}
                         // imagem={itemProduto.imagem}
                         />
                     ))
