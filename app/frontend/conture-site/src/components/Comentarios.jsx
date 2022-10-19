@@ -17,7 +17,8 @@ function Comentarios(props){
                     width: 70%;
                     margin-left: auto;
                     margin-right: 4%;
-                    margin-top: 2%;"
+                    margin-top: 2%;
+                    padding-left: 4%;"
                     >${props.mensagemResposta[i].mensagem}</div>`;
                 }
             }  
@@ -28,6 +29,8 @@ function Comentarios(props){
     },500)
 
     function definitionMessageReply(){
+        const buttonFocus = document.getElementById("button-send")
+        buttonFocus.focus() 
         sessionStorage.setItem("fkMensagemPrincipal",props.idMensagemPrincipal)
     }
     

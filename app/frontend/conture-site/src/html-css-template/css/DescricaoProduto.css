@@ -110,6 +110,7 @@
 }
 
 .button-send-coment-description{
+    padding-top: 1%;
     height: 100%;
     width: 10%;
     background: #7724BE;
@@ -117,6 +118,28 @@
     border-radius: 0px 0px 3px 0px;
     position: absolute;
     right: 0;
+}
+
+.image-description{
+    width: 100%;
+    height: 100%;
+}
+
+.div-location-uf-img{
+    text-align:left;
+    height: 70%;
+    position: relative;
+    margin-top: 1%;
+}
+
+.div-location-uf-img img{
+    height: 100%;
+    margin-left: 3%;
+}
+
+.div-location-uf-img b{
+    position: absolute;
+    margin-left: 3%;
 }
 
 .button-send-coment-description:hover{
@@ -173,6 +196,7 @@
     margin-left: auto;
     margin-right: 4%;
     margin-top: 2%;
+    padding-left: 4%;
 }
 
 .message-answer-description{

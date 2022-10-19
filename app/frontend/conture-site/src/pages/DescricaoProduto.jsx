@@ -9,6 +9,10 @@ import { useEffect, useState } from "react";
 import apiMensagemGrupo from "../apiMensagemGrupo";
 import Cadastro from "./Cadastro";
 import CardComentarios from "../components/CardComentarios";
+import Computador from "../html-css-template/imagens/ideapad.webp"
+import FotoPerfil from "../html-css-template/imagens/mulher.jpeg"
+import apiViaCep from "../apiViaCep";
+import IconLocation from "../html-css-template/imagens/iconLocation.svg";
 
 var produtosDoacao = 0;
 var produtosDoados = 0;
@@ -17,6 +21,7 @@ function DescricaoProduto() {
   const [produto, setProduto] = useState([]);
   const [usuario, setUsuario] = useState([]);
   const [mensagem, setMensagem] = useState([]);
+  const [cep, setCep] = useState([]);
 
   setTimeout(function dataCadastro(){
     var data = document.getElementById("data")
@@ -37,6 +42,12 @@ function DescricaoProduto() {
       .then((resposta) => {
         setUsuario(resposta.data);
         console.log(resposta.data);
+        apiViaCep
+          .get(`/${resposta.data.cep}/json`)
+          .then((response) => {
+            setCep(response.data);
+            console.log("teste", response.data);
+        });
       });
 
     apiMensagemGrupo
@@ -86,7 +97,10 @@ function DescricaoProduto() {
 
       
 
-      <CarouselProdutos qtdItens={1}></CarouselProdutos>
+      <CarouselProdutos 
+        qtdItens={1}
+        image={Computador}
+      ></CarouselProdutos>
 
       <CardComentarios
       comentarios=
@@ -157,11 +171,19 @@ function DescricaoProduto() {
         <div className="card-info-user">
           <div className="div-name-user">
             <div className="infos-user">
-              <div className="photo-user"></div>
+              <div className="photo-user">
+                <img src={FotoPerfil} className="image-description"/>
+              </div>
               <b className="name-user">{usuario.nome}</b>
             </div>
           </div>
-          <div className="div-location-user"></div>
+          <div className="div-location-user">
+            <div className="div-location-uf-img">
+                <img className="" src={IconLocation} alt="" /> 
+                <b>{cep.localidade} - {cep.uf}</b>
+            </div>
+            
+          </div>
           <div className="div-numbers-user">
             <div className="div-produtos-doacao">
               <h3>Para doação</h3>
