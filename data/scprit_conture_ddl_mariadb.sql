@@ -3,11 +3,15 @@ USE conture;
 
 CREATE TABLE desligamento_conta(
 	id_desligamento_conta INT AUTO_INCREMENT,
-	motivo_desligamento_conta CHAR(1),
 	data_desligamento TIMESTAMP,
+	fk_motivo_desligamento_conta INT,
 	fk_usuario INT,
 	CONSTRAINT `pk_desligamento_conta`
 		PRIMARY KEY (id_desligamento_conta),
+	CONSTRAINT `fk_motivo_desligamento_conta`
+		FOREIGN KEY (fk_motivo_desligamento_conta) REFERENCES motivo_desligamento_conta (id_motivo_desligamento_conta)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 	CONSTRAINT `fk_desligamento_usuario`
 		FOREIGN KEY (fk_usuario) REFERENCES usuario (id_usuario)
 		ON DELETE CASCADE
@@ -218,12 +222,23 @@ CREATE TABLE reporte(
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
 	CONSTRAINT `fk_tipo_reporte`
-		FOREIGN KEY (fk_tipo_reporte) REFERENCES usuario (id_usuario)
+		FOREIGN KEY (fk_tipo_reporte) REFERENCES tipo_reporte (id_tipo_reporte)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
 
+CREATE TABLE motivo_desligamento_conta(
+	id_motivo_desligamento_conta INT AUTO_INCREMENT NOT NULL,
+	motivo NVARCHAR(45) NOT NULL,
+	CONSTRAINT `pk_motivo_desligamento_conta`
+		PRIMARY KEY (id_motivo_desligamento_conta)
+);
 
+
+
+
+
+	
 
 
 
