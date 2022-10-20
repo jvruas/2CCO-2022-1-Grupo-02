@@ -13,6 +13,7 @@ import Computador from "../html-css-template/imagens/ideapad.webp"
 import FotoPerfil from "../html-css-template/imagens/mulher.jpeg"
 import apiViaCep from "../apiViaCep";
 import IconLocation from "../html-css-template/imagens/iconLocation.svg";
+import FotoPadrao from "../html-css-template/imagens/foto.jpg"
 
 var produtosDoacao = 0;
 var produtosDoados = 0;
@@ -73,6 +74,20 @@ function DescricaoProduto() {
         // produtosDoacao = produtosDoacao/2;
         // produtosDoados = produtosDoados/2;
       });
+
+        let idUsuario = sessionStorage.getItem('idDoador');
+
+        try{
+
+            // document.getElementById("nome_usuario").innerHTML = `${usuario.nome}`;
+            document.getElementById("img_perfil").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=P`;
+            // document.getElementById("img_banner").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=B`;  
+
+        }catch(error){
+            // document.getElementById("nome_usuario").innerHTML = "Usuário";  
+             document.getElementById("img_perfil").src = `${FotoPadrao}`;
+
+        }
   }, []);
   
 
@@ -172,7 +187,7 @@ function DescricaoProduto() {
           <div className="div-name-user">
             <div className="infos-user">
               <div className="photo-user">
-                <img src={FotoPerfil} className="image-description"/>
+                <img id="img_perfil" src={FotoPerfil} className="image-description"/>
               </div>
               <b className="name-user">{usuario.nome}</b>
             </div>
