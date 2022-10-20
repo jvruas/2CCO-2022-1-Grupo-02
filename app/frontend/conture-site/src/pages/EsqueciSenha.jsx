@@ -15,18 +15,50 @@ function EsqueciSenha() {
 
     const navegar = useNavigate();
 
+    /* Função para pegar os dados do usuário logado */
+    // const [usuarioLogado, setUsuario] = useState([]);
+
+    // useEffect(() => {
+    //     let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+    //     apiUsuario.get(`/1`).then((resposta) => {
+    //         try {
+    //             console.log(resposta.data)
+    //             setUsuario(resposta.data)
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     })
+    // }, [])
+
+    /* Função para enviar o código de validação e enviar o usuário para a página de validação */
+    // function validacao(event) {
+    //     event.preventDefault()
+
+    //     apiUsuario.post(`conta/validacao-email?emailDestinatario=${usuarioLogado.email}&idUsuario=1`, {
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         }
+    //     }).then((resposta) => {
+    //         navegar("/validacao-usuario")
+    //         console.log(resposta.status)
+    //     }).catch((error) => {
+    //         console.log(error)
+    //     })
+    // }
+
+
     function handleSubmit(event) {
         event.preventDefault()
 
         let idUsuario = sessionStorage.getItem('idUsuario')
         let senha = document.getElementById("senha");
-        
+
         var input_senha2 = document.getElementById("senha2");
 
-        if (senha.value == "" || input_senha2.value == ""){
+        if (senha.value == "" || input_senha2.value == "") {
             document.getElementById("alerta-img").style.display = "flex"
             document.getElementById("msg-alerta").innerHTML = `Preencha os campos vazios`
-        }else if (senha.value != input_senha2.value) {
+        } else if (senha.value != input_senha2.value) {
             document.getElementById("alerta-img").style.display = "flex"
             document.getElementById("msg-alerta").innerHTML = `As senhas não correspondem`
         } else if ((senha.value).length >= 1 && (senha.value).length < 6) {
@@ -34,14 +66,14 @@ function EsqueciSenha() {
             document.getElementById("msg-alerta").innerHTML = `A senha deve ter mais que 6 caracteres`
         } else {
             apiUsuario.patch(`/atualizar-senha?idUsuario=${idUsuario}&novaSenha=${senha.value}`)
-            .then((resposta) => {
-                navegar("/")
-                console.log(resposta.status)
-            }).catch((error) => { 
-                console.log(error)
-                document.getElementById("alerta-img").style.display = "flex"
-                document.getElementById("msg-alerta").innerHTML = `A nova senha não pode ser igual senha atual`
-            })
+                .then((resposta) => {
+                    navegar("/")
+                    console.log(resposta.status)
+                }).catch((error) => {
+                    console.log(error)
+                    document.getElementById("alerta-img").style.display = "flex"
+                    document.getElementById("msg-alerta").innerHTML = `A nova senha não pode ser igual senha atual`
+                })
         }
     }
 
@@ -102,7 +134,7 @@ function EsqueciSenha() {
                             onClick={ocultarSenha2} />
                     </div>
                     <div id="alerta" className="coluna">
-                        <img src={iconError} id="alerta-img"/><p id="msg-alerta"></p>
+                        <img src={iconError} id="alerta-img" /><p id="msg-alerta"></p>
                     </div>
                     <div className="divisao centralizado">
                         <button className="btn-esqc" onClick={handleSubmit}>
