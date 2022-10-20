@@ -2,11 +2,11 @@ import MenuSimples from "../components/MenuSimples";
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/Cadastro.css'
 import iconSenha from "../html-css-template/imagens/eye-slash-closed.png"
-import imgEtapa from "../html-css-template/imagens/Etapas.png"
-import imgEtapa2 from "../html-css-template/imagens/Etapas (1).png"
-import iconInfoSenha from "../html-css-template/imagens/info-circle 1.png"
+import imgEtapa from "../html-css-template/imagens/etapas.png"
+import imgEtapa2 from "../html-css-template/imagens/etapas1.png"
+import iconInfoSenha from "../html-css-template/imagens/info-circle1.png"
 import iconSeta from "../html-css-template/imagens/seta.png"
-import iconSeta2 from "../html-css-template/imagens/seta 2.png"
+import iconSeta2 from "../html-css-template/imagens/seta2.png"
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
 import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"

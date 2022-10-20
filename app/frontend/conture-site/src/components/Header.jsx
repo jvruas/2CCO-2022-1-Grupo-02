@@ -2,11 +2,11 @@ import logo from '../html-css-template/imagens/logo-conture.png';
 import lupa from '../html-css-template/imagens/icon-lupa.png';
 import fotoLogado from '../html-css-template/imagens/foto.jpg';
 import fotoDesogado from '../html-css-template/imagens/imagem-deslogado.png';
-import setaBaixo from '../html-css-template/imagens/chevron-down 1.svg';
-import interesse from '../html-css-template/imagens/Interesses.svg';
-import mensagem from '../html-css-template/imagens/Icon mensagem.svg';
-import notificacao from '../html-css-template/imagens/Icon notificação.svg';
-import adicionarProduto from '../html-css-template/imagens/Subtract.svg';
+import setaBaixo from '../html-css-template/imagens/chevron-down1.svg';
+import interesse from '../html-css-template/imagens/interesses.svg';
+import mensagem from '../html-css-template/imagens/icon-mensagem.svg';
+import notificacao from '../html-css-template/imagens/icon-notificacao.svg';
+import adicionarProduto from '../html-css-template/imagens/subtract.svg';
 import '../html-css-template/css/Style.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -33,23 +33,18 @@ function Header() {
 
     useEffect(() => {
         let param = sessionStorage.getItem('logado');
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
         if(param == "OK"){
             document.getElementById("nome_usuario").innerHTML = `${usuario.nome}`; 
-            document.getElementById("img_foto").src = `${fotoLogado}`;   
+            document.getElementById("img_foto").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=P`;   
         }else{
             document.getElementById("nome_usuario").innerHTML = "Usuário";  
             document.getElementById("img_foto").src = `${fotoDesogado}`;
         }
     })
 
-    // apiUsuario.get(`/${idUsuario}/imagem`).then((resposta) => {
-    //     try {
-    //         console.log(resposta.data)
-    //         setUsuario(resposta.data)
-    //     } catch (error) {
-    //         console.log(error)  
-    //     }
-    // })
+  
+    
     
     function logoff(event) {
         event.preventDefault()

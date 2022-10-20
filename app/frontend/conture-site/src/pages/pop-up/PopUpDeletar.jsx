@@ -1,5 +1,5 @@
 import '../../html-css-template/css/pop-up/PopUpDeletar.css';
-import fechar from "../../html-css-template/imagens/x-lg 1.svg";
+import fechar from "../../html-css-template/imagens/x-lg1.svg";
 import { Link, useNavigate } from "react-router-dom";
 import apiProdutos from '../../apiProduto';
 

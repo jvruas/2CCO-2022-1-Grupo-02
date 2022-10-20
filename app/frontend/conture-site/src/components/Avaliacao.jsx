@@ -1,4 +1,4 @@
-import estrela from '../html-css-template/imagens/Star 7.svg';
+import estrela from '../html-css-template/imagens/star7.svg';
 import foto from '../html-css-template/imagens/foto.jpg';
 import '../html-css-template/css/avaliacao.css'
 
@@ -6,6 +6,8 @@ import '../html-css-template/css/avaliacao.css'
 function Avaliacao(props) {
 
     let dataCad = new Date(props.dataCon);
+
+    
     
     return (
         <>
