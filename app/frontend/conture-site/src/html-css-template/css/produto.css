@@ -47,11 +47,14 @@
     height: 180px;
     width: 100%;
     border-bottom: solid 2px #939393;
+    display: flex;
+    justify-content: center;
 }
 
 .meio img{
     padding-top: 5px;
-    width: 100%;
+    width: 150px;
+    height: 150px;
 }
 
 .inferior{

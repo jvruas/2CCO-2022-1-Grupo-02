@@ -1,7 +1,7 @@
 import MenuSimples from "../components/MenuSimples";
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/EsqueciSenha.css'
-import iconInfoSenha from "../html-css-template/imagens/info-circle 1.png"
+import iconInfoSenha from "../html-css-template/imagens/info-circle1.png"
 import iconSenha from "../html-css-template/imagens/eye-slash-closed.png"
 import iconSalvar from "../html-css-template/imagens/folder-plus.png"
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"

@@ -129,7 +129,7 @@ function Feed() {
                         <Produto
                         visualizacao={itemProduto.quantidadeVisualizacao}
                         nome={itemProduto.nome}
-                        // nomeDoador={itemProduto.nomeDoador}
+                        nomeDoador={itemProduto.nomeDoador}
                         // imagem={itemProduto.imagem}
                         />
                     ))

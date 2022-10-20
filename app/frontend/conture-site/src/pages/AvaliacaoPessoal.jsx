@@ -28,7 +28,7 @@ function AvaliacaoPessoal() {
             for(let i=0; i<resposta.data.fila.length; i++){
             apiUsuario.get(`/${resposta.data.fila[i].fkDonatario}`).then((usuarioResposta) => {
                 try {
-                    console.log(usuarioResposta.data)
+                    console.log("vvddsssd",usuarioResposta.data)
                     setUsuario(usuarioResposta.data)
                     fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
                     .then(res => res.json()).then(data => {
