@@ -6,6 +6,8 @@ import '../html-css-template/css/avaliacao.css'
 function Avaliacao(props) {
 
     let dataCad = new Date(props.dataCon);
+
+    
     
     return (
         <>

@@ -1,7 +1,8 @@
 import "../html-css-template/css/produto.css"
 import trash from "../html-css-template/imagens/trash2.svg"
 import vector from "../html-css-template/imagens/vector.svg"
-import foto from "../html-css-template/imagens/rectangle44.svg"
+import foto from "../html-css-template/imagens/ft-card.png"
+
 import { Link, useNavigate } from "react-router-dom";
 
 function Produto(props) {

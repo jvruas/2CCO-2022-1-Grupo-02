@@ -33,23 +33,18 @@ function Header() {
 
     useEffect(() => {
         let param = sessionStorage.getItem('logado');
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
         if(param == "OK"){
             document.getElementById("nome_usuario").innerHTML = `${usuario.nome}`; 
-            document.getElementById("img_foto").src = `${fotoLogado}`;   
+            document.getElementById("img_foto").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=P`;   
         }else{
             document.getElementById("nome_usuario").innerHTML = "Usuário";  
             document.getElementById("img_foto").src = `${fotoDesogado}`;
         }
     })
 
-    // apiUsuario.get(`/${idUsuario}/imagem`).then((resposta) => {
-    //     try {
-    //         console.log(resposta.data)
-    //         setUsuario(resposta.data)
-    //     } catch (error) {
-    //         console.log(error)  
-    //     }
-    // })
+  
+    
     
     function logoff(event) {
         event.preventDefault()

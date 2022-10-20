@@ -60,11 +60,6 @@ function HistoricoDonatario() {
     
     }, [])
 
-    
-    // let dataCad = new Date(historico.dataConclusao);
-    // let dataD = dataCad.getDay();
-    // let dataM = dataCad.getMonth();
-    // let dataY = dataCad.getFullYear();
 
     return (
         <>
