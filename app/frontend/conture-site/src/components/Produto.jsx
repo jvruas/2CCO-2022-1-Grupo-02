@@ -9,20 +9,20 @@ function Produto(props) {
 
     const navegar = useNavigate();
 
-    function DescricaoProdutoRedirect(idProduto, idDoador){
-        sessionStorage.setItem("idProduto",idProduto);
-        sessionStorage.setItem("idDoador",idDoador);
+    function DescricaoProdutoRedirect(){
+        sessionStorage.setItem("idProduto",props.idProduto);
+        sessionStorage.setItem("idDoador",props.idDoador);
         navegar("/descricao-produto");
     }
     
     return(
         <div className="container-produto" 
-        // onClick={DescricaoProdutoRedirect(props.idProduto, props.idDoador)}
+         onClick={DescricaoProdutoRedirect}
         >
             <div className="informacoes-produto"
             >
                 <div className="superior"><img alt=""/><p>{props.nomeDoador}</p> <div class="visualizacao"><img src={vector} alt=""/> <p>{props.visualizacao}</p></div></div>
-                <div className="meio"><img src={foto} alt=""/></div>
+                <div className="meio"><img src="" alt=""/></div>
                 <div className="inferior"><p>{props.nome}</p></div>
             </div>
         </div>

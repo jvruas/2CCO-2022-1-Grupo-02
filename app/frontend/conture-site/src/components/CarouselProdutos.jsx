@@ -58,8 +58,9 @@ return(
   swipeable
 >
 
-    <div class="image"></div>
-    <div class="image2"></div>
+    <div class="image">
+      <img class="image-description" src={props.image} alt="" />
+    </div>
 </CarouselLib>
 );
 }
