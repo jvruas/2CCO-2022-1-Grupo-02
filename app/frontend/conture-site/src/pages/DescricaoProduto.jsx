@@ -124,7 +124,7 @@ function DescricaoProduto() {
             mensagemPrincipal={itemMensagem[0].mensagem}  
             mensagemResposta={itemMensagem[1]}
             index={itemMensagem[0].idMensagemGrupo}
-            idMensagemPrincipal={itemMensagem[0].idMensagemGrupo}
+            idMensagemPrincipal={itemMensagem[0].fkUsuario}
         >
         </Comentarios>
         )}
