@@ -7,7 +7,7 @@ export const dataLine = [
   ["2020", 117, 460],
   ["2021", 660, 120],
   ["2022", 103, 540],
-];
+];  
 
 export const optionsLine = {
   title: "Qtd. doações Presente X Qtd. doações Passado",
