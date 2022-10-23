@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import apiUsuario from "../apiUsuario.js";
 
 
+
 function dataUsuario() {
     return {
         idUsuario: "",
@@ -33,7 +34,7 @@ function AlterarSenha() {
 
     function handleSubmit(event) {
         event.preventDefault()
-        
+
         let senhaAtual = document.getElementById("senha");
         let senhaNova = document.getElementById("senha2");
         var input_senha2 = document.getElementById("senha3");
@@ -53,24 +54,56 @@ function AlterarSenha() {
         } else if ((senhaNova.value).length >= 1 && (senhaNova.value).length < 6) {
             document.getElementById("alerta-img2").style.display = "flex"
             document.getElementById("msg-alerta").innerHTML = `A senha deve ter mais que 6 caracteres`
-        } else if(senhaAtual.value == input_senha2.value){
+        } else if (senhaAtual.value == input_senha2.value) {
             document.getElementById("alerta-img2").style.display = "flex"
             document.getElementById("msg-alerta").innerHTML = `A nova senha não pode ser igual senha atual`
-        }else {
+        } else {
             apiUsuario.patch("/senha", json, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then((resposta) => {
-                    navegar("/")
-                    console.log(resposta.status)
-                }).catch((error) => {
-                    console.log(error)
-                    document.getElementById("msg-alerta").innerHTML = `Erro`
-                })
+                navegar("/")
+                console.log(resposta.status)
+            }).catch((error) => {
+                console.log(error)
+                document.getElementById("msg-alerta").innerHTML = `Erro`
+            })
         }
     }
 
+    /* Função para pegar os dados do usuário logado */ 
+    const [usuarioLogado, setUsuario] = useState([]);
+
+    useEffect(() => {
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+        apiUsuario.get(`/${idUsuario}`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setUsuario(resposta.data)
+            } catch (error) {
+                console.log(error)  
+            }
+        })
+    }, [])
+
+    /* Função para enviar o código de validação e enviar o usuário para a página de validação */
+    function validacao(event) {
+        event.preventDefault()
+
+        apiUsuario.post(`conta/validacao-email?emailDestinatario=${usuarioLogado.email}&idUsuario=${usuarioLogado.idUsuario}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((resposta) => {
+            navegar("/validacao-usuario")
+            console.log(resposta.status)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    /* Função para mostrar e esconder a senha */
     const ocultarSenha = () => {
         var senha = document.getElementById("senha");
         var img = document.getElementById("eye1");
@@ -122,8 +155,8 @@ function AlterarSenha() {
                         <div className="as-opcao as-opcao-selecionada">
                             <Link className="link-p" to="/alterar-senha"><p>Trocar senha</p></Link>
                         </div>
-                        <div className="as-opcao">
-                            <Link className="link-p" to="/validacao-usuario"><p>Validação</p></Link>
+                        <div className="as-opcao" onClick={validacao}>
+                            <p>Validação</p>
                         </div>
                     </div>
                     <div id="as-parte-dois">
@@ -148,7 +181,7 @@ function AlterarSenha() {
                             </div>
                         </div>
                         <div className="as-aviso">
-                            <img src={iconError} id="alerta-img2"/><p id="msg-alerta"></p>
+                            <img src={iconError} id="alerta-img2" /><p id="msg-alerta"></p>
                         </div>
                         <div className="as-btns">
                             <button type="button" onClick={handleSubmit}>

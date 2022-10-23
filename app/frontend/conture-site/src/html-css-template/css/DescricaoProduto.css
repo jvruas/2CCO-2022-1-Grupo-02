@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+.container-desc-produto{
+    width: 85%;
+    margin: auto;
+}
+
+.span-crumbs{
+    margin-right: 10px;
+}
+
+.span-crumbs-dad{
+    margin-right: auto;
+    margin-top: 20px;
+}
+
+.div-crumbs{
+    margin-top: 2%;
+}
+
+.product-title{
+    margin-top: 42%;
+}
+
+.div-image-produto-descricao{
+    width: 42%;
+    /* height: 70vh; */
+    margin-left: 91.3021px;
+    margin-top: 30px;
+    float: left;
+}
+
+.card-coment{
+    width: 38%;
+    height: 75vh;
+    float: right;
+    margin-right: 91.3021px;
+    margin-top: 30px;
+    background: #FFFFFF;
+    border: 0.5px solid rgba(0, 0, 0, 0.32);
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+    position: relative;
+}
+
+.div-coments-description{
+    width: 100%;
+    height: 80%;
+    overflow-y: auto;
+}
+
+.div-title-coment-description{
+    width: 100%;
+    height: 10%;
+    background: #FFFFFF;
+    border: 0.5px solid rgba(0, 0, 0, 0.32);
+    box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 3px 3px;
+}
+
+.title-coment-description{
+    color: #7724BE;
+    padding-top: 1%;
+    padding-left: 2%;
+}
+
+.div-send-coment-description{
+    width: 100%;
+    height: 10%;
+    background: #FFFFFF;
+    border: 0.5px solid rgba(0, 0, 0, 0.32);
+    border-radius: 0px 0px 0px 3px;
+    position: absolute;
+    bottom: 0;
+}
+
+.div-reply-coment-description{
+    height: 6%;
+    width: 15%;
+    margin-left: auto;
+    margin-right: 4%;
+}
+
+.button-reply-coment-description{
+    height: 100%;
+    font-size: 12px;
+    color: #FFFFFF;
+    width: 100%;
+    background: #7724BE;
+    border-radius: 3px;
+    border: none;
+}
+
+.input-send-coment-description{
+    width: 90%;
+    height: 100%;
+    background: #FFFFFF;
+    border: 0.5px solid rgba(0, 0, 0, 0.32);
+    border-radius: 0px 0px 0px 3px;
+    position: absolute;
+    bottom: 0;
+}
+
+.button-send-coment-description{
+    padding-top: 1%;
+    height: 100%;
+    width: 10%;
+    background: #7724BE;
+    border: 0.5px solid rgba(0, 0, 0, 0.32);
+    border-radius: 0px 0px 3px 0px;
+    position: absolute;
+    right: 0;
+}
+
+.image-description{
+    width: 100%;
+    height: 100%;
+}
+
+.div-location-uf-img{
+    text-align:left;
+    height: 70%;
+    position: relative;
+    margin-top: 1%;
+}
+
+.div-location-uf-img img{
+    height: 100%;
+    margin-left: 3%;
+}
+
+.name-coment-description{
+    font-size: 10px;
+}
+
+.message-coment-description{
+    margin-left: 2%;
+}
+
+.div-location-uf-img b{
+    position: absolute;
+    margin-left: 3%;
+}
+
+.button-send-coment-description:hover{
+    background: #7724BE;
+}
+
+.span-product-title{
+    margin-right: auto;
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+.card-description{
+    background: #FFFFFF;
+    border: 1px solid #ADADAD;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    height: 200px;
+    width: 100%;
+    margin-right: auto;
+    float: left;
+}
+
+.card-info-user{
+    background-color: brown;
+    height: 260px;
+    width: 44.5%;
+    margin-left: auto;
+    float: right;
+}
+
+.block-left{
+    width: 49.5%;
+    float: left;
+}
+
+.button-i-a{
+    background: #369F64;
+    border-radius: 3px;
+    height: 40px;
+    width: 180px;
+    cursor: pointer;
+    margin-top: 18px;
+    border: none;
+    color: #FFFFFF;
+}
+
+.message-main-description{
+    background: #FFFFFF;
+    border: 1px solid #7724BE;
+    border-radius: 10px 10px 10px 0px;
+    padding: 5px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: 4%;
+    margin-top: 2%;
+    padding-left: 4%;
+}
+
+.message-answer-description{
+    background: #FFFFFF;
+    border: 1px solid #7724BE;
+    border-radius: 10px 10px 10px 0px;
+    padding: 5px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: 4%;
+    margin-top: 2%;
+}
+
+.div-button{
+    text-align: center;
+}
+
+.more-info-description-product{
+    margin-top: 40px;
+    margin-bottom: 330px;
+}
+
+.image{
+    background-color: yellow;
+    width: 100%;
+    height: 75vh
+}
+.image2{
+    background-color: blue;
+    width: 100%;
+    height: 75vh
+}
+
+.div-name-user{
+    width: 100%;
+    height: 40%;
+    background: #FFFFFF;
+    border: 1px solid #ADADAD;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 3px 3px 0px 0px;
+}
+
+.div-location-user{
+    background: #FFFFFF;
+    border: 1px solid #ADADAD;
+    border-radius: 0px;
+    width: 100%;
+    height: 13%;
+}
+
+.div-numbers-user{
+    background: #FFFFFF;
+    border: 1px solid #ADADAD;
+    border-radius: 0px 0px 3px 3px;
+    width: 100%;
+    height: 47%;
+}
+
+.photo-user{
+    background-color: darkorange;
+    height: 60px;
+    width: 60px;
+    float: left;
+}
+
+.infos-user{
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+.name-user{
+    margin-left: 10px;
+}
+
+.title-description{
+    padding-top: 5px;
+    margin-left: 15px;
+}
+
+.text-description{
+    padding-top: 5px;
+    margin-left: 15px;
+}
+
+.div-produtos-doacao{
+    float: left;
+    margin-left: 20px;
+    margin-right: 70px;
+    padding-top: 25px;
+}
+
+.div-produtos-doados{
+    float: left;
+    padding-top: 25px;
+    margin-right: 50px;
+}
+
+.div-cadastro{
+    padding-top: 25px;
+}
+

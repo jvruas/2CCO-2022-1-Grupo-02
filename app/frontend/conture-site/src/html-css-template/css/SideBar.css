@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+
+.side-bar{
+    background-color: #7724BE;
+    height: 100vh;
+    width: 15%;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.div-image{
+    text-align: center;
+    width: 100%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 90px;
+    margin-bottom: 20px;
+}
+
+.div-image img{
+    width: 90px;
+    height: 90px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.div-title-side-bar{
+    color: white;
+    text-align: center;
+}
+
+.div-topic{
+    margin-top: 20%;
+    color: white;
+
+}

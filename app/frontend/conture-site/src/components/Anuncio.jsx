@@ -9,4 +9,4 @@ function Anuncio() {
     );
 }
 
-export default Anuncio
+export default Anuncio;

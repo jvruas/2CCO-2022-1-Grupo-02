@@ -1,10 +1,11 @@
 import "../html-css-template/css/produto.css"
-import trash from "../html-css-template/imagens/trash 2.svg"
-import vector from "../html-css-template/imagens/Vector.svg"
-import foto from "../html-css-template/imagens/Rectangle 44.svg"
+import trash from "../html-css-template/imagens/trash2.svg"
+import vector from "../html-css-template/imagens/vector.svg"
+import foto from "../html-css-template/imagens/rectangle44.svg"
 
 function Produto(props) {
 
+    
 
     return(
         <div className="container-produto">

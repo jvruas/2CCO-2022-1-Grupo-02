@@ -1,7 +1,7 @@
 import '../../html-css-template/css/pop-up/PopUpAvaliacao.css';
 import seta from "../../html-css-template/imagens/arrow.svg";
-import fechar from "../../html-css-template/imagens/x-lg 1.svg";
-import FontAwesomeIcon from "react-fontawesome";
+import fechar from "../../html-css-template/imagens/x-lg1.svg";
+
 
 function PopUpAvaliacao() {
     return (

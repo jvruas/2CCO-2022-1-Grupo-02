@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;
+}
+
+.div_conteiner{
+    height: 300px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 3px;
+    justify-content: space-between;
+    position: relative;
+    background-color: #FFF;
+}
+
+.div_sup_deletar {
+margin-top: 50px;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.div_sup_deletar img {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: 10px;
+   left: 470px;
+}
+
+.div_sup_deletar p {
+    font-weight: bold;
+}
+
+
+.div_deletar {
+    height: 80px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+.div_inf_deletar {
+    height: 220px;
+    width: 90%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+    
+}
+
+
+.div_inf input {
+    height: 120px;
+    width: 100%;
+    border: none;
+    border: #7724BE 2px solid;
+}
+.div_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.btn_confirmar {
+    height: 30px;
+    width: 120px;
+    border-radius: 3px;
+    background-color: #7724BE;
+    font-size: 14px;
+    color: #FFF;
+    border: solid 1px black;
+    font-weight: bold;
+
+}
+
+#deletar{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index:10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:rgba(0,0,0,.4);  
+}

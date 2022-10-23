@@ -2,10 +2,7 @@ package com.conture.apiproduto.controller;
 
 import com.conture.apiproduto.api.rest.usuario.UsuarioResposta;
 import com.conture.apiproduto.model.dto.request.AvaliacaoRequest;
-import com.conture.apiproduto.model.dto.response.AvaliacaoResponse;
-import com.conture.apiproduto.model.dto.response.EstatisticasAvaliacaoResponse;
-import com.conture.apiproduto.model.dto.response.MatchResponse;
-import com.conture.apiproduto.model.dto.response.ProdutoDoacaoResponse;
+import com.conture.apiproduto.model.dto.response.*;
 import com.conture.apiproduto.model.entity.*;
 import com.conture.apiproduto.model.dto.request.PreferenciaDonatarioRequest;
 import com.conture.apiproduto.model.dto.request.ProdutoDoacaoRequest;
@@ -66,9 +63,6 @@ public class ProdutoController {
 	private S3Service s3Service;
 
 	PilhaObj<String> pilhaHistorico = new PilhaObj<>(10);
-
-	FilaObj<AvaliacaoResponse> filaAvaliacao = new FilaObj<>(20);
-
 
 	@PostMapping()
 	public ResponseEntity<Integer> adicionarProduto(@RequestBody @Valid ProdutoDoacaoRequest produtoRequest) {
@@ -280,6 +274,7 @@ public class ProdutoController {
 	// TODO: Precisa de melhoras.
 	@GetMapping("/avaliacao")
 	public ResponseEntity<FilaObj> listarAvaliacao(@RequestParam @NotNull @Min(1) Integer idDoador) {
+		FilaObj<AvaliacaoResponse> filaAvaliacao = new FilaObj<>(20);
 		List<AvaliacaoResponse> listaAvaliacaoResponse = this.avaliacaoRepository.getAllByIdDoador(idDoador);
 
 		if (listaAvaliacaoResponse.isEmpty()) {
@@ -287,10 +282,10 @@ public class ProdutoController {
 		}
 
 		for (int i = 0; i < listaAvaliacaoResponse.size(); i++) {
-			this.filaAvaliacao.insert(listaAvaliacaoResponse.get(i));
+			filaAvaliacao.insert(listaAvaliacaoResponse.get(i));
 		}
 
-		return ResponseEntity.status(200).body(this.filaAvaliacao);
+		return ResponseEntity.status(200).body(filaAvaliacao);
 	}
 
 	@GetMapping("/avaliacao/stats")
@@ -342,9 +337,9 @@ public class ProdutoController {
 
 		List<ProdutoDoacaoResponse> listaProduto = this.produtoRepository.getAllByStatusNaoDoadoC();
 
-		if (listaProduto.isEmpty()) {
-			return status(204).build();
-		}
+			if (listaProduto.isEmpty()) {
+				return status(204).build();
+			}
 
 		Iterator<ProdutoDoacaoResponse> iterator = new AscendingListIterator(listaProduto);
 
@@ -404,11 +399,11 @@ public class ProdutoController {
 
 
 	@GetMapping("/status")
-	public ResponseEntity<List<ProdutoDoacaoResponse>> filtrarStatusProduto(
+	public ResponseEntity<List<ProdutoDoacaoHistoricoResponse>> filtrarStatusProduto(
 			@RequestParam @NotNull @Min(1) Integer idDoador,
-			@RequestParam @NotNull @Size(min = 5, max = 9) @Pattern(regexp = "(andamento)|(doado)|(recebido)|todos") String status
+			@RequestParam @NotNull @Size(min = 5, max = 9) @Pattern(regexp = "(andamento)|(doado)|(recebido)|(todos)") String status
 	) {
-		List<ProdutoDoacaoResponse> listaProduto = new ArrayList();
+		List<ProdutoDoacaoHistoricoResponse> listaProduto = new ArrayList();
 
 		switch (status) {
 			case "andamento": {

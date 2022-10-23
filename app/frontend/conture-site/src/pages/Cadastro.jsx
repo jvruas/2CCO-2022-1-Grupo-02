@@ -2,11 +2,11 @@ import MenuSimples from "../components/MenuSimples";
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/Cadastro.css'
 import iconSenha from "../html-css-template/imagens/eye-slash-closed.png"
-import imgEtapa from "../html-css-template/imagens/Etapas.png"
-import imgEtapa2 from "../html-css-template/imagens/Etapas (1).png"
-import iconInfoSenha from "../html-css-template/imagens/info-circle 1.png"
+import imgEtapa from "../html-css-template/imagens/etapas.png"
+import imgEtapa2 from "../html-css-template/imagens/etapas1.png"
+import iconInfoSenha from "../html-css-template/imagens/info-circle1.png"
 import iconSeta from "../html-css-template/imagens/seta.png"
-import iconSeta2 from "../html-css-template/imagens/seta 2.png"
+import iconSeta2 from "../html-css-template/imagens/seta2.png"
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
 import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
@@ -209,7 +209,6 @@ function Cadastro() {
                     <div className="divisao input">
                         <label htmlFor="email">E-mail</label>
                         <input id="email" type="email" name="email" size="80" maxLength="80" value={valuesUsuario.email} required onChange={handleChangeUser} />
-                        {/* <div>e-mail inválido</div> */}
                     </div>
 
                     <div className="divisao input">
@@ -270,7 +269,7 @@ function Cadastro() {
                         <div className="input menor">
                             <label htmlFor="genero">Gênero</label>
                             <select name="genero" id="genero" value={valuesUsuario.genero} required onChange={handleChangeUser}>
-                                <option value=""></option>
+                                <option value="" selected disabled hidden></option>
                                 <option value="F">Feminino</option>
                                 <option value="M">Masculino</option>
                                 <option value="X">Outro</option>
@@ -279,7 +278,7 @@ function Cadastro() {
                         <div className="input menor">
                             <label htmlFor="estadoCivil">Estado civil</label>
                             <select name="estadoCivil" id="estadoCivil" value={valuesUsuario.estadoCivil} required onChange={handleChangeUser}>
-                                <option value=""></option>
+                                <option value="" selected disabled hidden></option>
                                 <option value="S">Solteiro(a)</option>
                                 <option value="C">Casado(a)</option>
                                 <option value="D">Divorciado(a)</option>
@@ -300,7 +299,7 @@ function Cadastro() {
                     <div className="divisao input maior">
                         <label htmlFor="grauEscolaridade">Escolaridade</label>
                         <select id="grauEscolaridade" name="grauEscolaridade" value={valuesUsuario.grauEscolaridade} required onChange={handleChangeUser}>
-                            <option value=""></option>
+                            <option value="" selected disabled hidden></option>
                             <option value="A">Analfabeto</option>
                             <option value="I">Educação infantil</option>
                             <option value="F">Fundamental</option>
@@ -314,7 +313,7 @@ function Cadastro() {
                     <div className="divisao input maior">
                         <label htmlFor="fkSituacaoAtual">Situação atual</label>
                         <select name="fkSituacaoAtual" id="fkSituacaoAtual" value={valuesUsuario.fkSituacaoAtual} required onChange={handleChangeUser}>
-                            <option value=""></option>
+                            <option value="" selected disabled hidden></option>
                             {
                                 fkSituacaoAtual.map((situacao) => (
                                     <option value={situacao.idSituacaoAtual}>{situacao.nome}</option>

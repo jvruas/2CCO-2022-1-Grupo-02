@@ -1,6 +1,6 @@
 import logo from '../html-css-template/imagens/logo-conture.png'
 import foto from '../html-css-template/imagens/foto.jpg';
-import estrela from '../html-css-template/imagens/Star 16.svg';
+import estrela from '../html-css-template/imagens/star16.svg';
 import imgPerfil from '../html-css-template/imagens/imagem_fundo.jpg';
 import '../html-css-template/css/Perfil.css'
 import report from '../html-css-template/imagens/report.svg'
@@ -36,10 +36,8 @@ function PerfilSimples() {
         })
     }, [])
 
-
     
   let dataCad = new Date(usuario.dataCadastro);
-    
 
     return (
         <>

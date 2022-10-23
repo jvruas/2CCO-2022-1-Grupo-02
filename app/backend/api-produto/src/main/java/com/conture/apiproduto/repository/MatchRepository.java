@@ -1,6 +1,7 @@
 package com.conture.apiproduto.repository;
 
 import com.conture.apiproduto.model.dto.response.MatchResponse;
+import com.conture.apiproduto.model.dto.response.ProdutoDoacaoHistoricoResponse;
 import com.conture.apiproduto.model.dto.response.ProdutoDoacaoResponse;
 import com.conture.apiproduto.model.entity.Match;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,11 +23,11 @@ public interface MatchRepository extends JpaRepository<Match, Integer> {
 	@Query("select m.idMatch from Match m where m.fkDonatario = ?2 and m.status = true and m.produtoDoacao.idProdutoDoacao = ?1 and m.produtoDoacao.removido = false and m.produtoDoacao.status = true")
 	Optional<Integer> getIdMatchDoadoByIdProdutoAndIdDonatario(Integer idProdutoDoacao, Integer idDonatario);
 
-	@Query("select new com.conture.apiproduto.model.dto.response.ProdutoDoacaoResponse(m.produtoDoacao.nome, m.produtoDoacao.marca, m.produtoDoacao.modelo, m.produtoDoacao.descricao, m.produtoDoacao.defeito, m.produtoDoacao.entrega, m.produtoDoacao.quantidadeVisualizacao, m.produtoDoacao.dataCriacao, m.produtoDoacao.dataConclusao, m.produtoDoacao.status, m.produtoDoacao.categoriaProduto.nome, m.produtoDoacao.fkDoador) from Match m where m.status = false and m.produtoDoacao.status = false and m.produtoDoacao.removido = false and m.fkDonatario = ?1 order by m.dataInteresse desc")
-	List<ProdutoDoacaoResponse> getAllByStatusAndamento(Integer fkDonatario);
+	@Query("select new com.conture.apiproduto.model.dto.response.ProdutoDoacaoHistoricoResponse('ANDAMENTO', m.produtoDoacao.categoriaProduto.nome, m.produtoDoacao.nome, m.produtoDoacao.dataCriacao, m.produtoDoacao.dataConclusao, m.produtoDoacao.fkDoador) from Match m where m.status = false and m.produtoDoacao.status = false and m.produtoDoacao.removido = false and m.fkDonatario = ?1 order by m.dataInteresse desc")
+	List<ProdutoDoacaoHistoricoResponse> getAllByStatusAndamento(Integer fkDonatario);
 
-	@Query("select new com.conture.apiproduto.model.dto.response.ProdutoDoacaoResponse(m.produtoDoacao.nome, m.produtoDoacao.marca, m.produtoDoacao.modelo, m.produtoDoacao.descricao, m.produtoDoacao.defeito, m.produtoDoacao.entrega, m.produtoDoacao.quantidadeVisualizacao, m.produtoDoacao.dataCriacao, m.produtoDoacao.dataConclusao, m.produtoDoacao.status, m.produtoDoacao.categoriaProduto.nome, m.produtoDoacao.fkDoador) from Match m where m.status = true and m.produtoDoacao.status = true and m.produtoDoacao.removido = false and m.fkDonatario = ?1 order by m.produtoDoacao.dataConclusao desc")
-	List<ProdutoDoacaoResponse> getAllByStatusRecebido(Integer fkDonatario);
+	@Query("select new com.conture.apiproduto.model.dto.response.ProdutoDoacaoHistoricoResponse('RECEBIDO', m.produtoDoacao.categoriaProduto.nome, m.produtoDoacao.nome, m.produtoDoacao.dataCriacao, m.produtoDoacao.dataConclusao, m.produtoDoacao.fkDoador) from Match m where m.status = true and m.produtoDoacao.status = true and m.produtoDoacao.removido = false and m.fkDonatario = ?1 order by m.produtoDoacao.dataConclusao desc")
+	List<ProdutoDoacaoHistoricoResponse> getAllByStatusRecebido(Integer fkDonatario);
 
 	@Query("select new com.conture.apiproduto.model.dto.response.MatchResponse(m.matchPorcentagem, m.dataInteresse, m.fkDonatario) from Match m where m.produtoDoacao.idProdutoDoacao = ?1 and m.status = false and m.produtoDoacao.status = false and m.produtoDoacao.removido = false order by m.matchPorcentagem desc, m.dataInteresse asc")
 	List<MatchResponse> getAllMatchResponseByStatusFalseAndIdProduto(Integer idProdutoDoacao);

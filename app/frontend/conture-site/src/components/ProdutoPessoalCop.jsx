@@ -1,34 +1,28 @@
 import "../html-css-template/css/produto.css"
-import trash from "../html-css-template/imagens/trash 2.svg"
-import vector from "../html-css-template/imagens/Vector.svg"
-import foto from "../html-css-template/imagens/Rectangle 44.svg"
-import apiProduto from "../apiProduto.js";
-import { useState, useEffect } from "react";
+import trash from "../html-css-template/imagens/trash2.svg"
+import vector from "../html-css-template/imagens/vector.svg"
+import foto from "../html-css-template/imagens/ft-card.png"
+
+import { Link, useNavigate } from "react-router-dom";
 
 function Produto(props) {
 
-    // const [produto, setProduto] = useState([]);
-    // const [usuarioImg, setUsuarioImg] = useState([]);
 
-    // useEffect(() => {
-    //     let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-    //     apiProduto.get(`/listarProdutosUsuarios${idUsuario}`).then((resposta) => {
-    //         try {
-    //             console.log(resposta.data)
-    //             setUsuario(resposta.data)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     })
-    // }, [])
+    let produto = { idProduto: props.idProduto, nome: props.nome }
+    // Transformar o objeto em string e salvar em localStorage
+    sessionStorage.setItem('produto', JSON.stringify(produto));
+    // Receber a string
+    let pessoaString = sessionStorage.getItem('produto');
+    // transformar em objeto novamente
+    let produtoObj = JSON.parse(pessoaString);
+    console.log(produtoObj.idProduto);
 
     return (
-
         <div className="container-produto">
             <div className="informacoes-produto">
-                <div className="superior"><img src={trash} alt="" /> <div class="visualizacao"><img src={vector} alt="" /> <p></p></div></div>
+                <div className="superior"><Link to='/popup-deletar'><img src={trash} alt="" /></Link> <div class="visualizacao"><img src={vector} alt="" /><p>{props.visualizacao}</p></div></div>
                 <div className="meio"><img src={foto} alt="" /></div>
-                <div className="inferior"><p>Notebook Lenovo S145</p></div>
+                <div className="inferior"><p>{props.nome}</p></div>
             </div>
         </div>
     );

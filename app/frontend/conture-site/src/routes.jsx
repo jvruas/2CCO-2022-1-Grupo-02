@@ -14,11 +14,15 @@ import HistoricoPessoal from "./pages/HistoricoPessoal";
 import Historico from "./pages/Historico";
 import Disponivel from "./pages/Disponivel";
 import DisponivelPessoal from "./pages/DisponivelPessoal";
-import Avaliacao from "./pages/AvaliacaoPessoal";
+import Avaliacao from "./pages/Avaliacao";
+import AvaliacaoPessoal from "./pages/AvaliacaoPessoal";
 import CadastroProduto from "./pages/CadastroProduto";
 import PopUpFiltro from "./pages/pop-up/PopUpFiltro";
 import PopUpReporte from "./pages/pop-up/PopUpReporte";
 import PopUpAvaliacao from "./pages/pop-up/PopUpAvaliacao";
+import PopUpDeletar from "./pages/pop-up/PopUpDeletar";
+import DescricaoProduto from "./pages/DescricaoProduto";
+import Dashboard from "./pages/Dashboard";
 
 function Rotas() {
     return (
@@ -29,6 +33,7 @@ function Rotas() {
                 <Route path="/esqueci-senha" element={<EsqueciSenha/>} />
                 <Route path="/cadastro" element={<Cadastro/>} />
                 <Route path="*" element={<Feed/>} />
+                <Route path="/feed" element={<Feed/>} />
                 <Route path="/mensagem-direta" element={<MensagemDireta/>} />
                 <Route path="/validacao-usuario" element={<ValidacaoUsuario/>} />
                 <Route path="/validacao-usuario-confirmada" element={<ValidacaoUsuarioConfirmada/>} />
@@ -40,11 +45,15 @@ function Rotas() {
                 <Route path="/disponivel" element={<Disponivel/>} />
                 <Route path="/disponivel-pessoal" element={<DisponivelPessoal/>} />
                 <Route path="/avaliacao" element={<Avaliacao/>} />
+                <Route path="/avaliacao-pessoal" element={<AvaliacaoPessoal/>} />
                 <Route path="/cadastro-produto" element={<CadastroProduto/>} />
                 <Route path="/popup" element={<PopUp/>} />
                 <Route path="/popup-reporte" element={<PopUpReporte/>} />
+                <Route path="/descricao-produto" element={<DescricaoProduto/>} />
+                <Route path="/dashboard-admin-bi" element={<Dashboard/>}></Route>
                 <Route path="/popup-avaliacao" element={<PopUpAvaliacao/>} />
                 <Route path="/popup-filtro" element={<PopUpFiltro/>} />
+                <Route path="/popup-deletar" element={<PopUpDeletar/>} />
             </Routes>
         </BrowserRouter>
     );

@@ -2,9 +2,54 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import '../html-css-template/css/ValidacaoUsuario.css';
 import IconCheck from "../html-css-template/imagens/icon-check.svg";
-import { Link } from "react-router-dom";
+import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import apiUsuario from "../apiUsuario.js";
 
 function ValidacaoUsuario() {
+
+    const navegar = useNavigate();
+
+    /* Função para pegar os dados do usuário logado */
+    const [usuarioLogado, setUsuario] = useState([]);
+
+    useEffect(() => {
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+        apiUsuario.get(`/${idUsuario}`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setUsuario(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
+
+    /* Função para confirmação do código de validação e enviar o usuário para a página de validação */
+    function confirmacaoValidacao(event) {
+        event.preventDefault()
+
+        var codigo = document.getElementById("codigo-validacao");
+
+        if(codigo.value == ""){
+            document.getElementById("alerta-img2").style.display = "flex"
+            document.getElementById("msg-alerta").innerHTML = `Preencha o campo de código`
+        }else{
+            apiUsuario.post(`conta/validacao-codigo?idUsuario=${usuarioLogado.idUsuario}&codigo=${codigo.value}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((resposta) => {
+                navegar("/validacao-usuario-confirmada")
+                console.log(resposta.status)
+            }).catch((error) => {
+                console.log(error)
+                document.getElementById("alerta-img2").style.display = "flex"
+                document.getElementById("msg-alerta").innerHTML = `Código incorreto`
+            })
+        }        
+    }
 
     return (
         <>
@@ -27,19 +72,19 @@ function ValidacaoUsuario() {
                             <h2>VALIDAÇÃO</h2>
                         </div>
                         <div className="vl-mensagem">
-                            <p>Olá <span>Yan</span>,</p>
+                            <p>Olá <span>{usuarioLogado.nome}</span>,</p>
                             <p>Para ajudar a manter sua conta segura, a Conture quer ter certeza de que é realmente você que está autenticado.</p>
-                            <p>Um e-mail com um código de verificação sera enviado para <b><span>yan••••••••@gmail.com</span></b></p>
+                            <p>Um código de verificação foi enviado para o e-mail <b><span>{usuarioLogado.email}</span></b>.</p>
                         </div>
                         <div className="vl-campos">
                             <label htmlFor="codigo-validacao">Coloque o código</label>
                             <input type="text" name="codigo-validacao" id="codigo-validacao" />
                         </div>
                         <div className="vl-aviso">
-                            <p></p>
+                            <img src={iconError} id="alerta-img2" /><p id="msg-alerta"></p>
                         </div>
                         <div className="vl-btns">
-                            <button>
+                            <button type="button" onClick={confirmacaoValidacao}>
                                 <p>CONFIRMAR</p><img src={IconCheck} alt="Ícone confirmar" />
                             </button>
                         </div>

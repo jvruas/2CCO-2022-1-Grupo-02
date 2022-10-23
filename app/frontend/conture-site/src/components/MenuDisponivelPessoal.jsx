@@ -13,7 +13,7 @@ function MenuDisponivel() {
                     <Link to="/historico-pessoal"><p>Histórico</p></Link>
                 </div>
                 <div className='sub-menu'>
-                <Link to="/avaliacao"><p>Avaliações</p></Link>
+                <Link to="/avaliacao-pessoal"><p>Avaliações</p></Link>
                 </div>
         </div>
     );
