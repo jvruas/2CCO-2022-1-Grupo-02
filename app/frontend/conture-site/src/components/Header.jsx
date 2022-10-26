@@ -114,10 +114,10 @@ function Header() {
                                 <img src={lupa} alt="Lupa de pesquisa" />
                             </button>
                         </div>
-                        <div id="div_usuario">
+                        <div id="div_usuario"onClick={mostrarMenu}>
                             <img src={fotoDesogado} alt="" id="img_foto" />
                             <p id="nome_usuario">Usuário</p>
-                            <img src={setaBaixo} alt="" className="img_seta" id="seta_menu" onClick={mostrarMenu} />
+                            <img src={setaBaixo} alt="" className="img_seta" id="seta_menu"  />
                             <div id="he-tooltip">
                                 <div className="menuzinho">
                                     <div id="triangulo-para-cima">
