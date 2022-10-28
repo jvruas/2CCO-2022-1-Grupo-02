@@ -15,22 +15,22 @@ import apiUsuario from "../apiUsuario"
 function Avaliacao() {
 
     const [produtos, setProdutos] = useState([]);
-    const [usuario, setUsuario] = useState([]);
+    const [usuarioAva, setUsuarioAva] = useState([]);
     const [endereco, setEndereco] = useState([]);
 
     
     useEffect(() => {
-        let idUsuario = sessionStorage.getItem('idDoador');
-        apiProdutos.get(`/avaliacao?idDoador=${idUsuario}`).then((resposta) => {
+        let idDoador = sessionStorage.getItem('idDoador');
+        apiProdutos.get(`/avaliacao?idDoador=${idDoador}`).then((resposta) => {
 
-            console.log("pppdgdg", resposta.data.fila)
+            console.log(resposta.data.fila)
             setProdutos(resposta.data.fila)
             
             for(let i=0; i<resposta.data.fila.length; i++){
             apiUsuario.get(`/${resposta.data.fila[i].fkDonatario}`).then((usuarioResposta) => {
                 try {
-                    console.log("vvddsssd",usuarioResposta.data)
-                    setUsuario(usuarioResposta.data)
+                    console.log(usuarioResposta.data)
+                    setUsuarioAva(usuarioResposta.data)
                     fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
                     .then(res => res.json()).then(data => {
                         console.log(data)
@@ -65,7 +65,7 @@ function Avaliacao() {
                            
                                 nota={ava.valor}
                                 comentario={ava.comentario}
-                                donatario={usuario.nome}
+                                donatario={usuarioAva.nome}
                                 cidade={endereco.localidade}
                                 estado={endereco.uf}
                                 dataCon={ava.data}

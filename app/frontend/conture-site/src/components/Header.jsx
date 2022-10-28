@@ -41,10 +41,7 @@ function Header() {
             document.getElementById("nome_usuario").innerHTML = "Usuário";  
             document.getElementById("img_foto").src = `${fotoDesogado}`;
         }
-    })
-
-  
-    
+    })   
     
     function logoff(event) {
         event.preventDefault()

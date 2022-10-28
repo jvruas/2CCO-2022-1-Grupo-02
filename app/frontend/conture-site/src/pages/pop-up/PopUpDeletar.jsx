@@ -6,17 +6,33 @@ import apiProdutos from '../../apiProduto';
 function PopUpDeletar(props) {
 
     const navegar = useNavigate();
-    let produto = sessionStorage.getItem('idProduto');
-    function handleSubmit(event) {
-        event.preventDefault()
-        let param = document.getElementById();
-        apiProdutos.delete(`${produto}`, {
-    
-        }).then((resposta) => {
-            sessionStorage.setItem('idProduto', resposta.data)
-            console.log(resposta.status)
+
+    const [produtos, setProduto] = useState([]);
+    // let produto = sessionStorage.getItem('idProduto');
+    // function handleSubmit(event) {
+    //     event.preventDefault()
+    //     let param = document.getElementById();
+    //     apiProdutos.delete(`${produto}`, {
+
+    //     }).then((resposta) => {
+    //         sessionStorage.setItem(resposta.data)
+    //         console.log(resposta.status)
+    //     })
+    // }
+
+   
+    useEffect(() => {
+        let idProduto = sessionStorage.getItem('idProduto');
+        apiProdutos.delete(`${idProduto}`).then((produtoResposta) => {
+            try {
+                console.log(produtoResposta)
+                setProduto(produtoResposta)
+            } catch (error) {
+                console.log(error)
+            }
         })
-    }
+    }, [])
+    
 
 
     return (

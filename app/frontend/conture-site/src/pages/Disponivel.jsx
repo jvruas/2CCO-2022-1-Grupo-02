@@ -12,9 +12,9 @@ import apiProdutos from "../apiProduto.js"
 function Disponivel() {
 
     const [produtos, setProdutos] = useState([]);
-useEffect(() => {
-        let idUsuario = sessionStorage.getItem('idDoador');
-        apiProdutos.get(`disponiveis?idDoador=${idUsuario}`).then((resposta) => {
+    useEffect(() => {
+        let idDoador = sessionStorage.getItem('idDoador');
+        apiProdutos.get(`disponiveis?idDoador=${idDoador}`).then((resposta) => {
             try {
                 console.log(resposta.data)
                 setProdutos(resposta.data)
@@ -35,13 +35,13 @@ useEffect(() => {
                     <div className="div_sup_disp"><b><p>Disponíveis</p></b> <Link to="/popup-filtro"><img src={Filtro} /></Link></div>
                     <div className="div_inf_disp">
                         <div className="div_card">
-                        {produtos != undefined && produtos.length > 0 ? produtos.map((prod) => (
-                            <Card 
-                            visualizacao={prod.quantidadeVisualizacao}
-                            nome={prod.nome}
-                            idProduto={prod.idProduto}
-                             />
-                            )): ""}
+                            {produtos != undefined && produtos.length > 0 ? produtos.map((prod) => (
+                                <Card
+                                    visualizacao={prod.quantidadeVisualizacao}
+                                    nome={prod.nome}
+                                    idProduto={prod.idProduto}
+                                />
+                            )) : ""}
 
                         </div>
                     </div>

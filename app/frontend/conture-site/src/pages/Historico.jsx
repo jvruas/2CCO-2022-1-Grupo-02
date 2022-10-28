@@ -15,10 +15,10 @@ function HistoricoDonatario() {
 
     
     const [historico, setHistorico] = useState([]);
-    const [usuario, setUsuario] = useState([]);
+    const [usuarioDon, setUsuarioDon] = useState([]);
     useEffect(() => {
-        let idUsuario = sessionStorage.getItem('idDoador');
-            apiProdutos.get(`/status?idDoador=${idUsuario}&status=todos`).then((resposta) => {
+        let idDoador= sessionStorage.getItem('idDoador');
+            apiProdutos.get(`/status?idDoador=${idDoador}&status=todos`).then((resposta) => {
             try {
                 console.log("uijhhjh", resposta.data)
                 setHistorico(resposta.data)
@@ -51,10 +51,10 @@ function HistoricoDonatario() {
     //     })
     // }
 
-    apiUsuario.get(`/${idUsuario}`).then((usuarioResposta) => {
+    apiUsuario.get(`/${idDoador}`).then((usuarioResposta) => {
         try {
-            console.log("ofdoidsfodsfoifdsj",usuarioResposta.data)
-            setUsuario(usuarioResposta.data)
+            console.log(usuarioResposta.data)
+            setUsuarioDon(usuarioResposta.data)
         } catch (error) {
             console.log(error)
         }
@@ -64,7 +64,6 @@ function HistoricoDonatario() {
 
 
     return (
-        
         <>
             <Header></Header>
             <section id="hp-section">
