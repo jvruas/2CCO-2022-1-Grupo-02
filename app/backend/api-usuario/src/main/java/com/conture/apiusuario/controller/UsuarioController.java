@@ -237,19 +237,25 @@ public class UsuarioController {
 		return status(200).body(lista);
 	}
 
+	// TODO: IMPROVE
 	@PostMapping("conta/validacao-email")
-	public ResponseEntity enviarEmail(@RequestParam String emailDestinatario,
-									  @RequestParam Integer idUsuario) throws FileNotFoundException {
+	public ResponseEntity<Integer> enviarEmail(
+			@RequestParam String emailDestinatario,
+			@RequestParam Integer idUsuario
+	) throws FileNotFoundException {
 		Usuario usuario = usuarioRepository.getById(idUsuario);
+
 		if (usuario.getVerificado()){
-			return status(400).body("usuario ja validado");
+			return status(409).build();
 		}
+
 		String codigo = email.gerarCodigo();
 		usuario.setCodigo(codigo);
 		usuarioRepository.save(usuario);
 		String corpoEmail = email.gerarEmail(codigo);
 		email.sendEmail(corpoEmail, emailDestinatario);
-		return status(200).build();
+
+		return status(200).body(idUsuario);
 	}
 
 	@PostMapping("conta/validacao-codigo")
