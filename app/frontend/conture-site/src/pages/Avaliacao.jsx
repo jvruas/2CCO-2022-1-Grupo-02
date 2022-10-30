@@ -4,12 +4,50 @@ import MenuPerfil from "../components/MenuAvaliacao"
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/AvaliacaoPage.css'
 import Footer from "../components/Footer"
-import Nota from "../components/Nota"
+import Nota from "../components/NotaCop"
 import Comentarios from "../components/Avaliacao"
+import { useState, useEffect } from "react";
+import apiProdutos from "../apiProduto";
+import apiUsuario from "../apiUsuario"
 
 
 
 function Avaliacao() {
+
+    const [produtos, setProdutos] = useState([]);
+    const [usuarioAva, setUsuarioAva] = useState([]);
+    const [endereco, setEndereco] = useState([]);
+
+    
+    useEffect(() => {
+        let idDoador = sessionStorage.getItem('idDoador');
+        apiProdutos.get(`/avaliacao?idDoador=${idDoador}`).then((resposta) => {
+
+            console.log(resposta.data.fila)
+            setProdutos(resposta.data.fila)
+            
+            for(let i=0; i<resposta.data.fila.length; i++){
+            apiUsuario.get(`/${resposta.data.fila[i].fkDonatario}`).then((usuarioResposta) => {
+                try {
+                    console.log(usuarioResposta.data)
+                    setUsuarioAva(usuarioResposta.data)
+                    fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
+                    .then(res => res.json()).then(data => {
+                        console.log(data)
+                        setEndereco(data)
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            })
+        }
+            try {
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
+
     return (
         <>
             <Header></Header>
@@ -22,8 +60,18 @@ function Avaliacao() {
                         <Nota></Nota>
                     </div>
                     <div className="comentarios">
-                    <Comentarios></Comentarios>
-                    <Comentarios></Comentarios>
+                    {produtos != undefined && produtos.length > 0 ? produtos.map((ava) => (
+                            <Comentarios 
+                           
+                                nota={ava.valor}
+                                comentario={ava.comentario}
+                                donatario={usuarioAva.nome}
+                                cidade={endereco.localidade}
+                                estado={endereco.uf}
+                                dataCon={ava.data}
+
+                            />
+                        )): ""}
                 
                     </div>
                 </div>

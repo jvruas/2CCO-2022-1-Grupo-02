@@ -19,6 +19,7 @@ function Comentarios(props){
     const [nomeResposta, setNomeResposta] = useState([]);
 
     setTimeout(function respostas(){
+        sessionStorage.setItem("fkMensagemPrincipal",null)
         const resposta = document.getElementById(`div-respostas${indice}`);
         resposta.innerHTML = " ";
         try {
@@ -55,13 +56,13 @@ function Comentarios(props){
 
     function definitionMessageReply(){
         const buttonFocus = document.getElementById("button-send")
-        buttonFocus.focus() 
         sessionStorage.setItem("fkMensagemPrincipal",props.idMensagemPrincipal)
+        buttonFocus.focus() 
     }
     
     return(
         <>
-        {sessionStorage.setItem("fkMensagemPrincipal",null)}
+        
                 <div className="message-main-description">
                 <b className="name-coment-description">{nome.nome} {nome.sobrenome}:</b>
                     <br />
