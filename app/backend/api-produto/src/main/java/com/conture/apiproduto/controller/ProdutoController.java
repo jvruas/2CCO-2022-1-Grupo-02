@@ -255,7 +255,7 @@ public class ProdutoController {
 	// TODO: Precisa de melhoras.
 	@GetMapping("/avaliacao")
 	public ResponseEntity<FilaObj> listarAvaliacao(@RequestParam @NotNull @Min(1) Integer idDoador) {
-		FilaObj<AvaliacaoResponse> filaAvaliacao = new FilaObj<>(20);
+		FilaObj<AvaliacaoResponse> filaAvaliacao = new FilaObj<>(30);
 		List<AvaliacaoResponse> listaAvaliacaoResponse = this.avaliacaoRepository.getAllByIdDoador(idDoador);
 
 		if (listaAvaliacaoResponse.isEmpty()) {
