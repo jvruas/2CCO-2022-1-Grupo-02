@@ -14,13 +14,13 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
 	UsuarioCadastroRequest findByIdUsuario(Integer idUsuario);
-	@Query("select new com.conture.apiusuario.dto.response.UsuarioLogadoResponse(u.idUsuario, u.email, u.nome, u.sobrenome, u.genero, u.dataNascimento, u.estadoCivil, u.cep, u.dataCadastro, u.grauEscolaridade, u.cpf, u.situacaoAtual.nome) from Usuario u where u.email = ?1 and u.senha = ?2")
+	@Query("select new com.conture.apiusuario.dto.response.UsuarioLogadoResponse(u.idUsuario, u.email, u.nome, u.sobrenome, u.genero, u.dataNascimento, u.estadoCivil, u.telefone, u.cep, u.dataCadastro, u.grauEscolaridade, u.cpf, u.situacaoAtual.nome) from Usuario u where u.email = ?1 and u.senha = ?2")
 	Optional<UsuarioLogadoResponse> getByEmailAndSenha(String email, String senha);
 
-	@Query("select new com.conture.apiusuario.dto.response.UsuarioLogadoResponse(u.idUsuario, u.email, u.nome, u.sobrenome, u.genero, u.dataNascimento, u.estadoCivil, u.cep, u.dataCadastro, u.grauEscolaridade, u.cpf, u.situacaoAtual.nome) from Usuario u where u.idUsuario = ?1 and u.removido = false")
+	@Query("select new com.conture.apiusuario.dto.response.UsuarioLogadoResponse(u.idUsuario, u.email, u.nome, u.sobrenome, u.genero, u.dataNascimento, u.estadoCivil, u.telefone, u.cep, u.dataCadastro, u.grauEscolaridade, u.cpf, u.situacaoAtual.nome) from Usuario u where u.idUsuario = ?1 and u.removido = false")
 	Optional<UsuarioLogadoResponse> getUsuarioLogadoById(Integer idUsuario);
 
-	@Query("select new com.conture.apiusuario.dto.response.UsuarioLogadoResponse(u.idUsuario, u.email, u.nome, u.sobrenome, u.genero, u.dataNascimento, u.estadoCivil, u.cep, u.dataCadastro, u.grauEscolaridade, u.cpf, u.situacaoAtual.nome) from Usuario u where concat(u.nome,' ',u.sobrenome) like concat('%',?1,'%') order by u.nome")
+	@Query("select new com.conture.apiusuario.dto.response.UsuarioLogadoResponse(u.idUsuario, u.email, u.nome, u.sobrenome, u.genero, u.dataNascimento, u.estadoCivil, u.telefone, u.cep, u.dataCadastro, u.grauEscolaridade, u.cpf, u.situacaoAtual.nome) from Usuario u where concat(u.nome,' ',u.sobrenome) like concat('%',?1,'%') order by u.nome")
 	List<UsuarioLogadoResponse> getByNome(String nome);
 
 	@Query("update Usuario u set u.email = null, u.senha = null, u.nome = null, u.sobrenome = null, u.cpf = null, u.genero = null, u.dataNascimento = null, u.estadoCivil = null, u.telefone = null, u.cep = null, u.grauEscolaridade = null, u.situacaoAtual = null, u.verificado = null, u.removido = true where u.idUsuario = ?1 and u.removido = false")
