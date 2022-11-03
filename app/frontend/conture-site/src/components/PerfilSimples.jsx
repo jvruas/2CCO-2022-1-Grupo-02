@@ -7,6 +7,8 @@ import report from '../html-css-template/imagens/report.svg'
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiUsuario from "../apiUsuario.js";
+import apiProdutos from '../apiProduto';
+import fotoDeslogado from '../html-css-template/imagens/imagem-deslogado.png';
     
 
 function PerfilSimples() {
@@ -17,10 +19,11 @@ function PerfilSimples() {
 
     const [usuario, setUsuario] = useState([]);
     const [endereco, setEndereco] = useState([]);
-    // const [usuarioImg, setUsuarioImg] = useState([]);
+    const [nota, setNota] = useState([]);
+    const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect(() => {
-        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+        let idUsuario = sessionStorage.getItem('idDoador');
         apiUsuario.get(`/${idUsuario}`).then((usuarioResposta) => {
             try {
                 console.log(usuarioResposta.data)
@@ -36,6 +39,32 @@ function PerfilSimples() {
         })
     }, [])
 
+    useEffect(() => {
+        let idUsuario = sessionStorage.getItem('idDoador');
+        apiProdutos.get(`avaliacao/stats?idDoador=${idUsuario}`).then((resposta) => {
+            try {
+                console.log("teste",resposta.data)
+                setNota(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
+
+
+
+    useEffect(() => {
+        let param = sessionStorage.getItem('logado');
+        let idUsuario = sessionStorage.getItem('idDoador');
+        if(param == "OK"){
+            document.getElementById("nome_usuario").innerHTML = `${usuario.nome}`; 
+            document.getElementById("img_perfil").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=P`;
+            document.getElementById("img_banner").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=B`;  
+        }else{
+            document.getElementById("nome_usuario").innerHTML = "Usuário";  
+            document.getElementById("img_perfil").src = `${fotoDeslogado}`;
+        }
+    })
     
   let dataCad = new Date(usuario.dataCadastro);
 
@@ -43,13 +72,13 @@ function PerfilSimples() {
         <>
                 <div id="perfil">
                     <div id="perfil_imagem">
-                        <img src={imgPerfil} alt="" />
+                        <img src={imgPerfil} alt="" id="img_banner"/>
                     </div>
                     <div id="perfil_inf">
                         <div id="perfil_informacao">
                             <div id="perfil_conteudo">
                                 <div id="foto">
-                                    <img src={foto} alt="" />
+                                    <img src={fotoDeslogado} alt="" id="img_perfil"/>
                                 </div>
                                 <div id="perfil_texto">
                                     <div class="inf">
@@ -64,7 +93,7 @@ function PerfilSimples() {
                                     </div>
                                     <div>
                                         <img src={estrela} alt="" />
-                                        <p>{usuario.avaliacao}</p>
+                                        <p>{nota.mediaAvaliacoes}</p>
                                     </div>
                                 </div>
                             </div>

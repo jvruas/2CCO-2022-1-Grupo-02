@@ -49,11 +49,11 @@ function Rotas() {
                 <Route path="/cadastro-produto" element={<CadastroProduto/>} />
                 <Route path="/popup" element={<PopUp/>} />
                 <Route path="/popup-reporte" element={<PopUpReporte/>} />
+                <Route path="/descricao-produto" element={<DescricaoProduto/>} />
+                <Route path="/dashboard-admin-bi" element={<Dashboard/>}></Route>
                 <Route path="/popup-avaliacao" element={<PopUpAvaliacao/>} />
                 <Route path="/popup-filtro" element={<PopUpFiltro/>} />
                 <Route path="/popup-deletar" element={<PopUpDeletar/>} />
-                <Route path="/descricao-produto" element={<DescricaoProduto/>} />
-                <Route path="/dashboard-admin-bi" element={<Dashboard/>}></Route>
             </Routes>
         </BrowserRouter>
     );

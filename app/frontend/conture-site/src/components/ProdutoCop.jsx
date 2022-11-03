@@ -1,18 +1,25 @@
 import "../html-css-template/css/produto.css"
 import trash from "../html-css-template/imagens/trash2.svg"
 import vector from "../html-css-template/imagens/vector.svg"
-import foto from "../html-css-template/imagens/rectangle44.svg"
+import foto from "../html-css-template/imagens/ft-card.png"
+import { useNavigate } from "react-router-dom";
 
 function Produto(props) {
 
-    
+    const navegar = useNavigate();
+
+    function DescricaoProdutoRedirect(){
+        sessionStorage.setItem("idProduto",props.idProduto);
+        sessionStorage.setItem("idDoador",props.idDoador);
+        navegar("/descricao-produto");
+    }
 
     return(
-        <div className="container-produto">
+        <div className="container-produto" onClick={DescricaoProdutoRedirect}>
             <div className="informacoes-produto">
-                <div className="superior"><img alt=""/> <div class="visualizacao"><img src={vector} alt=""/> <p>250</p></div></div>
+                <div className="superior"><img alt=""/> <div class="visualizacao"><p>{props.visualizacao}</p><img src={vector} alt="" /></div></div>
                 <div className="meio"><img src={foto} alt=""/></div>
-                <div className="inferior"><p>Notebook Lenovo S145</p></div>
+                <div className="inferior"><p>{props.nome}</p></div>
             </div>
         </div>
     );

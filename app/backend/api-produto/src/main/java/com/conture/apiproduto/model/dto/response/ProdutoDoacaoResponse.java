@@ -6,6 +6,10 @@ import java.util.Date;
 
 public class ProdutoDoacaoResponse {
 	@NotNull
+	@Positive
+	private Integer idProdutoDoacao;
+
+	@NotNull
 	@NotBlank
 	@Size(max = 60)
 	private String nome;
@@ -57,6 +61,7 @@ public class ProdutoDoacaoResponse {
 
 
 	public ProdutoDoacaoResponse(
+			Integer idProdutoDoacao,
 			String nome,
 			String marca,
 			String modelo,
@@ -70,6 +75,7 @@ public class ProdutoDoacaoResponse {
 			String categoriaProduto,
 			Integer fkDoador
 	) {
+		this.idProdutoDoacao = idProdutoDoacao;
 		this.nome = nome;
 		this.marca = marca;
 		this.modelo = modelo;
@@ -84,6 +90,7 @@ public class ProdutoDoacaoResponse {
 		this.fkDoador = fkDoador;
 	}
 
+	public Integer getIdProdutoDoacao() { return idProdutoDoacao; }
 
 	public String getNome() {
 		return nome;

@@ -1,12 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
 
-/*Reset*/
-* {
+*{
+    /* height: 100%; */
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Tajawal;
-    text-decoration: none;     
+    font-family: 'Tajawal', sans-serif;
 }
 
 .container-produto{
@@ -18,7 +15,7 @@
     border: solid 2px #939393;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
+    margin-top: 50px;
     cursor: pointer;
 }
 
@@ -48,15 +45,11 @@
     height: 180px;
     width: 100%;
     border-bottom: solid 2px #939393;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .meio img{
-    /* padding-top: 5px; */
-    width: 150px;
-    height: 150px;
+    padding-top: 5px;
+    width: 100%;
 }
 
 .inferior{
