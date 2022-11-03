@@ -16,27 +16,27 @@ function Header() {
 
     const navegar = useNavigate();
 
-    const [usuario, setUsuario] = useState([]);
+    const [usuarioHeader, setUsuarioHeader] = useState([]);
     // const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect(() => {
-        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-        apiUsuario.get(`/${idUsuario}`).then((resposta) => {
+        let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
+        apiUsuario.get(`/${idUsuarioHeader}`).then((resposta) => {
             try {
                 console.log(resposta.data)
-                setUsuario(resposta.data)
+                setUsuarioHeader(resposta.data)
             } catch (error) {
                 console.log(error)  
             }
         })
-    }, [])
+    })
 
     useEffect(() => {
         let param = sessionStorage.getItem('logado');
-        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+        let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
         if(param == "OK"){
-            document.getElementById("nome_usuario").innerHTML = `${usuario.nome}`; 
-            document.getElementById("img_foto").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=P`;   
+            document.getElementById("nome_usuario").innerHTML = `${usuarioHeader.nome}`; 
+            document.getElementById("img_foto").src = `http://localhost:8080/usuarios/${idUsuarioHeader}/imagem?tipoImagem=P`;   
         }else{
             document.getElementById("nome_usuario").innerHTML = "Usuário";  
             document.getElementById("img_foto").src = `${fotoDesogado}`;

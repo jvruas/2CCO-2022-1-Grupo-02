@@ -17,17 +17,17 @@ function PerfilSimples() {
 
     const navegar = useNavigate();
 
-    const [usuario, setUsuario] = useState([]);
+    const [usuarioPerfil, setUsuarioPerfil] = useState([]);
     const [endereco, setEndereco] = useState([]);
     const [nota, setNota] = useState([]);
     const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect(() => {
-        let idUsuario = sessionStorage.getItem('idDoador');
-        apiUsuario.get(`/${idUsuario}`).then((usuarioResposta) => {
+        let idUsuarioPerfil = sessionStorage.getItem('idDoador');
+        apiUsuario.get(`/${idUsuarioPerfil}`).then((usuarioResposta) => {
             try {
                 console.log(usuarioResposta.data)
-                setUsuario(usuarioResposta.data)
+                setUsuarioPerfil(usuarioResposta.data)
                 fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
                 .then(res => res.json()).then(data => {
                     console.log(data)
@@ -40,8 +40,8 @@ function PerfilSimples() {
     }, [])
 
     useEffect(() => {
-        let idUsuario = sessionStorage.getItem('idDoador');
-        apiProdutos.get(`avaliacao/stats?idDoador=${idUsuario}`).then((resposta) => {
+        let idUsuarioPerfil = sessionStorage.getItem('idDoador');
+        apiProdutos.get(`avaliacao/stats?idDoador=${idUsuarioPerfil}`).then((resposta) => {
             try {
                 console.log("teste",resposta.data)
                 setNota(resposta.data)
@@ -55,18 +55,18 @@ function PerfilSimples() {
 
     useEffect(() => {
         let param = sessionStorage.getItem('logado');
-        let idUsuario = sessionStorage.getItem('idDoador');
+        let idUsuarioPerfil = sessionStorage.getItem('idDoador');
         if(param == "OK"){
-            document.getElementById("nome_usuario").innerHTML = `${usuario.nome}`; 
-            document.getElementById("img_perfil").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=P`;
-            document.getElementById("img_banner").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=B`;  
+            document.getElementById("nome_usuario").innerHTML = `${usuarioPerfil.nome}`; 
+            document.getElementById("img_perfil").src = `http://localhost:8080/usuarios/${idUsuarioPerfil}/imagem?tipoImagem=P`;
+            document.getElementById("img_banner").src = `http://localhost:8080/usuarios/${idUsuarioPerfil}/imagem?tipoImagem=B`;  
         }else{
             document.getElementById("nome_usuario").innerHTML = "Usuário";  
             document.getElementById("img_perfil").src = `${fotoDeslogado}`;
         }
     })
     
-  let dataCad = new Date(usuario.dataCadastro);
+  let dataCad = new Date(usuarioPerfil.dataCadastro);
 
     return (
         <>
@@ -83,9 +83,9 @@ function PerfilSimples() {
                                 <div id="perfil_texto">
                                     <div class="inf">
                                         <b>
-                                            <p>{usuario.nome}</p>
+                                            <p>{usuarioPerfil.nome}</p>
                                         </b>
-                                        <p>#0{usuario.idUsuario}</p>
+                                        <p>#0{usuarioPerfil.idUsuario}</p>
                                     </div>
                                     <div class="inf">
                                         <p>{endereco.localidade} - {endereco.uf}</p>
