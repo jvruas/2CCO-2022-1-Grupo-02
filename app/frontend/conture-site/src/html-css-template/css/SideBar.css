@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -42,5 +44,43 @@
 .div-topic{
     margin-top: 20%;
     color: white;
+    width: 80%;
+    height: 15%;
+    /* background-color: yellow; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
 
+.div-topic div{
+height: 50px;
+width: 100%;
+display: flex;
+justify-content: space-around;
+align-items: center;
+}
+
+.div-topic img{
+    height: 30px;
+    width: 30px;
+}
+
+.div-topic p:hover{
+    font-size: 18px;
+    text-shadow: 0 0 0.2em #FFFFFF;
+}
+
+.div-sair{
+    color: white;
+    width: 80%;
+    height: 7%;
+    background-color: yellow;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.div-sair img{
+    height: 30px;
+    width: 30px;
 }

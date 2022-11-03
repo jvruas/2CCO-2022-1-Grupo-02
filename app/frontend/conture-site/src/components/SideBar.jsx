@@ -1,8 +1,11 @@
 import "../html-css-template/css/SideBar.css"
 import logo from "../html-css-template/imagens/logo-conture.png"
+import iconBi from "../html-css-template/imagens/bi.svg"
+import iconAna from "../html-css-template/imagens/analytics.svg"
+import iconSair from "../html-css-template/imagens/sair.svg"
 
-function SideBar(){
-    return(
+function SideBar() {
+    return (
         <>
             <div className="side-bar">
                 <div className="div-image">
@@ -12,15 +15,20 @@ function SideBar(){
                     <b>Administrador</b>
                 </div>
 
-                <div className="div-topic">
-                    <b>GRÁFICOS BI</b>
-                    <br />
-                    <br />
-                    ANALYTICS
+                <div className="div-topic dvi">
+                    <div>
+                        <img src={iconBi} alt="Ícone de BI" /><p>GRÁFICOS BI</p>
+                    </div>
+                    <div>
+                        <img src={iconAna} alt="Ícone de Analytics" /><p>ANALYTICS</p>
+                    </div>
+                </div>
+                <div className="div-sair">
+                    <img src={iconSair} alt="Ícone de sair" /><p>SAIR</p>
                 </div>
             </div>
         </>
     );
 }
 
-export default SideBar
+export default SideBar;

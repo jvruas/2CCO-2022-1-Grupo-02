@@ -4,7 +4,9 @@ import "../html-css-template/css/Dashboard.css";
 import ChartLine from "../components/ChartLine";
 import ChartBarViewTwo from "../components/ViewTwo";
 import ChartBarViewThree from "../components/ViewThree";
-import ChartBarViewFour from "../components/ViewFour";
+import ChartBarViewFour from "../components/ViewFour";  
+import Map from "../components/MapBrazil"
+
 
 function Dashboard() {
   return (
@@ -16,7 +18,8 @@ function Dashboard() {
         </div>
         <div className="dash-pDois">
           <div className="dash-scroll">
-            <ChartLine />
+            <Map></Map>
+            <ChartLine></ChartLine>
             <ChartBarViewTwo />
             <ChartBarViewThree />
             <ChartBarViewFour />
