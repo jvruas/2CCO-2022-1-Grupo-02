@@ -128,7 +128,7 @@ public class ProdutoController {
 
 		byte[] imagem = this.produtoRepository.getImagemByID(idProduto);
 
-		if (imagem.length == 0) {
+		if (imagem == null) {
 			return status(404).build();
 		}
 
