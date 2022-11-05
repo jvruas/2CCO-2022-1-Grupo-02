@@ -21,9 +21,12 @@ public class ImagemUsuario {
 	private String tipoImagem;
 
 	@NotNull
-	@JsonIgnore
-	@Column(length = 16_777_216)
-	private byte[] imagemUsuario;
+	@NotBlank
+	private String bucketName;
+
+	@NotNull
+	@NotBlank
+	private String objectName;
 
 	@NotNull
 	@ManyToOne
@@ -35,32 +38,43 @@ public class ImagemUsuario {
 
 	private ImagemUsuario(
 			String tipoImagem,
-			byte[] imagemUsuario,
+			String bucketName,
+			String objectName,
 			Integer fkUsuario
 	) {
 		this.tipoImagem = tipoImagem;
-		this.imagemUsuario = imagemUsuario;
+		this.bucketName = bucketName;
+		this.objectName = objectName;
 		this.setUsuario(fkUsuario);
 	}
 
 	public static ImagemUsuario fromPattern(
 			String tipoImagem,
-			byte[] imagemUsuario,
+			String bucketName,
+			String objectName,
 			Integer fkUsuario
 	) {
-		return new ImagemUsuario(tipoImagem, imagemUsuario, fkUsuario);
+		return new ImagemUsuario(tipoImagem, bucketName, objectName, fkUsuario);
 	}
 
 	public Integer getIdImagemUsuario() { return idImagemUsuario; }
 
 	public void setIdImagemUsuario(Integer idImagemUsuario) { this.idImagemUsuario = idImagemUsuario; }
 
-	public byte[] getImagemUsuario() {
-		return imagemUsuario;
+	public String getBucketName() {
+		return this.bucketName;
 	}
 
-	public void setImagemUsuario(byte[] imagemUsuario) {
-		this.imagemUsuario = imagemUsuario;
+	public void setBucketName(String bucketName) {
+		this.bucketName = bucketName;
+	}
+
+	public String getObjectName() {
+		return this.objectName;
+	}
+
+	public void setObjectName(String objectName) {
+		this.objectName = objectName;
 	}
 
 	public String getTipoImagem() {

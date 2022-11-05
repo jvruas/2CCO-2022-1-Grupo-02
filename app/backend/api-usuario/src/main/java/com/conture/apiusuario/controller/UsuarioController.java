@@ -4,6 +4,7 @@ import com.conture.apiusuario.dto.request.*;
 import com.conture.apiusuario.entity.*;
 import com.conture.apiusuario.repository.*;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
+import com.conture.apiusuario.services.S3Service;
 import com.conture.apiusuario.utility.Email;
 import com.conture.apiusuario.utility.GerenciadorUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 import static org.springframework.http.ResponseEntity.*;
@@ -33,6 +35,9 @@ public class UsuarioController {
 	private ImagemUsuarioRepository imagemUsuarioRepository;
 	@Autowired
 	private DesligamentoContaRepository desligamentoContaRepository;
+
+	@Autowired
+	private S3Service s3Service;
 
 	private Email email = new Email();
 
@@ -81,6 +86,10 @@ public class UsuarioController {
 	}
 
 
+<<<<<<< HEAD
+=======
+	//TODO:
+>>>>>>> joao
 	@DeleteMapping("/{idUsuario}/login")
 	public ResponseEntity logoff(@PathVariable @Min(1) Integer idUsuario) {
 		if (!GerenciadorUsuario.logoff(idUsuario)) {
@@ -240,10 +249,19 @@ public class UsuarioController {
 			@RequestParam String emailDestinatario,
 			@RequestParam Integer idUsuario
 	) throws FileNotFoundException {
+<<<<<<< HEAD
 		Usuario usuario = this.usuarioRepository.getById(idUsuario);
+=======
+		Usuario usuario = usuarioRepository.getById(idUsuario);
+<<<<<<< HEAD
+		if (usuario.getVerificado()) {
+			return status(400).body("usuario ja validado");
+=======
+>>>>>>> joao
 
 		if (usuario.getVerificado()) {
 			return status(409).build();
+>>>>>>> development
 		}
 
 		String codigo = email.gerarCodigo();
@@ -256,6 +274,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("conta/validacao-codigo")
+<<<<<<< HEAD
 	public ResponseEntity validarUsuario(
 			@RequestParam Integer idUsuario,
 			@RequestParam String codigo
@@ -265,6 +284,16 @@ public class UsuarioController {
 
 		if (!codigoGerado.equals(codigo)) {
 			status(400).build();
+=======
+	public ResponseEntity validarUsuario(@RequestParam Integer idUsuario,
+										 @RequestParam String codigo) {
+		Usuario usuario = usuarioRepository.getById(idUsuario);
+		String codigoGerado = usuario.getCodigo();
+		if (codigoGerado.equals(codigo)) {
+			usuario.setVerificado(true);
+			usuarioRepository.save(usuario);
+			return status(200).build();
+>>>>>>> joao
 		}
 
 		usuario.setVerificado(true);
@@ -375,7 +404,9 @@ public class UsuarioController {
 			return status(400).build();
 		}
 
-		if (!this.usuarioRepository.existsById(idUsuario)) {
+		Optional<Usuario> usuario = this.usuarioRepository.getUsuarioById(idUsuario);
+
+		if (usuario.isEmpty()) {
 			return status(404).build();
 		}
 
@@ -385,7 +416,11 @@ public class UsuarioController {
 			return status(409).build();
 		}
 
-		this.imagemUsuarioRepository.save(ImagemUsuario.fromPattern(tipoImagem, novaImagem, idUsuario));
+		String imageName = String.format("%s_%s", tipoImagem, UUID.nameUUIDFromBytes(usuario.get().getCpf().getBytes()).toString());
+
+		this.imagemUsuarioRepository.save(ImagemUsuario.fromPattern(tipoImagem, this.s3Service.getDefaultBucketName(), imageName, idUsuario));
+
+		this.s3Service.putObject(imageName, novaImagem);
 
 		return status(201).build();
 	}
@@ -401,45 +436,54 @@ public class UsuarioController {
 			return status(400).build();
 		}
 
-		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
+		Optional<ImagemUsuario> imagemUsuario = this.imagemUsuarioRepository.getImagemByIdUsuarioAndTipoImagem(Usuario.fromPattern(idUsuario), tipoImagem);
 
-		if (idImagemUsuario.isEmpty()) {
+		if (imagemUsuario.isEmpty()) {
 			return status(404).build();
 		}
 
-		this.imagemUsuarioRepository.updateImagem(idImagemUsuario.get(), novaImagem);
+		this.s3Service.putObject(imagemUsuario.get().getObjectName(), novaImagem);
 
 		return status(200).build();
 	}
-
 
 	@GetMapping(value = "/{idUsuario}/imagem", produces = "image/jpeg")
 	public ResponseEntity<byte[]> getImagem(
 			@PathVariable @Min(1) Integer idUsuario,
 			@RequestParam @Size(min = 1, max = 1) @Pattern(regexp = "[B,P]") String tipoImagem
 	) {
-		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
+		Optional<ImagemUsuario> imagemUsuario = this.imagemUsuarioRepository.getImagemByIdUsuarioAndTipoImagem(Usuario.fromPattern(idUsuario), tipoImagem);
 
-		if (idImagemUsuario.isEmpty()) {
+		if (imagemUsuario.isEmpty()) {
 			return status(404).build();
 		}
 
-		return status(200).body(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
-	}
+		byte[] image;
 
+		try {
+			image = this.s3Service.getObject(imagemUsuario.get().getBucketName(), imagemUsuario.get().getObjectName());
+		} catch (IOException ioException) {
+			return status(503).build();
+		}
+
+		return status(200).body(image);
+	}
 
 	@DeleteMapping("/{idUsuario}/imagem")
 	public ResponseEntity deletarImagem(
 			@PathVariable @Min(1) Integer idUsuario,
 			@RequestParam @Size(min = 1, max = 1) @Pattern(regexp = "[B,P]") String tipoImagem
 	) {
-		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(idUsuario), tipoImagem);
 
-		if (idImagemUsuario.isEmpty()) {
+		Optional<ImagemUsuario> imagemUsuario = this.imagemUsuarioRepository.getImagemByIdUsuarioAndTipoImagem(Usuario.fromPattern(idUsuario), tipoImagem);
+
+		if (imagemUsuario.isEmpty()) {
 			return status(404).build();
 		}
 
-		this.imagemUsuarioRepository.deleteById(idImagemUsuario.get());
+		this.s3Service.deleteObject(imagemUsuario.get().getBucketName(), imagemUsuario.get().getObjectName());
+
+		this.imagemUsuarioRepository.deleteById(imagemUsuario.get().getIdImagemUsuario());
 
 		return status(200).build();
 	}

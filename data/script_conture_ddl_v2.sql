@@ -56,7 +56,8 @@ CREATE TABLE IF NOT EXISTS `conture`.`produto_doacao` (
   `marca` NVARCHAR(60) NOT NULL,
   `modelo` VARCHAR(60) NOT NULL,
   `descricao` NVARCHAR(255) NOT NULL,
-  `imagem_principal` MEDIUMBLOB NULL,
+  `bucket_name` VARCHAR(255) NULL,
+  `object_name` VARCHAR(255) NULL,
   `defeito` TINYINT NOT NULL,
   `entrega` TINYINT NOT NULL,
   `quantidade_visualizacao` INT NOT NULL,
@@ -205,7 +206,8 @@ CREATE TABLE IF NOT EXISTS `conture`.`desligamento_conta` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `conture`.`imagem_usuario` (
   `id_imagem_usuario` INT NOT NULL AUTO_INCREMENT,
-  `imagem_usuario` MEDIUMBLOB NOT NULL,
+  `bucket_name` VARCHAR(255) NOT NULL,
+  `object_name` VARCHAR(255) NOT NULL,
   `tipo_imagem` CHAR(1) NOT NULL,
   `fk_usuario` INT NOT NULL,
   PRIMARY KEY (`id_imagem_usuario`),
@@ -217,7 +219,8 @@ CREATE TABLE IF NOT EXISTS `conture`.`imagem_usuario` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `conture`.`imagem_produto_doacao` (
   `id_imagem_produto_doacao` INT NOT NULL AUTO_INCREMENT,
-  `imagem` MEDIUMBLOB NOT NULL,
+  `bucket_name` VARCHAR(255) NOT NULL,
+  `object_name` VARCHAR(255) NOT NULL,
   `fk_produto_doacao` INT NOT NULL,
   PRIMARY KEY (`id_imagem_produto_doacao`),
   INDEX `fk_imagem_produto_doacao_produto_doacao1_idx` (`fk_produto_doacao` ASC) VISIBLE,

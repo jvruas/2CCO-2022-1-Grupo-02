@@ -3,6 +3,7 @@ package com.conture.apiproduto.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -12,9 +13,12 @@ public class ImagemProdutoDoacao {
 	private Integer idImagemProdutoDoacao;
 
 	@NotNull
-	@JsonIgnore
-	@Column(length = 16_777_216)
-	private byte[] imagem;
+	@NotBlank
+	private String bucketName;
+
+	@NotNull
+	@NotBlank
+	private String objectName;
 
 	@NotNull
 	@ManyToOne
@@ -27,26 +31,33 @@ public class ImagemProdutoDoacao {
 
 	private ImagemProdutoDoacao(
 			Integer fkProdutoDoacao,
-			@NotNull byte[] imagem
+			String bucketName,
+			String objectName
 	) {
 		this.setProdutoDoacao(fkProdutoDoacao);
-		this.imagem = imagem;
+		this.bucketName = bucketName;
+		this.objectName = objectName;
 	}
 
 
 	public static ImagemProdutoDoacao fromPattern(
 			Integer fkProdutoDoacao,
-			@NotNull byte[] imagem
+			String bucketName,
+			String objectName
 	) {
-		return new ImagemProdutoDoacao(fkProdutoDoacao, imagem);
+		return new ImagemProdutoDoacao(fkProdutoDoacao, bucketName, objectName);
 	}
 
 	public Integer getIdImagemProdutoDoacao() {
 		return idImagemProdutoDoacao;
 	}
 
-	public byte[] getImagem() {
-		return imagem;
+	public String getBucketName() {
+		return bucketName;
+	}
+
+	public String getObjectName() {
+		return objectName;
 	}
 
 	public ProdutoDoacao getProdutoDoacao() {
@@ -57,8 +68,12 @@ public class ImagemProdutoDoacao {
 		this.idImagemProdutoDoacao = idImagemProdutoDoacao;
 	}
 
-	public void setImagem(byte[] imagem) {
-		this.imagem = imagem;
+	public void setBucketName(String bucketName) {
+		this.bucketName = bucketName;
+	}
+
+	public void setObjectName(String objectName) {
+		this.objectName = objectName;
 	}
 
 	public void setProdutoDoacao(Integer fkProdutoDoacao) {

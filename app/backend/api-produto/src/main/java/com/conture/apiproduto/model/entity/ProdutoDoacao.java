@@ -34,9 +34,9 @@ public class ProdutoDoacao {
 	@Size(max = 255)
 	private String descricao;
 
-	@JsonIgnore
-	@Column(length = 16_777_216)
-	private byte[] imagemPrincipal;
+	private String bucketName;
+	
+	private String objectName;
 
 	@NotNull
 	private Boolean defeito;
@@ -161,8 +161,12 @@ public class ProdutoDoacao {
 		return descricao;
 	}
 
-	public byte[] getImagemPrincipal() {
-		return imagemPrincipal;
+	public String getBucketName() {
+		return bucketName;
+	}
+
+	public String getObjectName() {
+		return objectName;
 	}
 
 	public Boolean getDefeito() {
@@ -221,8 +225,12 @@ public class ProdutoDoacao {
 		this.descricao = descricao;
 	}
 
-	public void setImagemPrincipal(byte[] imagemPrincipal) {
-		this.imagemPrincipal = imagemPrincipal;
+	public void setBucketName(String bucketName) {
+		this.bucketName = bucketName;
+	}
+
+	public void setObjectName(String objectName) {
+		this.objectName = objectName;
 	}
 
 	public void setDefeito(Boolean defeito) {
