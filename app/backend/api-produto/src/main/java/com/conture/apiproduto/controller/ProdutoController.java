@@ -29,6 +29,7 @@ import javax.validation.constraints.Size;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.status;
 
@@ -117,6 +118,23 @@ public class ProdutoController {
 		return status(201).body(idProduto);
 	}
 
+	@GetMapping(value = "/{idProduto}/imagem-principal", produces = "image/jpeg")
+	public ResponseEntity<byte[]> getImagemPrincipal(
+			@PathVariable @Min(1) Integer idProduto
+	) {
+		if (!this.produtoRepository.hasByIdNotRemovido(idProduto)) {
+			return status(404).build();
+		}
+
+		byte[] imagem = this.produtoRepository.getImagemByID(idProduto);
+
+		if (imagem.length == 0) {
+			return status(404).build();
+		}
+
+		return status(200).body(imagem);
+	}
+
 
 	@PostMapping(value = "/{idProduto}/imagem-extra", consumes = "image/jpeg")
 	public ResponseEntity<Integer> adicionarImagemExtra(
@@ -148,6 +166,22 @@ public class ProdutoController {
 
 		this.imagemProdutoDoacaoRepository.save(ImagemProdutoDoacao.fromPattern(idProduto, imagem));
 		return status(201).body(this.imagemProdutoDoacaoRepository.findTop1ByProdutoDoacaoIdProdutoDoacaoOrderByIdImagemProdutoDoacaoDesc(idProduto).get().getIdImagemProdutoDoacao());
+	}
+
+
+	@GetMapping(value = "/{idProduto}/imagem-extra")
+	public ResponseEntity<List<byte[]>> getImagensExtra(
+			@PathVariable @Min(1) Integer idProduto
+	) {
+		if (!this.produtoRepository.hasByIdNotRemovido(idProduto)) {
+			return status(404).build();
+		}
+
+		if(this.imagemProdutoDoacaoRepository.countByProdutoDoacaoIdProdutoDoacao(idProduto) <= 0) {
+			return status(204).build();
+		}
+
+		return status(200).body(this.imagemProdutoDoacaoRepository.getAllByIdProdutoDoacao(idProduto));
 	}
 
 
