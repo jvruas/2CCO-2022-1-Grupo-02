@@ -29,6 +29,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -138,10 +139,18 @@ public class ProdutoController {
 			return status(404).build();
 		}
 
-		byte[] imagem = this.produtoRepository.getImagemByID(idProduto);
+		ProdutoDoacao imagemProduto = this.produtoRepository.getImagemByID(idProduto).get();
 
-		if (imagem == null) {
+		if (imagemProduto.getBucketName() == null || imagemProduto.getObjectName() == null) {
 			return status(404).build();
+		}
+
+		byte[] imagem;
+
+		try {
+			imagem = this.s3Service.getObject(imagemProduto.getBucketName(), imagemProduto.getObjectName());
+		} catch (IOException ioException) {
+			return status(503).build();
 		}
 
 		return status(200).body(imagem);
@@ -169,7 +178,7 @@ public class ProdutoController {
 		Optional<UsuarioResposta> usuario;
 
 		try {
-			usuario = this.usuarioClient.getUsuarioLogado(idDoadorRequest);;
+			usuario = this.usuarioClient.getUsuarioLogado(idDoadorRequest);
 		} catch (FeignException response) {
 			if (response.status() == -1) { // Service Unavailable
 				return status(503).build();
@@ -196,11 +205,22 @@ public class ProdutoController {
 			return status(404).build();
 		}
 
-		if(this.imagemProdutoDoacaoRepository.countByProdutoDoacaoIdProdutoDoacao(idProduto) <= 0) {
+		if (this.imagemProdutoDoacaoRepository.countByProdutoDoacaoIdProdutoDoacao(idProduto) <= 0) {
 			return status(204).build();
 		}
 
-		return status(200).body(this.imagemProdutoDoacaoRepository.getAllByIdProdutoDoacao(idProduto));
+		List<ImagemProdutoDoacao> imagemExtraCollection = this.imagemProdutoDoacaoRepository.getAllByIdProdutoDoacao(idProduto);
+		List<byte[]> imagemCollection = new ArrayList<>();
+
+		try {
+			for (ImagemProdutoDoacao imagem : imagemExtraCollection) {
+				imagemCollection.add(this.s3Service.getObject(imagem.getBucketName(), imagem.getObjectName()));
+			}
+		} catch (IOException ioException) {
+			return status(503).build();
+		}
+
+		return status(200).body(imagemCollection);
 	}
 
 
@@ -371,9 +391,9 @@ public class ProdutoController {
 
 		List<ProdutoDoacaoResponse> listaProduto = this.produtoRepository.getAllByStatusNaoDoadoC();
 
-			if (listaProduto.isEmpty()) {
-				return status(204).build();
-			}
+		if (listaProduto.isEmpty()) {
+			return status(204).build();
+		}
 
 		Iterator<ProdutoDoacaoResponse> iterator = new AscendingListIterator(listaProduto);
 

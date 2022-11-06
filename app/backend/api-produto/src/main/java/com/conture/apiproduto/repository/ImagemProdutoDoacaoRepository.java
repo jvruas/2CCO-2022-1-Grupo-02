@@ -13,6 +13,6 @@ public interface ImagemProdutoDoacaoRepository extends JpaRepository<ImagemProdu
 
 	Optional<ImagemProdutoDoacao> findTop1ByProdutoDoacaoIdProdutoDoacaoOrderByIdImagemProdutoDoacaoDesc(Integer idProdutoDoacao);
 
-	@Query("select img.imagem from ImagemProdutoDoacao img where img.produtoDoacao.idProdutoDoacao = ?1")
-	List<byte[]> getAllByIdProdutoDoacao(Integer idProdutoDoacao);
+	@Query("select img from ImagemProdutoDoacao img where img.produtoDoacao.idProdutoDoacao = ?1")
+	List<ImagemProdutoDoacao> getAllByIdProdutoDoacao(Integer idProdutoDoacao);
 }

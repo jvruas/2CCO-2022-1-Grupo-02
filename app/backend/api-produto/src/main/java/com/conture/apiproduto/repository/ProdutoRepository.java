@@ -46,14 +46,11 @@ public interface ProdutoRepository extends JpaRepository<ProdutoDoacao, Integer>
 	@Query("select p.quantidadeVisualizacao from ProdutoDoacao p where p.idProdutoDoacao = ?1 and p.removido = false and p.status = false")
 	Optional<Integer> getQuantidadeVisualizacaoById(Integer idProdutoDoacao);
 
-<<<<<<< HEAD
-	@Query("select p.imagemPrincipal from ProdutoDoacao p where p.idProdutoDoacao = ?1 and p.removido = false")
-	byte[] getImagemByID(Integer idProdutoDoacao);
 
-	@Query("select case when count(p) = 1 then true else false end from ProdutoDoacao p where p.idProdutoDoacao = ?1 and p.imagemPrincipal <> null and p.removido = false and p.status = false")
-=======
+	@Query("select p from ProdutoDoacao p where p.idProdutoDoacao = ?1 and p.removido = false")
+	Optional<ProdutoDoacao> getImagemByID(Integer idProdutoDoacao);
+
 	@Query("select case when count(p) = 1 then true else false end from ProdutoDoacao p where p.idProdutoDoacao = ?1 and p.bucketName <> null and p.objectName <> null and p.removido = false and p.status = false")
->>>>>>> joao
 	boolean imagemPrincipalIsNotNull(Integer idProdutoDoacao);
 
 	@Query("select new com.conture.apiproduto.model.dto.response.ProdutoDoacaoResponse(p.idProdutoDoacao, p.nome, p.marca, p.modelo, p.descricao, p.defeito, p.entrega, p.quantidadeVisualizacao, p.dataCriacao, p.dataConclusao, p.status, p.categoriaProduto.nome, p.fkDoador) from ProdutoDoacao p where p.idProdutoDoacao = ?1 and p.removido = false")
