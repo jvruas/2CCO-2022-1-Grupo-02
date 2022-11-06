@@ -1,6 +1,59 @@
 CREATE DATABASE conture;
 USE conture;
 
+CREATE TABLE situacao_atual(
+	id_situacao_atual INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	nome varchar(45) NOT NULL
+);
+
+CREATE TABLE usuario(
+	id_usuario INT AUTO_INCREMENT not null,
+	email VARCHAR(80) NOT NULL,
+	senha VARCHAR(18) NOT NULL,
+	nome varchar(45) NOT NULL,
+	sobrenome varchar(60) not null,
+	cpf char(11) not null,
+	genero char(1) not null,
+	data_nascimento timestamp not null,
+	estado_civil char(1) not null,
+	telefone char(11) not null,
+	cep char(8) not null,
+	data_cadastro timestamp not null,
+	grau_escolaridade char(1) not null,
+	removido mediumblob not null,
+	fk_situacao_atual int(11),
+	CONSTRAINT `pk_usuario`
+		PRIMARY KEY (id_usuario),
+	CONSTRAINT `fk_situacao`
+		FOREIGN KEY (fk_situacao_atual) REFERENCES situacao_atual (id_situacao_atual)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	start_timestamp TIMESTAMP(6) GENERATED ALWAYS AS ROW START,
+	end_timestamp TIMESTAMP(6) GENERATED ALWAYS AS ROW END,
+	PERIOD FOR SYSTEM_TIME(start_timestamp, end_timestamp)
+) WITH SYSTEM VERSIONING;
+
+create table imagem_usuario(
+	id_imagem_usuario INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	imagem_usuario VARCHAR(1400),
+	tipo_imagem CHAR(1),
+	fk_usuario INT,
+	CONSTRAINT `fk_usuario_img`
+		FOREIGN KEY (fk_usuario) REFERENCES usuario (id_usuario)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	start_timestamp TIMESTAMP(6) GENERATED ALWAYS AS ROW START,
+	end_timestamp TIMESTAMP(6) GENERATED ALWAYS AS ROW END,
+	PERIOD FOR SYSTEM_TIME(start_timestamp, end_timestamp)
+) WITH SYSTEM VERSIONING;
+
+CREATE TABLE motivo_desligamento_conta(
+	id_motivo_desligamento_conta INT AUTO_INCREMENT NOT NULL,
+	motivo NVARCHAR(45) NOT NULL,
+	CONSTRAINT `pk_motivo_desligamento_conta`
+		PRIMARY KEY (id_motivo_desligamento_conta)
+);
+
 CREATE TABLE desligamento_conta(
 	id_desligamento_conta INT AUTO_INCREMENT,
 	data_desligamento TIMESTAMP,
@@ -158,7 +211,7 @@ CREATE TABLE mensagem_grupo(
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
 	start_timestamp TIMESTAMP(6) GENERATED ALWAYS AS ROW START,
-	end_timestamp TSIMESTAMP(6) GENERATED ALWAYS AS ROW END,
+	end_timestamp TIMESTAMP(6) GENERATED ALWAYS AS ROW END,
 	PERIOD FOR SYSTEM_TIME(start_timestamp, end_timestamp)
 ) WITH SYSTEM VERSIONING;
 
@@ -227,14 +280,17 @@ CREATE TABLE reporte(
 		ON UPDATE CASCADE
 );
 
-CREATE TABLE motivo_desligamento_conta(
-	id_motivo_desligamento_conta INT AUTO_INCREMENT NOT NULL,
-	motivo NVARCHAR(45) NOT NULL,
-	CONSTRAINT `pk_motivo_desligamento_conta`
-		PRIMARY KEY (id_motivo_desligamento_conta)
+CREATE TABLE uf_usuario(
+	id_uf_usuario INT AUTO_INCREMENT NOT NULL,
+	uf CHAR(2),
+	fk_usuario INT,
+	CONSTRAINT `pk_uf_usuario`
+		PRIMARY KEY (id_uf_usuario),
+	CONSTRAINT `fk_usuario`
+		FOREIGN KEY (fk_usuario) REFERENCES usuario (id_usuario)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
-
-
 
 
 
