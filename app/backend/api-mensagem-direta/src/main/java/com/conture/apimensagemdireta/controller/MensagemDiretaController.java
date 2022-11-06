@@ -18,6 +18,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.springframework.http.ResponseEntity.*;
@@ -120,25 +121,37 @@ public class MensagemDiretaController {
 		Optional<ChatDireto> chatDireto1 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(fkUsuarioRemetente, fkUsuarioDonatario);
 		Optional<ChatDireto> chatDireto2 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(fkUsuarioDonatario, fkUsuarioRemetente);
 
+		ChatDireto chatDireto1Value = null;
+		ChatDireto chatDireto2Value = null;
+
 		if (chatDireto1.isEmpty() && chatDireto2.isEmpty()) {
 			return status(404).build();
 		}
 
-		List<Mensagem> mensagens = this.repositoryMensagem.acharPorFkChatDiretoOrderByDataDesc(chatDireto1.get(), chatDireto2.get());
+		try {
+			chatDireto1Value = chatDireto1.get();
+		} catch (NoSuchElementException ignored) {}
+
+		try {
+			chatDireto2Value = chatDireto2.get();
+		} catch (NoSuchElementException ignored) {}
+
+		List<Mensagem> mensagens = this.repositoryMensagem.acharPorFkChatDiretoOrderByDataDesc(chatDireto1Value, chatDireto2Value);
 		List<MensagemResponse> mensagemResponse = new ArrayList<>();
 
 		if (mensagens.isEmpty()) {
 			return status(204).build();
-		} else {
-			for (Mensagem m : mensagens) {
-				if (m.getFkChatDireto().getFkUsuarioRemetente() == fkUsuarioRemetente) {
-					m.setVisualizado(true);
-					repositoryMensagem.save(m);
-				}
-				mensagemResponse.add(m.converterMsgResponse(m));
-			}
-			return status(200).body(mensagemResponse);
 		}
+
+		for (Mensagem m : mensagens) {
+			if (m.getFkChatDireto().getFkUsuarioRemetente() == fkUsuarioRemetente) {
+				m.setVisualizado(true);
+				repositoryMensagem.save(m);
+			}
+			mensagemResponse.add(m.converterMsgResponse(m, this.usuarioClient));
+		}
+
+		return status(200).body(mensagemResponse);
 	}
 
 	@GetMapping("/nao-visualizado")

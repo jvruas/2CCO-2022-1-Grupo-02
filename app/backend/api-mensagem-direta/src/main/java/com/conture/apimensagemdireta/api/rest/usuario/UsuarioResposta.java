@@ -7,7 +7,6 @@ public class UsuarioResposta {
 	// Atributos
 	private Integer idUsuario;
 	private String email;
-	private String senha;
 	private String nome;
 	private String sobrenome;
 	private String cpf;
@@ -24,7 +23,6 @@ public class UsuarioResposta {
 	public UsuarioResposta(
 			Integer idUsuario,
 			String email,
-			String senha,
 			String nome,
 			String sobrenome,
 			String cpf,
@@ -39,7 +37,6 @@ public class UsuarioResposta {
 	) {
 		this.idUsuario = idUsuario;
 		this.email = email;
-		this.senha = senha;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.cpf = cpf;
@@ -60,10 +57,6 @@ public class UsuarioResposta {
 
 	public String getEmail() {
 		return email;
-	}
-
-	public String getSenha() {
-		return senha;
 	}
 
 	public String getNome() {
@@ -112,5 +105,4 @@ public class UsuarioResposta {
 
 	public UsuarioResposta() {
 	}
-
 }

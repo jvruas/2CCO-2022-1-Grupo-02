@@ -1,5 +1,7 @@
 package com.conture.apimensagemdireta.entity;
 
+import com.conture.apimensagemdireta.api.rest.usuario.UsuarioClient;
+import com.conture.apimensagemdireta.api.rest.usuario.UsuarioResposta;
 import com.conture.apimensagemdireta.dto.response.MensagemResponse;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -8,72 +10,79 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Optional;
 
 @Entity
 public class Mensagem {
 
-    // Atributos
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idMensagem;
+	// Atributos
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idMensagem;
 
-    @NotNull
-    private boolean visualizado;
+	@NotNull
+	private boolean visualizado;
 
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date data;
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date data;
 
-    @NotBlank
-    @Size(min = 1, max = 200, message = "O tamanho mínimo da mensagem é 1 caractere e o máximo de 200")
-    private String mensagem;
+	@NotBlank
+	@Size(min = 1, max = 200, message = "O tamanho mínimo da mensagem é 1 caractere e o máximo de 200")
+	private String mensagem;
 
-    @ManyToOne
-	@JoinColumn(name="fk_chat_direto")
+	@ManyToOne
+	@JoinColumn(name = "fk_chat_direto")
 	private ChatDireto fkChatDireto;
 
-    public MensagemResponse converterMsgResponse(Mensagem m) {
-        return new MensagemResponse(m.isVisualizado(), m.getData(), m.getMensagem(), m.getFkChatDireto().getFkUsuarioRemetente());
-    }
+	public MensagemResponse converterMsgResponse(Mensagem mensagem, UsuarioClient usuarioClient) throws IllegalStateException {
+		Optional<UsuarioResposta> usuarioResposta = usuarioClient.getUsuarioById(mensagem.getFkChatDireto().getFkUsuarioRemetente());
 
-    // Getters e Setters
-    public Integer getIdMensagem() {
-        return idMensagem;
-    }
+		if (usuarioResposta.isEmpty()) {
+			throw new IllegalStateException(String.format("Error: User %d has no messages", mensagem.getFkChatDireto().getFkUsuarioRemetente()));
+		}
 
-    public void setIdMensagem(Integer idMensagem) {
-        this.idMensagem = idMensagem;
-    }
+		return new MensagemResponse(mensagem.isVisualizado(), mensagem.getData(), mensagem.getMensagem(), usuarioResposta.get());
+	}
 
-    public boolean isVisualizado() {
-        return visualizado;
-    }
+	// Getters e Setters
+	public Integer getIdMensagem() {
+		return idMensagem;
+	}
 
-    public void setVisualizado(boolean visualizado) {
-        this.visualizado = visualizado;
-    }
+	public void setIdMensagem(Integer idMensagem) {
+		this.idMensagem = idMensagem;
+	}
 
-    public Date getData() {
-        return data;
-    }
+	public boolean isVisualizado() {
+		return visualizado;
+	}
 
-    public void setData(Date data) {
-        this.data = data;
-    }
+	public void setVisualizado(boolean visualizado) {
+		this.visualizado = visualizado;
+	}
 
-    public String getMensagem() {
-        return mensagem;
-    }
+	public Date getData() {
+		return data;
+	}
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
-    }
+	public void setData(Date data) {
+		this.data = data;
+	}
 
-    public ChatDireto getFkChatDireto() {
-        return fkChatDireto;
-    }
+	public String getMensagem() {
+		return mensagem;
+	}
 
-    public void setFkChatDireto(ChatDireto fkChatDireto) {
-        this.fkChatDireto = fkChatDireto;
-    }
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
+	}
+
+	public ChatDireto getFkChatDireto() {
+		return fkChatDireto;
+	}
+
+	public void setFkChatDireto(ChatDireto fkChatDireto) {
+		this.fkChatDireto = fkChatDireto;
+	}
 }
