@@ -3,16 +3,23 @@ import { useEffect, useState } from "react";
 import "../html-css-template/css/DescricaoProduto.css"
 
 function Comentarios(props){
+
     const [nome, setNome] = useState([]);
-    apiUsuario
+
+    useEffect(() => {
+        apiUsuario
                     .get(`/${props.idMensagemPrincipal}`)
                     .then((resposta) => {
                         setNome(resposta.data)
+                        console.log("Quem é?",resposta.data)
                     })
+    },[]);
+    
     const indice = props.index
     const [nomeResposta, setNomeResposta] = useState([]);
-    
+
     setTimeout(function respostas(){
+        sessionStorage.setItem("fkMensagemPrincipal",null)
         const resposta = document.getElementById(`div-respostas${indice}`);
         resposta.innerHTML = " ";
         try {
@@ -49,13 +56,13 @@ function Comentarios(props){
 
     function definitionMessageReply(){
         const buttonFocus = document.getElementById("button-send")
-        buttonFocus.focus() 
         sessionStorage.setItem("fkMensagemPrincipal",props.idMensagemPrincipal)
+        buttonFocus.focus() 
     }
     
     return(
         <>
-        {sessionStorage.setItem("fkMensagemPrincipal",null)}
+        
                 <div className="message-main-description">
                 <b className="name-coment-description">{nome.nome} {nome.sobrenome}:</b>
                     <br />

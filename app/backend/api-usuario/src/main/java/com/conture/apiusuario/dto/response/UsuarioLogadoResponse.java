@@ -38,6 +38,11 @@ public class UsuarioLogadoResponse {
 	private String estadoCivil;
 
 	@NotBlank
+	@Size(min = 11, max = 11)
+	@Pattern(regexp = "^[0-9]+$")
+	private String telefone;
+
+	@NotBlank
 	@Size(min = 8, max = 8)
 	@Pattern(regexp = "^[0-9]+$")
 	private String cep;
@@ -68,6 +73,7 @@ public class UsuarioLogadoResponse {
 			String genero,
 			Date dataNascimento,
 			String estadoCivil,
+			String telefone,
 			String cep,
 			Date dataCadastro,
 			String grauEscolaridade,
@@ -82,6 +88,7 @@ public class UsuarioLogadoResponse {
 		this.genero = genero;
 		this.dataNascimento = dataNascimento;
 		this.estadoCivil = estadoCivil;
+		this.telefone = telefone;
 		this.cep = cep;
 		this.dataCadastro = dataCadastro;
 		this.grauEscolaridade = grauEscolaridade;
@@ -89,7 +96,6 @@ public class UsuarioLogadoResponse {
 
 		this.situacaoAtual = situacaoAtual;
 	}
-
 
 	public Integer getIdUsuario() {
 		return idUsuario;
@@ -122,6 +128,8 @@ public class UsuarioLogadoResponse {
 	public String getEstadoCivil() {
 		return estadoCivil;
 	}
+
+	public String getTelefone() { return telefone; }
 
 	public String getCep() { return this.cep; }
 

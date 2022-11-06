@@ -14,6 +14,7 @@ import FotoPerfil from "../html-css-template/imagens/mulher.jpeg"
 import apiViaCep from "../apiViaCep";
 import IconLocation from "../html-css-template/imagens/iconLocation.svg";
 import FotoPadrao from "../html-css-template/imagens/foto.jpg"
+import { Link, useNavigate } from "react-router-dom";
 
 var produtosDoacao = 0;
 var produtosDoados = 0;
@@ -124,7 +125,7 @@ function DescricaoProduto() {
             mensagemPrincipal={itemMensagem[0].mensagem}  
             mensagemResposta={itemMensagem[1]}
             index={itemMensagem[0].idMensagemGrupo}
-            idMensagemPrincipal={itemMensagem[0].idMensagemGrupo}
+            idMensagemPrincipal={itemMensagem[0].fkUsuario}
         >
         </Comentarios>
         )}
@@ -182,7 +183,7 @@ function DescricaoProduto() {
           <div className="div-button">
           <button className="button-i-a">Tenho Interesse</button>
           </div>
-        </div>
+        </div><Link to={"/disponivel"}>
         <div className="card-info-user">
           <div className="div-name-user">
             <div className="infos-user">
@@ -215,7 +216,7 @@ function DescricaoProduto() {
               }</h2>
             </div>
           </div>
-        </div>
+        </div></Link>
       </div>
 
       <Footer></Footer>

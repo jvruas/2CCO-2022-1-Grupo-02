@@ -3,6 +3,7 @@ import "../html-css-template/css/produto.css"
 import trash from "../html-css-template/imagens/trash2.svg"
 import vector from "../html-css-template/imagens/vector.svg"
 import foto from "../html-css-template/imagens/ft-card.png"
+import apiProduto from "../apiProduto";
 
 
 function Produto(props) {
@@ -12,6 +13,14 @@ function Produto(props) {
     function DescricaoProdutoRedirect(){
         sessionStorage.setItem("idProduto",props.idProduto);
         sessionStorage.setItem("idDoador",props.idDoador);
+
+        apiProduto.patch(`/${props.idProduto}/visualizacao?quantidadeVisualizacao=1`)
+                .then((resposta) => {
+                    console.log(resposta.status)
+                }).catch((error) => {
+                    console.log(error)
+                })
+
         navegar("/descricao-produto");
     }
     
@@ -29,4 +38,4 @@ function Produto(props) {
     );
 }
 
-export default Produto
+export default Produto;

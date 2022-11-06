@@ -7,6 +7,8 @@ import report from '../html-css-template/imagens/report.svg'
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiUsuario from "../apiUsuario.js";
+import apiProdutos from '../apiProduto';
+import fotoDeslogado from '../html-css-template/imagens/imagem-deslogado.png';
     
 
 function PerfilSimples() {
@@ -15,16 +17,17 @@ function PerfilSimples() {
 
     const navegar = useNavigate();
 
-    const [usuario, setUsuario] = useState([]);
+    const [usuarioPerfil, setUsuarioPerfil] = useState([]);
     const [endereco, setEndereco] = useState([]);
-    // const [usuarioImg, setUsuarioImg] = useState([]);
+    const [nota, setNota] = useState([]);
+    const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect(() => {
-        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-        apiUsuario.get(`/${idUsuario}`).then((usuarioResposta) => {
+        let idUsuarioPerfil = sessionStorage.getItem('idDoador');
+        apiUsuario.get(`/${idUsuarioPerfil}`).then((usuarioResposta) => {
             try {
                 console.log(usuarioResposta.data)
-                setUsuario(usuarioResposta.data)
+                setUsuarioPerfil(usuarioResposta.data)
                 fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
                 .then(res => res.json()).then(data => {
                     console.log(data)
@@ -36,27 +39,53 @@ function PerfilSimples() {
         })
     }, [])
 
+    useEffect(() => {
+        let idUsuarioPerfil = sessionStorage.getItem('idDoador');
+        apiProdutos.get(`avaliacao/stats?idDoador=${idUsuarioPerfil}`).then((resposta) => {
+            try {
+                console.log("teste",resposta.data)
+                setNota(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
+
+
+
+    useEffect(() => {
+        let param = sessionStorage.getItem('logado');
+        let idUsuarioPerfil = sessionStorage.getItem('idDoador');
+        if(param == "OK"){
+            document.getElementById("nome_usuario").innerHTML = `${usuarioPerfil.nome}`; 
+            document.getElementById("img_perfil").src = `http://localhost:8080/usuarios/${idUsuarioPerfil}/imagem?tipoImagem=P`;
+            document.getElementById("img_banner").src = `http://localhost:8080/usuarios/${idUsuarioPerfil}/imagem?tipoImagem=B`;  
+        }else{
+            document.getElementById("nome_usuario").innerHTML = "Usuário";  
+            document.getElementById("img_perfil").src = `${fotoDeslogado}`;
+        }
+    })
     
-  let dataCad = new Date(usuario.dataCadastro);
+  let dataCad = new Date(usuarioPerfil.dataCadastro);
 
     return (
         <>
                 <div id="perfil">
                     <div id="perfil_imagem">
-                        <img src={imgPerfil} alt="" />
+                        <img src={imgPerfil} alt="" id="img_banner"/>
                     </div>
                     <div id="perfil_inf">
                         <div id="perfil_informacao">
                             <div id="perfil_conteudo">
                                 <div id="foto">
-                                    <img src={foto} alt="" />
+                                    <img src={fotoDeslogado} alt="" id="img_perfil"/>
                                 </div>
                                 <div id="perfil_texto">
                                     <div class="inf">
                                         <b>
-                                            <p>{usuario.nome}</p>
+                                            <p>{usuarioPerfil.nome}</p>
                                         </b>
-                                        <p>#0{usuario.idUsuario}</p>
+                                        <p>#0{usuarioPerfil.idUsuario}</p>
                                     </div>
                                     <div class="inf">
                                         <p>{endereco.localidade} - {endereco.uf}</p>
@@ -64,7 +93,7 @@ function PerfilSimples() {
                                     </div>
                                     <div>
                                         <img src={estrela} alt="" />
-                                        <p>{usuario.avaliacao}</p>
+                                        <p>{nota.mediaAvaliacoes}</p>
                                     </div>
                                 </div>
                             </div>
