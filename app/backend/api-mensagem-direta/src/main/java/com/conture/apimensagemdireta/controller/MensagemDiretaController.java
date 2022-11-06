@@ -38,9 +38,10 @@ public class MensagemDiretaController {
 
 	@PostMapping
 	public ResponseEntity<Integer> adicionarMensagem(
-			@RequestBody @Valid MensagemRequest mensagemRequest) {
+			@RequestBody @Valid MensagemRequest mensagemRequest
+	) {
 
-		if(mensagemRequest.getFkUsuarioRemetente() == mensagemRequest.getFkUsuarioDestinatario()){
+		if (mensagemRequest.getFkUsuarioRemetente() == mensagemRequest.getFkUsuarioDestinatario()) {
 			return status(400).build();
 		}
 
@@ -84,8 +85,10 @@ public class MensagemDiretaController {
 
 
 	@GetMapping
-	public ResponseEntity<List<MensagemResponse>> listarMensagens(@RequestParam @NotNull @Min(1) Integer fkUsuarioRemetente,
-																  @RequestParam @NotNull @Min(1) Integer fkUsuarioDonatario) {
+	public ResponseEntity<List<MensagemResponse>> listarMensagens(
+			@RequestParam @NotNull @Min(1) Integer fkUsuarioRemetente,
+			@RequestParam @NotNull @Min(1) Integer fkUsuarioDonatario
+	) {
 
 		try {
 			Optional<UsuarioResposta> usuarioFkRemetente = this.usuarioClient.getUsuarioById(fkUsuarioRemetente);
@@ -139,8 +142,9 @@ public class MensagemDiretaController {
 	}
 
 	@GetMapping("/nao-visualizado")
-	public ResponseEntity existeMensagemNaoVisualizada(@RequestParam @NotNull @Min(1) Integer fkUsuarioDestinatario) {
-
+	public ResponseEntity existeMensagemNaoVisualizada(
+			@RequestParam @NotNull @Min(1) Integer fkUsuarioDestinatario
+	) {
 		try {
 			Optional<UsuarioResposta> usuarioFkDestinatario = this.usuarioClient.getUsuarioById(fkUsuarioDestinatario);
 		} catch (FeignException response) {
@@ -174,4 +178,27 @@ public class MensagemDiretaController {
 		return status(200).build();
 	}
 
+
+	@GetMapping("/chat")
+	public ResponseEntity<List<ChatDireto>> getAllChatsByRemetente(
+			@RequestParam() @NotNull @Min(1) Integer fkUsuarioRemetente
+	) {
+		try {
+			Optional<UsuarioResposta> usuarioFkDestinatario = this.usuarioClient.getUsuarioById(fkUsuarioRemetente);
+		} catch (FeignException response) {
+			if (response.status() == -1) {
+				return status(503).build();
+			}
+
+			return status(404).build();
+		}
+
+		List<ChatDireto> chatDiretoCollection = this.repositoryChatDireto.findByFkUsuarioRemetente(fkUsuarioRemetente);
+
+		if (chatDiretoCollection.isEmpty()) {
+			return status(204).build();
+		}
+
+		return status(200).body(chatDiretoCollection);
+	}
 }
