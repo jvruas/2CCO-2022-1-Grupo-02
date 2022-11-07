@@ -18,9 +18,10 @@ CREATE TABLE usuario(
 	estado_civil char(1) not null,
 	telefone char(11) not null,
 	cep char(8) not null,
+	uf char(2) not null,
 	data_cadastro timestamp not null,
 	grau_escolaridade char(1) not null,
-	removido mediumblob not null,
+	removido tinyint not null,
 	fk_situacao_atual int(11),
 	CONSTRAINT `pk_usuario`
 		PRIMARY KEY (id_usuario),
@@ -35,7 +36,8 @@ CREATE TABLE usuario(
 
 create table imagem_usuario(
 	id_imagem_usuario INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-	imagem_usuario VARCHAR(1400),
+	bucket_name VARCHAR(255),
+	object_name VARCHAR(255),
 	tipo_imagem CHAR(1),
 	fk_usuario INT,
 	CONSTRAINT `fk_usuario_img`
@@ -87,7 +89,8 @@ CREATE TABLE produto_doacao(
 	marca NVARCHAR(60) NOT NULL,
 	modelo NVARCHAR(60) NOT NULL,
 	descricao NVARCHAR(400) NOT NULL,
-	imagem_principal VARCHAR(1400),
+	bucket_name VARCHAR(255),
+	object_name VARCHAR(255),
 	defeito TINYINT NOT NULL,
 	entrega TINYINT NOT NULL,
 	quantidade_visualizacao INT NOT NULL,
@@ -136,7 +139,8 @@ CREATE TABLE preferencia_donatario(
 
 CREATE TABLE imagem_produto_doacao(
 	id_imagem_produto_doacao INT AUTO_INCREMENT NOT NULL,
-	imagem VARCHAR(1400),
+	bucket_name VARCHAR(255),
+	object_name VARCHAR(255),
 	fk_produto_doacao INT,
 	CONSTRAINT `pk_imagem_produto_doacao`
 		PRIMARY KEY (id_imagem_produto_doacao),
@@ -277,23 +281,11 @@ CREATE TABLE reporte(
 	CONSTRAINT `fk_tipo_reporte`
 		FOREIGN KEY (fk_tipo_reporte) REFERENCES tipo_reporte (id_tipo_reporte)
 		ON DELETE CASCADE
-		ON UPDATE CASCADE
-);
-
-CREATE TABLE uf_usuario(
-	id_uf_usuario INT AUTO_INCREMENT NOT NULL,
-	uf CHAR(2),
-	fk_usuario INT,
-	CONSTRAINT `pk_uf_usuario`
-		PRIMARY KEY (id_uf_usuario),
-	CONSTRAINT `fk_usuario`
-		FOREIGN KEY (fk_usuario) REFERENCES usuario (id_usuario)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
-);
-
-
-
+		ON UPDATE CASCADE,
+	start_timestamp TIMESTAMP(6) GENERATED ALWAYS AS ROW START,
+	end_timestamp TIMESTAMP(6) GENERATED ALWAYS AS ROW END,
+	PERIOD FOR SYSTEM_TIME(start_timestamp, end_timestamp)
+) WITH SYSTEM VERSIONING;
 	
 
 
