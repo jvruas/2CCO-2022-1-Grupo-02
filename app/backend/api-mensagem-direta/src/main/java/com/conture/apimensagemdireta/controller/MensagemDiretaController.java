@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.springframework.http.ResponseEntity.*;
 
@@ -37,10 +35,9 @@ public class MensagemDiretaController {
 	private UsuarioClient usuarioClient;
 
 	@PostMapping
-	public ResponseEntity<Integer> adicionarMensagem(
-			@RequestBody @Valid MensagemRequest mensagemRequest) {
+	public ResponseEntity<Integer> adicionarMensagem(@RequestBody @Valid MensagemRequest mensagemRequest) {
 
-		if(mensagemRequest.getFkUsuarioRemetente() == mensagemRequest.getFkUsuarioDestinatario()){
+		if (mensagemRequest.getFkUsuarioRemetente() == mensagemRequest.getFkUsuarioDestinatario()) {
 			return status(400).build();
 		}
 
@@ -84,8 +81,7 @@ public class MensagemDiretaController {
 
 
 	@GetMapping
-	public ResponseEntity<List<MensagemResponse>> listarMensagens(@RequestParam @NotNull @Min(1) Integer fkUsuarioRemetente,
-																  @RequestParam @NotNull @Min(1) Integer fkUsuarioDonatario) {
+	public ResponseEntity<List<MensagemResponse>> listarMensagens(@RequestParam @NotNull @Min(1) Integer fkUsuarioRemetente, @RequestParam @NotNull @Min(1) Integer fkUsuarioDonatario) {
 
 		try {
 			Optional<UsuarioResposta> usuarioFkRemetente = this.usuarioClient.getUsuarioById(fkUsuarioRemetente);
@@ -117,30 +113,43 @@ public class MensagemDiretaController {
 		Optional<ChatDireto> chatDireto1 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(fkUsuarioRemetente, fkUsuarioDonatario);
 		Optional<ChatDireto> chatDireto2 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(fkUsuarioDonatario, fkUsuarioRemetente);
 
+		ChatDireto chatDireto1Value = null;
+		ChatDireto chatDireto2Value = null;
+
 		if (chatDireto1.isEmpty() && chatDireto2.isEmpty()) {
 			return status(404).build();
 		}
 
-		List<Mensagem> mensagens = this.repositoryMensagem.acharPorFkChatDiretoOrderByDataDesc(chatDireto1.get(), chatDireto2.get());
+		try {
+			chatDireto1Value = chatDireto1.get();
+		} catch (NoSuchElementException ignored) {
+		}
+
+		try {
+			chatDireto2Value = chatDireto2.get();
+		} catch (NoSuchElementException ignored) {
+		}
+
+		List<Mensagem> mensagens = this.repositoryMensagem.acharPorFkChatDiretoOrderByDataDesc(chatDireto1Value, chatDireto2Value);
 		List<MensagemResponse> mensagemResponse = new ArrayList<>();
 
 		if (mensagens.isEmpty()) {
 			return status(204).build();
-		} else {
-			for (Mensagem m : mensagens) {
-				if (m.getFkChatDireto().getFkUsuarioRemetente() == fkUsuarioRemetente) {
-					m.setVisualizado(true);
-					repositoryMensagem.save(m);
-				}
-				mensagemResponse.add(m.converterMsgResponse(m));
-			}
-			return status(200).body(mensagemResponse);
 		}
+
+		for (Mensagem m : mensagens) {
+			if (m.getFkChatDireto().getFkUsuarioRemetente() == fkUsuarioRemetente) {
+				m.setVisualizado(true);
+				repositoryMensagem.save(m);
+			}
+			mensagemResponse.add(m.converterMsgResponse(m, this.usuarioClient));
+		}
+
+		return status(200).body(mensagemResponse);
 	}
 
 	@GetMapping("/nao-visualizado")
 	public ResponseEntity existeMensagemNaoVisualizada(@RequestParam @NotNull @Min(1) Integer fkUsuarioDestinatario) {
-
 		try {
 			Optional<UsuarioResposta> usuarioFkDestinatario = this.usuarioClient.getUsuarioById(fkUsuarioDestinatario);
 		} catch (FeignException response) {
@@ -174,4 +183,103 @@ public class MensagemDiretaController {
 		return status(200).build();
 	}
 
+
+	@GetMapping("/chat/all")
+	public ResponseEntity<List<UsuarioResposta>> getAllChatsByRemetente(@RequestParam() @NotNull @Min(1) Integer fkUsuarioRemetente) {
+		try {
+			Optional<UsuarioResposta> usuarioFkRemetente = this.usuarioClient.getUsuarioById(fkUsuarioRemetente);
+		} catch (FeignException response) {
+			if (response.status() == -1) {
+				return status(503).build();
+			}
+
+			return status(404).build();
+		}
+
+		List<ChatDireto> chatDiretoCollection = new ArrayList<>();
+
+		chatDiretoCollection.addAll(this.repositoryChatDireto.findByFkUsuarioDestinatario(fkUsuarioRemetente));
+		chatDiretoCollection.addAll(this.repositoryChatDireto.findByFkUsuarioRemetente(fkUsuarioRemetente));
+
+		List<ChatDireto> chatDiretoResponseCollection = new ArrayList<>();
+
+		for (int i = 0; i < chatDiretoCollection.size(); i++) {
+			boolean isDuplicated = false;
+
+			for (int j = i; j < chatDiretoCollection.size(); j++) {
+				if (chatDiretoCollection.get(i).getFkUsuarioRemetente().equals(chatDiretoCollection.get(j).getFkUsuarioDestinatario())) {
+					isDuplicated = true;
+					break;
+				}
+			}
+
+			if (!isDuplicated) {
+				chatDiretoResponseCollection.add(chatDiretoCollection.get(i));
+			}
+		}
+
+		List<UsuarioResposta> usuarioRespostaCollection = new ArrayList<>();
+
+		for (ChatDireto chatDireto : chatDiretoResponseCollection) {
+			if (chatDireto.getFkUsuarioRemetente() == fkUsuarioRemetente) {
+				usuarioRespostaCollection.add(usuarioClient.getUsuarioById(chatDireto.getFkUsuarioDestinatario()).get());
+				continue;
+			}
+			usuarioRespostaCollection.add(usuarioClient.getUsuarioById(chatDireto.getFkUsuarioRemetente()).get());
+		}
+
+		if (usuarioRespostaCollection.isEmpty()) {
+			return status(204).build();
+		}
+
+		return status(200).body(usuarioRespostaCollection);
+	}
+
+	@GetMapping("/chat")
+	public ResponseEntity<UsuarioResposta> getChatByDestinatario(@RequestParam @NotNull @Min(1) Integer fkUsuarioRemetente, @RequestParam @NotNull @Min(1) Integer fkUsuarioDonatario) {
+		try {
+			Integer fkDonatario = this.usuarioClient.getIdUsuarioLogado(fkUsuarioRemetente);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+			return status(401).build();
+		}
+
+		try {
+			Optional<UsuarioResposta> usuarioFkDestinatario = this.usuarioClient.getUsuarioById(fkUsuarioDonatario);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+			return status(404).build();
+		}
+
+		Optional<ChatDireto> chatDireto1 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(fkUsuarioRemetente, fkUsuarioDonatario);
+		Optional<ChatDireto> chatDireto2 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(fkUsuarioDonatario, fkUsuarioRemetente);
+
+		List<ChatDireto> chatCollection = new ArrayList<>(2);
+
+		if (chatDireto1.isPresent()) {
+			chatCollection.add(chatDireto1.get());
+		}
+
+		if (chatDireto2.isPresent()) {
+			chatCollection.add(chatDireto2.get());
+		}
+
+		if (chatCollection.isEmpty()) {
+			return status(204).build();
+		}
+
+		UsuarioResposta usuarioResponse = null;
+
+		if (chatCollection.get(0).getFkUsuarioRemetente() == fkUsuarioRemetente) {
+			usuarioResponse = usuarioClient.getUsuarioById(chatCollection.get(0).getFkUsuarioDestinatario()).get();
+		} else {
+			usuarioResponse = usuarioClient.getUsuarioById(chatCollection.get(0).getFkUsuarioRemetente()).get();
+		}
+
+		return status(200).body(usuarioResponse);
+	}
 }
