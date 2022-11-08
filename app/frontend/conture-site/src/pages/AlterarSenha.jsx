@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import apiUsuario from "../apiUsuario.js";
 
 
+
 function dataUsuario() {
     return {
         idUsuario: "",

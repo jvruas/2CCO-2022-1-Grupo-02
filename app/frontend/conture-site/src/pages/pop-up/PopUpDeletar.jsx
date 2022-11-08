@@ -1,22 +1,39 @@
 import '../../html-css-template/css/pop-up/PopUpDeletar.css';
-import fechar from "../../html-css-template/imagens/x-lg 1.svg";
+import fechar from "../../html-css-template/imagens/x-lg1.svg";
 import { Link, useNavigate } from "react-router-dom";
 import apiProdutos from '../../apiProduto';
 
 function PopUpDeletar(props) {
 
-    const navegar = useNavigate();
+    // const navegar = useNavigate();
+
+    
+    // const [usuario, setProdutos] = useState([]);
     let produto = sessionStorage.getItem('idProduto');
     function handleSubmit(event) {
         event.preventDefault()
         let param = document.getElementById();
         apiProdutos.delete(`${produto}`, {
-    
         }).then((resposta) => {
-            sessionStorage.setItem('idProduto', resposta.data)
+            // sessionStorage.setItem(resposta.data)
             console.log(resposta.status)
+            
         })
     }
+
+   
+    
+        let idProduto = sessionStorage.getItem('idProduto');
+        apiProdutos.delete(`${idProduto}`).then((produtoResposta) => {
+            try {
+                console.log(produtoResposta)
+                // setProduto(produtoResposta)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+   
+    
 
 
     return (
@@ -29,7 +46,8 @@ function PopUpDeletar(props) {
                     </div>
                        
                     <div className='div_inf_deletar'>
-                        <div className='div_btn'><button className='btn_confirmar' onClick={handleSubmit}>Confirmar</button></div>
+                        <div className='div_btn'><Link to='/disponivel-pessoal'><button className='btn_confirmar' onClick={handleSubmit}>Confirmar</button>
+                        </Link></div>
                     </div>
 
                 </div>

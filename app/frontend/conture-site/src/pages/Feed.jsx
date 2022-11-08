@@ -110,6 +110,8 @@ function Feed() {
                 {
                     produtosCelular.map((itemProduto) => (
                         <Produto
+                        idProduto={1}
+                        idDoador={itemProduto.fkDoador}
                         visualizacao={itemProduto.quantidadeVisualizacao}
                         nome={itemProduto.nome}
                         nomeDoador={itemProduto.nomeDoador}
@@ -127,9 +129,11 @@ function Feed() {
                 {
                     produtosTablet.map((itemProduto) => (
                         <Produto
+                        idProduto={1}
+                        idDoador={itemProduto.fkDoador}
                         visualizacao={itemProduto.quantidadeVisualizacao}
                         nome={itemProduto.nome}
-                        // nomeDoador={itemProduto.nomeDoador}
+                        nomeDoador={itemProduto.nomeDoador}
                         // imagem={itemProduto.imagem}
                         />
                     ))

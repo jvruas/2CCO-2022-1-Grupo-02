@@ -35,8 +35,8 @@ public class MensagemGrupoController {
 	@Autowired
 	private ProdutoClient produtoClient;
 
-	@PostMapping()
-	public ResponseEntity adicionarPergunta(@RequestBody @Valid MensagemGrupoRequest mensagem) {
+    @PostMapping()
+    public ResponseEntity adicionarPergunta(@RequestBody MensagemGrupoRequest mensagem) {
 
 		try {
 			Integer fkUsuario = this.usuarioClient.getIdUsuarioLogado(mensagem.getFkUsuario());
@@ -81,8 +81,8 @@ public class MensagemGrupoController {
 		return status(201).build();
 	}
 
-	@GetMapping
-	public ResponseEntity<List<Object>> listarMensagens(@RequestParam Integer fkProdutoDoacao) {
+	@GetMapping("/{fkProdutoDoacao}")
+		public ResponseEntity<List<Object>> listarMensagens(@PathVariable Integer fkProdutoDoacao){
 
 		try {
 			Optional<ProdutoResposta> fkProduto = this.produtoClient.getProdutoById(fkProdutoDoacao);

@@ -81,8 +81,6 @@ public class UsuarioController {
 	}
 
 
-
-	//TODO:
 	@DeleteMapping("/{idUsuario}/login")
 	public ResponseEntity logoff(@PathVariable @Min(1) Integer idUsuario) {
 		if (!GerenciadorUsuario.logoff(idUsuario)) {
@@ -93,7 +91,6 @@ public class UsuarioController {
 	}
 
 
-	//TODO:
 	@GetMapping("/{idUsuario}/login")
 	public ResponseEntity existsUsuarioLogado(
 			@PathVariable @Min(1) Integer idUsuario,
@@ -237,32 +234,43 @@ public class UsuarioController {
 		return status(200).body(lista);
 	}
 
+
 	@PostMapping("conta/validacao-email")
-	public ResponseEntity enviarEmail(@RequestParam String emailDestinatario,
-									  @RequestParam Integer idUsuario) throws FileNotFoundException {
-		Usuario usuario = usuarioRepository.getById(idUsuario);
-		if (usuario.getVerificado()){
-			return status(400).body("usuario ja validado");
+	public ResponseEntity<Integer> enviarEmail(
+			@RequestParam String emailDestinatario,
+			@RequestParam Integer idUsuario
+	) throws FileNotFoundException {
+		Usuario usuario = this.usuarioRepository.getById(idUsuario);
+
+		if (usuario.getVerificado()) {
+			return status(409).build();
 		}
+
 		String codigo = email.gerarCodigo();
 		usuario.setCodigo(codigo);
-		usuarioRepository.save(usuario);
+		this.usuarioRepository.save(usuario);
 		String corpoEmail = email.gerarEmail(codigo);
 		email.sendEmail(corpoEmail, emailDestinatario);
-		return status(200).build();
+
+		return status(200).body(idUsuario);
 	}
 
 	@PostMapping("conta/validacao-codigo")
-	public ResponseEntity validarUsuario(@RequestParam Integer idUsuario,
-										 @RequestParam String codigo){
-		Usuario usuario = usuarioRepository.getById(idUsuario);
+	public ResponseEntity validarUsuario(
+			@RequestParam Integer idUsuario,
+			@RequestParam String codigo
+	) {
+		Usuario usuario = this.usuarioRepository.getById(idUsuario);
 		String codigoGerado = usuario.getCodigo();
-		if (codigoGerado.equals(codigo)){
-			usuario.setVerificado(true);
-			usuarioRepository.save(usuario);
-			return status(200).build();
+
+		if (!codigoGerado.equals(codigo)) {
+			status(400).build();
 		}
-		return status(400).build();
+
+		usuario.setVerificado(true);
+		usuario.setCodigo(null);
+		this.usuarioRepository.save(usuario);
+		return status(200).build();
 	}
 
 	@GetMapping("/situacao-atual")
@@ -318,7 +326,7 @@ public class UsuarioController {
 			return status(404).build();
 		}
 
-		if (usuario.get().getSenha().equals(novaSenha)){
+		if (usuario.get().getSenha().equals(novaSenha)) {
 			return status(409).build();
 		}
 

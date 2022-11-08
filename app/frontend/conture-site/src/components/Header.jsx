@@ -2,11 +2,11 @@ import logo from '../html-css-template/imagens/logo-conture.png';
 import lupa from '../html-css-template/imagens/icon-lupa.png';
 import fotoLogado from '../html-css-template/imagens/foto.jpg';
 import fotoDesogado from '../html-css-template/imagens/imagem-deslogado.png';
-import setaBaixo from '../html-css-template/imagens/chevron-down 1.svg';
-import interesse from '../html-css-template/imagens/Interesses.svg';
-import mensagem from '../html-css-template/imagens/Icon mensagem.svg';
-import notificacao from '../html-css-template/imagens/Icon notificação.svg';
-import adicionarProduto from '../html-css-template/imagens/Subtract.svg';
+import setaBaixo from '../html-css-template/imagens/chevron-down1.svg';
+import interesse from '../html-css-template/imagens/interesses.svg';
+import mensagem from '../html-css-template/imagens/icon-mensagem.svg';
+import notificacao from '../html-css-template/imagens/icon-notificacao.svg';
+import adicionarProduto from '../html-css-template/imagens/subtract.svg';
 import '../html-css-template/css/Style.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -16,40 +16,32 @@ function Header() {
 
     const navegar = useNavigate();
 
-    const [usuario, setUsuario] = useState([]);
+    const [usuarioHeader, setUsuarioHeader] = useState([]);
     // const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect(() => {
-        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-        apiUsuario.get(`/${idUsuario}`).then((resposta) => {
+        let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
+        apiUsuario.get(`/${idUsuarioHeader}`).then((resposta) => {
             try {
                 console.log(resposta.data)
-                setUsuario(resposta.data)
+                setUsuarioHeader(resposta.data)
             } catch (error) {
                 console.log(error)  
             }
         })
-    }, [])
+    })
 
     useEffect(() => {
         let param = sessionStorage.getItem('logado');
+        let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
         if(param == "OK"){
-            document.getElementById("nome_usuario").innerHTML = `${usuario.nome}`; 
-            document.getElementById("img_foto").src = `${fotoLogado}`;   
+            document.getElementById("nome_usuario").innerHTML = `${usuarioHeader.nome}`; 
+            document.getElementById("img_foto").src = `http://localhost:8080/usuarios/${idUsuarioHeader}/imagem?tipoImagem=P`;   
         }else{
             document.getElementById("nome_usuario").innerHTML = "Usuário";  
             document.getElementById("img_foto").src = `${fotoDesogado}`;
         }
-    })
-
-    // apiUsuario.get(`/${idUsuario}/imagem`).then((resposta) => {
-    //     try {
-    //         console.log(resposta.data)
-    //         setUsuario(resposta.data)
-    //     } catch (error) {
-    //         console.log(error)  
-    //     }
-    // })
+    })   
     
     function logoff(event) {
         event.preventDefault()
@@ -119,10 +111,10 @@ function Header() {
                                 <img src={lupa} alt="Lupa de pesquisa" />
                             </button>
                         </div>
-                        <div id="div_usuario">
+                        <div id="div_usuario"onClick={mostrarMenu}>
                             <img src={fotoDesogado} alt="" id="img_foto" />
                             <p id="nome_usuario">Usuário</p>
-                            <img src={setaBaixo} alt="" className="img_seta" id="seta_menu" onClick={mostrarMenu} />
+                            <img src={setaBaixo} alt="" className="img_seta" id="seta_menu"  />
                             <div id="he-tooltip">
                                 <div className="menuzinho">
                                     <div id="triangulo-para-cima">

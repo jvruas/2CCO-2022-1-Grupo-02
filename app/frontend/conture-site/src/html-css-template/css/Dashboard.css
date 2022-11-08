@@ -58,10 +58,19 @@
     width: 100%;
 }
 
-.card{
-    background-color: #f0efef;
-    height: 100%px;
-    width: 100%;
-    border-radius:10px;
-    box-shadow: 1px;
+.div-image img{
+    width: 90px;
+    height: 90px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.div-title-side-bar{
+    color: white;
+    text-align: center;
+}
+
+.container{
+    width: 80%;
+    height: 100vh;
 }

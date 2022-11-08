@@ -73,7 +73,9 @@ public class Usuario {
     @Size(min = 1, max = 1, message = "A escolaridade deve ter 1 letra")
 	@Pattern(regexp = "[A,I,F,M,S,P,E,D]", message = "Grau de escolaridade aceita apenas [ A | I | F | M | S | P | E | D ] como valores")
 	private String grauEscolaridade;
-	
+
+
+	@JsonIgnore
 	private String codigo;
 
 	private Boolean verificado = false;

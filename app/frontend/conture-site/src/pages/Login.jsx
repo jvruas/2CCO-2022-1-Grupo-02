@@ -49,7 +49,11 @@ function Login() {
             sessionStorage.setItem('idUsuarioLogado', resposta.data.idUsuario)
             sessionStorage.setItem('idEmailLogado', resposta.data.email)
             sessionStorage.setItem('logado', "OK")
-            navegar("/")
+            if(resposta.data.email == "admin@admin.com"){
+                navegar("/dashboard-admin-bi")
+            }else{
+                navegar("/")
+            }
         }).catch((error) => { 
             if(error.status == "409"){
                 navegar("/")

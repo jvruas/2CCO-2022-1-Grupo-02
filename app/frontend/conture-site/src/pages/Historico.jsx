@@ -6,10 +6,63 @@ import '../html-css-template/css/Style.css'
 import '../html-css-template/css/HistoricoPessoalPage.css'
 import Footer from "../components/Footer"
 import Historico from "../components/HistoricoMenor"
-
+import { useState, useEffect } from "react";
+import apiProdutos from "../apiProduto.js"
+import apiUsuario from "../apiUsuario"
 
 
 function HistoricoDonatario() {
+
+    
+    const [historico, setHistorico] = useState([]);
+    const [usuarioDon, setUsuarioDon] = useState([]);
+    useEffect(() => {
+        let idDoador= sessionStorage.getItem('idDoador');
+            apiProdutos.get(`/status?idDoador=${idDoador}&status=todos`).then((resposta) => {
+            try {
+                console.log("uijhhjh", resposta.data)
+                setHistorico(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+        let dataCad = new Date(historico.dataConclusao);
+
+    // if(select_opcoes.value == 0){
+    //     apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
+    //         try {
+    //             console.log(resposta.data)
+    //             setHistorico(resposta.data)
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     })
+    // }
+
+
+    // if(select_opcoes.value == 0){
+    //     apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
+    //         try {
+    //             console.log(resposta.data)
+    //             setHistorico(resposta.data)
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     })
+    // }
+
+    apiUsuario.get(`/${idDoador}`).then((usuarioResposta) => {
+        try {
+            console.log(usuarioResposta.data)
+            setUsuarioDon(usuarioResposta.data)
+        } catch (error) {
+            console.log(error)
+        }
+    })
+    
+    }, [])
+
+
     return (
         <>
             <Header></Header>
@@ -32,8 +85,13 @@ function HistoricoDonatario() {
 
                     </div>
                     <div className="div_historicos">
-                        <Historico></Historico>
-                        <Historico></Historico>
+                    {historico != undefined && historico.length > 0 ?  historico.map((historico)=>(
+                            <Historico 
+                            tipo={historico.tipo}
+                            tipoEquipamento={historico.categoriaProduto}
+                            dataCon={historico.dataConclusao}
+                             />
+                            )): ""}
                         
                     </div>
                 </div>

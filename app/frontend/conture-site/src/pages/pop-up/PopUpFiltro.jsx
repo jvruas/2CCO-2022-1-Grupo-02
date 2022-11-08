@@ -1,5 +1,5 @@
 import '../../html-css-template/css/pop-up/PopUpFiltro.css';
-import fechar from "../../html-css-template/imagens/x-lg 1.svg";
+import fechar from "../../html-css-template/imagens/x-lg1.svg";
 import { Link } from "react-router-dom";
 
 function PopUpFiltro() {

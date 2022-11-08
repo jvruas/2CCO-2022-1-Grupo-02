@@ -1,7 +1,10 @@
 import '../html-css-template/css/HistoricoMenor.css'
 
-function HistoricoMenor(){
+function HistoricoMenor(props){
+
+    let dataCad = new Date(props.dataCon);
    return (
+    
         <>
         <div class="historico">
         <div class="historico_sup">
@@ -10,9 +13,9 @@ function HistoricoMenor(){
             <div>Data</div>
         </div>
         <div class="historico_inf">
-            <div>exemplo</div>
-            <div> exemplo</div>
-            <div>10/04/2003</div>
+            <div>{props.tipo}</div>
+            <div> {props.tipoEquipamento}</div>
+            <div>{dataCad.getDate()}/{dataCad.getMonth()}/{dataCad.getFullYear()}</div>
         </div>
     </div>
     </>
