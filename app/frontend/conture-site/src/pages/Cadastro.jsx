@@ -2,7 +2,7 @@ import MenuSimples from "../components/MenuSimples";
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/Cadastro.css'
 import iconSenha from "../html-css-template/imagens/eye-slash-closed.png"
-import imgEtapa from "../html-css-template/imagens/etapas.png"
+import imgEtapa from "../html-css-template/imagens/Etapas.png"
 import imgEtapa2 from "../html-css-template/imagens/etapas1.png"
 import iconInfoSenha from "../html-css-template/imagens/info-circle1.png"
 import iconSeta from "../html-css-template/imagens/seta.png"

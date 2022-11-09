@@ -5,12 +5,20 @@ import ChartLine from "../components/ChartLine";
 import ChartBarViewTwo from "../components/ViewTwo";
 import ChartBarViewThree from "../components/ViewThree";
 import ChartBarViewFour from "../components/ViewFour";  
-import Map from "../components/MapBrazil"
-
-
-
+import MapBrazil from "../components/MapBrazil"
+import apiView from "../apiView"
+import { useEffect, useState } from "react";
 
 function Dashboard() {
+
+  const [map, setMap] = useState([]);
+  useEffect(() => {
+          apiView.get("/vw_qtd_reportes_estado?data=2").then((resposta) => {
+              console.log(resposta.data);
+              setMap(resposta.data);
+          })
+  }, [])
+
   return (
     <div id="dash">
       <SideBar />
@@ -20,7 +28,9 @@ function Dashboard() {
         </div>
         <div className="dash-pDois">
           <div className="dash-scroll">
-            <Map></Map>
+            <MapBrazil
+              mapa={map}
+            ></MapBrazil>
             <ChartLine></ChartLine>
             <ChartBarViewTwo />
             <ChartBarViewThree />

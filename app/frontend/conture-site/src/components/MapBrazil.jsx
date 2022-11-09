@@ -5,8 +5,21 @@ import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 import ReactFC from "react-fusioncharts";
 
 
-function MapBrazil() {
+function MapBrazil(props) {
 
+    var listMap = [];
+
+    for(var i = 0; i < props.mapa.length; i++) {
+        var dict = {
+            id: "0"+i+1,
+            value: ""+props.mapa[i].qt_reportes
+        };
+
+        listMap.push(dict);
+        
+    }
+
+    console.log("aaaa", listMap);
 
     ReactFC.fcRoot(FusionCharts, Maps, Brazil, FusionTheme);
 
@@ -39,33 +52,24 @@ function MapBrazil() {
             gradient: "1",
             color: [
                 {
-                    maxvalue: "200000",
+                    maxvalue: "2000",
                     displayvalue: "Average",
                     code: "#3ec34d"
                 },
                 {
-                    maxvalue: "400000",
+                    maxvalue: "4000",
                     displayvalue: "Above Average",
                     code: "#80bfff"
                 },
                 {
-                    maxvalue: "600000",
+                    maxvalue: "6000",
                     code: "#00b386"
                 }
             ],
             maxvalue: 0
         },
 
-        data: [
-            {
-                id: "002",
-                value: "4000"
-            },
-            {
-                id: "001",
-                value: "4000"
-            }
-        ]
+        data: listMap
     };
 
     const chartConfigs = {
