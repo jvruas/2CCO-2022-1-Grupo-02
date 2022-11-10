@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+.section-match{
+    height: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header_match{
+height: 400px;
+width: 100%;
+background-color: yellowgreen;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+
+.cards{
+height: 300px;
+width: 100%;
+background-color: aqua;
+display:grid;
+grid-template-columns:25% 25% 25% 25%;
+}

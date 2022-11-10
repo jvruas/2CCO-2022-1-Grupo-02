@@ -15,7 +15,7 @@ function SideBar() {
                     <b>Administrador</b>
                 </div>
 
-                <div className="div-topic dvi">
+                <div className="div-topic">
                     <div>
                         <img src={iconBi} alt="Ícone de BI" /><p>GRÁFICOS BI</p>
                     </div>

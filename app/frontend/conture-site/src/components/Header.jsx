@@ -99,6 +99,14 @@ function Header() {
         }
     }
 
+    
+    function PesquisarRedirect(){
+        const value = document.getElementById("input_pesq").value;
+        sessionStorage.setItem("pesquisa",value);
+        navegar("/pesquisa");
+        console.log(value);
+    }
+
     return (
         <>
             <header id="header_completo">
@@ -106,9 +114,9 @@ function Header() {
                     <div class="container_completo">
                         <Link to="/"><img src={logo} alt="Logo Conture" className="logo" /></Link>
                         <div id="input_pesquisar">
-                            <input type="text" />
-                            <button>
-                                <img src={lupa} alt="Lupa de pesquisa" />
+                            <input type="text" id="input_pesq" />
+                            <button onClick={PesquisarRedirect}>
+                                <img src={lupa} alt="Lupa de pesquisa" />   
                             </button>
                         </div>
                         <div id="div_usuario"onClick={mostrarMenu}>

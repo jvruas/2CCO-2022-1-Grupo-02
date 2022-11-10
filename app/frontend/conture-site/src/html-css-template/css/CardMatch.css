@@ -1,0 +1,164 @@
+@import url('https://fonas.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;
+}
+
+.div_match{
+    height: 300px;
+    width: 270px;
+    border: 2px black solid;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.perfil{
+    margin-top: 30px;
+    height: 262px;
+    width: 80%;
+}
+
+.perfil_imagem{
+    height: 122px;
+    width: 100%;
+ 
+}
+
+.perfil_imagem img{
+    height: 122px;
+    width: 100%;
+    object-fit: fill;
+}
+
+.perfil_inf{
+    height: 50%;
+    width: 100%;
+    border-bottom: black 2px solid;
+}
+
+.perfil_informacao{
+    height: 100px;
+    width: 100%;
+    position: relative;
+    top: 42px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.perfil_conteudo{
+    height: 70px;
+    width: 300px;
+    display: flex;
+}
+
+.foto{
+    height: 70px;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.foto img{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.perfil_texto{
+    height: 70px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    background-color: blueviolet;
+    justify-content: space-between;
+}
+
+.perfil_texto div{
+    height: 33.3px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    
+    
+}
+
+.inf{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#perfil_texto img{
+    height: 16px;
+    width: 16px;
+}
+
+.img_reporte{
+    height: 15px;
+    width: 15px;
+   
+  
+}
+
+#disp-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text_match{
+height: 40px;
+width: 100%;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+}
+
+.div_circulo{
+    height: 110px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.circulo{
+    height: 80px;
+    width: 80px;
+    border: solid black 1px;
+    border-radius: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagens{
+    height: 30px;
+    width: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    left: 100px;
+}
+
+.header_match{
+    height: 30px;
+    border-bottom: solid 2px black;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
