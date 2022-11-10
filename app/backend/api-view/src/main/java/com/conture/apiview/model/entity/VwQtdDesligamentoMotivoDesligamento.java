@@ -25,16 +25,18 @@ public class VwQtdDesligamentoMotivoDesligamento implements Serializable{
 	@Id
 	private String id;
 
-	@Column(name = "quantidade_desligamentos")
-    private Integer quantidadeDesligamentos;
+	@Column(name = "Problemas_em_utilizar_o_site")
+    private Integer problemasSite;
 
-	@Column(name = "motivo")
-    private String motivo;
+	@Column(name = "Nao_consigo_achar_os_eletronicos_que_preciso")
+    private String naoAchoEletronico;
+
+	@Column(name = "Outros")
+    private String outros;
 
 
 	@Column(name = "data")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date data;
+    private String data;
 
 
 	public VwQtdDesligamentoMotivoDesligamento(){
@@ -42,12 +44,14 @@ public class VwQtdDesligamentoMotivoDesligamento implements Serializable{
 	}
 
 
-	public VwQtdDesligamentoMotivoDesligamento(String id, Integer quantidadeDesligamentos, String motivo, Date data) {
-		this.id = id;
-		this.quantidadeDesligamentos = quantidadeDesligamentos;
-		this.motivo = motivo;
-		this.data = data;
-	}
+    public VwQtdDesligamentoMotivoDesligamento(String id, Integer problemasSite, String naoAchoEletronico,
+            String outros, String data) {
+        this.id = id;
+        this.problemasSite = problemasSite;
+        this.naoAchoEletronico = naoAchoEletronico;
+        this.outros = outros;
+        this.data = data;
+    }
 
 
 	public String getId() {
@@ -60,34 +64,46 @@ public class VwQtdDesligamentoMotivoDesligamento implements Serializable{
 	}
 
 
-	public Integer getQuantidadeDesligamentos() {
-		return quantidadeDesligamentos;
+	public Integer getProblemasSite() {
+		return problemasSite;
 	}
 
 
-	public void setQuantidadeDesligamentos(Integer quantidadeDesligamentos) {
-		this.quantidadeDesligamentos = quantidadeDesligamentos;
+	public void setProblemasSite(Integer problemasSite) {
+		this.problemasSite = problemasSite;
 	}
 
 
-	public String getMotivo() {
-		return motivo;
+	public String getNaoAchoEletronico() {
+		return naoAchoEletronico;
 	}
 
 
-	public void setMotivo(String motivo) {
-		this.motivo = motivo;
+	public void setNaoAchoEletronico(String naoAchoEletronico) {
+		this.naoAchoEletronico = naoAchoEletronico;
 	}
 
 
-	public Date getData() {
+	public String getOutros() {
+		return outros;
+	}
+
+
+	public void setOutros(String outros) {
+		this.outros = outros;
+	}
+
+
+	public String getData() {
 		return data;
 	}
 
 
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 
+
+	
 	
 }

@@ -1,40 +1,36 @@
 import { Chart } from "react-google-charts";
 import "../html-css-template/css/Dashboard.css";
 
-export const dataLine = [
-  ["Ano", "Presente", "Passado"],
-  ["2019", 100, 400],
-  ["2020", 117, 460],
-  ["2021", 660, 120],
-  ["2022", 103, 540],
-];  
-
-export const optionsLine = {
-  title: "Qtd. doações Presente X Qtd. doações Passado",
-  colors: ["#470083", "#0066FF"],
-//   backgroundColor: "#f0efef",
-  hAxis: { title: "Ano", titleTextStyle: { color: "#3334" } },
-  vAxis: { minValue: 0 },
-  titleTextStyle: {
-    color: 'black',    
-    fontName: 'Tajawal', 
-    fontSize: 14, 
-    bold: true, 
-    italic: false 
-}
+export const options = {
+  title: "Monthly Coffee Production by Country",
+  vAxis: { title: "Cups" },
+  hAxis: { title: "Month" },
+  seriesType: "bars",
+  series: { 5: { type: "line" } },
 };
 
-const chartsLine = () => {
+
+function chartsLine(props) {
+  const dataLine = [["Ano", "Headset", "Mesa Digitalizadora", "Notebook", "Smartphone", "Tablet", "Average"]];
+  console.log(props.dados);
+  for (var idx = 0; idx < props.dados.length; idx++) {
+    var media = (props.dados[idx].headset + props.dados[idx].mesaDigitalizadora + props.dados[idx].notebook + props.dados[idx].smartphone + props.dados[idx].tablet)/6
+    dataLine.push([props.dados[idx].ano, props.dados[idx].headset, props.dados[idx].mesaDigitalizadora, props.dados[idx].notebook, props.dados[idx].smartphone, props.dados[idx].tablet, media]);
+  }
+
+  console.log("aaaabbbb", dataLine);
+
   return (
     <div className="card">
       <Chart
-        chartType="AreaChart"
+        chartType="ComboChart"
         data={dataLine}
-        options={optionsLine}
+        options={options}
         width={"100%"}
         height={"100%"}
       />
     </div>
   );
-};
+}
+
 export default chartsLine;

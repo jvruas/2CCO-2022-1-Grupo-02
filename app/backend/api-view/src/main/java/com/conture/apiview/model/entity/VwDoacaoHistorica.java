@@ -23,21 +23,37 @@ public class VwDoacaoHistorica {
 	@Id
 	private String id;
 
-    @Column(name = "mes")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date mes;
+    @Column(name = "HEADSET")
+    private Integer headset;
 
-    @Column(name = "qtd_produtos")
-    private Integer qtd_produtos;
+    @Column(name = "MESA_DIGITALIZADORA")
+    private Integer mesaDigitalizadora;
+
+    @Column(name = "NOTEBOOK")
+    private Integer notebook;
+
+    @Column(name = "SMARTPHONE")
+    private Integer smartphone;
+
+    @Column(name = "TABLET")
+    private Integer tablet;
+
+    @Column(name = "DATA")
+    private String ano;
 
     public VwDoacaoHistorica(){
 
     }
 
-    public VwDoacaoHistorica(String id, Date mes, Integer qtd_produtos) {
+    public VwDoacaoHistorica(String id, Integer headset, Integer mesaDigitalizadora, Integer notebook,
+            Integer smartphone, Integer tablet, String ano) {
         this.id = id;
-        this.mes = mes;
-        this.qtd_produtos = qtd_produtos;
+        this.headset = headset;
+        this.mesaDigitalizadora = mesaDigitalizadora;
+        this.notebook = notebook;
+        this.smartphone = smartphone;
+        this.tablet = tablet;
+        this.ano = ano;
     }
 
     public String getId() {
@@ -48,20 +64,54 @@ public class VwDoacaoHistorica {
         this.id = id;
     }
 
-    public Date getMes() {
-        return mes;
+    public Integer getHeadset() {
+        return headset;
     }
 
-    public void setMes(Date mes) {
-        this.mes = mes;
+    public void setHeadset(Integer headset) {
+        this.headset = headset;
     }
 
-    public Integer getQtd_produtos() {
-        return qtd_produtos;
+    public Integer getMesaDigitalizadora() {
+        return mesaDigitalizadora;
     }
 
-    public void setQtd_produtos(Integer qtd_produtos) {
-        this.qtd_produtos = qtd_produtos;
+    public void setMesaDigitalizadora(Integer mesaDigitalizadora) {
+        this.mesaDigitalizadora = mesaDigitalizadora;
     }
+
+    public Integer getNotebook() {
+        return notebook;
+    }
+
+    public void setNotebook(Integer notebook) {
+        this.notebook = notebook;
+    }
+
+    public Integer getSmartphone() {
+        return smartphone;
+    }
+
+    public void setSmartphone(Integer smartphone) {
+        this.smartphone = smartphone;
+    }
+
+    public Integer getTablet() {
+        return tablet;
+    }
+
+    public void setTablet(Integer tablet) {
+        this.tablet = tablet;
+    }
+
+    public String getAno() {
+        return ano;
+    }
+
+    public void setAno(String ano) {
+        this.ano = ano;
+    }
+
+    
 
 }

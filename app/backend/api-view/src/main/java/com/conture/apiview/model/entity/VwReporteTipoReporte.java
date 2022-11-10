@@ -25,78 +25,107 @@ public class VwReporteTipoReporte implements Serializable{
 	@Id
 	private String id;
 
-	@Column(name = "total_reportes")
-    private Integer totalReportes;
+	@Column(name = "Assedio")
+    private Integer assedio;
 
-	@Column(name = "reporte")
-    private String reporte;
+	@Column(name = "Discurso_de_odio")
+    private Integer odio;
+
+	@Column(name = "Informacoes_do_perfil")
+    private Integer perfil;
+
+	@Column(name = "Nudez_ou_atividade_sexual")
+    private Integer nudez;
+
+	@Column(name = "Produto_falso")
+    private Integer produtoFalso;
+
+	@Column(name = "Spam")
+    private Integer spam;
 
 	@Column(name = "data")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date data;
-
-
+    private String data;
 
 	public VwReporteTipoReporte(){
 
 	}
 
-
-
-	public VwReporteTipoReporte(String id, Integer totalReportes, String reporte, Date data) {
-		this.id = id;
-		this.totalReportes = totalReportes;
-		this.reporte = reporte;
-		this.data = data;
-	}
-
-
+    public VwReporteTipoReporte(String id, Integer assedio, Integer odio, Integer perfil, Integer nudez,
+            Integer produtoFalso, Integer spam, String data) {
+        this.id = id;
+        this.assedio = assedio;
+        this.odio = odio;
+        this.perfil = perfil;
+        this.nudez = nudez;
+        this.produtoFalso = produtoFalso;
+        this.spam = spam;
+        this.data = data;
+    }
 
 	public String getId() {
 		return id;
 	}
 
-
-
 	public void setId(String id) {
 		this.id = id;
 	}
 
-
-
-	public Integer getTotalReportes() {
-		return totalReportes;
+	public Integer getAssedio() {
+		return assedio;
 	}
 
-
-
-	public void setTotalReportes(Integer totalReportes) {
-		this.totalReportes = totalReportes;
+	public void setAssedio(Integer assedio) {
+		this.assedio = assedio;
 	}
 
-
-
-	public String getReporte() {
-		return reporte;
+	public Integer getOdio() {
+		return odio;
 	}
 
-
-
-	public void setReporte(String reporte) {
-		this.reporte = reporte;
+	public void setOdio(Integer odio) {
+		this.odio = odio;
 	}
 
+	public Integer getPerfil() {
+		return perfil;
+	}
 
+	public void setPerfil(Integer perfil) {
+		this.perfil = perfil;
+	}
 
-	public Date getData() {
+	public Integer getNudez() {
+		return nudez;
+	}
+
+	public void setNudez(Integer nudez) {
+		this.nudez = nudez;
+	}
+
+	public Integer getProdutoFalso() {
+		return produtoFalso;
+	}
+
+	public void setProdutoFalso(Integer produtoFalso) {
+		this.produtoFalso = produtoFalso;
+	}
+
+	public Integer getSpam() {
+		return spam;
+	}
+
+	public void setSpam(Integer spam) {
+		this.spam = spam;
+	}
+
+	public String getData() {
 		return data;
 	}
 
-
-
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 
+	
 	
 }

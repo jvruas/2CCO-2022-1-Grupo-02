@@ -13,6 +13,6 @@ import com.conture.apiview.model.entity.VwDoacaoHistorica;
 @Repository
 @Transactional
 public interface ViewDoacaoReporitory extends PagingAndSortingRepository<VwDoacaoHistorica, Integer> {
-    @Query("select vw from VwDoacaoHistorica vw WHERE mes like concat(?1,'%')")
+    @Query("select vw from VwDoacaoHistorica vw WHERE DATA like concat(?1,'%')")
     List<VwDoacaoHistorica> findTeste(String data);
 }
