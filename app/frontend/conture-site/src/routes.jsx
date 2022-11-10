@@ -23,6 +23,8 @@ import PopUpAvaliacao from "./pages/pop-up/PopUpAvaliacao";
 import PopUpDeletar from "./pages/pop-up/PopUpDeletar";
 import DescricaoProduto from "./pages/DescricaoProduto";
 import Dashboard from "./pages/Dashboard";
+import Pesquisa from "./pages/Pesquisa";
+import Match from "./pages/Match";
 
 function Rotas() {
     return (
@@ -54,6 +56,8 @@ function Rotas() {
                 <Route path="/popup-avaliacao" element={<PopUpAvaliacao/>} />
                 <Route path="/popup-filtro" element={<PopUpFiltro/>} />
                 <Route path="/popup-deletar" element={<PopUpDeletar/>} />
+                <Route path="/pesquisa" element={<Pesquisa/>} />
+                <Route path="/match" element={<Match/>} />
             </Routes>
         </BrowserRouter>
     );
