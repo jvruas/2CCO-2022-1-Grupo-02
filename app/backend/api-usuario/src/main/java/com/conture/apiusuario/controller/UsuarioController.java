@@ -237,20 +237,24 @@ public class UsuarioController {
 
 	@PostMapping("conta/validacao-email")
 	public ResponseEntity<Integer> enviarEmail(
-			@RequestParam String emailDestinatario,
 			@RequestParam Integer idUsuario
 	) throws FileNotFoundException {
-		Usuario usuario = this.usuarioRepository.getById(idUsuario);
+		Optional<Usuario> usuario = this.usuarioRepository.findById(idUsuario);
 
-		if (usuario.getVerificado()) {
+		if (usuario.isEmpty()) {
+			return status(404).build();
+		}
+
+		if (usuario.get().getVerificado()) {
 			return status(409).build();
 		}
 
 		String codigo = email.gerarCodigo();
-		usuario.setCodigo(codigo);
-		this.usuarioRepository.save(usuario);
+		usuario.get().setCodigo(codigo);
+		this.usuarioRepository.save(usuario.get());
+
 		String corpoEmail = email.gerarEmail(codigo);
-		email.sendEmail(corpoEmail, emailDestinatario);
+		email.sendEmail(corpoEmail, usuario.get().getEmail());
 
 		return status(200).body(idUsuario);
 	}
@@ -260,16 +264,19 @@ public class UsuarioController {
 			@RequestParam Integer idUsuario,
 			@RequestParam String codigo
 	) {
-		Usuario usuario = this.usuarioRepository.getById(idUsuario);
-		String codigoGerado = usuario.getCodigo();
+		Optional<Usuario> usuario = this.usuarioRepository.findById(idUsuario);
 
-		if (!codigoGerado.equals(codigo)) {
-			status(400).build();
+		if (usuario.isEmpty()) {
+			return status(404).build();
 		}
 
-		usuario.setVerificado(true);
-		usuario.setCodigo(null);
-		this.usuarioRepository.save(usuario);
+		if (!codigo.equals(usuario.get().getCodigo())) {
+			return status(400).build();
+		}
+
+		usuario.get().setVerificado(true);
+		usuario.get().setCodigo(null);
+		this.usuarioRepository.save(usuario.get());
 		return status(200).build();
 	}
 
