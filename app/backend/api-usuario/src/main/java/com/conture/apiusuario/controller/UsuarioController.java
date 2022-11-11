@@ -259,6 +259,7 @@ public class UsuarioController {
 		return status(200).body(idUsuario);
 	}
 
+
 	@PostMapping("conta/validacao-codigo")
 	public ResponseEntity validarUsuario(
 			@RequestParam Integer idUsuario,
@@ -276,6 +277,46 @@ public class UsuarioController {
 
 		usuario.get().setVerificado(true);
 		usuario.get().setCodigo(null);
+		this.usuarioRepository.save(usuario.get());
+		return status(200).build();
+	}
+
+	@PostMapping("/codigo-senha/email")
+	public ResponseEntity<Integer> resetSenhaEmail(
+			@RequestParam Integer idUsuario
+	) throws FileNotFoundException {
+		Optional<Usuario> usuario = this.usuarioRepository.findById(idUsuario);
+
+		if (usuario.isEmpty()) {
+			return status(404).build();
+		}
+
+		String codigoSenha = email.gerarCodigo();
+		usuario.get().setCodigoSenha(codigoSenha);
+		this.usuarioRepository.save(usuario.get());
+
+		String corpoEmail = email.gerarEmail(codigoSenha);
+		email.sendEmail(corpoEmail, usuario.get().getEmail());
+
+		return status(200).body(idUsuario);
+	}
+
+	@PostMapping("/codigo-senha")
+	public ResponseEntity resetSenha(
+			@RequestParam Integer idUsuario,
+			@RequestParam String codigo
+	) {
+		Optional<Usuario> usuario = this.usuarioRepository.findById(idUsuario);
+
+		if (usuario.isEmpty()) {
+			return status(404).build();
+		}
+
+		if (!codigo.equals(usuario.get().getCodigoSenha())) {
+			return status(400).build();
+		}
+
+		usuario.get().setCodigoSenha(null);
 		this.usuarioRepository.save(usuario.get());
 		return status(200).build();
 	}

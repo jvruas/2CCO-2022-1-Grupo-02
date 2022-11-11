@@ -78,6 +78,9 @@ public class Usuario {
 	@JsonIgnore
 	private String codigo;
 
+	@JsonIgnore
+	private String codigoSenha;
+
 	private Boolean verificado = false;
 
 	@NotNull
@@ -148,6 +151,10 @@ public class Usuario {
 		return codigo;
 	}
 
+	public String getCodigoSenha() {
+		return codigoSenha;
+	}
+
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
@@ -191,6 +198,10 @@ public class Usuario {
 	public void setIdUsuario(Integer idUsuario) { this.idUsuario = idUsuario; }
 
 	public void setEmail(String email) { this.email = email; }
+
+	public void setCodigoSenha(String codigoSenha) {
+		this.codigoSenha = codigoSenha;
+	}
 
 	public void setSenha(String senha) { this.senha = senha; }
 
