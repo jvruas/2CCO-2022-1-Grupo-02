@@ -15,7 +15,7 @@ function PopUpDeletar(props) {
         let param = document.getElementById();
         apiProdutos.delete(`${produto}`, {
         }).then((resposta) => {
-            // sessionStorage.setItem(resposta.data)
+            sessionStorage.setItem(resposta.data)
             console.log(resposta.status)
             
         })

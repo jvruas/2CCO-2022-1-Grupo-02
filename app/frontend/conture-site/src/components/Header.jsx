@@ -106,6 +106,13 @@ function Header() {
         navegar("/pesquisa");
         console.log(value);
     }
+    
+    function PesquisarRedirectCat(){
+        const value = document.getElementById("produtos_cat").value;
+        sessionStorage.setItem("pesquisa",value);
+        navegar("/pesquisa");
+        console.log(value);
+    }
 
     return (
         <>
@@ -161,10 +168,10 @@ function Header() {
                         <img src={setaBaixo} alt="" className="img_seta" />
                     </div>
                     <div id="div_produtos">
-                        <p>Notebook</p>
-                        <p>Celular</p>
-                        <p>Tablet</p>
-                        <p>Desktop</p>
+                        <p onClick={PesquisarRedirectCat} id="produtos_cat" value="notebook" >Notebook</p>
+                        <p onClick={PesquisarRedirectCat} id="produtos_cat" value="celular">Celular</p>
+                        <p onClick={PesquisarRedirectCat} id="produtos_cat" value="tablet">Tablet</p>
+                        <p onClick={PesquisarRedirectCat} id="produtos_cat" value="desktop">Desktop</p>
                     </div>
                 </div>
 

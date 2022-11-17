@@ -45,7 +45,7 @@ function Rotas() {
                 <Route path="/historico-pessoal" element={<HistoricoPessoal/>} />
                 <Route path="/historico" element={<Historico/>} />
                 <Route path="/disponivel" element={<Disponivel/>} />
-                <Route path="/disponivel-pessoal" element={<DisponivelPessoal/>} />
+                <Route path="/disponivel-pessoal/:id" element={<DisponivelPessoal/>} />
                 <Route path="/avaliacao" element={<Avaliacao/>} />
                 <Route path="/avaliacao-pessoal" element={<AvaliacaoPessoal/>} />
                 <Route path="/cadastro-produto" element={<CadastroProduto/>} />
