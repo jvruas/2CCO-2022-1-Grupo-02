@@ -6,13 +6,17 @@ import com.conture.apiusuario.repository.*;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
 import com.conture.apiusuario.utility.Email;
 import com.conture.apiusuario.utility.GerenciadorUsuario;
+import com.conture.apiusuario.utility.ImageUtilities;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 import static org.springframework.http.ResponseEntity.*;
@@ -413,12 +417,26 @@ public class UsuarioController {
 	}
 
 
-	@PostMapping(value = "/{idUsuario}/imagem", consumes = "image/jpeg")
+	@PostMapping(value = "/{idUsuario}/imagem", consumes = "multipart/form-data")
 	public ResponseEntity adicionarImagem(
 			@PathVariable @Min(1) Integer idUsuario,
 			@RequestParam @Size(min = 1, max = 1) @Pattern(regexp = "[B,P]") String tipoImagem,
-			@RequestBody byte[] novaImagem
+			@RequestBody MultipartFile file
 	) {
+		Optional<byte[]> convertedImage = Optional.ofNullable(null);
+
+		try {
+			convertedImage = Optional.of(ImageUtilities.ByteArrayFrom(file));
+		} catch (IOException ioException) {
+			status(503).build();
+		}
+
+		if (convertedImage.isEmpty()) {
+			status(503).build();
+		}
+
+		byte[] novaImagem = convertedImage.get();
+
 		if (novaImagem.length > 16_777_216 || novaImagem.length == 0) { // Magical Number -> 16MB
 			return status(400).build();
 		}
@@ -439,12 +457,26 @@ public class UsuarioController {
 	}
 
 
-	@PatchMapping(value = "/{idUsuario}/imagem", consumes = "image/jpeg")
+	@PatchMapping(value = "/{idUsuario}/imagem", consumes = "multipart/form-data")
 	public ResponseEntity atualizarImagem(
 			@PathVariable @Min(1) Integer idUsuario,
 			@RequestParam @Size(min = 1, max = 1) @Pattern(regexp = "[B,P]") String tipoImagem,
-			@RequestBody byte[] novaImagem
+			@RequestBody MultipartFile file
 	) {
+		Optional<byte[]> convertedImage = Optional.ofNullable(null);
+
+		try {
+			convertedImage = Optional.of(ImageUtilities.ByteArrayFrom(file));
+		} catch (IOException ioException) {
+			status(503).build();
+		}
+
+		if (convertedImage.isEmpty()) {
+			status(503).build();
+		}
+
+		byte[] novaImagem = convertedImage.get();
+
 		if (novaImagem.length > 16_777_216 || novaImagem.length == 0) { // Magical Number -> 16MB
 			return status(400).build();
 		}
