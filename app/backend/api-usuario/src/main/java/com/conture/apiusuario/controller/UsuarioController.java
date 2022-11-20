@@ -58,6 +58,7 @@ public class UsuarioController {
 
 		novoUsuario.setNome(novoUsuario.getNome().trim().toUpperCase());
 		novoUsuario.setSobrenome(novoUsuario.getSobrenome().trim().toUpperCase());
+		novoUsuario.setUf(novoUsuario.getUf().trim().toUpperCase());
 
 		this.usuarioRepository.save(Usuario.fromPattern(novoUsuario));
 
@@ -408,6 +409,7 @@ public class UsuarioController {
 		usuario.setGenero(usuarioPerfil.getGenero());
 		usuario.setEstadoCivil(usuarioPerfil.getEstadoCivil());
 		usuario.setCep(usuarioPerfil.getCep());
+		usuario.setUf(usuarioPerfil.getUf().trim().toUpperCase());
 		usuario.setGrauEscolaridade(usuarioPerfil.getGrauEscolaridade());
 		usuario.setTelefone(usuarioPerfil.getTelefone());
 		usuario.setSituacaoAtual(usuarioPerfil.getFkSituacaoAtual());
