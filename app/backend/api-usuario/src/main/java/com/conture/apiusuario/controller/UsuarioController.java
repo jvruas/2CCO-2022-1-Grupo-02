@@ -82,6 +82,12 @@ public class UsuarioController {
 
 		GerenciadorUsuario.login(usuarioPesquisado.get());
 
+		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(usuarioPesquisado.get().getIdUsuario()), "P");
+
+		if (idImagemUsuario.isPresent()) {
+			usuarioPesquisado.get().setPerfilImage(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
+		}
+
 		return status(201).body(usuarioPesquisado.get());
 	}
 
@@ -109,6 +115,12 @@ public class UsuarioController {
 
 		if (responseType.equals("id")) {
 			return status(200).body(usuarioLogado.get().getIdUsuario());
+		}
+
+		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(usuarioLogado.get().getIdUsuario()), "P");
+
+		if (idImagemUsuario.isPresent()) {
+			usuarioLogado.get().setPerfilImage(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
 		}
 
 		return status(200).body(usuarioLogado.get());
@@ -182,6 +194,15 @@ public class UsuarioController {
 			return status(204).build();
 		}
 
+		for (UsuarioLogadoResponse usuario : listaUsuarioPesquisado){
+			Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(usuario.getIdUsuario()), "P");
+
+			if (idImagemUsuario.isPresent()) {
+				usuario.setPerfilImage(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
+			}
+		}
+
+
 		return status(200).body(listaUsuarioPesquisado);
 	}
 
@@ -192,6 +213,12 @@ public class UsuarioController {
 
 		if (usuario.isEmpty()) {
 			return status(404).build();
+		}
+
+		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(usuario.get().getIdUsuario()), "P");
+
+		if (idImagemUsuario.isPresent()) {
+			usuario.get().setPerfilImage(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
 		}
 
 		return status(200).body(usuario.get());
