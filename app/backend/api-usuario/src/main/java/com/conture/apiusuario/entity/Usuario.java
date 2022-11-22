@@ -11,46 +11,46 @@ import java.util.Date;
 
 @Entity
 public class Usuario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUsuario;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idUsuario;
 
-    @Email
-    @NotBlank
-	@Column(unique=true)
-    @Size(max = 80, message = "O e-mail deve ter no máximo 80 letras")
-    private String email;
+	@Email
+	@NotBlank
+	@Column(unique = true)
+	@Size(max = 80, message = "O e-mail deve ter no máximo 80 letras")
+	private String email;
 
-    @NotBlank
-    @Size(min = 6, max = 18, message = "A senha deve ter no máximo 18 letras")
-    private String senha;
+	@NotBlank
+	@Size(min = 6, max = 18, message = "A senha deve ter no máximo 18 letras")
+	private String senha;
 
-    @NotBlank
-    @Size(max = 45, message = "O nome deve ter no máximo 45 letras")
-    private String nome;
+	@NotBlank
+	@Size(max = 45, message = "O nome deve ter no máximo 45 letras")
+	private String nome;
 
-    @NotBlank
-    @Size(max = 60, message = "O sobrenome deve ter no máximo 60 letras")
-    private String sobrenome;
+	@NotBlank
+	@Size(max = 60, message = "O sobrenome deve ter no máximo 60 letras")
+	private String sobrenome;
 
-    @CPF
-    @NotBlank
-	@Column(unique=true)
-    @Size(min = 11, max = 11, message = "O cpf deve ter 11 letras")
+	@CPF
+	@NotBlank
+	@Column(unique = true)
+	@Size(min = 11, max = 11, message = "O cpf deve ter 11 letras")
 	@Pattern(regexp = "^[0-9]+$", message = "O CPF aceita apenas números")
 	private String cpf;
 
-    @NotBlank
-    @Size(min = 1, max = 1, message = "O genero deve ter 1 letra")
+	@NotBlank
+	@Size(min = 1, max = 1, message = "O genero deve ter 1 letra")
 	@Pattern(regexp = "[F,M,X]", message = "Genero aceita apenas [ F | M | X ] como valores")
 	private String genero;
 
 	@Past
 	@Temporal(TemporalType.TIMESTAMP)
-    private Date dataNascimento;
+	private Date dataNascimento;
 
-    @NotBlank
-    @Size(min = 1, max = 1, message = "O cpf deve ter 1 letra")
+	@NotBlank
+	@Size(min = 1, max = 1, message = "O cpf deve ter 1 letra")
 	@Pattern(regexp = "[S,C,$,D,V]", message = "Estado civil aceita apenas [ S | C | $ | D | V ] como valores")
 	private String estadoCivil;
 
@@ -59,18 +59,23 @@ public class Usuario {
 	@Pattern(regexp = "^[0-9]+$", message = "O telefone aceita apenas números")
 	private String telefone;
 
-    @NotBlank
+	@NotBlank
 	@Size(min = 8, max = 8, message = "O cep deve ter no máximo 8 letras")
 	@Pattern(regexp = "^[0-9]+$", message = "O CEP aceita apenas números")
 	private String cep;
 
+	@NotBlank
+	@Size(min = 2, max = 2)
+	@Pattern(regexp = "^[a-z|A-Z]+$")
+	private String uf;
+
 	@PastOrPresent
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
-    private Date dataCadastro;
+	private Date dataCadastro;
 
-    @NotBlank
-    @Size(min = 1, max = 1, message = "A escolaridade deve ter 1 letra")
+	@NotBlank
+	@Size(min = 1, max = 1, message = "A escolaridade deve ter 1 letra")
 	@Pattern(regexp = "[A,I,F,M,S,P,E,D]", message = "Grau de escolaridade aceita apenas [ A | I | F | M | S | P | E | D ] como valores")
 	private String grauEscolaridade;
 
@@ -88,13 +93,14 @@ public class Usuario {
 	private boolean removido;
 
 	@ManyToOne()
-	@JoinColumn(name="fk_situacao_atual")
+	@JoinColumn(name = "fk_situacao_atual")
 	private SituacaoAtual situacaoAtual;
 
 
-	public Usuario() {}
+	public Usuario() {
+	}
 
-	private Usuario (Integer idUsuario) {
+	private Usuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
@@ -109,6 +115,7 @@ public class Usuario {
 			String estadoCivil,
 			String telefone,
 			String cep,
+			String uf,
 			String grauEscolaridade,
 			Integer fkSituacaoAtual
 	) {
@@ -122,6 +129,7 @@ public class Usuario {
 		this.estadoCivil = estadoCivil;
 		this.telefone = telefone;
 		this.cep = cep;
+		this.uf = uf;
 		this.grauEscolaridade = grauEscolaridade;
 		this.setSituacaoAtual(fkSituacaoAtual);
 	}
@@ -142,6 +150,7 @@ public class Usuario {
 				novoUsuario.getEstadoCivil(),
 				novoUsuario.getTelefone(),
 				novoUsuario.getCep(),
+				novoUsuario.getUf(),
 				novoUsuario.getGrauEscolaridade(),
 				novoUsuario.getFkSituacaoAtual()
 		);
@@ -163,69 +172,137 @@ public class Usuario {
 		return verificado;
 	}
 
-	public Integer getIdUsuario() { return idUsuario; }
+	public Integer getIdUsuario() {
+		return idUsuario;
+	}
 
-	public String getEmail() { return email; }
+	public String getEmail() {
+		return email;
+	}
 
-	public String getSenha() { return senha; }
+	public String getSenha() {
+		return senha;
+	}
 
-	public String getNome() { return nome; }
+	public String getNome() {
+		return nome;
+	}
 
-	public String getSobrenome() { return sobrenome; }
+	public String getSobrenome() {
+		return sobrenome;
+	}
 
-	public String getCpf() { return cpf; }
+	public String getCpf() {
+		return cpf;
+	}
 
-	public String getGenero() { return genero; }
+	public String getGenero() {
+		return genero;
+	}
 
-	public Date getDataNascimento() { return dataNascimento; }
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
 
-	public String getEstadoCivil() { return estadoCivil; }
+	public String getEstadoCivil() {
+		return estadoCivil;
+	}
 
-	public String getTelefone() { return telefone; }
+	public String getTelefone() {
+		return telefone;
+	}
 
-	public String getCep() { return cep; }
+	public String getCep() {
+		return cep;
+	}
 
-	public Date getDataCadastro() { return dataCadastro; }
+	public String getUf() {
+		return uf;
+	}
 
-	public String getGrauEscolaridade() { return grauEscolaridade; }
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
 
-	public Boolean isVerificado() { return verificado; }
+	public String getGrauEscolaridade() {
+		return grauEscolaridade;
+	}
 
-	public boolean isRemovido() { return removido; }
+	public Boolean isVerificado() {
+		return verificado;
+	}
 
-	public SituacaoAtual getSituacaoAtual() { return situacaoAtual; }
+	public boolean isRemovido() {
+		return removido;
+	}
 
-	public void setIdUsuario(Integer idUsuario) { this.idUsuario = idUsuario; }
+	public SituacaoAtual getSituacaoAtual() {
+		return situacaoAtual;
+	}
 
-	public void setEmail(String email) { this.email = email; }
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public void setCodigoSenha(String codigoSenha) {
 		this.codigoSenha = codigoSenha;
 	}
 
-	public void setSenha(String senha) { this.senha = senha; }
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
-	public void setNome(String nome) { this.nome = nome; }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-	public void setSobrenome(String sobrenome) { this.sobrenome = sobrenome; }
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
+	}
 
-	public void setCpf(String cpf) { this.cpf = cpf; }
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
-	public void setGenero(String genero) { this.genero = genero; }
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
 
-	public void setDataNascimento(Date dataNascimento) { this.dataNascimento = dataNascimento; }
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
 
-	public void setEstadoCivil(String estadoCivil) { this.estadoCivil = estadoCivil; }
+	public void setEstadoCivil(String estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
 
-	public void setTelefone(String telefone) { this.telefone = telefone; }
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
-	public void setCep(String cep) { this.cep = cep; }
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
 
-	public void setGrauEscolaridade(String grauEscolaridade) { this.grauEscolaridade = grauEscolaridade; }
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
 
-	public void setVerificado(Boolean verificado) { this.verificado = verificado; }
+	public void setGrauEscolaridade(String grauEscolaridade) {
+		this.grauEscolaridade = grauEscolaridade;
+	}
 
-	public void setRemovido(boolean removido) { this.removido = removido; }
+	public void setVerificado(Boolean verificado) {
+		this.verificado = verificado;
+	}
+
+	public void setRemovido(boolean removido) {
+		this.removido = removido;
+	}
 
 	public void setSituacaoAtual(Integer fksituacaoAtual) {
 		SituacaoAtual novaSituacaoAtual = new SituacaoAtual();
