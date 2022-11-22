@@ -11,6 +11,7 @@ import '../html-css-template/css/Style.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiUsuario from "../apiUsuario.js";
+import api from '../api';
 
 function Header() {
 
@@ -35,8 +36,11 @@ function Header() {
         let param = sessionStorage.getItem('logado');
         let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
         if(param == "OK"){
-            document.getElementById("nome_usuario").innerHTML = `${usuarioHeader.nome}`; 
-            document.getElementById("img_foto").src = `http://localhost:8080/usuarios/${idUsuarioHeader}/imagem?tipoImagem=P`;   
+            
+
+            document.getElementById("nome_usuario").innerHTML = usuarioHeader.nome; 
+            document.getElementById("img_foto").src = 
+            usuarioHeader.imagem;   
         }else{
             document.getElementById("nome_usuario").innerHTML = "Usuário";  
             document.getElementById("img_foto").src = `${fotoDesogado}`;
@@ -106,6 +110,13 @@ function Header() {
         navegar("/pesquisa");
         console.log(value);
     }
+    
+    function PesquisarRedirectCat(){
+        const value = document.getElementById("produtos_cat").value;
+        sessionStorage.setItem("pesquisa",value);
+        navegar("/pesquisa");
+        console.log(value);
+    }
 
     return (
         <>
@@ -161,10 +172,10 @@ function Header() {
                         <img src={setaBaixo} alt="" className="img_seta" />
                     </div>
                     <div id="div_produtos">
-                        <p>Notebook</p>
-                        <p>Celular</p>
-                        <p>Tablet</p>
-                        <p>Desktop</p>
+                        <p onClick={PesquisarRedirectCat} id="produtos_cat" value="notebook" >Notebook</p>
+                        <p onClick={PesquisarRedirectCat} id="produtos_cat" value="celular">Celular</p>
+                        <p onClick={PesquisarRedirectCat} id="produtos_cat" value="tablet">Tablet</p>
+                        <p onClick={PesquisarRedirectCat} id="produtos_cat" value="desktop">Desktop</p>
                     </div>
                 </div>
 
