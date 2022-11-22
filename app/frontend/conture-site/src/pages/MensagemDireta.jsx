@@ -10,9 +10,50 @@ import fotoPatricia from "../html-css-template/imagens/patricia.jpg"
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiUsuario from "../apiUsuario.js";
+import apiMensagemDireto from "../apiMensagemDireta";
+
 
 
 function MensagemDireta() {
+
+    const [chat, setChat] = useState([]);
+    const [remetente, setRemetente] = useState([]);
+
+    useEffect(() => {
+        let idUsuarioLogado = sessionStorage.getItem('idUsuarioLogado');
+        apiMensagemDireto.get(`chat/all?fkUsuarioRemetente=${idUsuarioLogado}`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setChat(resposta.data)
+            } catch (error) {
+                console.log(error)  
+            }
+        })
+    })
+
+    useEffect(() => {
+        apiUsuario.get(`/${chat.idUsuario}`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setRemetente(resposta.data)
+            } catch (error) {
+                console.log(error)  
+            }
+        })
+    })
+
+    function formatacaoId(id){
+        console.log("tamanho" + id.length)
+        if(id.length == 1){
+            return "#000" + id;
+        }else if(id.length == 2){
+            return "#00" + id;
+        }else if(id.length == 3){
+            return "#0" + id;
+        }else{
+            return "#" + id;
+        }
+    }
 
     return (
         <>
@@ -31,7 +72,14 @@ function MensagemDireta() {
                         </div>
                         <div id="md-chats">
                             <div className="md-chats-interno scroll">
-                               <Chat/>
+                            {chat != undefined && chat.length > 0 ? chat.map((chat) => (
+                            <Chat
+                                // foto={chat.}
+                                nome={chat.nome}
+                                id={formatacaoId(chat.idUsuario)}
+                            />
+                        )) : ""}
+                               
                             </div>
                         </div>
                     </div>
@@ -39,10 +87,10 @@ function MensagemDireta() {
                         <div id="md-cabecalho">
                             <img src={fotoPatricia} alt="Foto do outro usuário" />
                             <div>
-                                <h3>Patrícia</h3>
+                                <h3>{remetente.nome}</h3>
                             </div>
                             <div>
-                                <p>#0002</p>
+                                <p>#{remetente.id}</p>
                             </div>
                         </div>
                         <div id="md-mensagens" className="scroll">

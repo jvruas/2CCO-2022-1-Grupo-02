@@ -3,7 +3,9 @@ import '../html-css-template/css/Style.css'
 import '../html-css-template/css/Cadastro.css'
 import iconSenha from "../html-css-template/imagens/eye-slash-closed.png"
 import imgEtapa from "../html-css-template/imagens/etapas.png"
-import imgEtapa2 from "../html-css-template/imagens/etapas1.png"
+import imgEtapa2 from "../html-css-template/imagens/etapas2.png"
+import imgEtapa3 from "../html-css-template/imagens/etapas3.png"
+import iconCamera from "../html-css-template/imagens/icon-camera.svg"
 import iconInfoSenha from "../html-css-template/imagens/info-circle1.png"
 import iconSeta from "../html-css-template/imagens/seta.png"
 import iconSeta2 from "../html-css-template/imagens/seta2.png"
@@ -29,6 +31,7 @@ function dataUsuario() {
         estadoCivil: "",
         telefone: "",
         cep: "",
+        // uf: "",
         grauEscolaridade: "",
         fkSituacaoAtual: ""
     }
@@ -50,9 +53,9 @@ function Cadastro() {
         })
     }, [])
 
-
     // Função para chamar o endPoint para cadastrar o usuário
-    const [valuesUsuario, setValuesUsuario] = useState(dataUsuario)
+    const [valuesUsuario, setValuesUsuario] = useState(dataUsuario);
+    var fotoPerfil = document.getElementById("fotoPerfil");
 
     function handleChangeUser(event) {
         const { value, name } = event.target
@@ -67,14 +70,25 @@ function Cadastro() {
     function handleChangeData(dataNasc) {
         var input_dataNasc = document.getElementById("dataNasc");
         dataUsuario.dataNasc = input_dataNasc.value
-        console.log(epoch(input_dataNasc.value))
+        // console.log(epoch(input_dataNasc.value))
     }
 
     const navegar = useNavigate();
 
     function handleSubmit(event) {
         var input_dataNasc = document.getElementById("dataNasc");
+        var data_uf = "";
         event.preventDefault()
+
+        fetch(`https://viacep.com.br/ws/${valuesUsuario.cep}/json/`)
+            .then(res => res.json()).then(data => {
+                console.log(data.uf)
+                data_uf = data;
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
         let json = {
             email: valuesUsuario.email,
             senha: valuesUsuario.senha,
@@ -86,64 +100,63 @@ function Cadastro() {
             estadoCivil: valuesUsuario.estadoCivil,
             telefone: valuesUsuario.telefone,
             cep: valuesUsuario.cep,
+            uf: "SP",
             grauEscolaridade: valuesUsuario.grauEscolaridade,
             fkSituacaoAtual: valuesUsuario.fkSituacaoAtual
         }
 
-        fetch(`https://viacep.com.br/ws/${valuesUsuario.cep}/json/`)
-        .then(res => res.json()).then(data => {
-            console.log(data)
-        })
-        .catch((error) => { 
-            console.log(error)
-            document.getElementById("alerta-img2").style.display = "flex"
-            document.getElementById("msg-alerta2").innerHTML = `CEP inválido`
-        })
-        
-        if(valuesUsuario.nome == "" || valuesUsuario.sobrenome == "" || valuesUsuario.cpf == "" || valuesUsuario.genero == "" || input_dataNasc.value == "" || valuesUsuario.estadoCivil == "" || valuesUsuario.telefone == "" || valuesUsuario.cep == "" || valuesUsuario.grauEscolaridade == "" || valuesUsuario.fkSituacaoAtual == ""){
-            document.getElementById("alerta-img2").style.display = "flex"
-            document.getElementById("msg-alerta2").innerHTML = `Preencha os campos vazios`
-        }else if(valuesUsuario.cpf.length < 11){
-            document.getElementById("alerta-img2").style.display = "flex"
-            document.getElementById("msg-alerta2").innerHTML = `CPF inválido`
-        }else if(valuesUsuario.telefone.length < 11){
-            document.getElementById("alerta-img2").style.display = "flex"
-            document.getElementById("msg-alerta2").innerHTML = `Telefone inválido`
-        }else if(valuesUsuario.cep.length < 8){
-            document.getElementById("alerta-img2").style.display = "flex"
-            document.getElementById("msg-alerta2").innerHTML = `CEP inválido`
-        }else{
-            apiUsuario.post("/", json, {
+        apiUsuario.post("/", json, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((resposta) => {
+            console.log("ta caindo aqui")
+            var idUsuario = resposta.data;
+            console.log("fotoPerfil", fotoPerfil.files[0])
+
+            let formData = new FormData();
+            formData.append("file", fotoPerfil.files[0]);
+
+            let config = {
                 headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then((resposta) => {
-                    console.log(resposta.status)
-                    navegar("/login")
-            }).catch((error) => { 
-                console.log(error)
-                if(error.status == "409"){
-                    document.getElementById("alerta-img2").style.display = "flex"
-                    document.getElementById("msg-alerta2").innerHTML = `E-mail ou CPF já está sendo utilizado`
-                }else if(error.status == "400"){
-                    document.getElementById("alerta-img2").style.display = "flex"
-                    document.getElementById("msg-alerta2").innerHTML = `Os campos CPF, Telefone e CEP não podem conter - e .`
-                }
-            })
-        }
+                    'Content-Type': 'multipart/form-data'
+                },
+            }
+
+            // let fotoPerfilSelecionada = fotoPerfil.value == "" ? fotoPerfil.value = "../html-css-template/imagens/foto.jpg" : fotoPerfil.files[0];
+            apiUsuario.post(`/${idUsuario}/imagem?tipoImagem=P`, formData, config)
+                .then((respostaImg) => {
+                    try {
+                        console.log(respostaImg)
+                    } catch (error) {
+                        console.log(error)
+                    }
+                })
+        }).catch((error) => {
+            console.log(error)
+            if (error.status == "409") {
+                document.getElementById("alerta-img2").style.display = "flex"
+                document.getElementById("msg-alerta2").innerHTML = `E-mail ou CPF já está sendo utilizado`
+            } else if (error.status == "400") {
+                document.getElementById("alerta-img2").style.display = "flex"
+                document.getElementById("msg-alerta2").innerHTML = `Os campos CPF, Telefone e CEP não podem conter - e .`
+            }
+        })
     }
+
 
     // Função para mudar o formulário de cadastro
     const mostrarForm = () => {
         var form1 = document.getElementById("form-cadastro1");
         var form2 = document.getElementById("form-cadastro2");
+        var form3 = document.getElementById("section-foto");
 
         var input_email = document.getElementById("email");
 
         var input_senha = document.getElementById("senha");
         var input_confSenha = document.getElementById("confSenha");
 
-        if(input_email.value == "" || input_senha.value == "" || input_confSenha.value == ""){
+        if (input_email.value == "" || input_senha.value == "" || input_confSenha.value == "") {
             document.getElementById("alerta-img").style.display = "flex"
             document.getElementById("msg-alerta").innerHTML = `Preencha os campos vazios`
         } else if (input_senha.value != input_confSenha.value) {
@@ -160,10 +173,58 @@ function Cadastro() {
             if (form1.style.display == "grid") {
                 form1.style.display = "none"
                 form2.style.display = "grid"
+                form3.style.display = "none"
             }
             else {
                 form1.style.display = "grid"
                 form2.style.display = "none"
+                form3.style.display = "none"
+            }
+        }
+    }
+
+    const mostrarForm2 = () => {
+        var input_dataNasc = document.getElementById("dataNasc");
+
+        var section1 = document.getElementById("section-cadastro1");
+        var form2 = document.getElementById("form-cadastro2");
+        var section2 = document.getElementById("section-foto");
+
+        fetch(`https://viacep.com.br/ws/${valuesUsuario.cep}/json/`)
+            .then(res => res.json()).then(data => {
+                console.log(data)
+            })
+            .catch((error) => {
+                console.log(error)
+                document.getElementById("alerta-img2").style.display = "flex"
+                document.getElementById("msg-alerta2").innerHTML = `CEP inválido`
+            })
+
+        if (valuesUsuario.nome == "" || valuesUsuario.sobrenome == "" || valuesUsuario.cpf == "" || valuesUsuario.genero == "" || input_dataNasc.value == "" || valuesUsuario.estadoCivil == "" || valuesUsuario.telefone == "" || valuesUsuario.cep == "" || valuesUsuario.grauEscolaridade == "" || valuesUsuario.fkSituacaoAtual == "") {
+            document.getElementById("alerta-img2").style.display = "flex"
+            document.getElementById("msg-alerta2").innerHTML = `Preencha os campos vazios`
+        } else if (valuesUsuario.cpf.length < 11) {
+            document.getElementById("alerta-img2").style.display = "flex"
+            document.getElementById("msg-alerta2").innerHTML = `CPF inválido`
+        } else if (valuesUsuario.telefone.length < 11) {
+            document.getElementById("alerta-img2").style.display = "flex"
+            document.getElementById("msg-alerta2").innerHTML = `Telefone inválido`
+        } else if (valuesUsuario.cep.length < 8) {
+            document.getElementById("alerta-img2").style.display = "flex"
+            document.getElementById("msg-alerta2").innerHTML = `CEP inválido`
+        } else {
+            document.getElementById("alerta-img").style.display = "none"
+            document.getElementById("msg-alerta").innerHTML = ``
+            document.getElementById("alerta-img2").style.display = "none"
+            document.getElementById("msg-alerta2").innerHTML = ``
+            if (section1.style.display == "flex") {
+                section1.style.display = "none"
+                form2.style.display = "none"
+                section2.style.display = "flex"
+            } else {
+                section1.style.display = "flex"
+                form2.style.display = "grid"
+                section2.style.display = "none"
             }
         }
     }
@@ -198,7 +259,7 @@ function Cadastro() {
     return (
         <>
             <MenuSimples />
-            <form className="section-cadastro1">
+            <div id="section-cadastro1">
                 <div id="form-cadastro1">
                     <div className="divisao centralizado">
                         <h1>CADASTRO DE USUÁRIO</h1>
@@ -233,7 +294,7 @@ function Cadastro() {
                             onClick={ocultarSenha2} />
                     </div>
                     <div id="alerta" className="coluna">
-                        <img src={iconError} id="alerta-img"/><p id="msg-alerta"></p>
+                        <img src={iconError} id="alerta-img" /><p id="msg-alerta"></p>
                     </div>
                     <div className="divisao direita">
                         <button className="btn-cadastro1" type="button" onClick={mostrarForm}>PRÓXIMO<img src={iconSeta} alt="Ícone de próximo" /></button>
@@ -322,16 +383,37 @@ function Cadastro() {
                         </select>
                     </div>
                     <div id="alerta" className="coluna">
-                        <img src={iconError} id="alerta-img2"/><p id="msg-alerta2"></p>
+                        <img src={iconError} id="alerta-img2" /><p id="msg-alerta2"></p>
                     </div>
                     <div className="input_double">
                         <button className="btn btn_voltar" type="button" onClick={mostrarForm}><img src={iconSeta2} alt="Ícone de voltar" /><p>VOLTAR</p></button>
+                        <button className="btn btn_cadastrar" onClick={mostrarForm2}><p>PRÓXIMO</p><img src={iconSeta} alt="Ícone de confirmação para cadastrar o usuário" /></button>
+                    </div>
+                </div>
+            </div>
+            <div id="section-foto">
+                <div id="cadastrar-foto">
+                    <div className="divisao centralizado">
+                        <h1>CADASTRO DE USUÁRIO</h1>
+                    </div>
+                    <div className="divisao centralizado">
+                        <img className="imp_progresso" src={imgEtapa3} alt="Barra de progresso de cadastro" />
+                    </div>
+                    <div className="divisao flex-centralizada">
+                        <p>Foto</p>
+                        <div className="input-fotoPerfil">
+                            <label htmlFor="fotoPerfil" id="label-fotoPerfil"><img src={iconCamera} alt="Ícone de câmera" id="icon-camera-1" /></label>
+                            <input type="file" accept="image/*" name="fotoPerfil" id="fotoPerfil" />
+                        </div>
+                        <p className="aviso-foto">*Opcional. Caso não insira uma foto, será adicionado uma foto padrão.</p>
+                    </div>
+                    <div className="input_double">
+                        <button className="btn btn_voltar" type="button" onClick={mostrarForm2}><img src={iconSeta2} alt="Ícone de voltar" /><p>VOLTAR</p></button>
                         <button className="btn btn_cadastrar" onClick={handleSubmit}><p>CADASTRAR</p><img src={iconOk} alt="Ícone de confirmação para cadastrar o usuário" /></button>
                     </div>
                 </div>
-            </form>
+            </div>
         </>
     )
 }
-
 export default Cadastro;

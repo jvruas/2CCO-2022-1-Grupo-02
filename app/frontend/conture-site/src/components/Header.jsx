@@ -17,26 +17,38 @@ function Header() {
     const navegar = useNavigate();
 
     const [usuarioHeader, setUsuarioHeader] = useState([]);
-    // const [usuarioImg, setUsuarioImg] = useState([]);
+    const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect(() => {
         let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
         apiUsuario.get(`/${idUsuarioHeader}`).then((resposta) => {
             try {
-                console.log(resposta.data)
+                // console.log(resposta.data)
                 setUsuarioHeader(resposta.data)
             } catch (error) {
                 console.log(error)  
             }
         })
+
+   
     })
 
     useEffect(() => {
         let param = sessionStorage.getItem('logado');
         let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
+        apiUsuario.get(`${idUsuarioHeader}/imagem?tipoImagem=P`).then((respostaImg) => {
+            try {
+                console.log(respostaImg.data)
+                setUsuarioImg(respostaImg.data)
+                document.getElementById("img_foto").src = respostaImg.data; 
+            } catch (error) {
+                console.log(error)  
+            }
+        })
         if(param == "OK"){
             document.getElementById("nome_usuario").innerHTML = `${usuarioHeader.nome}`; 
-            document.getElementById("img_foto").src = `http://localhost:8080/usuarios/${idUsuarioHeader}/imagem?tipoImagem=P`;   
+            // document.getElementById("img_foto").src = `apiUsuario.get(${idUsuarioHeader}/imagem?tipoImagem=P)`; 
+            // document.getElementById("img_foto").src = usuarioImg;   
         }else{
             document.getElementById("nome_usuario").innerHTML = "Usuário";  
             document.getElementById("img_foto").src = `${fotoDesogado}`;

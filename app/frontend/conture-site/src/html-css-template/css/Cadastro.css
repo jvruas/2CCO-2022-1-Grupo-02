@@ -4,49 +4,49 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Tajawal;
-    text-decoration: none;     
+    text-decoration: none;
 }
 
-.section-cadastro1{
+#section-cadastro1 {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
 }
 
-#form-cadastro1{
+#form-cadastro1 {
     margin-top: 25px;
     width: 466px;
-    height: 470;
+    height: 470px;
     display: grid;
     grid-template-rows: 65px 55px 90px 90px 90px 20px 60px;
 }
 
-.divisao{
+.divisao {
     height: 100%;
     width: 100%;
 }
 
-.centralizado{
+.centralizado {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.direita{
+.direita {
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
-.input{
+.input {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-input{
+input {
     width: 100%;
     height: 44px;
     border: 1px solid #A6A6A6;
@@ -55,30 +55,30 @@ input{
     padding-right: 70px;
 }
 
-h1{
+h1 {
     font-size: 22px;
 }
 
-.coluna{
+.coluna {
     display: flex;
     align-items: flex-end;
     margin-bottom: 2%;
 }
 
-.coluna p{
+.coluna p {
     color: red;
     font-weight: 600;
     padding-left: 10px;
 }
 
-.coluna img{
+.coluna img {
     /* display: none; */
     width: 20px;
     height: 20px;
     color: red;
 }
 
-.ca-eye{
+.ca-eye {
     width: 16px;
     height: 16px;
     position: relative;
@@ -86,15 +86,18 @@ h1{
     left: 95%;
 }
 
-label img{
+label img {
     padding-left: 10px;
 }
 
-label, button, input, select{
+label,
+button,
+input,
+select{
     font-size: 16px;
 }
 
-.btn-cadastro1{
+.btn-cadastro1 {
     width: 178px;
     height: 44px;
     display: flex;
@@ -107,11 +110,11 @@ label, button, input, select{
     border-radius: 3px;
 }
 
-.btn-cadastro1:hover{
+.btn-cadastro1:hover {
     background-color: var(--verde-btn-hover);
 }
 
-#form-cadastro2{
+#form-cadastro2 {
     margin-top: 25px;
     width: 466px;
     height: 920px;
@@ -119,7 +122,8 @@ label, button, input, select{
     grid-template-rows: 65px 55px 90px 90px 90px 90px 90px 90px 90px 30px 50px;
 }
 
-input, select{
+input,
+select {
     height: 44px;
     border: 1px solid #A6A6A6;
     border-radius: 3px;
@@ -127,21 +131,22 @@ input, select{
     padding-right: 10px;
 }
 
-.maior{
+.maior {
     width: 100%;
 }
 
-.menor{
+.menor {
     width: 45%;
 }
 
-.input_double{
+.input_double {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.btn{
+.btn {
     width: 178px;
     height: 44px;
     border: none;
@@ -153,36 +158,83 @@ input, select{
     margin-top: 10%;
 }
 
-a{
+a {
     color: #000000;
 }
 
-.btn_voltar{
+.btn_voltar {
     color: #000000;
     background-color: var(--cinza-btn);
     border: 1px solid var(--cinza-btn-border);
 }
 
-.btn_voltar:hover{
+.btn_voltar:hover {
     background-color: var(--cinza-btn-hover);
 }
 
-.btn_cadastrar{
+.btn_cadastrar {
     color: #FFFFFF;
     background-color: var(--verde-btn);
 }
 
-.btn_cadastrar:hover{
+.btn_cadastrar:hover {
     background-color: var(--verde-btn-hover);
+}
+
+#section-foto {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#cadastrar-foto {
+    margin-top: 25px;
+    width: 466px;
+    height: 600px;
+    display: grid;
+    grid-template-rows: 65px 55px 360px 60px;
+}
+
+.flex-centralizada {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#label-fotoPerfil {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px dashed #000000;
+}
+
+#label-fotoPerfil img {
+    width: 28px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.aviso-foto{
+    margin-top: 5%;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 /*Tooltip*/
 .tooltip {
     position: relative;
     display: inline-block;
-  }
-  
-  .tooltip .tooltiptext {
+}
+
+.tooltip .tooltiptext {
     visibility: hidden;
     width: 380px;
     height: 90px;
@@ -192,26 +244,27 @@ a{
     text-align: left;
     border-radius: 6px;
     padding: 5px 0;
-  
+
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
-  }
-  
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-  }
-
-
-@media (max-width: 500px){
-    #form-cadastro1, #form-cadastro2{
-        width: 90%;
-    }
-    .btn{
-        width: 150px;
-    }
-    .ca-eye{
-        left: 90%;
-    }   
 }
 
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+@media (max-width: 500px) {
+    #form-cadastro1,
+    #form-cadastro2 {
+        width: 90%;
+    }
+
+    .btn {
+        width: 150px;
+    }
+
+    .ca-eye {
+        left: 90%;
+    }
+}

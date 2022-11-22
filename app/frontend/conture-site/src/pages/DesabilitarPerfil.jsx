@@ -4,7 +4,8 @@ import '../html-css-template/css/DesabilitarPerfil.css';
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png";
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png";
 import iconSad from "../html-css-template/imagens/icon-sad.svg";
-import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
+import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg";
+import iconSeta2 from "../html-css-template/imagens/seta2.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import apiUsuario from "../apiUsuario.js";
@@ -158,7 +159,7 @@ function DesabilitarPerfil() {
                             <img src={iconError} id="alerta-img2"/><p id="msg-alerta"></p>
                         </div>
                         <div className="dc-btns">
-                            <Link to="/editar-perfil"><div>VOLTAR</div></Link>
+                            <Link to="/editar-perfil"><div><img src={iconSeta2} alt="Ícone de voltar" />VOLTAR</div></Link>
                             <button type="button" onClick={handleSubmit}>
                                 <p>DESABILITAR</p><img src={iconSad} alt="Ícone de tristeza" />
                             </button>

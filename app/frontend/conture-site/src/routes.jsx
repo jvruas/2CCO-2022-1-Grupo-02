@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import EsqueciSenha from "./pages/EsqueciSenha";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
-import PopUp from "./pages/PopUp";
+import PopUpSenha from "./pages/PopUpSenha";
 import Feed from "./pages/Feed";
 import MensagemDireta from "./pages/MensagemDireta";
 import ValidacaoUsuario from "./pages/ValidacaoUsuario";
@@ -29,7 +29,7 @@ function Rotas() {
         <BrowserRouter>
             <Routes>
                 <Route path="/login" element={<Login/>} />
-                <Route path="/email-esqueci-senha" element={<PopUp/>} />
+                <Route path="/email-esqueci-senha" element={<PopUpSenha/>} />
                 <Route path="/esqueci-senha" element={<EsqueciSenha/>} />
                 <Route path="/cadastro" element={<Cadastro/>} />
                 <Route path="*" element={<Feed/>} />
@@ -47,7 +47,7 @@ function Rotas() {
                 <Route path="/avaliacao" element={<Avaliacao/>} />
                 <Route path="/avaliacao-pessoal" element={<AvaliacaoPessoal/>} />
                 <Route path="/cadastro-produto" element={<CadastroProduto/>} />
-                <Route path="/popup" element={<PopUp/>} />
+                <Route path="/popup" element={<PopUpSenha/>} />
                 <Route path="/popup-reporte" element={<PopUpReporte/>} />
                 <Route path="/descricao-produto" element={<DescricaoProduto/>} />
                 <Route path="/dashboard-admin-bi" element={<Dashboard/>}></Route>
