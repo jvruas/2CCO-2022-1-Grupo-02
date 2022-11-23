@@ -11,6 +11,7 @@ import '../html-css-template/css/Style.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiUsuario from "../apiUsuario.js";
+import api from '../api';
 
 function Header() {
 
@@ -35,8 +36,11 @@ function Header() {
         let param = sessionStorage.getItem('logado');
         let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
         if(param == "OK"){
-            document.getElementById("nome_usuario").innerHTML = `${usuarioHeader.nome}`; 
-            document.getElementById("img_foto").src = `http://localhost:8080/usuarios/${idUsuarioHeader}/imagem?tipoImagem=P`;   
+            
+
+            document.getElementById("nome_usuario").innerHTML = usuarioHeader.nome; 
+            document.getElementById("img_foto").src = 
+            usuarioHeader.imagem;   
         }else{
             document.getElementById("nome_usuario").innerHTML = "Usuário";  
             document.getElementById("img_foto").src = `${fotoDesogado}`;

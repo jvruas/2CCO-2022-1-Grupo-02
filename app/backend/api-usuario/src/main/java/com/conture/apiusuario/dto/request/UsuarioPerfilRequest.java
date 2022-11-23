@@ -25,6 +25,11 @@ public class UsuarioPerfilRequest {
 	@Pattern(regexp = "^[0-9]+$")
 	private String cep;
 
+	@NotBlank
+	@Size(min = 2, max = 2)
+	@Pattern(regexp = "^[a-z|A-Z]+$")
+	private String uf;
+
 	@NotNull
 	@NotBlank
 	@Size(min = 1, max = 1)
@@ -58,9 +63,15 @@ public class UsuarioPerfilRequest {
 		return cep;
 	}
 
+	public String getUf() {
+		return uf;
+	}
+
 	public String getGrauEscolaridade() {
 		return grauEscolaridade;
 	}
 
-	public Integer getFkSituacaoAtual() { return fkSituacaoAtual; }
+	public Integer getFkSituacaoAtual() {
+		return fkSituacaoAtual;
+	}
 }

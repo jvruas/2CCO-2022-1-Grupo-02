@@ -9,14 +9,19 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiProdutos from "../apiProduto.js"
 
+
+import {useParams} from "react-router-dom";
+
 function DisponivelPessoal() {
+    const params = useParams();
+
     const [produtos, setProdutos] = useState([]);
     // const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect
     (() => {
         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-        apiProdutos.get(`disponiveis?idDoador=${idUsuario}`).then((resposta) => {
+        apiProdutos.get(`disponiveis?idDoador=${params.id}`).then((resposta) => {
             try {
                 console.log(resposta.data)
                 setProdutos(resposta.data)
