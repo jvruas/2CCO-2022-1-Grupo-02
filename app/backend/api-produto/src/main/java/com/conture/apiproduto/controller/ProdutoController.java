@@ -11,6 +11,7 @@ import com.conture.apiproduto.service.MatchService;
 
 import com.conture.apiproduto.util.collection.FilaObj;
 import com.conture.apiproduto.util.collection.PilhaObj;
+import com.conture.apiproduto.util.file.ImageUtilities;
 import com.conture.apiproduto.util.file.Txt;
 import com.conture.apiproduto.util.sort.Filter;
 import com.conture.apiproduto.util.sort.Iterator;
@@ -20,6 +21,7 @@ import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -27,8 +29,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.status;
 
@@ -85,12 +89,26 @@ public class ProdutoController {
 	}
 
 
-	@PostMapping(value = "/{idProduto}/imagem-principal", consumes = "image/jpeg")
+	@PostMapping(value = "/{idProduto}/imagem-principal", consumes = "multipart/form-data")
 	public ResponseEntity<Integer> adicionarImagemPrincipalProduto(
 			@PathVariable @NotNull @Min(1) Integer idProduto,
 			@RequestParam(name = "idDoador") @NotNull @Min(1) Integer idDoadorRequest,
-			@RequestBody @NotNull byte[] imagemPrincipal
+			@RequestBody @NotNull MultipartFile file
 	) {
+		Optional<byte[]> convertedImage = Optional.ofNullable(null);
+
+		try {
+			convertedImage = Optional.of(ImageUtilities.ByteArrayFrom(file));
+		} catch (IOException ioException) {
+			status(503).build();
+		}
+
+		if (convertedImage.isEmpty()) {
+			status(503).build();
+		}
+
+		byte[] imagemPrincipal = convertedImage.get();
+
 		if (imagemPrincipal.length > 16_777_216 || imagemPrincipal.length == 0) { // Magical Number -> 16MB
 			return status(400).build();
 		}
@@ -117,13 +135,44 @@ public class ProdutoController {
 		return status(201).body(idProduto);
 	}
 
+	@GetMapping(value = "/{idProduto}/imagem-principal", produces = "image/jpeg")
+	public ResponseEntity<byte[]> getImagemPrincipal(
+			@PathVariable @Min(1) Integer idProduto
+	) {
+		if (!this.produtoRepository.hasByIdNotRemovido(idProduto)) {
+			return status(404).build();
+		}
 
-	@PostMapping(value = "/{idProduto}/imagem-extra", consumes = "image/jpeg")
+		byte[] imagem = this.produtoRepository.getImagemByID(idProduto);
+
+		if (imagem == null) {
+			return status(404).build();
+		}
+
+		return status(200).body(imagem);
+	}
+
+
+	@PostMapping(value = "/{idProduto}/imagem-extra", consumes = "multipart/form-data")
 	public ResponseEntity<Integer> adicionarImagemExtra(
 			@PathVariable @NotNull @Min(1) Integer idProduto,
 			@RequestParam(name = "idDoador") @NotNull @Min(1) Integer idDoadorRequest,
-			@RequestBody @NotNull byte[] imagem
+			@RequestBody @NotNull MultipartFile file
 	) {
+		Optional<byte[]> convertedImage = Optional.ofNullable(null);
+
+		try {
+			convertedImage = Optional.of(ImageUtilities.ByteArrayFrom(file));
+		} catch (IOException ioException) {
+			status(503).build();
+		}
+
+		if (convertedImage.isEmpty()) {
+			status(503).build();
+		}
+
+		byte[] imagem = convertedImage.get();
+
 		if (imagem.length > 16_777_216 || imagem.length == 0) { // Magical Number -> 16MB
 			return status(400).build();
 		}
@@ -148,6 +197,22 @@ public class ProdutoController {
 
 		this.imagemProdutoDoacaoRepository.save(ImagemProdutoDoacao.fromPattern(idProduto, imagem));
 		return status(201).body(this.imagemProdutoDoacaoRepository.findTop1ByProdutoDoacaoIdProdutoDoacaoOrderByIdImagemProdutoDoacaoDesc(idProduto).get().getIdImagemProdutoDoacao());
+	}
+
+
+	@GetMapping(value = "/{idProduto}/imagem-extra")
+	public ResponseEntity<List<byte[]>> getImagensExtra(
+			@PathVariable @Min(1) Integer idProduto
+	) {
+		if (!this.produtoRepository.hasByIdNotRemovido(idProduto)) {
+			return status(404).build();
+		}
+
+		if (this.imagemProdutoDoacaoRepository.countByProdutoDoacaoIdProdutoDoacao(idProduto) <= 0) {
+			return status(204).build();
+		}
+
+		return status(200).body(this.imagemProdutoDoacaoRepository.getAllByIdProdutoDoacao(idProduto));
 	}
 
 
@@ -318,9 +383,9 @@ public class ProdutoController {
 
 		List<ProdutoDoacaoResponse> listaProduto = this.produtoRepository.getAllByStatusNaoDoadoC();
 
-			if (listaProduto.isEmpty()) {
-				return status(204).build();
-			}
+		if (listaProduto.isEmpty()) {
+			return status(204).build();
+		}
 
 		Iterator<ProdutoDoacaoResponse> iterator = new AscendingListIterator(listaProduto);
 

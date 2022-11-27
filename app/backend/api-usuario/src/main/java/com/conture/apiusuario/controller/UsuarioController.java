@@ -6,13 +6,17 @@ import com.conture.apiusuario.repository.*;
 import com.conture.apiusuario.dto.response.UsuarioLogadoResponse;
 import com.conture.apiusuario.utility.Email;
 import com.conture.apiusuario.utility.GerenciadorUsuario;
+import com.conture.apiusuario.utility.ImageUtilities;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 import static org.springframework.http.ResponseEntity.*;
@@ -54,6 +58,7 @@ public class UsuarioController {
 
 		novoUsuario.setNome(novoUsuario.getNome().trim().toUpperCase());
 		novoUsuario.setSobrenome(novoUsuario.getSobrenome().trim().toUpperCase());
+		novoUsuario.setUf(novoUsuario.getUf().trim().toUpperCase());
 
 		this.usuarioRepository.save(Usuario.fromPattern(novoUsuario));
 
@@ -77,12 +82,16 @@ public class UsuarioController {
 
 		GerenciadorUsuario.login(usuarioPesquisado.get());
 
+		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(usuarioPesquisado.get().getIdUsuario()), "P");
+
+		if (idImagemUsuario.isPresent()) {
+			usuarioPesquisado.get().setPerfilImage(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
+		}
+
 		return status(201).body(usuarioPesquisado.get());
 	}
 
 
-
-	//TODO:
 	@DeleteMapping("/{idUsuario}/login")
 	public ResponseEntity logoff(@PathVariable @Min(1) Integer idUsuario) {
 		if (!GerenciadorUsuario.logoff(idUsuario)) {
@@ -93,7 +102,6 @@ public class UsuarioController {
 	}
 
 
-	//TODO:
 	@GetMapping("/{idUsuario}/login")
 	public ResponseEntity existsUsuarioLogado(
 			@PathVariable @Min(1) Integer idUsuario,
@@ -107,6 +115,12 @@ public class UsuarioController {
 
 		if (responseType.equals("id")) {
 			return status(200).body(usuarioLogado.get().getIdUsuario());
+		}
+
+		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(usuarioLogado.get().getIdUsuario()), "P");
+
+		if (idImagemUsuario.isPresent()) {
+			usuarioLogado.get().setPerfilImage(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
 		}
 
 		return status(200).body(usuarioLogado.get());
@@ -180,6 +194,15 @@ public class UsuarioController {
 			return status(204).build();
 		}
 
+		for (UsuarioLogadoResponse usuario : listaUsuarioPesquisado){
+			Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(usuario.getIdUsuario()), "P");
+
+			if (idImagemUsuario.isPresent()) {
+				usuario.setPerfilImage(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
+			}
+		}
+
+
 		return status(200).body(listaUsuarioPesquisado);
 	}
 
@@ -190,6 +213,12 @@ public class UsuarioController {
 
 		if (usuario.isEmpty()) {
 			return status(404).build();
+		}
+
+		Optional<Integer> idImagemUsuario = this.imagemUsuarioRepository.getImagemID(Usuario.fromPattern(usuario.get().getIdUsuario()), "P");
+
+		if (idImagemUsuario.isPresent()) {
+			usuario.get().setPerfilImage(this.imagemUsuarioRepository.getById(idImagemUsuario.get()).getImagemUsuario());
 		}
 
 		return status(200).body(usuario.get());
@@ -237,38 +266,91 @@ public class UsuarioController {
 		return status(200).body(lista);
 	}
 
-	// TODO: IMPROVE
+
 	@PostMapping("conta/validacao-email")
 	public ResponseEntity<Integer> enviarEmail(
-			@RequestParam String emailDestinatario,
 			@RequestParam Integer idUsuario
 	) throws FileNotFoundException {
-		Usuario usuario = usuarioRepository.getById(idUsuario);
+		Optional<Usuario> usuario = this.usuarioRepository.findById(idUsuario);
 
-		if (usuario.getVerificado()){
+		if (usuario.isEmpty()) {
+			return status(404).build();
+		}
+
+		if (usuario.get().getVerificado()) {
 			return status(409).build();
 		}
 
 		String codigo = email.gerarCodigo();
-		usuario.setCodigo(codigo);
-		usuarioRepository.save(usuario);
+		usuario.get().setCodigo(codigo);
+		this.usuarioRepository.save(usuario.get());
+
 		String corpoEmail = email.gerarEmail(codigo);
-		email.sendEmail(corpoEmail, emailDestinatario);
+		email.sendEmail(corpoEmail, usuario.get().getEmail());
 
 		return status(200).body(idUsuario);
 	}
 
+
 	@PostMapping("conta/validacao-codigo")
-	public ResponseEntity validarUsuario(@RequestParam Integer idUsuario,
-										 @RequestParam String codigo){
-		Usuario usuario = usuarioRepository.getById(idUsuario);
-		String codigoGerado = usuario.getCodigo();
-		if (codigoGerado.equals(codigo)){
-			usuario.setVerificado(true);
-			usuarioRepository.save(usuario);
-			return status(200).build();
+	public ResponseEntity validarUsuario(
+			@RequestParam Integer idUsuario,
+			@RequestParam String codigo
+	) {
+		Optional<Usuario> usuario = this.usuarioRepository.findById(idUsuario);
+
+		if (usuario.isEmpty()) {
+			return status(404).build();
 		}
-		return status(400).build();
+
+		if (!codigo.equals(usuario.get().getCodigo())) {
+			return status(400).build();
+		}
+
+		usuario.get().setVerificado(true);
+		usuario.get().setCodigo(null);
+		this.usuarioRepository.save(usuario.get());
+		return status(200).build();
+	}
+
+	@PostMapping("/codigo-senha/email")
+	public ResponseEntity<Integer> resetSenhaEmail(
+			@RequestParam Integer idUsuario
+	) throws FileNotFoundException {
+		Optional<Usuario> usuario = this.usuarioRepository.findById(idUsuario);
+
+		if (usuario.isEmpty()) {
+			return status(404).build();
+		}
+
+		String codigoSenha = email.gerarCodigo();
+		usuario.get().setCodigoSenha(codigoSenha);
+		this.usuarioRepository.save(usuario.get());
+
+		String corpoEmail = email.gerarEmail(codigoSenha);
+		email.sendEmail(corpoEmail, usuario.get().getEmail());
+
+		return status(200).body(idUsuario);
+	}
+
+	@PostMapping("/codigo-senha")
+	public ResponseEntity resetSenha(
+			@RequestParam Integer idUsuario,
+			@RequestParam String codigo
+	) {
+		Optional<Usuario> usuario = this.usuarioRepository.findById(idUsuario);
+
+		if (usuario.isEmpty()) {
+			return status(404).build();
+		}
+
+		if (!codigo.equals(usuario.get().getCodigoSenha())) {
+			return status(400).build();
+		}
+
+		usuario.get().setCodigoSenha(null);
+		this.usuarioRepository.save(usuario.get());
+		return status(200).build();
 	}
 
 	@GetMapping("/situacao-atual")
@@ -324,7 +406,7 @@ public class UsuarioController {
 			return status(404).build();
 		}
 
-		if (usuario.get().getSenha().equals(novaSenha)){
+		if (usuario.get().getSenha().equals(novaSenha)) {
 			return status(409).build();
 		}
 
@@ -354,6 +436,7 @@ public class UsuarioController {
 		usuario.setGenero(usuarioPerfil.getGenero());
 		usuario.setEstadoCivil(usuarioPerfil.getEstadoCivil());
 		usuario.setCep(usuarioPerfil.getCep());
+		usuario.setUf(usuarioPerfil.getUf().trim().toUpperCase());
 		usuario.setGrauEscolaridade(usuarioPerfil.getGrauEscolaridade());
 		usuario.setTelefone(usuarioPerfil.getTelefone());
 		usuario.setSituacaoAtual(usuarioPerfil.getFkSituacaoAtual());
@@ -363,12 +446,26 @@ public class UsuarioController {
 	}
 
 
-	@PostMapping(value = "/{idUsuario}/imagem", consumes = "image/jpeg")
+	@PostMapping(value = "/{idUsuario}/imagem", consumes = "multipart/form-data")
 	public ResponseEntity adicionarImagem(
 			@PathVariable @Min(1) Integer idUsuario,
 			@RequestParam @Size(min = 1, max = 1) @Pattern(regexp = "[B,P]") String tipoImagem,
-			@RequestBody byte[] novaImagem
+			@RequestBody MultipartFile file
 	) {
+		Optional<byte[]> convertedImage = Optional.ofNullable(null);
+
+		try {
+			convertedImage = Optional.of(ImageUtilities.ByteArrayFrom(file));
+		} catch (IOException ioException) {
+			status(503).build();
+		}
+
+		if (convertedImage.isEmpty()) {
+			status(503).build();
+		}
+
+		byte[] novaImagem = convertedImage.get();
+
 		if (novaImagem.length > 16_777_216 || novaImagem.length == 0) { // Magical Number -> 16MB
 			return status(400).build();
 		}
@@ -389,12 +486,26 @@ public class UsuarioController {
 	}
 
 
-	@PatchMapping(value = "/{idUsuario}/imagem", consumes = "image/jpeg")
+	@PatchMapping(value = "/{idUsuario}/imagem", consumes = "multipart/form-data")
 	public ResponseEntity atualizarImagem(
 			@PathVariable @Min(1) Integer idUsuario,
 			@RequestParam @Size(min = 1, max = 1) @Pattern(regexp = "[B,P]") String tipoImagem,
-			@RequestBody byte[] novaImagem
+			@RequestBody MultipartFile file
 	) {
+		Optional<byte[]> convertedImage = Optional.ofNullable(null);
+
+		try {
+			convertedImage = Optional.of(ImageUtilities.ByteArrayFrom(file));
+		} catch (IOException ioException) {
+			status(503).build();
+		}
+
+		if (convertedImage.isEmpty()) {
+			status(503).build();
+		}
+
+		byte[] novaImagem = convertedImage.get();
+
 		if (novaImagem.length > 16_777_216 || novaImagem.length == 0) { // Magical Number -> 16MB
 			return status(400).build();
 		}

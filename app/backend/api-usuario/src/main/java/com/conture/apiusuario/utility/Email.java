@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Email {
 	public String gerarCodigo(){
 		Integer codigo = ThreadLocalRandom.current().nextInt(111111, 999999);
-		return "C-"+codigo;
+		return String.format("C-%s", codigo);
 	}
 
 	public String gerarEmail(String codigo) throws FileNotFoundException {

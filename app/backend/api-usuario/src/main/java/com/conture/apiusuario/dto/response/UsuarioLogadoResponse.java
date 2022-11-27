@@ -61,6 +61,8 @@ public class UsuarioLogadoResponse {
 	@Pattern(regexp = "^[0-9]+$")
 	private String cpf;
 
+	byte[] perfilImage;
+
 	@NotBlank
 	private String situacaoAtual;
 
@@ -78,7 +80,6 @@ public class UsuarioLogadoResponse {
 			Date dataCadastro,
 			String grauEscolaridade,
 			String cpf,
-
 			String situacaoAtual
 	) {
 		this.idUsuario = idUsuario;
@@ -93,9 +94,29 @@ public class UsuarioLogadoResponse {
 		this.dataCadastro = dataCadastro;
 		this.grauEscolaridade = grauEscolaridade;
 		this.cpf = cpf;
-
 		this.situacaoAtual = situacaoAtual;
 	}
+
+	public UsuarioLogadoResponse(
+			Integer idUsuario,
+			String email,
+			String nome,
+			String sobrenome,
+			String genero,
+			Date dataNascimento,
+			String estadoCivil,
+			String telefone,
+			String cep,
+			Date dataCadastro,
+			String grauEscolaridade,
+			String cpf,
+			byte[] perfilImage,
+			String situacaoAtual
+	) {
+		this(idUsuario, email, nome, sobrenome, genero, dataNascimento, estadoCivil, telefone, cep, dataCadastro, grauEscolaridade, cpf, situacaoAtual);
+		this.perfilImage = perfilImage;
+	}
+
 
 	public Integer getIdUsuario() {
 		return idUsuario;
@@ -129,9 +150,13 @@ public class UsuarioLogadoResponse {
 		return estadoCivil;
 	}
 
-	public String getTelefone() { return telefone; }
+	public String getTelefone() {
+		return telefone;
+	}
 
-	public String getCep() { return this.cep; }
+	public String getCep() {
+		return this.cep;
+	}
 
 	public Date getDataCadastro() {
 		return dataCadastro;
@@ -139,6 +164,10 @@ public class UsuarioLogadoResponse {
 
 	public String getGrauEscolaridade() {
 		return grauEscolaridade;
+	}
+
+	public byte[] getPerfilImage() {
+		return perfilImage;
 	}
 
 	public String getSituacaoAtual() {
@@ -186,7 +215,9 @@ public class UsuarioLogadoResponse {
 		this.estadoCivil = estadoCivil;
 	}
 
-	public void setCep(String cep) { this.cep = cep; }
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
 
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
@@ -194,6 +225,10 @@ public class UsuarioLogadoResponse {
 
 	public void setGrauEscolaridade(String grauEscolaridade) {
 		this.grauEscolaridade = grauEscolaridade;
+	}
+
+	public void setPerfilImage(byte[] perfilImage) {
+		this.perfilImage = perfilImage;
 	}
 
 	public void setCpf(String cpf) {
