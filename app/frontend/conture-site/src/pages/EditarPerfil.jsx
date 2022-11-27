@@ -16,6 +16,7 @@ function dataEdicaoUsuario() {
         genero: "",
         estadoCivil: "",
         cep: "",
+        uf: "",
         grauEscolaridade: "",
         telefone: "",
         fkSituacaoAtual: ""
@@ -137,22 +138,26 @@ function EditarPerfil() {
             genero: valuesUsuario.genero != "" ? valuesUsuario.genero : usuarioLogado.genero,
             estadoCivil: valuesUsuario.estadoCivil != "" ? valuesUsuario.estadoCivil : usuarioLogado.estadoCivil,
             cep: valuesUsuario.cep != "" ? valuesUsuario.cep : usuarioLogado.cep,
+            uf: usuarioLogado.uf,
             grauEscolaridade: valuesUsuario.grauEscolaridade != "" ? valuesUsuario.grauEscolaridade : usuarioLogado.grauEscolaridade,
             telefone: valuesUsuario.telefone != "" ? valuesUsuario.telefone : usuarioLogado.telefone,
             fkSituacaoAtual: valuesUsuario.fkSituacaoAtual
         }
 
-        if (valuesUsuario.cep != "") {
-            fetch(`https://viacep.com.br/ws/${valuesUsuario.cep}/json/`)
+        if (valuesUsuario.cep != "" || valuesUsuario.cep == "") {
+            fetch(`https://viacep.com.br/ws/${usuarioLogado.cep}/json/`)
                 .then(res => res.json()).then(data => {
-                    console.log(data)
+                    json.uf = data.uf
+                    //console.log(json)
                 })
                 .catch((error) => {
                     console.log(error)
                     document.getElementById("alerta-img2").style.display = "flex"
                     document.getElementById("msg-alerta").innerHTML = `CEP inválido`
                 })
-        } else if (valuesUsuario.telefone != "" && valuesUsuario.telefone.length < 11) {
+        } 
+        
+        if (valuesUsuario.telefone != "" && valuesUsuario.telefone.length < 11) {
             document.getElementById("alerta-img2").style.display = "flex"
             document.getElementById("msg-alerta").innerHTML = `Telefone inválido`
         } else {
@@ -162,7 +167,7 @@ function EditarPerfil() {
                 }
             }).then((resposta) => {
                 document.location.reload(true)
-                console.log(resposta.status)
+                //console.log(resposta.status)
             }).catch((error) => {
                 console.log(error)
                 console.log(json)

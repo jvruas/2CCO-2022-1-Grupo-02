@@ -1,7 +1,7 @@
 import logo from '../html-css-template/imagens/logo-conture.png';
 import lupa from '../html-css-template/imagens/icon-lupa.png';
-import fotoLogado from '../html-css-template/imagens/foto.jpg';
-import fotoDesogado from '../html-css-template/imagens/imagem-deslogado.png';
+import fotoLogado from '../html-css-template/imagens/icon-logado-sem-foto.png';
+import fotoDeslogado from '../html-css-template/imagens/imagem-deslogado.png';
 import setaBaixo from '../html-css-template/imagens/chevron-down1.svg';
 import interesse from '../html-css-template/imagens/interesses.svg';
 import mensagem from '../html-css-template/imagens/icon-mensagem.svg';
@@ -17,7 +17,6 @@ function Header() {
     const navegar = useNavigate();
 
     const [usuarioHeader, setUsuarioHeader] = useState([]);
-    const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect(() => {
         let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
@@ -26,35 +25,32 @@ function Header() {
                 // console.log(resposta.data)
                 setUsuarioHeader(resposta.data)
             } catch (error) {
-                console.log(error)  
+                console.log(error)
             }
         })
-
-   
     })
 
     useEffect(() => {
         let param = sessionStorage.getItem('logado');
         let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
-        apiUsuario.get(`${idUsuarioHeader}/imagem?tipoImagem=P`).then((respostaImg) => {
-            try {
-                console.log(respostaImg.data)
-                setUsuarioImg(respostaImg.data)
-                document.getElementById("img_foto").src = respostaImg.data; 
-            } catch (error) {
-                console.log(error)  
+        apiUsuario.get(`${idUsuarioHeader}/imagem?tipoImagem=P`, 
+        {responseType: 'blob'}).then((respostaImg) => {
+            let imgUrl = URL.createObjectURL(respostaImg.data)
+            document.getElementById("img_foto").src = imgUrl;
+        }).catch((error) => {
+            console.log(error)
+            if (param == "OK") {
+                document.getElementById("img_foto").src = `${fotoLogado}`;
             }
         })
-        if(param == "OK"){
-            document.getElementById("nome_usuario").innerHTML = `${usuarioHeader.nome}`; 
-            // document.getElementById("img_foto").src = `apiUsuario.get(${idUsuarioHeader}/imagem?tipoImagem=P)`; 
-            // document.getElementById("img_foto").src = usuarioImg;   
-        }else{
-            document.getElementById("nome_usuario").innerHTML = "Usuário";  
-            document.getElementById("img_foto").src = `${fotoDesogado}`;
+        if (param == "OK") {
+            document.getElementById("nome_usuario").innerHTML = `${usuarioHeader.nome}`;
+        } else {
+            document.getElementById("nome_usuario").innerHTML = "Usuário";
+            document.getElementById("img_foto").src = `${fotoDeslogado}`;
         }
-    })   
-    
+    })
+
     function logoff(event) {
         event.preventDefault()
         sessionStorage.setItem('logado', "")
@@ -70,7 +66,7 @@ function Header() {
         }).catch((error) => {
             console.log(error)
         })
-        
+
     }
 
     const mostrarMenu = () => {
@@ -95,18 +91,18 @@ function Header() {
 
     const redirecionarDoar = () => {
         let param = sessionStorage.getItem('logado');
-        if(param == "OK"){
+        if (param == "OK") {
             navegar("/cadastro-produto")
-        }else{
+        } else {
             navegar("/login")
         }
     }
 
     const redirecionarMensagemD = () => {
         let param = sessionStorage.getItem('logado');
-        if(param == "OK"){
+        if (param == "OK") {
             navegar("/mensagem-direta")
-        }else{
+        } else {
             navegar("/login")
         }
     }
@@ -123,10 +119,10 @@ function Header() {
                                 <img src={lupa} alt="Lupa de pesquisa" />
                             </button>
                         </div>
-                        <div id="div_usuario"onClick={mostrarMenu}>
-                            <img src={fotoDesogado} alt="" id="img_foto" />
+                        <div id="div_usuario" onClick={mostrarMenu}>
+                            <img src={fotoDeslogado} alt="" id="img_foto" />
                             <p id="nome_usuario">Usuário</p>
-                            <img src={setaBaixo} alt="" className="img_seta" id="seta_menu"  />
+                            <img src={setaBaixo} alt="" className="img_seta" id="seta_menu" />
                             <div id="he-tooltip">
                                 <div className="menuzinho">
                                     <div id="triangulo-para-cima">
@@ -150,7 +146,7 @@ function Header() {
                         </div>
                         <div id="div_icones">
                             <img src={interesse} alt="Ícone de matchs" />
-                            <img src={mensagem} alt="Ícone de mensagem direta" onClick={redirecionarMensagemD}/>
+                            <img src={mensagem} alt="Ícone de mensagem direta" onClick={redirecionarMensagemD} />
                             <img src={notificacao} alt="Ícone de notificação" />
                         </div>
                         <button type="button" id="btn_doacao" onClick={redirecionarDoar}>

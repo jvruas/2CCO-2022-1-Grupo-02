@@ -31,7 +31,7 @@ function dataUsuario() {
         estadoCivil: "",
         telefone: "",
         cep: "",
-        // uf: "",
+        uf: "",
         grauEscolaridade: "",
         fkSituacaoAtual: ""
     }
@@ -45,7 +45,6 @@ function Cadastro() {
     useEffect(() => {
         apiUsuario.get("/situacao-atual").then((resposta) => {
             try {
-                console.log(resposta.data)
                 setSituacaoAtual(resposta.data)
             } catch (error) {
                 console.log(error)
@@ -60,7 +59,6 @@ function Cadastro() {
     function handleChangeUser(event) {
         const { value, name } = event.target
         setValuesUsuario({ ...valuesUsuario, [name]: value, })
-        console.log(valuesUsuario)
     }
 
     function epoch(date) {
@@ -70,24 +68,13 @@ function Cadastro() {
     function handleChangeData(dataNasc) {
         var input_dataNasc = document.getElementById("dataNasc");
         dataUsuario.dataNasc = input_dataNasc.value
-        // console.log(epoch(input_dataNasc.value))
     }
 
     const navegar = useNavigate();
 
     function handleSubmit(event) {
         var input_dataNasc = document.getElementById("dataNasc");
-        var data_uf = "";
         event.preventDefault()
-
-        fetch(`https://viacep.com.br/ws/${valuesUsuario.cep}/json/`)
-            .then(res => res.json()).then(data => {
-                console.log(data.uf)
-                data_uf = data;
-            })
-            .catch((error) => {
-                console.log(error)
-            })
 
         let json = {
             email: valuesUsuario.email,
@@ -100,48 +87,52 @@ function Cadastro() {
             estadoCivil: valuesUsuario.estadoCivil,
             telefone: valuesUsuario.telefone,
             cep: valuesUsuario.cep,
-            uf: "SP",
+            uf: "",
             grauEscolaridade: valuesUsuario.grauEscolaridade,
             fkSituacaoAtual: valuesUsuario.fkSituacaoAtual
         }
 
-        apiUsuario.post("/", json, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((resposta) => {
-            console.log("ta caindo aqui")
-            var idUsuario = resposta.data;
-            console.log("fotoPerfil", fotoPerfil.files[0])
-
-            let formData = new FormData();
-            formData.append("file", fotoPerfil.files[0]);
-
-            let config = {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-            }
-
-            // let fotoPerfilSelecionada = fotoPerfil.value == "" ? fotoPerfil.value = "../html-css-template/imagens/foto.jpg" : fotoPerfil.files[0];
-            apiUsuario.post(`/${idUsuario}/imagem?tipoImagem=P`, formData, config)
-                .then((respostaImg) => {
-                    try {
-                        console.log(respostaImg)
-                    } catch (error) {
-                        console.log(error)
+        fetch(`https://viacep.com.br/ws/${valuesUsuario.cep}/json/`)
+            .then(res => res.json()).then(data => {
+                json.uf = data.uf;
+                apiUsuario.post("/", json, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then((resposta) => {
+                    var idUsuario = resposta.data;
+        
+                    let formData = new FormData();
+                    formData.append("file", fotoPerfil.files[0]);
+        
+                    let config = {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        },
+                    }
+        
+                    apiUsuario.post(`/${idUsuario}/imagem?tipoImagem=P`, formData, config)
+                        .then((respostaImg) => {
+                            try {
+                                navegar("/")
+                            } catch (error) {
+                                console.log(error)
+                            }
+                        })
+                }).catch((error) => {
+                    console.log(error)
+                    if (error.status == "409") {
+                        document.getElementById("alerta-img2").style.display = "flex"
+                        document.getElementById("msg-alerta2").innerHTML = `E-mail ou CPF já está sendo utilizado`
+                    } else if (error.status == "400") {
+                        document.getElementById("alerta-img2").style.display = "flex"
+                        document.getElementById("msg-alerta2").innerHTML = `Os campos CPF, Telefone e CEP não podem conter - e .`
                     }
                 })
-        }).catch((error) => {
-            console.log(error)
-            if (error.status == "409") {
-                document.getElementById("alerta-img2").style.display = "flex"
-                document.getElementById("msg-alerta2").innerHTML = `E-mail ou CPF já está sendo utilizado`
-            } else if (error.status == "400") {
-                document.getElementById("alerta-img2").style.display = "flex"
-                document.getElementById("msg-alerta2").innerHTML = `Os campos CPF, Telefone e CEP não podem conter - e .`
-            }
-        })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
 

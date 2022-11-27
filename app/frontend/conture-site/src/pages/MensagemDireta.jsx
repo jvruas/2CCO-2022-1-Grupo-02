@@ -6,6 +6,7 @@ import MensagemUsuario from "../components/mensagem-direta/MensagemUsuario";
 import '../html-css-template/css/MensagemDireta.css';
 import iconLupaPreta from "../html-css-template/imagens/icon-lupa-preta.svg"
 import iconSend from "../html-css-template/imagens/icon-send.svg"
+import fotoLogado from '../html-css-template/imagens/icon-logado-sem-foto.png';
 import fotoPatricia from "../html-css-template/imagens/patricia.jpg"
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -17,33 +18,110 @@ import apiMensagemDireto from "../apiMensagemDireta";
 function MensagemDireta() {
 
     const [chat, setChat] = useState([]);
+    var chatComFoto = [];
     const [remetente, setRemetente] = useState([]);
+    const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect(() => {
         let idUsuarioLogado = sessionStorage.getItem('idUsuarioLogado');
         apiMensagemDireto.get(`chat/all?fkUsuarioRemetente=${idUsuarioLogado}`).then((resposta) => {
             try {
-                console.log(resposta.data)
+                //console.log(resposta.data)
                 setChat(resposta.data)
+
+                if(chat.length > 0){
+        
+                    for(var i = 0; i < chat.length; i++){
+                        var field = chat[i];
+                        var novo = "";
+                        var x = 0;
+        
+                        apiUsuario.get(`${resposta.data[i].idUsuario}/imagem?tipoImagem=P`, 
+                        {responseType: 'blob'}).then((respostaImg) => {
+                            let imgUrl = URL.createObjectURL(respostaImg.data)   
+                            //console.log(imgUrl)
+                            for(var jsonX in field){
+                                var item_atual = '"'+jsonX+'":"'+field[jsonX]+'",';
+                                novo += item_atual + (x < 1 || x > 1 ? '' : `"foto": ${imgUrl},`);
+                                x++;
+                            }
+                        }).catch((error) => {
+                            console.log(error)
+                            for(var jsonX in field){
+                                var item_atual = '"'+jsonX+'":"'+field[jsonX]+'",';
+                                novo += item_atual + (x < 1 || x > 1 ? '' : `"foto": ${fotoLogado},`);
+                                x++;
+                            }
+                        })
+        
+                        novo = '{'+novo.substring(0,novo.length-1)+'}'; // removo a última vírgula
+                        chatComFoto[i] = JSON.parse(novo); // crio o objeto json
+                    }
+                }
+
+                console.log(chatComFoto);
             } catch (error) {
                 console.log(error)  
             }
         })
     })
 
-    useEffect(() => {
-        apiUsuario.get(`/${chat.idUsuario}`).then((resposta) => {
-            try {
-                console.log(resposta.data)
-                setRemetente(resposta.data)
-            } catch (error) {
-                console.log(error)  
-            }
-        })
-    })
+    // useEffect(() => {
+    //     apiUsuario.get(`/${chat.idUsuario}`).then((resposta) => {
+    //         try {
+    //             console.log(resposta.data)
+    //             setRemetente(resposta.data)   
+    //         } catch (error) {
+    //             console.log(error)  
+    //         }
+    //     })
+    // })
+
+    // const getFoto = () => {
+
+    //     if(chat.length > 0){
+    //         var newField = [];
+
+    //         for(var i = 0; i < chat.length; i++){
+    //             var field = chat[i];
+    //             var novo = "";
+    //             var x = 0;
+
+    //             apiUsuario.get(`${chat[i].idUsuario}/imagem?tipoImagem=P`, 
+    //             {responseType: 'blob'}).then((respostaImg) => {
+    //                 let imgUrl = URL.createObjectURL(respostaImg.data)   
+    //                 console.log(imgUrl)
+    //                 for(var jsonX in field){
+    //                     var item_atual = '"'+jsonX+'":"'+field[jsonX]+'",';
+    //                     novo += item_atual + (x < 1 || x > 1 ? '' : `"foto": ${imgUrl},`);
+    //                     x++;
+    //                 }
+    //             }).catch((error) => {
+    //                 console.log(error)
+    //                 for(var jsonX in field){
+    //                     var item_atual = '"'+jsonX+'":"'+field[jsonX]+'",';
+    //                     novo += item_atual + (x < 1 || x > 1 ? '' : `"foto": ${fotoLogado},`);
+    //                     x++;
+    //                 }
+    //             })
+
+    //             novo = '{'+novo.substring(0,novo.length-1)+'}'; // removo a última vírgula
+    //             newField[i] = JSON.parse(novo); // crio o objeto json
+    //         }
+    //     }
+    //     apiUsuario.get(`${chat.idUsuario}/imagem?tipoImagem=P`, 
+    //             {responseType: 'blob'}).then((respostaImg) => {
+    //                 let imgUrl = URL.createObjectURL(respostaImg.data)   
+    //                 console.log(imgUrl)
+    //                 return imgUrl
+    //             }).catch((error) => {
+    //                 console.log(error)
+    //                 return fotoLogado
+    //             })
+    // }
 
     function formatacaoId(id){
-        console.log("tamanho" + id.length)
+        //console.log("tamanho" + id.length)
         if(id.length == 1){
             return "#000" + id;
         }else if(id.length == 2){
@@ -74,7 +152,7 @@ function MensagemDireta() {
                             <div className="md-chats-interno scroll">
                             {chat != undefined && chat.length > 0 ? chat.map((chat) => (
                             <Chat
-                                // foto={chat.}
+                                //foto={}
                                 nome={chat.nome}
                                 id={formatacaoId(chat.idUsuario)}
                             />
