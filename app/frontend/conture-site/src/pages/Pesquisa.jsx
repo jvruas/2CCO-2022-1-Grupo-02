@@ -7,9 +7,11 @@ import '../html-css-template/css/Pesquisa.css'
 import { useEffect, useState } from "react";
 import apiProduto from "../apiProduto.js";
 import apiUsuario from "../apiUsuario";
+import { useNavigate } from "react-router-dom";
 
 function Pesquisa() {
     
+    const navegar = useNavigate();
     const [Produtos, setProdutos] = useState([]);
     useEffect
     (() => {
@@ -21,8 +23,24 @@ function Pesquisa() {
             } catch (error) {
                 console.log(error)
             }
+        })  
+    },[])
+
+    useEffect
+    (() => {
+        let categoria = sessionStorage.getItem('tipoCategoria');
+        apiProduto.get(`/categoria?idCategoria=${categoria}`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                navegar("/pesquisa")
+                setProdutos(resposta.data)
+                
+            } catch (error) {
+                console.log(error)
+            }
         })
-    }, [])
+    }, []
+)
 
 
     return (

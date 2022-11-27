@@ -1,17 +1,42 @@
 import '../../html-css-template/css/pop-up/PopUpFiltro.css';
 import fechar from "../../html-css-template/imagens/x-lg1.svg";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useState } from 'react';
+import apiUsuario from '../../apiUsuario';
 
 function PopUpFiltro() {
 
-    const [idSelecionado, setIdSelecionado] = useState(0);
+    const [reporte, setReporte] = useState(0);
+    const navegar = useNavigate();
+
+    let rep = sessionStorage.getItem('reporte');
+    let remetente = sessionStorage.getItem("idUsuarioLogado")
+    let reportado = sessionStorage.getItem("reportado")
+  
+
+    function handleSubmit() {
+        
+        apiUsuario.post(`/reporte`,{ 
+            fkReportador:remetente,
+            fkReportado:reportado,
+            fkTipoReporte:rep
+        }).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setReporte(resposta.data)
+                navegar("/disponivel")
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }
+
 
     return (
         <> <section id='filtro'>
             <div className='div_filtro'>
-                <div className='div_sup_filtro'><p>Filtrar Produto</p><Link to={`/disponivel-pessoal/${idSelecionado}`}><img src={fechar} alt="" /></Link></div>
-                <div className='div_meio_filtro'>
+                <div className='div_sup_filtro'><p>Confirmar reporte</p><Link to={`/disponivel `}><img src={fechar} alt="" /></Link></div>
+                {/* <div className='div_meio_filtro'>
                     <div>
                         <input type="checkbox" name="horns" id='0' onClick={() => setIdSelecionado(0)}/>
                         <label for="horns">Todos</label></div>
@@ -24,9 +49,13 @@ function PopUpFiltro() {
                     <div><input type="checkbox" name="horns" id='4' onClick={() => setIdSelecionado(4)}/>
                         <label for="horns">Notebook</label></div>
                         <div><input type="checkbox" name="horns" id='5' onClick={() => setIdSelecionado(5)}/>
-                        <label for="horns">Tablet</label></div>
-                </div>
-                <div className='div_sup'><button className='btn_filtrar'>Filtrar</button></div>
+                        <label for="horns">Tablet</label>
+
+<button className='btn_filtrar'>Confirmar</button>
+                        </div>
+                </div> */}
+
+                <div className='div_inf'><button className='btn_filtrar' onClick={(() => {handleSubmit()})}>Confirmar</button></div>
             </div>
             </section>
         </>

@@ -21,7 +21,7 @@ function DisponivelPessoal() {
     useEffect
     (() => {
         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-        apiProdutos.get(`disponiveis?idDoador=${params.id}`).then((resposta) => {
+        apiProdutos.get(`disponiveis?idDoador=${idUsuario}`).then((resposta) => {
             try {
                 console.log(resposta.data)
                 setProdutos(resposta.data)
@@ -38,11 +38,13 @@ function DisponivelPessoal() {
                 <Perfil></Perfil>
                 <MenuPerfil></MenuPerfil>
                 <div className="conteiner-produto">
-                <div className="div_sup_disp"><b><p>Disponíveis</p></b> <Link to="/popup-filtro"><img src={Filtro} /></Link></div>
+                <div className="div_sup_disp"><b><p>Disponíveis</p></b></div>
                     <div className="div_inf_disp">
                         <div className="div_card">
                             {produtos != undefined && produtos.length > 0 ? produtos.map((prod) => (
                             <Card 
+                            fkDoador={prod.fkDoador}
+                            produto={prod.idProdutoDoacao}
                             visualizacao={prod.quantidadeVisualizacao}
                             nome={prod.nome}
                             idProduto={prod.idProduto}

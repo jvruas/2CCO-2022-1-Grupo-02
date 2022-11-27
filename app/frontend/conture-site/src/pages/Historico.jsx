@@ -30,7 +30,7 @@ function HistoricoDonatario() {
         let dataCad = new Date(historico.dataConclusao);
 
     if(opcoes == 0){
-        apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
+        apiProdutos.get(`/status?idDoador=${idDoador}?todos`).then((resposta) => {
             try {
                 console.log(resposta.data)
                 setHistorico(resposta.data)
@@ -40,7 +40,7 @@ function HistoricoDonatario() {
         })
     }
     if(opcoes == 1){
-        apiProdutos.get(`/status?idDoador=${idUsuario}?andamento`).then((resposta) => {
+        apiProdutos.get(`/status?idDoador=${idDoador}?andamento`).then((resposta) => {
             try {
                 console.log(resposta.data)
                 setHistorico(resposta.data)
@@ -50,7 +50,7 @@ function HistoricoDonatario() {
         })
     }
     if(opcoes == 2){
-        apiProdutos.get(`/status?idDoador=${idUsuario}?doado`).then((resposta) => {
+        apiProdutos.get(`/status?idDoador=${idDoador}?doado`).then((resposta) => {
             try {
                 console.log(resposta.data)
                 setHistorico(resposta.data)
@@ -60,7 +60,7 @@ function HistoricoDonatario() {
         })
     }
     if(opcoes == 3){
-        apiProdutos.get(`/status?idDoador=${idUsuario}?recebido`).then((resposta) => {
+        apiProdutos.get(`/status?idDoador=${idDoador}?recebido`).then((resposta) => {
             try {
                 console.log(resposta.data)
                 setHistorico(resposta.data)
