@@ -17,7 +17,7 @@ import DisponivelPessoal from "./pages/DisponivelPessoal";
 import Avaliacao from "./pages/Avaliacao";
 import AvaliacaoPessoal from "./pages/AvaliacaoPessoal";
 import CadastroProduto from "./pages/CadastroProduto";
-import PopUpFiltro from "./pages/pop-up/PopUpFiltro";
+import PopUpReporteConfirma from "./pages/pop-up/PopUpReporte2";
 import PopUpReporte from "./pages/pop-up/PopUpReporte";
 import PopUpAvaliacao from "./pages/pop-up/PopUpAvaliacao";
 import PopUpDeletar from "./pages/pop-up/PopUpDeletar";
@@ -54,7 +54,7 @@ function Rotas() {
                 <Route path="/descricao-produto" element={<DescricaoProduto/>} />
                 <Route path="/dashboard-admin-bi" element={<Dashboard/>}></Route>
                 <Route path="/popup-avaliacao" element={<PopUpAvaliacao/>} />
-                <Route path="/popup-filtro" element={<PopUpFiltro/>} />
+                <Route path="/popup-reporte-confirma" element={<PopUpReporteConfirma/>} />
                 <Route path="/popup-deletar" element={<PopUpDeletar/>} />
                 <Route path="/pesquisa" element={<Pesquisa/>} />
                 <Route path="/match" element={<Match/>} />

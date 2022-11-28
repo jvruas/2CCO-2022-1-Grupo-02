@@ -2,36 +2,41 @@ import '../../html-css-template/css/pop-up/PopUpDeletar.css';
 import fechar from "../../html-css-template/imagens/x-lg1.svg";
 import { Link, useNavigate } from "react-router-dom";
 import apiProdutos from '../../apiProduto';
+import { useState, useEffect } from "react";
 
 function PopUpDeletar(props) {
 
-    // const navegar = useNavigate();
+    const navegar = useNavigate();
 
     
-    // const [usuario, setProdutos] = useState([]);
-    let produto = sessionStorage.getItem('idProduto');
-    function handleSubmit(event) {
-        event.preventDefault()
-        let param = document.getElementById();
-        apiProdutos.delete(`${produto}`, {
-        }).then((resposta) => {
-            // sessionStorage.setItem(resposta.data)
-            console.log(resposta.status)
-            
-        })
-    }
-
-   
+    const [produto, setProduto] = useState([]);
     
-        let idProduto = sessionStorage.getItem('idProduto');
-        apiProdutos.delete(`${idProduto}`).then((produtoResposta) => {
+
+    function handleSubmit() {
+        let prod = sessionStorage.getItem('idProdutoDoacao');
+        let doador = sessionStorage.getItem('fkDoador');
+        apiProdutos.delete(`/${prod}?idDoador=${doador}`).then((produtoResposta) => {
             try {
                 console.log(produtoResposta)
-                // setProduto(produtoResposta)
+
+                setProduto(produtoResposta)
+                navegar("/disponivel-pessoal");
             } catch (error) {
                 console.log(error)
             }
         })
+    }
+    
+        // let idProduto = sessionStorage.getItem('idProduto');
+        // apiProdutos.delete(`/${produto}?idDoador=${doador}`).then((produtoResposta) => {
+        //     try {
+        //         console.log(produtoResposta)
+        //         setProduto(produtoResposta)
+        //         navegar("/disponivel-pessoal");
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        // })
    
     
 
@@ -41,12 +46,12 @@ function PopUpDeletar(props) {
             <section id='deletar'>
                 <div className='div_conteiner'>
                     <div className='div_sup_deletar'><p></p><Link to='/disponivel-pessoal'><img src={fechar} alt="" /></Link></div>
-                    <div className='div_deletar'><b>Confirmar para deletar publicação</b>
+                    <div className='div_deletar'><b>Confirmar para deletar equipamento</b>
                     <div>Você realmente deseja deletar a publicação de doação referente ao equipamento</div>
                     </div>
                        
                     <div className='div_inf_deletar'>
-                        <div className='div_btn'><Link to='/disponivel-pessoal'><button className='btn_confirmar' onClick={handleSubmit}>Confirmar</button>
+                        <div className='div_btn'><Link to='/disponivel-pessoal'><button className='btn_confirmar' onClick={(()=> {handleSubmit()})}>Confirmar</button>
                         </Link></div>
                     </div>
 

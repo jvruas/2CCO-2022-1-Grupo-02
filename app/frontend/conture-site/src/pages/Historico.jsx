@@ -16,6 +16,7 @@ function HistoricoDonatario() {
     
     const [historico, setHistorico] = useState([]);
     const [usuarioDon, setUsuarioDon] = useState([]);
+    const opcoes = document.getElementById("select_opcoes").value;
     useEffect(() => {
         let idDoador= sessionStorage.getItem('idDoador');
             apiProdutos.get(`/status?idDoador=${idDoador}&status=todos`).then((resposta) => {
@@ -28,16 +29,46 @@ function HistoricoDonatario() {
         })
         let dataCad = new Date(historico.dataConclusao);
 
-    // if(select_opcoes.value == 0){
-    //     apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
-    //         try {
-    //             console.log(resposta.data)
-    //             setHistorico(resposta.data)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     })
-    // }
+    if(opcoes == 0){
+        apiProdutos.get(`/status?idDoador=${idDoador}?todos`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setHistorico(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }
+    if(opcoes == 1){
+        apiProdutos.get(`/status?idDoador=${idDoador}?andamento`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setHistorico(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }
+    if(opcoes == 2){
+        apiProdutos.get(`/status?idDoador=${idDoador}?doado`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setHistorico(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }
+    if(opcoes == 3){
+        apiProdutos.get(`/status?idDoador=${idDoador}?recebido`).then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setHistorico(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }
 
 
     // if(select_opcoes.value == 0){
@@ -76,10 +107,10 @@ function HistoricoDonatario() {
                         <div id="div_filtro"><p>Filtrar por</p>
 
                             <select name="" id="select_opcoes">
-                                <option value="">Todos</option>
-                                <option value="">Processo</option>
-                                <option value="">Doados</option>
-                                <option value="">Recebidos</option>
+                                <option value="0">Todos</option>
+                                <option value="1">Processo</option>
+                                <option value="2">Doados</option>
+                                <option value="3">Recebidos</option>
                             </select>
                         </div>
 

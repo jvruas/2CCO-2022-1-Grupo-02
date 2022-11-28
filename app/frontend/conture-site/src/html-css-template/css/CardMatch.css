@@ -16,12 +16,14 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    /* background-color: aqua; */
 }
 
 .perfil{
     margin-top: 30px;
     height: 262px;
     width: 80%;
+    background-color: blue;
 }
 
 .perfil_imagem{
@@ -49,12 +51,14 @@
     top: 42px;
     display: flex;
     justify-content: space-between;
+    background-color: red;
 }
 
 .perfil_conteudo{
     height: 70px;
     width: 300px;
     display: flex;
+    background-color: blue;
 }
 
 .foto{

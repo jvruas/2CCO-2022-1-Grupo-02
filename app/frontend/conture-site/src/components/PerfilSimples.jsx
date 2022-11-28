@@ -66,6 +66,12 @@ function PerfilSimples() {
         }
     })
     
+    function RedirectReport(){
+        
+        sessionStorage.setItem("reportado",usuarioPerfil.idUsuario);
+        navegar("/popup-reporte");
+    }
+
   let dataCad = new Date(usuarioPerfil.dataCadastro);
 
     return (
@@ -97,7 +103,7 @@ function PerfilSimples() {
                                     </div>
                                 </div>
                             </div>
-                        <Link to="/popup-reporte" ><img src={report} alt="" className='img_reporte'/></Link>
+                        <img src={report} alt="" className='img_reporte' onClick={RedirectReport}/>
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,12 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiProdutos from "../apiProduto.js"
 
+
+import {useParams} from "react-router-dom";
+
 function DisponivelPessoal() {
+    const params = useParams();
+
     const [produtos, setProdutos] = useState([]);
     // const [usuarioImg, setUsuarioImg] = useState([]);
 
@@ -33,11 +38,13 @@ function DisponivelPessoal() {
                 <Perfil></Perfil>
                 <MenuPerfil></MenuPerfil>
                 <div className="conteiner-produto">
-                <div className="div_sup_disp"><b><p>Disponíveis</p></b> <Link to="/popup-filtro"><img src={Filtro} /></Link></div>
+                <div className="div_sup_disp"><b><p>Disponíveis</p></b></div>
                     <div className="div_inf_disp">
                         <div className="div_card">
                             {produtos != undefined && produtos.length > 0 ? produtos.map((prod) => (
                             <Card 
+                            fkDoador={prod.fkDoador}
+                            produto={prod.idProdutoDoacao}
                             visualizacao={prod.quantidadeVisualizacao}
                             nome={prod.nome}
                             idProduto={prod.idProduto}

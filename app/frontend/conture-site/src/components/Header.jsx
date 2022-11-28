@@ -11,6 +11,7 @@ import '../html-css-template/css/Style.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiUsuario from "../apiUsuario.js";
+import api from '../api';
 
 function Header() {
 
@@ -28,7 +29,8 @@ function Header() {
                 console.log(error)
             }
         })
-    })
+        
+    },[])
 
     useEffect(() => {
         let param = sessionStorage.getItem('logado');
@@ -114,7 +116,14 @@ function Header() {
         navegar("/pesquisa");
         console.log(value);
     }
+    
+    function Redirect(event){
+ 
+            sessionStorage.setItem("tipoCategoria", event.nativeEvent.path[1].id);
+            navegar("/pesquisa")
+    }
 
+    
     return (
         <>
             <header id="header_completo">
@@ -169,10 +178,10 @@ function Header() {
                         <img src={setaBaixo} alt="" className="img_seta" />
                     </div>
                     <div id="div_produtos">
-                        <p>Notebook</p>
-                        <p>Celular</p>
-                        <p>Tablet</p>
-                        <p>Desktop</p>
+                        <p id='1' onClick={((event) =>{Redirect(event)})}>Notebook</p>
+                        <p id='3' onClick={((event) =>{Redirect(event)})}>Celular</p>
+                        <p id='2' onClick={((event) =>{Redirect(event)})}>Tablet</p>
+                        <p id='4' onClick={((event) =>{Redirect(event)})}>Desktop</p>
                     </div>
                 </div>
 

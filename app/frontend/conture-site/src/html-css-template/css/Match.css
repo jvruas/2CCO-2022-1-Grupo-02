@@ -21,7 +21,7 @@
 .header_match{
 height: 400px;
 width: 100%;
-background-color: yellowgreen;
+/* background-color: yellowgreen; */
 display: flex;
 flex-direction: column;
 justify-content: space-between;
@@ -30,7 +30,7 @@ justify-content: space-between;
 .cards{
 height: 300px;
 width: 100%;
-background-color: aqua;
+/* background-color: aqua; */
 display:grid;
 grid-template-columns:25% 25% 25% 25%;
 }

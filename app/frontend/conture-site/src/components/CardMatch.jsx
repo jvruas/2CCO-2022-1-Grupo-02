@@ -1,4 +1,4 @@
-import '../html-css-template/css/Style.css' 
+// import '../html-css-template/css/Style.css' 
 import estrela from '../html-css-template/imagens/star16.svg';
 import fotoDeslogado from '../html-css-template/imagens/imagem-deslogado.png';
 import aceitar from '../html-css-template/imagens/accept.svg';
