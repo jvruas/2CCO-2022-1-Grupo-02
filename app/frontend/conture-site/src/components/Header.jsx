@@ -114,13 +114,23 @@ function Header() {
         const value = document.getElementById("input_pesq").value;
         sessionStorage.setItem("pesquisa",value);
         navegar("/pesquisa");
+        document.location.reload(true);
         console.log(value);
     }
     
     function Redirect(event){
  
+        if(event.target.id != ""){
+            
+            sessionStorage.setItem("tipoCategoria", event.target.id);
+            navegar("/pesquisa")
+            document.location.reload(true);
+        }
+        else{
             sessionStorage.setItem("tipoCategoria", event.nativeEvent.path[1].id);
             navegar("/pesquisa")
+            document.location.reload(true);
+        }
     }
 
     

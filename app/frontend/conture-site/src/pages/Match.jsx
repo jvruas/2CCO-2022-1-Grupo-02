@@ -3,7 +3,6 @@ import Perfil from "../components/PerfilSimples"
 import MenuPerfil from "../components/MenuDisponivel"
 import '../html-css-template/css/Match.css'
 import Footer from "../components/Footer"
-import HeaderMatch from "../components/headerMatch"
 import Card from "../components/CardMatch"
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -18,8 +17,11 @@ function Match() {
             <section className="section-match">
                 <Perfil></Perfil>
                 <MenuPerfil></MenuPerfil>
-                <div className="header_match">
-                
+                <div className="div_matchs">
+                <div className="match">
+                <div className='header_matchs'>
+                <p>Notebook i5</p>
+                 </div>  
                 <div className="cards">
                     <Card></Card>
                     <Card></Card>
@@ -28,7 +30,7 @@ function Match() {
 
                 </div>
                 </div>
-
+</div>
           
             </section>
             <Footer></Footer>

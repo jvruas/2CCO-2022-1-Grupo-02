@@ -25,6 +25,7 @@ import DescricaoProduto from "./pages/DescricaoProduto";
 import Dashboard from "./pages/Dashboard";
 import Pesquisa from "./pages/Pesquisa";
 import Match from "./pages/Match";
+import CardMatch from "./components/CardMatch";
 
 function Rotas() {
     return (
@@ -58,6 +59,7 @@ function Rotas() {
                 <Route path="/popup-deletar" element={<PopUpDeletar/>} />
                 <Route path="/pesquisa" element={<Pesquisa/>} />
                 <Route path="/match" element={<Match/>} />
+                <Route path="/card-match" element={<CardMatch/>} />
             </Routes>
         </BrowserRouter>
     );
