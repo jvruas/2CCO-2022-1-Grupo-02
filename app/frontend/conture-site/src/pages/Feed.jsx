@@ -10,23 +10,19 @@ import apiUsuario from "../apiUsuario";
 
 function Feed() {
 
-    
-    // const [categorias, setCategoria] = useState([]);
 
-    // useEffect(() => {
-    //     apiProduto.get("/todas-categorias").then((resposta) => {
-    //         try {
-    //             console.log(resposta.data)
-    //             setCategoria(resposta.data)
-    //             console.log(resposta.data[0].nome)
-    //             console.log(resposta.data[1].nome)
-    //             console.log(resposta.data[2].nome)
+    useEffect(() => {
+        
+        let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
+        apiUsuario.get(`${idUsuarioHeader}/imagem?tipoImagem=P`, 
+        {responseType: 'blob'}).then((respostaImg) => {
+            let imgUrl = URL.createObjectURL(respostaImg.data)
+            document.getElementById("img_foto").src = imgUrl;
+        }).catch((error) => {
+            console.log(error)
+        })
+    })
 
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     })
-    // }, [])
 
     const [produtosNote, setProdutosNote] = useState([]);
     const [produtosCelular, setProdutosCelular] = useState([]);
@@ -39,10 +35,7 @@ function Feed() {
                         resposta.data[i].nomeDoador=response.data.nome
                         setProdutosNote(resposta.data);
                     })
-                    // apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
-                    // `).then((response) => {
-                    //     resposta.data[i].imagem="data:image/png;base64,"+response.data
-                    // })
+            
                 }
                 console.log("resposta.data");
                 console.log(resposta.data);

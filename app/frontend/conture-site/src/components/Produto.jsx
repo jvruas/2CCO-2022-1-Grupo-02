@@ -10,28 +10,25 @@ function Produto(props) {
 
     const navegar = useNavigate();
 
-    function DescricaoProdutoRedirect(){
-        sessionStorage.setItem("idProduto",props.idProduto);
-        sessionStorage.setItem("idDoador",props.idDoador);
+    function DescricaoProdutoRedirect() {
+        sessionStorage.setItem("idProduto", props.idProduto);
+        sessionStorage.setItem("idDoador", props.idDoador);
 
         apiProduto.patch(`/${props.idProduto}/visualizacao?quantidadeVisualizacao=1`)
-                .then((resposta) => {
-                    console.log(resposta.status)
-                }).catch((error) => {
-                    console.log(error)
-                })
+            .then((resposta) => {
+                console.log(resposta.status)
+            }).catch((error) => {
+                console.log(error)
+            })
 
         navegar("/descricao-produto");
     }
-    
-    return(
-        <div className="container-produto" 
-         onClick={DescricaoProdutoRedirect}
-        >
-            <div className="informacoes-produto"
-            >
-                <div className="superior"><img alt=""/><p>{props.nomeDoador}</p> <div class="visualizacao"><img src={vector} alt=""/> <p>{props.visualizacao}</p></div></div>
-                <div className="meio"><img src="" alt=""/></div>
+
+    return (
+        <div className="container-produto" onClick={DescricaoProdutoRedirect}>
+            <div className="informacoes-produto">
+                <div className="superior"><img alt="" /><p>{props.nomeDoador}</p> <div class="visualizacao"><img src={vector} alt="" /> <p>{props.visualizacao}</p></div></div>
+                <div className="meio"><img src={props.foto} alt="" /></div>
                 <div className="inferior"><p>{props.nome}</p></div>
             </div>
         </div>
