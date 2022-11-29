@@ -15,11 +15,13 @@ function HistoricoDonatario() {
 
     const [historico, setHistorico] = useState([]);
     const [usuario, setUsuario] = useState([]);
-    let idUsuario;
-    
+    let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+
+
+    let status = sessionStorage.getItem('status')
     let navegar = useNavigate();
     useEffect(() => {
-        idUsuario = sessionStorage.getItem('idUsuarioLogado');
+
         apiProdutos.get(`/status?idDoador=${idUsuario}&status=todos`).then((resposta) => {
             try {
                 console.log("uijhhjh", resposta.data)
@@ -30,10 +32,9 @@ function HistoricoDonatario() {
         })
         let dataCad = new Date(historico.dataConclusao);
 
-        
         apiUsuario.get(`/${idUsuario}`).then((usuarioResposta) => {
             try {
-                console.log("ofdoidsfodsfoifdsj", usuarioResposta.data)
+                console.log(usuarioResposta.data)
                 setUsuario(usuarioResposta.data)
             } catch (error) {
                 console.log(error)
@@ -42,22 +43,27 @@ function HistoricoDonatario() {
 
     }, [])
 
-    function Redirect(event){
- 
-        sessionStorage.setItem("status", event.nativeEvent.path[1].id);
-        let status = sessionStorage.getItem("status");
-            apiProdutos.get(`/status?idDoador=${idUsuario}&status=${status}`).then((resposta) => {
-                try {
-                    console.log("pgiffnfd", resposta.data)
-                    setHistorico(resposta.data)
-                } catch (error) {
-                    console.log(error)
-                }
-            })
-        navegar("/historico-pessoal")
-}
-            
-    
+    const getFiltro = () => {
+        let status = sessionStorage.getItem('status');
+        apiProdutos.get(`/status?idDoador=${idUsuario}&status=${status}`).then((resposta) => {
+            try {
+                console.log("uijhhjh", resposta.data)
+                setHistorico(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }
+
+    function Redirect(event) {
+        console.log(event)
+        if (event.target.value != "") {
+            sessionStorage.setItem("status", event.target.value);
+            getFiltro();
+        }
+    }
+
+
 
 
     return (
@@ -71,11 +77,11 @@ function HistoricoDonatario() {
                         <b><p>Histórico</p></b>
 
                         <div id="div_filtro"><p>Filtrar por</p>
-                            <select name="select_opcoes" id="select_opcoes">
-                                <option id='todos' onClick={((event) =>{Redirect(event)})}>Todos</option>
-                                <option id='andamento' onClick={((event) =>{Redirect(event)})}>Processo</option>
-                                <option id='doado' onClick={((event) =>{Redirect(event)})}>Doados</option>
-                                <option id='recebido' onClick={((event) =>{Redirect(event)})}>Recebidos</option>
+                            <select onChange={((event) => { Redirect(event) })} name="select_opcoes" id="select_opcoes">
+                                <option value='todos'>Todos</option>
+                                <option value='andamento'>Processo</option>
+                                <option value='doado'>Doados</option>
+                                <option value='recebido'>Recebidos</option>
                             </select>
                         </div>
 

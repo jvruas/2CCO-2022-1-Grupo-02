@@ -6,49 +6,57 @@ import rejeitar from '../html-css-template/imagens/reject.svg';
 import '../html-css-template/css/CardMatch.css'
 // import Header from './headerMatch';
 
-function Match() {
+function CardMatch() {
     return (
         <>
-    <div className='div_match'>
-    <div className="perfil_inf">
-                        <div classname="perfil_informacao">
-                            <div classname="perfil_conteudo">
-                                <div classname="foto">
-                                    <img src={fotoDeslogado} alt="" id="img_perfil"/>
+            <div className='div_match'>
+                <div className='perfil_inf'>
+                    <div className='div_imagem'>
+                        <img src={fotoDeslogado} alt="" />
+                    </div>
+                    <div className='div_informacao'>
+                        <div className='inf_sup'><b>
+                            <p>Igor</p>
+                        </b></div>
+                        <div className='inf_meio'><p>São Paulo - SP</p>
+                            <p>10/08/21</p></div>
+                        <div className='div_inf'><img src={estrela} alt="" />
+                            <p>3.0</p></div>
+                    </div>
+
+                    {/* <div classname="foto_match">
+                                    <img src={fotoDeslogado} alt="" />
                                 </div>
-                                <div classname="perfil_texto">
-                                <div classname="inf">
+                                <div classname='perfil_texto_match'>
+                                <div classname="inf_match">
                                         <b>
                                             <p>Igor</p>
                                         </b>
-                                       
                                     </div>
-                                    <div classname="inf">
+                                    <div classname='inf'>
                                         <p>São Paulo - SP</p>
                                         <p>10/08/21</p>
                                     </div>
-                                    <div>
+                                    <div className=''>
                                         <img src={estrela} alt="" />
-                                        <p></p>
+                                        <p>3.0</p>
                                     </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div id='div_resultado'>
-                        <div className='text_match'>Match</div>
-                        <div className='div_circulo'>
+                                </div> */}
+
+                </div>
+                <div id='div_resultado'>
+                    <div className='text_match'>Match</div>
+                    <div className='div_circulo'>
                         <div className='circulo'><p>90%</p></div>
                         <div className='imagens'>
-                        <img src={aceitar} alt="" />
-                        <img src={rejeitar} alt="" /></div>
-                        </div>
-
+                            <img src={aceitar} alt="" />
+                            <img src={rejeitar} alt="" /></div>
                     </div>
-    </div>
+
+                </div>
+            </div>
         </>
     );
 
 }
-export default Match;
+export default CardMatch;

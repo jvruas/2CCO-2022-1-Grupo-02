@@ -18,11 +18,10 @@ function Produto(props) {
         <div className="container-produto" onClick={DescricaoProdutoRedirect}>
             <div className="informacoes-produto">
                 <div className="superior"><img alt=""/> <div class="visualizacao"><p>{props.visualizacao}</p><img src={vector} alt="" /></div></div>
-                <div className="meio"><img src={foto} alt=""/></div>
+                <div className="meio"><img src={props.foto} alt=""/></div>
                 <div className="inferior"><p>{props.nome}</p></div>
             </div>
         </div>
     );
 }
-
 export default Produto

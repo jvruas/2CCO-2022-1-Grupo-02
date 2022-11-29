@@ -24,10 +24,7 @@ function Pesquisa() {
                 console.log(error)
             }
         })  
-    },[])
 
-    useEffect
-    (() => {
         let categoria = sessionStorage.getItem('tipoCategoria');
         apiProduto.get(`/categoria?idCategoria=${categoria}`).then((resposta) => {
             try {
@@ -59,9 +56,7 @@ function Pesquisa() {
                              />
                             )): ""}
 
-                            
-
-                                        
+                        
                         </div>
                     </div>
                 </div>
