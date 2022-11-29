@@ -2,7 +2,7 @@ import MenuSimples from "../components/MenuSimples";
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/Cadastro.css'
 import iconSenha from "../html-css-template/imagens/eye-slash-closed.png"
-import imgEtapa from "../html-css-template/imagens/etapas.png"
+import imgEtapa from "../html-css-template/imagens/etapas1.png"
 import imgEtapa2 from "../html-css-template/imagens/etapas2.png"
 import imgEtapa3 from "../html-css-template/imagens/etapas3.png"
 import iconCamera from "../html-css-template/imagens/icon-camera.svg"
@@ -12,8 +12,9 @@ import iconSeta2 from "../html-css-template/imagens/seta2.png"
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
 import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
-import { Link, useNavigate } from "react-router-dom";
 import iconOk from "../html-css-template/imagens/icon-ok.png"
+import fotoLogado from '../html-css-template/imagens/icon-logado-sem-foto.png';
+import { Link, useNavigate } from "react-router-dom";
 import apiUsuario from "../apiUsuario.js";
 import { useEffect, useState } from "react";
 
@@ -118,6 +119,9 @@ function Cadastro() {
                             } catch (error) {
                                 console.log(error)
                             }
+                        })
+                        .catch((error) => {
+                            navegar("/")
                         })
                 }).catch((error) => {
                     console.log(error)
