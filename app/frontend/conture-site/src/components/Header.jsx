@@ -42,7 +42,7 @@ function Header() {
                 let imgUrl = URL.createObjectURL(respostaImg.data)
                 document.getElementById("img_foto").src = imgUrl;
             }).catch((error) => {
-                console.log(error)
+                // console.log(error)
                 if (param == "OK") {
                     document.getElementById("img_foto").src = `${fotoLogado}`;
                 }
