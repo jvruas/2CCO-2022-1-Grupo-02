@@ -33,7 +33,6 @@ function EditarPerfil() {
     useEffect(() => {
         apiUsuario.get("/situacao-atual").then((resposta) => {
             try {
-                console.log(resposta.data)
                 setSituacaoAtual(resposta.data)
             } catch (error) {
                 console.log(error)
@@ -138,47 +137,43 @@ function EditarPerfil() {
             genero: valuesUsuario.genero != "" ? valuesUsuario.genero : usuarioLogado.genero,
             estadoCivil: valuesUsuario.estadoCivil != "" ? valuesUsuario.estadoCivil : usuarioLogado.estadoCivil,
             cep: valuesUsuario.cep != "" ? valuesUsuario.cep : usuarioLogado.cep,
-            uf: usuarioLogado.uf,
+            uf: "",
             grauEscolaridade: valuesUsuario.grauEscolaridade != "" ? valuesUsuario.grauEscolaridade : usuarioLogado.grauEscolaridade,
             telefone: valuesUsuario.telefone != "" ? valuesUsuario.telefone : usuarioLogado.telefone,
             fkSituacaoAtual: valuesUsuario.fkSituacaoAtual
+        }
+
+        if (valuesUsuario.telefone != "" && valuesUsuario.telefone.length < 11) {
+            document.getElementById("alerta-img2").style.display = "flex"
+            document.getElementById("msg-alerta").innerHTML = `Telefone inválido`
         }
 
         if (valuesUsuario.cep != "" || valuesUsuario.cep == "") {
             fetch(`https://viacep.com.br/ws/${usuarioLogado.cep}/json/`)
                 .then(res => res.json()).then(data => {
                     json.uf = data.uf
-                    //console.log(json)
+                    apiUsuario.put(`${sessionStorage.getItem('idUsuarioLogado')}/perfil`, json, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then((resposta) => {
+                        document.location.reload(true)
+                        //console.log(resposta.status)
+                    }).catch((error) => {
+                        console.log(error)
+                        console.log(json)
+                        document.getElementById("alerta-img2").style.display = "flex"
+                        document.getElementById("msg-alerta").innerHTML = `Erro`
+                    })
                 })
                 .catch((error) => {
                     console.log(error)
                     document.getElementById("alerta-img2").style.display = "flex"
                     document.getElementById("msg-alerta").innerHTML = `CEP inválido`
                 })
-        } 
-        
-        if (valuesUsuario.telefone != "" && valuesUsuario.telefone.length < 11) {
-            document.getElementById("alerta-img2").style.display = "flex"
-            document.getElementById("msg-alerta").innerHTML = `Telefone inválido`
-        } else {
-            apiUsuario.put(`${sessionStorage.getItem('idUsuarioLogado')}/perfil`, json, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then((resposta) => {
-                document.location.reload(true)
-                //console.log(resposta.status)
-            }).catch((error) => {
-                console.log(error)
-                console.log(json)
-                document.getElementById("alerta-img2").style.display = "flex"
-                document.getElementById("msg-alerta").innerHTML = `Erro`
-            })
         }
 
     }
-
-
 
     /* Função para enviar o código de validação e enviar o usuário para a página de validação */
     function validacao(event) {
@@ -208,8 +203,8 @@ function EditarPerfil() {
                         <div className="ep-opcao">
                             <Link className="link-p" to="/alterar-senha"><p>Trocar senha</p></Link>
                         </div>
-                        <div className="ep-opcao">
-                            <Link className="link-p" to="/validacao-usuario"><p>Validação</p></Link>
+                        <div className="as-opcao" onClick={validacao}>
+                            <p>Validação</p>
                         </div>
                     </div>
                     <div id="ep-parte-dois">

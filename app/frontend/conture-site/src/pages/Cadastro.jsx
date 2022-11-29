@@ -12,8 +12,9 @@ import iconSeta2 from "../html-css-template/imagens/seta2.png"
 import iconOpen from "../html-css-template/imagens/eye-slash-opened.png"
 import iconClose from "../html-css-template/imagens/eye-slash-closed.png"
 import iconError from "../html-css-template/imagens/exclamation-circle-fill.svg"
-import { Link, useNavigate } from "react-router-dom";
 import iconOk from "../html-css-template/imagens/icon-ok.png"
+import fotoLogado from '../html-css-template/imagens/icon-logado-sem-foto.png';
+import { Link, useNavigate } from "react-router-dom";
 import apiUsuario from "../apiUsuario.js";
 import { useEffect, useState } from "react";
 
@@ -118,6 +119,9 @@ function Cadastro() {
                             } catch (error) {
                                 console.log(error)
                             }
+                        })
+                        .catch((error) => {
+                            navegar("/")
                         })
                 }).catch((error) => {
                     console.log(error)

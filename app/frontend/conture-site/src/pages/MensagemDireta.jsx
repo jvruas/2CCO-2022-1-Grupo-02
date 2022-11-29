@@ -18,124 +18,52 @@ import apiMensagemDireto from "../apiMensagemDireta";
 function MensagemDireta() {
 
     const [chat, setChat] = useState([]);
-    var chatComFoto = [];
     const [remetente, setRemetente] = useState([]);
+    var remetentes = [];
     const [usuarioImg, setUsuarioImg] = useState([]);
 
+    /* Puxa todos os chats com o usuário logado */
     useEffect(() => {
         let idUsuarioLogado = sessionStorage.getItem('idUsuarioLogado');
         apiMensagemDireto.get(`chat/all?fkUsuarioRemetente=${idUsuarioLogado}`).then((resposta) => {
             try {
                 //console.log(resposta.data)
                 setChat(resposta.data)
-
-                if(chat.length > 0){
-        
-                    for(var i = 0; i < chat.length; i++){
-                        var field = chat[i];
-                        var novo = "";
-                        var x = 0;
-        
-                        apiUsuario.get(`${resposta.data[i].idUsuario}/imagem?tipoImagem=P`, 
-                        {responseType: 'blob'}).then((respostaImg) => {
-                            let imgUrl = URL.createObjectURL(respostaImg.data)   
-                            //console.log(imgUrl)
-                            for(var jsonX in field){
-                                var item_atual = '"'+jsonX+'":"'+field[jsonX]+'",';
-                                novo += item_atual + (x < 1 || x > 1 ? '' : `"foto": ${imgUrl},`);
-                                x++;
-                            }
-                        }).catch((error) => {
-                            console.log(error)
-                            for(var jsonX in field){
-                                var item_atual = '"'+jsonX+'":"'+field[jsonX]+'",';
-                                novo += item_atual + (x < 1 || x > 1 ? '' : `"foto": ${fotoLogado},`);
-                                x++;
-                            }
-                        })
-        
-                        novo = '{'+novo.substring(0,novo.length-1)+'}'; // removo a última vírgula
-                        chatComFoto[i] = JSON.parse(novo); // crio o objeto json
-                    }
-                }
-
-                console.log(chatComFoto);
             } catch (error) {
-                console.log(error)  
+                console.log(error)
             }
         })
     })
 
-    // useEffect(() => {
-    //     apiUsuario.get(`/${chat.idUsuario}`).then((resposta) => {
-    //         try {
-    //             console.log(resposta.data)
-    //             setRemetente(resposta.data)   
-    //         } catch (error) {
-    //             console.log(error)  
-    //         }
-    //     })
-    // })
-
-    // const getFoto = () => {
-
-    //     if(chat.length > 0){
-    //         var newField = [];
-
-    //         for(var i = 0; i < chat.length; i++){
-    //             var field = chat[i];
-    //             var novo = "";
-    //             var x = 0;
-
-    //             apiUsuario.get(`${chat[i].idUsuario}/imagem?tipoImagem=P`, 
-    //             {responseType: 'blob'}).then((respostaImg) => {
-    //                 let imgUrl = URL.createObjectURL(respostaImg.data)   
-    //                 console.log(imgUrl)
-    //                 for(var jsonX in field){
-    //                     var item_atual = '"'+jsonX+'":"'+field[jsonX]+'",';
-    //                     novo += item_atual + (x < 1 || x > 1 ? '' : `"foto": ${imgUrl},`);
-    //                     x++;
-    //                 }
-    //             }).catch((error) => {
-    //                 console.log(error)
-    //                 for(var jsonX in field){
-    //                     var item_atual = '"'+jsonX+'":"'+field[jsonX]+'",';
-    //                     novo += item_atual + (x < 1 || x > 1 ? '' : `"foto": ${fotoLogado},`);
-    //                     x++;
-    //                 }
-    //             })
-
-    //             novo = '{'+novo.substring(0,novo.length-1)+'}'; // removo a última vírgula
-    //             newField[i] = JSON.parse(novo); // crio o objeto json
-    //         }
-    //     }
-    //     apiUsuario.get(`${chat.idUsuario}/imagem?tipoImagem=P`, 
-    //             {responseType: 'blob'}).then((respostaImg) => {
-    //                 let imgUrl = URL.createObjectURL(respostaImg.data)   
-    //                 console.log(imgUrl)
-    //                 return imgUrl
-    //             }).catch((error) => {
-    //                 console.log(error)
-    //                 return fotoLogado
-    //             })
+    // function fotoPorId(id) {
+    //     apiUsuario.get(`${id}/imagem?tipoImagem=P`,
+    //         { responseType: 'blob' }).then((respostaImg) => {
+    //             let imgUrl = URL.createObjectURL(respostaImg.data)
+    //             return imgUrl;
+    //         }).catch((error) => {
+    //             //console.log(error)
+    //             return fotoLogado;
+    //         })
     // }
 
-    function formatacaoId(id){
+
+
+    function formatacaoId(id) {
         //console.log("tamanho" + id.length)
-        if(id.length == 1){
+        if (id.length == 1) {
             return "#000" + id;
-        }else if(id.length == 2){
+        } else if (id.length == 2) {
             return "#00" + id;
-        }else if(id.length == 3){
+        } else if (id.length == 3) {
             return "#0" + id;
-        }else{
+        } else {
             return "#" + id;
         }
     }
 
     return (
         <>
-            <Header/>
+            <Header />
             <section id="md-section">
                 <div className="grid">
                     <div id="md-parte-um">
@@ -150,14 +78,14 @@ function MensagemDireta() {
                         </div>
                         <div id="md-chats">
                             <div className="md-chats-interno scroll">
-                            {chat != undefined && chat.length > 0 ? chat.map((chat) => (
-                            <Chat
-                                //foto={}
-                                nome={chat.nome}
-                                id={formatacaoId(chat.idUsuario)}
-                            />
-                        )) : ""}
-                               
+                                {chat != undefined && chat.length > 0 ? chat.map((chat) => (
+                                    <Chat
+                                        //foto={fotoPorId(chat.idUsuario)}
+                                        nome={chat.nome}
+                                        id={formatacaoId(chat.idUsuario)}
+                                    />
+                                )) : ""}
+
                             </div>
                         </div>
                     </div>
@@ -172,9 +100,9 @@ function MensagemDireta() {
                             </div>
                         </div>
                         <div id="md-mensagens" className="scroll">
-                           <MensagemOutro/>
-                           <MensagemUsuario/>
-                    
+                            <MensagemOutro />
+                            <MensagemUsuario />
+
                         </div>
                         <div id="md-enviar-mensagem">
                             <input type="text" />

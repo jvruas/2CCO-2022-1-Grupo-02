@@ -19,6 +19,7 @@ function Header() {
 
     const [usuarioHeader, setUsuarioHeader] = useState([]);
 
+    /* Puxa as informações do usuário logado */
     useEffect(() => {
         let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
         apiUsuario.get(`/${idUsuarioHeader}`).then((resposta) => {
@@ -29,22 +30,23 @@ function Header() {
                 console.log(error)
             }
         })
-        
-    },[])
 
+    }, [])
+
+    /* Puxa as fotos do usuário logado */
     useEffect(() => {
         let param = sessionStorage.getItem('logado');
         let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
-        apiUsuario.get(`${idUsuarioHeader}/imagem?tipoImagem=P`, 
-        {responseType: 'blob'}).then((respostaImg) => {
-            let imgUrl = URL.createObjectURL(respostaImg.data)
-            document.getElementById("img_foto").src = imgUrl;
-        }).catch((error) => {
-            console.log(error)
-            if (param == "OK") {
-                document.getElementById("img_foto").src = `${fotoLogado}`;
-            }
-        })
+        apiUsuario.get(`${idUsuarioHeader}/imagem?tipoImagem=P`,
+            { responseType: 'blob' }).then((respostaImg) => {
+                let imgUrl = URL.createObjectURL(respostaImg.data)
+                document.getElementById("img_foto").src = imgUrl;
+            }).catch((error) => {
+                console.log(error)
+                if (param == "OK") {
+                    document.getElementById("img_foto").src = `${fotoLogado}`;
+                }
+            })
         if (param == "OK") {
             document.getElementById("nome_usuario").innerHTML = `${usuarioHeader.nome}`;
         } else {
@@ -53,6 +55,7 @@ function Header() {
         }
     })
 
+    /* Faz logoff do usuário logado */
     function logoff(event) {
         event.preventDefault()
         sessionStorage.setItem('logado', "")
@@ -71,6 +74,7 @@ function Header() {
 
     }
 
+    /* Mostra o menu dependendo se tem usuário está logado ou não */
     const mostrarMenu = () => {
         var menu = document.getElementById("he-tooltip");
         let param = sessionStorage.getItem('logado');
@@ -91,6 +95,7 @@ function Header() {
         }
     }
 
+    /* Direciona para página de cadastro de produto dependendo se tem usuário está logado ou não */
     const redirecionarDoar = () => {
         let param = sessionStorage.getItem('logado');
         if (param == "OK") {
@@ -100,6 +105,7 @@ function Header() {
         }
     }
 
+    /* Direciona para página mensagem direta dependendo se tem usuário está logado ou não */
     const redirecionarMensagemD = () => {
         let param = sessionStorage.getItem('logado');
         if (param == "OK") {
@@ -109,10 +115,9 @@ function Header() {
         }
     }
 
-    
-    function PesquisarRedirect(){
+    function PesquisarRedirect() {
         const value = document.getElementById("input_pesq").value;
-        sessionStorage.setItem("pesquisa",value);
+        sessionStorage.setItem("pesquisa", value);
         navegar("/pesquisa");
         document.location.reload(true);
         console.log(value);
@@ -133,7 +138,7 @@ function Header() {
         }
     }
 
-    
+
     return (
         <>
             <header id="header_completo">
@@ -143,7 +148,7 @@ function Header() {
                         <div id="input_pesquisar">
                             <input type="text" id="input_pesq" />
                             <button onClick={PesquisarRedirect}>
-                                <img src={lupa} alt="Lupa de pesquisa" />   
+                                <img src={lupa} alt="Lupa de pesquisa" />
                             </button>
                         </div>
                         <div id="div_usuario" onClick={mostrarMenu}>
@@ -178,7 +183,7 @@ function Header() {
                         </div>
                         <button type="button" id="btn_doacao" onClick={redirecionarDoar}>
                             <p>DOAR PRODUTO</p>
-                            <img src={adicionarProduto} alt="" />
+                            <img src={adicionarProduto} alt="Ícone de soma" />
                         </button>
                     </div>
                 </div>
@@ -188,10 +193,10 @@ function Header() {
                         <img src={setaBaixo} alt="" className="img_seta" />
                     </div>
                     <div id="div_produtos">
-                        <p id='1' onClick={((event) =>{Redirect(event)})}>Notebook</p>
-                        <p id='3' onClick={((event) =>{Redirect(event)})}>Celular</p>
-                        <p id='2' onClick={((event) =>{Redirect(event)})}>Tablet</p>
-                        <p id='4' onClick={((event) =>{Redirect(event)})}>Desktop</p>
+                        <p id='1' onClick={((event) => { Redirect(event) })}>Notebook</p>
+                        <p id='3' onClick={((event) => { Redirect(event) })}>Celular</p>
+                        <p id='2' onClick={((event) => { Redirect(event) })}>Tablet</p>
+                        <p id='4' onClick={((event) => { Redirect(event) })}>Desktop</p>
                     </div>
                 </div>
 

@@ -1,11 +1,8 @@
-import logo from '../html-css-template/imagens/logo-conture.png'
-import foto from '../html-css-template/imagens/foto.jpg';
 import estrela from '../html-css-template/imagens/star16.svg';
-import fotoLogado from '../html-css-template/imagens/foto.jpg';
-// import fotoDeslogado from '../html-css-template/imagens/icone_pessoa.png';
-import imgPerfil from '../html-css-template/imagens/imagem_fundo.jpg';
+import fotoLogado from '../html-css-template/imagens/icon-logado-sem-foto.png';
+import fotoCapa from '../html-css-template/imagens/capa-fundo.jpg';
 import '../html-css-template/css/Perfil.css'
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiUsuario from "../apiUsuario.js";
 import apiProdutos from "../apiProduto.js";
@@ -21,8 +18,8 @@ function Perfil() {
     const [usuario, setUsuario] = useState([]);
     const [endereco, setEndereco] = useState([]);
     const [nota, setNota] = useState([]);
-    const [usuarioImg, setUsuarioImg] = useState([]);
 
+    /* Puxa as informações do usuário logado */
     useEffect(() => {
         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
         apiUsuario.get(`/${idUsuario}`).then((usuarioResposta) => {
@@ -30,16 +27,46 @@ function Perfil() {
                 console.log(usuarioResposta.data)
                 setUsuario(usuarioResposta.data)
                 fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
-                .then(res => res.json()).then(data => {
-                    console.log(data)
-                    setEndereco(data)
-                })
+                    .then(res => res.json()).then(data => {
+                        //console.log(data)
+                        setEndereco(data)
+                    })
             } catch (error) {
                 console.log(error)
             }
         })
     }, [])
 
+    /* Puxa as fotos do usuário logado */
+    useEffect(() => {
+        let param = sessionStorage.getItem('logado');
+        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+        apiUsuario.get(`${idUsuario}/imagem?tipoImagem=P`,
+            { responseType: 'blob' }).then((respostaImg) => {
+                let imgUrl = URL.createObjectURL(respostaImg.data)
+                document.getElementById("img_perfil").src = imgUrl;
+                sessionStorage.setItem('fotoUsuario', "Sim")
+            }).catch((error) => {
+                if (param == "OK") {
+                    document.getElementById("img_perfil").src = `${fotoLogado}`;
+                    sessionStorage.setItem('fotoUsuario', "Não")
+                }
+            })
+
+        apiUsuario.get(`${idUsuario}/imagem?tipoImagem=B`,
+            { responseType: 'blob' }).then((respostaImg) => {
+                let imgUrl = URL.createObjectURL(respostaImg.data)
+                document.getElementById("img_banner").src = imgUrl;
+                sessionStorage.setItem('fotoBanner', "Sim")
+            }).catch((error) => {
+                if (param == "OK") {
+                    document.getElementById("img_banner").src = `${fotoCapa}`;
+                    sessionStorage.setItem('fotoBanner', "Não")
+                }
+            })
+    })
+
+    /* Puxa as avaliações do usuário logado */
     useEffect(() => {
         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
         apiProdutos.get(`avaliacao/stats?idDoador=${idUsuario}`).then((resposta) => {
@@ -52,57 +79,84 @@ function Perfil() {
         })
     }, [])
 
+    /* Muda a foto do banner */
+    // useEffect(() => {
 
+    //         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+    //         var fotoBanner = document.getElementById("fotoBanner");
+    //         let formData = new FormData();
+    //         formData.append("file", fotoBanner.files[0]);
 
-    useEffect(() => {
-        let param = sessionStorage.getItem('logado');
-        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-        if(param == "OK"){
-            document.getElementById("nome_usuario").innerHTML = `${usuario.nome}`; 
-            document.getElementById("img_perfil").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=P`;
-            document.getElementById("img_banner").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=B`;  
-        }else{
-            document.getElementById("nome_usuario").innerHTML = "Usuário";  
-            document.getElementById("img_perfil").src = `${fotoDeslogado}`;
-        }
-    })
-    
-  let dataCad = new Date(usuario.dataCadastro);
-    
+    //         let config = {
+    //             headers: {
+    //                 'Content-Type': 'multipart/form-data'
+    //             },
+    //         }
+
+    //         if (sessionStorage.getItem('fotoBanner') == "Sim") {
+    //             apiUsuario.post(`/${idUsuario}/imagem?tipoImagem=B`, formData, config)
+    //                 .then((respostaImg) => {
+    //                     try {
+    //                         document.location.reload(true)
+    //                     } catch (error) {
+    //                         console.log(error)
+    //                     }
+    //                 })
+    //                 .catch((error) => {
+    //                     document.location.reload(true)
+    //                 })
+    //         } else {
+    //             apiUsuario.patch(`/${idUsuario}/imagem?tipoImagem=B`, formData, config)
+    //                 .then((respostaImg) => {
+    //                     try {
+    //                         document.location.reload(true)
+    //                     } catch (error) {
+    //                         console.log(error)
+    //                     }
+    //                 })
+    //                 .catch((error) => {
+    //                     document.location.reload(true)
+    //                 })
+    //         }
+        
+    // })
+
+    let dataCad = new Date(usuario.dataCadastro);
 
     return (
         <>
-                <div id="perfil">
-                    <div id="perfil_imagem">
-                        <img src={imgPerfil} alt="" id="img_banner"/>
-                    </div>
-                    <div id="perfil_inf">
-                        <div id="perfil_informacao">
-                            <div id="perfil_conteudo">
-                                <div id="foto">
-                                    <img src={fotoDeslogado} alt="" id="img_perfil"/>
-                                </div>
-                                <div id="perfil_texto">
+            <div id="perfil">
+                <div id="perfil_imagem">
+                    <label htmlFor="fotoBanner"><img src={fotoCapa} alt="" id="img_banner" /></label>
+                    <input type="file" accept="image/*" name="fotoBanner" id="fotoBanner" />
+                </div>
+                <div id="perfil_inf">
+                    <div id="perfil_informacao">
+                        <div id="perfil_conteudo">
+                            <div id="foto">
+                                <label htmlFor="fotoPerfilUsuario"><img src={fotoLogado} alt="" id="img_perfil" /></label>
+                                <input type="file" accept="image/*" name="fotoPerfilUsuario" id="fotoPerfilUsuario" />
+                            </div>
+                            <div id="perfil_texto">
                                 <div class="inf">
-                                        <b>
-                                            <p>{usuario.nome}</p>
-                                        </b>
-                                        <p>#0{usuario.idUsuario}</p>
-                                    </div>
-                                    <div class="inf">
-                                        <p>{endereco.localidade} - {endereco.uf}</p>
-                                        <p>Desde {months[dataCad.getMonth()]}/{dataCad.getFullYear()}</p>
-                                    </div>
-                                    <div>
-                                        <img src={estrela} alt="" />
-                                        <p>{nota.mediaAvaliacoes}</p>
-                                    </div>
+                                    <b>
+                                        <p>{usuario.nome}</p>
+                                    </b>
+                                    <p>#0{usuario.idUsuario}</p>
+                                </div>
+                                <div class="inf_cidade_data">
+                                    <p>{endereco.localidade} - {endereco.uf}</p>
+                                    <p>Desde {months[dataCad.getMonth()]}/{dataCad.getFullYear()}</p>
+                                </div>
+                                <div>
+                                    <img src={estrela} alt="Estrela de avaliação" />
+                                    <p className="nota_avaliacao">{nota.mediaAvaliacoes == undefined ? "5.0" : nota.mediaAvaliacoes}</p>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
+            </div>
         </>
     );
 }
