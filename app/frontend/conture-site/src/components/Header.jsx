@@ -18,7 +18,7 @@ function Header() {
     const navegar = useNavigate();
 
     const [usuarioHeader, setUsuarioHeader] = useState([]);
-
+    const [categorias, setCategoria] = useState([]);
     /* Puxa as informações do usuário logado */
     useEffect(() => {
         let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
@@ -129,6 +129,7 @@ function Header() {
     function PesquisarRedirect() {
         const value = document.getElementById("input_pesq").value;
         sessionStorage.setItem("pesquisa", value);
+        sessionStorage.setItem("nomeBuscado", value);
         navegar("/pesquisa");
         document.location.reload(true);
         console.log(value);
@@ -137,20 +138,42 @@ function Header() {
     function Redirect(event) {
 
         if (event.target.id != "") {
-
+            const value = document.getElementsByName("input_pesq").value;
             sessionStorage.setItem("tipoCategoria", event.target.id);
+            sessionStorage.setItem("nomeBuscado", categorias.nome);
             navegar("/pesquisa")
             document.location.reload(true);
         }
+
         else {
             sessionStorage.setItem("tipoCategoria", event.nativeEvent.path[1].id);
+            sessionStorage.setItem("nomeBuscado", categorias.nome);
             navegar("/pesquisa")
             document.location.reload(true);
         }
     }
 
+    function RedirectCat(event) {
+
+        if (event.target.id != "") {
+
+            sessionStorage.setItem("tipoCategoria", event.target.id);
+            sessionStorage.setItem("nomeBuscado", categorias.nome);
+            navegar("/pesquisa")
+            document.location.reload(true);
+        }
+
+        else {
+            sessionStorage.setItem("tipoCategoria", event.nativeEvent.path[1].id);
+            sessionStorage.setItem("nomeBuscado", categorias.nome);
+            navegar("/pesquisa")
+            document.location.reload(true);
+        }
+
+    }
+
     /* Função que chama o endPoint que traz todas as categorias */
-    const [categorias, setCategoria] = useState([]);
+    // const [categorias, setCategoria] = useState([]);
 
     useEffect(() => {
         apiProduto.get("/todas-categorias").then((resposta) => {
@@ -229,7 +252,7 @@ function Header() {
                 <div>
                     {
                         categorias.map((categoria) => (
-                            <p id={categoria.idCategoriaProduto} value={categoria.idCategoriaProduto} onClick={((event) => { Redirect(event) })}>{categoria.nome}</p>
+                            <p id={categoria.idCategoriaProduto} value={categoria.idCategoriaProduto} name onClick={((event) => { RedirectCat(event) })}>{categoria.nome}</p>
                         ))
                     }
                 </div>
