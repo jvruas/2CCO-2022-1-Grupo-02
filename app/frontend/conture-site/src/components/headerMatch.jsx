@@ -1,6 +1,6 @@
 import '../html-css-template/css/Style.css' 
 
-import '../html-css-template/css/CardMatch.css'
+import '../html-css-template/css/match.css'
 
 function Match() {
     return (

@@ -9,37 +9,37 @@
     text-decoration: none;
 }
 
-.div_conteiner{
-    height: 400px;
+.div_conteiner_ava{
+    height: 450px;
     width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 3px;
-    justify-content: space-between;
+    justify-content: space-around;
     position: relative;
     background-color: #FFF;
 }
 
-.div_sup {
+.div_sup_ava {
 
     height: 50px;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    
+    /* background-color: aqua; */
 }
 
-.div_sup img {
+.div_sup_ava img {
     height: 20px;
     width: 20px;
     position: absolute;
-    top: 10px;
+    top: 25px;
    left: 470px;
 }
 
-.div_sup p {
+.div_sup_ava p {
     font-weight: bold;
 }
 
@@ -50,22 +50,23 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    /* background-color: #FC0; */
 }
 
 
-.div_inf {
-    height: 220px;
+.div_inf_ava {
+    height: 250px;
     width: 90%;
     margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    
+    /* background-color: #7724BE; */
     
 }
 
 
-.div_inf input {
+.div_inf_ava input {
     height: 120px;
     width: 100%;
     border: none;
@@ -87,7 +88,7 @@
     background-color: #7724BE;
     font-size: 14px;
     color: #FFF;
-    border: solid 1px black;
+    border: none;
     font-weight: bold;
 
 }
@@ -103,9 +104,15 @@
     background:rgba(0,0,0,.4);  
 }
 
+.estrelas{
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+}
 
 .estrelas input[type=radio] {
     display: none;
+    margin-left: 15px;
   }
   .estrelas label i.fa{
     font-size: 2.3em
