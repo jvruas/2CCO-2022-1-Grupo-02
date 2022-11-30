@@ -193,10 +193,10 @@ function Header() {
                         <img src={setaBaixo} alt="" className="img_seta" />
                     </div>
                     <div id="div_produtos">
-                        <p id='1' onClick={((event) => { Redirect(event) })}>Notebook</p>
-                        <p id='3' onClick={((event) => { Redirect(event) })}>Celular</p>
-                        <p id='2' onClick={((event) => { Redirect(event) })}>Tablet</p>
-                        <p id='4' onClick={((event) => { Redirect(event) })}>Desktop</p>
+                        <p id='7' onClick={((event) => { Redirect(event) })}>Notebook</p>
+                        <p id='1' onClick={((event) => { Redirect(event) })}>Celular</p>
+                        <p id='8' onClick={((event) => { Redirect(event) })}>Tablet</p>
+                        <p id='2' onClick={((event) => { Redirect(event) })}>Desktop</p>
                     </div>
                 </div>
 

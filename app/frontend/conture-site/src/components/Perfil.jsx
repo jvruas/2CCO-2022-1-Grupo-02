@@ -28,7 +28,6 @@ function Perfil() {
                 setUsuario(usuarioResposta.data)
                 fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
                     .then(res => res.json()).then(data => {
-                        //console.log(data)
                         setEndereco(data)
                     })
             } catch (error) {
@@ -71,7 +70,6 @@ function Perfil() {
         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
         apiProdutos.get(`avaliacao/stats?idDoador=${idUsuario}`).then((resposta) => {
             try {
-                console.log(resposta.data)
                 setNota(resposta.data)
             } catch (error) {
                 console.log(error)
