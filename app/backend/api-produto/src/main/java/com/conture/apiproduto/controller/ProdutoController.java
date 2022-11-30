@@ -1,5 +1,6 @@
 package com.conture.apiproduto.controller;
 
+import com.conture.apiproduto.api.rest.mensagemdireta.MensagemDiretaClient;
 import com.conture.apiproduto.api.rest.usuario.UsuarioResposta;
 import com.conture.apiproduto.model.dto.request.AvaliacaoRequest;
 import com.conture.apiproduto.model.dto.response.*;
@@ -61,6 +62,9 @@ public class ProdutoController {
 
 	@Autowired
 	private UsuarioClient usuarioClient;
+
+	@Autowired
+	private MensagemDiretaClient mensagemDiretaClient;
 
 	PilhaObj<String> pilhaHistorico = new PilhaObj<>(10);
 
@@ -647,6 +651,14 @@ public class ProdutoController {
 
 		this.matchRepository.updateStatusTrueById(idMatch.get());
 		this.produtoRepository.updateStatusTrueAndDataConclusaoNowById(idProduto, Date.from(Instant.now()));
+
+		try {
+			this.mensagemDiretaClient.adicionarChat(idDoadorRequest, idDonatarioRequest);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+		}
 
 		return status(200).build();
 	}
