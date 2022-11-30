@@ -10,8 +10,8 @@ import adicionarProduto from '../html-css-template/imagens/subtract.svg';
 import '../html-css-template/css/Style.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import apiProduto from '../apiProduto';
 import apiUsuario from "../apiUsuario.js";
-import api from '../api';
 
 function Header() {
 
@@ -95,6 +95,17 @@ function Header() {
         }
     }
 
+     /* Mostra categoria de produtos */
+     const mostrarCategorias = () => {
+        var menu = document.getElementById("todas-categorias");
+        if (menu.style.visibility == "hidden") {
+            menu.style.visibility = "visible";
+        }
+        else {
+            menu.style.visibility = "hidden";
+        }
+    }
+
     /* Direciona para página de cadastro de produto dependendo se tem usuário está logado ou não */
     const redirecionarDoar = () => {
         let param = sessionStorage.getItem('logado');
@@ -122,21 +133,35 @@ function Header() {
         document.location.reload(true);
         console.log(value);
     }
-    
-    function Redirect(event){
- 
-        if(event.target.id != ""){
-            
+
+    function Redirect(event) {
+
+        if (event.target.id != "") {
+
             sessionStorage.setItem("tipoCategoria", event.target.id);
             navegar("/pesquisa")
             document.location.reload(true);
         }
-        else{
+        else {
             sessionStorage.setItem("tipoCategoria", event.nativeEvent.path[1].id);
             navegar("/pesquisa")
             document.location.reload(true);
         }
     }
+
+    /* Função que chama o endPoint que traz todas as categorias */
+    const [categorias, setCategoria] = useState([]);
+
+    useEffect(() => {
+        apiProduto.get("/todas-categorias").then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setCategoria(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
 
 
     return (
@@ -188,7 +213,7 @@ function Header() {
                     </div>
                 </div>
                 <div id="header_inferior">
-                    <div id="div_produto">
+                    <div id="div_produto" onClick={mostrarCategorias}>
                         <p>Produtos</p>
                         <img src={setaBaixo} alt="" className="img_seta" />
                     </div>
@@ -199,8 +224,16 @@ function Header() {
                         <p id='2' onClick={((event) => { Redirect(event) })}>Desktop</p>
                     </div>
                 </div>
-
             </header>
+            <div id="todas-categorias">
+                <div>
+                    {
+                        categorias.map((categoria) => (
+                            <p id={categoria.idCategoriaProduto} value={categoria.idCategoriaProduto} onClick={((event) => { Redirect(event) })}>{categoria.nome}</p>
+                        ))
+                    }
+                </div>
+            </div>
 
         </>
     );

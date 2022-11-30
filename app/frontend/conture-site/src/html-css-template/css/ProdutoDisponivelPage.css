@@ -47,6 +47,6 @@
 .div_card{
     height: 300px;
     width: 100%;
-    display:grid;
+    display: grid;
     grid-template-columns:25% 25% 25% 25%;
 }

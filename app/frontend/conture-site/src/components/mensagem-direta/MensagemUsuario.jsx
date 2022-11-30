@@ -1,11 +1,11 @@
 import '../../html-css-template/css/MensagemDireta.css';
 
-function MensagemUsuario() {
+function MensagemUsuario(props) {
 
     return (
         <>
             <div className="md-msg-eu">
-                <p>Boa tarde! Tudo ótimo e com você?</p>
+                <p>{props.mensagem}</p>
             </div>
         </>
     )

@@ -72,7 +72,7 @@ function Perfil() {
             try {
                 setNota(resposta.data)
             } catch (error) {
-                console.log(error)
+                //console.log(error)
             }
         })
     }, [])
