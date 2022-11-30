@@ -6,6 +6,13 @@ function Comentarios(props){
 
     const [nome, setNome] = useState([]);
 
+    if(props.idMensagemPrincipal==900){
+        setNomeResposta({
+            "nome": "Conture",
+            "sobrenome": ""
+          })
+    }
+
     useEffect(() => {
         apiUsuario
                     .get(`/${props.idMensagemPrincipal}`)
@@ -28,6 +35,7 @@ function Comentarios(props){
                     apiUsuario
                     .get(`/${props.mensagemResposta[i].fkUsuario}`)
                     .then((resposta) => {
+                        console.log("mamamia", resposta.data)
                         setNomeResposta(resposta.data)
                     });
                     resposta.innerHTML += `<div className="message-answer-description"

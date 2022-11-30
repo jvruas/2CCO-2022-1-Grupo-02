@@ -1,6 +1,4 @@
 import CarouselLib from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import "../html-css-template/css/DescricaoProduto.css"
 
 function CarouselProdutos(props){
 return(
