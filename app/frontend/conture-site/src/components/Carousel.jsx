@@ -1,7 +1,7 @@
 import CarouselLib from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-function Carousel(props){
+function  Carousel(props){
 return(
 <CarouselLib
   additionalTransfrom={0}

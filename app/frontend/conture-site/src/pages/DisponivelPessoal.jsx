@@ -4,7 +4,7 @@ import MenuPerfil from "../components/MenuDisponivelPessoal"
 import '../html-css-template/css/ProdutoDisponivelPage.css'
 import Footer from "../components/Footer"
 import Card from "../components/ProdutoPessoalCop"
-import Filtro from "../html-css-template/imagens/filtro.svg";
+import Filtro from "../html-css-template/imagens/Filtro.svg";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiProdutos from "../apiProduto.js"

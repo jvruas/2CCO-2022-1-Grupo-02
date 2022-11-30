@@ -15,6 +15,7 @@ import apiViaCep from "../apiViaCep";
 import IconLocation from "../html-css-template/imagens/iconLocation.svg";
 import FotoPadrao from "../html-css-template/imagens/foto.jpg"
 import { Link, useNavigate } from "react-router-dom";
+import ErrorBoundary from "./ErrorBoundary"
 
 var produtosDoacao = 0;
 var produtosDoados = 0;
@@ -55,7 +56,28 @@ function DescricaoProduto() {
     apiMensagemGrupo
       .get(`/${sessionStorage.getItem("idProduto")}`)
       .then((resposta) => {
-        setMensagem(resposta.data);
+        console.log("aicalica",resposta.data)
+        try{
+          if(resposta.data.trim()==""){
+            var a = [[{
+              "idMensagemGrupo": "",
+              "mensagem": "Faça aqui sua pergunta ao doador!",
+              "data": "2022-06-01T14:50:27.886+00:00",
+              "fkUsuario": 900,
+              "fkProdutoDoacao": "",
+              "fkMensagemPrincipal": null
+            },,
+            ]]
+            setMensagem(a)
+
+          }
+          else{
+            setMensagem(resposta.data);
+          }
+        }catch(e){
+          setMensagem(resposta.data)
+        }
+        
         console.log("teste", resposta.data);
       });
 
@@ -118,6 +140,8 @@ function DescricaoProduto() {
         image={Computador}
       ></CarouselProdutos>
 
+
+      <ErrorBoundary>
       <CardComentarios
       comentarios=
         {mensagem.map((itemMensagem) =>
@@ -130,8 +154,10 @@ function DescricaoProduto() {
         </Comentarios>
         )}
       >
-
       </CardComentarios>
+
+      </ErrorBoundary>
+
       
 
       
