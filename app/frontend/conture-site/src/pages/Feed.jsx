@@ -9,18 +9,6 @@ import apiProduto from "../apiProduto.js";
 import apiUsuario from "../apiUsuario";
 
 function Feed() {
-
-
-    function pegarImagemPro(idProduto){
-        apiProduto.get(`${idProduto}/imagem-principal`, 
-        {responseType: 'blob'}).then((respostaImg) => {
-            let imgUrl = URL.createObjectURL(respostaImg.data)
-            return imgUrl;
-        }).catch((error) => {
-            console.log(error)
-        })
-    }
-        
     
     const [produtosNote, setProdutosNote] = useState([]);
     const [produtosCelular, setProdutosCelular] = useState([]);

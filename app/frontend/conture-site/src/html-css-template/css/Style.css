@@ -193,7 +193,7 @@ footer {
     width: 20px;
 }
 
-.he-link-img{
+.he-link-img {
     height: 24px;
     width: 20px;
 }
@@ -279,16 +279,16 @@ footer {
 
 #triangulo-para-cima {
     position: relative;
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     top: -10%;
     left: 78.5%;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 15px solid #FFFFFF;
-  }
+}
 
-#menuzinho-deslogado{
+#menuzinho-deslogado {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -299,30 +299,30 @@ footer {
     top: -5%;
 }
 
-#menuzinho-deslogado div{
+#menuzinho-deslogado div {
     width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.mn-parte-um{
+.mn-parte-um {
     height: 40%;
     justify-content: center;
     border-bottom: 1px solid #000000;
 }
 
-.mn-parte-dois{
+.mn-parte-dois {
     height: 60%;
     justify-content: space-evenly;
 }
 
-.mn-parte-dois p{
+.mn-parte-dois p {
     font-size: 13px;
     font-weight: bold;
 }
 
-#menuzinho-deslogado button{
+#menuzinho-deslogado button {
     height: 35px;
     width: 100%;
     border: none;
@@ -333,7 +333,7 @@ footer {
     background-color: #7724BE;
 }
 
-#menuzinho-logado{
+#menuzinho-logado {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -344,7 +344,7 @@ footer {
     top: -5%;
 }
 
-#menuzinho-logado button{
+#menuzinho-logado button {
     height: 35px;
     width: 90%;
     color: #FFFFFF;
@@ -355,23 +355,44 @@ footer {
     background-color: #7724BE;
 }
 
-.he-link-p{
+.he-link-p {
     color: #000000;
     font-size: 14px;
     font-weight: bold;
 }
 
-.he-link-p:hover{
+.he-link-p:hover {
     font-size: 14.5px;
     font-weight: bolder;
 }
 
-.he-link-btn{
+.he-link-btn {
     color: #FFFFFF;
     font-size: 14px;
     font-weight: bold;
 }
 
-#menuzinho-deslogado button:hover, #menuzinho-logado button:hover{
+#menuzinho-deslogado button:hover,
+#menuzinho-logado button:hover {
     background-color: #2F0E4C;
+}
+
+#todas-categorias {
+    position: absolute;
+    height: 400px;
+    width: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    visibility: hidden;
+    z-index: 1;
+    background-color: #5C337F;
+}
+
+#todas-categorias > div {
+    height: 370px;
+    width: 300px;
+    display: grid;
+    grid-template-rows: 30px 30px 30px 30px 30px 30px 30px 30px 30px;  
 }

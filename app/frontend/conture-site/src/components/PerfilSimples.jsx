@@ -61,7 +61,7 @@ function PerfilSimples() {
                     document.getElementById("img_banner").src = `${fotoCapa}`;
                 }
             })
-    })
+    }, [])
 
     /* Puxa as avaliações do usuario doador */
     useEffect(() => {
@@ -74,6 +74,19 @@ function PerfilSimples() {
             }
         })
     }, [])
+
+     
+    function formatacaoId(id) {
+        if (id < 10) {
+            return "#000" + id;
+        } else if (id < 100) {
+            return "#00" + id;
+        } else if (id < 1000) {
+            return "#0" + id;
+        } else {
+            return "#" + id;
+        }
+    }
 
     /* Redireciona para o popUp de reporte */
     function RedirectReport() {
@@ -101,7 +114,7 @@ function PerfilSimples() {
                                     <b>
                                         <p>{usuarioPerfil.nome}</p>
                                     </b>
-                                    <p>#0{usuarioPerfil.idUsuario}</p>
+                                    <p>{formatacaoId(usuarioPerfil.idUsuario)}</p>
                                 </div>
                                 <div class="inf">
                                     <p>{endereco.localidade} - {endereco.uf}</p>

@@ -24,6 +24,16 @@ function dataProduto() {
     }
 }
 
+function dataPreferencia() {
+    return {
+        faixaEtaria: "",
+        estadoCivil: "",
+        grauEscolaridade: "",
+        fkSituacaoAtual: "",
+        fkProdutoDoacao: ""
+    }
+}
+
 function CadastroProduto() {
 
     const navegar = useNavigate();
@@ -59,12 +69,24 @@ function CadastroProduto() {
 
 
     // Função para chamar o endPoint para cadastrar produto
-    const [valuesProduto, setValuesProduto] = useState(dataProduto)
+    const [valuesProduto, setValuesProduto] = useState(dataProduto);
+    const [valuesPreferencia, setValuesPreferencia] = useState(dataPreferencia);
+    var fotoPrincipal = document.getElementById("foto1");
+    var foto2 = document.getElementById("foto2");
+    var foto3 = document.getElementById("foto3");
+    var foto4 = document.getElementById("foto4");
+    var foto5 = document.getElementById("foto5");
 
     function handleChangeUser(event) {
         const { value, name } = event.target
         setValuesProduto({ ...valuesProduto, [name]: value, })
         console.log(valuesProduto)
+    }
+
+    function handleChangePref(event) {
+        const { value, name } = event.target
+        setValuesPreferencia({ ...valuesPreferencia, [name]: value, })
+        console.log(valuesPreferencia)
     }
 
     function handleSubmit(event) {
@@ -89,21 +111,81 @@ function CadastroProduto() {
                 'Content-Type': 'application/json'
             }
         }).then((resposta) => {
-            console.log(resposta.data)
-            
-            // apiProduto.post(`/${resposta.data}/imagem-principal?idDoador=${idDoador}`
-            // .then((resposta) => {
-            //     console.log(resposta)
-            // }).catch((error) => {
-            //     console.log(error)
-            // })
 
-            // apiProduto.post(`/${resposta.data}/imagem-extra?idDoador=${idDoador}`
-            // .then((resposta) => {
-            //     console.log(resposta)
-            // }).catch((error) => {
-            //     console.log(error)
-            // })
+            let formData = new FormData();
+            formData.append("file", fotoPrincipal.files[0]);
+
+            let formData2 = new FormData();
+            formData2.append("file", foto2.files[0]);
+
+            let formData3 = new FormData();
+            formData3.append("file", foto3.files[0]);
+
+            let formData4 = new FormData();
+            formData4.append("file", foto4.files[0]);
+
+            let formData5 = new FormData();
+            formData5.append("file", foto5.files[0]);
+
+            let config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+            }
+
+            apiProduto.post(`/${resposta.data}/imagem-principal?idDoador=${sessionStorage.getItem('idUsuarioLogado')}`, formData, config)
+                .then((resposta) => {
+                    console.log(resposta)
+                    navegar("/")
+                }).catch((error) => {
+                    console.log(error)
+                })
+
+            apiProduto.post(`/${resposta.data}/imagem-extra?idDoador=${sessionStorage.getItem('idUsuarioLogado')}`, formData2, config)
+                .then((resposta) => {
+                    console.log(resposta)
+                }).catch((error) => {
+                    console.log(error)
+                })
+
+            apiProduto.post(`/${resposta.data}/imagem-extra?idDoador=${sessionStorage.getItem('idUsuarioLogado')}`, formData3, config)
+                .then((resposta) => {
+                    console.log(resposta)
+                }).catch((error) => {
+                    console.log(error)
+                })
+
+            apiProduto.post(`/${resposta.data}/imagem-extra?idDoador=${sessionStorage.getItem('idUsuarioLogado')}`, formData4, config)
+                .then((resposta) => {
+                    console.log(resposta)
+                }).catch((error) => {
+                    console.log(error)
+                })
+
+            apiProduto.post(`/${resposta.data}/imagem-extra?idDoador=${sessionStorage.getItem('idUsuarioLogado')}`, formData5, config)
+                .then((resposta) => {
+                    console.log(resposta)
+                }).catch((error) => {
+                    console.log(error)
+                })
+
+            let jsonPreferencias = {
+                faixaEtaria: valuesPreferencia.faixaEtaria,
+                estadoCivil: valuesPreferencia.estadoCivil,
+                grauEscolaridade: valuesPreferencia.grauEscolaridade,
+                fkSituacaoAtual: valuesPreferencia.fkSituacaoAtual,
+                fkProdutoDoacao: resposta.data
+            }
+
+            apiUsuario.post("/preferencia", jsonPreferencias, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((resposta) => {
+                console.log(resposta.status)
+            }).catch((error) => {
+                console.log(error)
+            })
 
         }).catch((error) => {
             console.log(error)
@@ -112,13 +194,89 @@ function CadastroProduto() {
 
     }
 
-    // function preferenciasDesligadas(){
-    //     var preferencia = document.getElementById("preferencia");
-    //     var span = document.querySelectorAll("span");
-    //     if(preferencia.checked){
-    //         span.style.color = "#000000";
-    //     }
-    // }
+    function preferenciasDesligadas() {
+        var preferencia = document.getElementById("preferencia");
+
+        if (!preferencia.checked) {
+            document.getElementById('label-ec').style.color = "#CACACA";
+            document.getElementById('EC1').selected = true;
+            document.getElementById('EC1').disabled = true;
+            document.getElementById('EC2').disabled = true;
+            document.getElementById('EC3').disabled = true;
+            document.getElementById('EC4').disabled = true;
+            document.getElementById('EC5').disabled = true;
+
+            document.getElementById('label-es').style.color = "#CACACA";
+            document.getElementById('ES1').selected = true;
+            document.getElementById('ES1').disabled = true;
+            document.getElementById('ES2').disabled = true;
+            document.getElementById('ES3').disabled = true;
+            document.getElementById('ES4').disabled = true;
+            document.getElementById('ES5').disabled = true;
+            document.getElementById('ES6').disabled = true;
+            document.getElementById('ES7').disabled = true;
+            document.getElementById('ES8').disabled = true;
+            document.getElementById('ES9').disabled = true;
+
+            document.getElementById('label-fx').style.color = "#CACACA";
+            document.getElementById('FX1').selected = true;
+            document.getElementById('FX1').disabled = true;
+            document.getElementById('FX2').disabled = true;
+            document.getElementById('FX3').disabled = true;
+            document.getElementById('FX4').disabled = true;
+
+            document.getElementById('label-sa').style.color = "#CACACA";
+            document.getElementById('0').selected = true;
+            document.getElementById('0').disabled = true;
+            document.getElementById('1').disabled = true;
+            document.getElementById('2').disabled = true;
+            document.getElementById('3').disabled = true;
+            document.getElementById('4').disabled = true;
+            document.getElementById('5').disabled = true;
+            document.getElementById('6').disabled = true;
+            document.getElementById('7').disabled = true;
+            document.getElementById('8').disabled = true;
+            document.getElementById('9').disabled = true;
+            document.getElementById('10').disabled = true;
+        }else if(preferencia.checked){
+            document.getElementById('label-ec').style.color = "#000000";
+            document.getElementById('EC1').disabled = false;
+            document.getElementById('EC2').disabled = false;
+            document.getElementById('EC3').disabled = false;
+            document.getElementById('EC4').disabled = false;
+            document.getElementById('EC5').disabled = false;
+
+            document.getElementById('label-es').style.color = "#000000";
+            document.getElementById('ES1').disabled = false;
+            document.getElementById('ES2').disabled = false;
+            document.getElementById('ES3').disabled = false;
+            document.getElementById('ES4').disabled = false;
+            document.getElementById('ES5').disabled = false;
+            document.getElementById('ES6').disabled = false;
+            document.getElementById('ES7').disabled = false;
+            document.getElementById('ES8').disabled = false;
+            document.getElementById('ES9').disabled = false;
+            
+            document.getElementById('label-fx').style.color = "#000000";
+            document.getElementById('FX1').disabled = false;
+            document.getElementById('FX2').disabled = false;
+            document.getElementById('FX3').disabled = false;
+            document.getElementById('FX4').disabled = false;
+
+            document.getElementById('label-sa').style.color = "#000000";
+            document.getElementById('0').disabled = false;
+            document.getElementById('1').disabled = false;
+            document.getElementById('2').disabled = false;
+            document.getElementById('3').disabled = false;
+            document.getElementById('4').disabled = false;
+            document.getElementById('5').disabled = false;
+            document.getElementById('6').disabled = false;
+            document.getElementById('7').disabled = false;
+            document.getElementById('8').disabled = false;
+            document.getElementById('9').disabled = false;
+            document.getElementById('10').disabled = false;
+        }
+    }
 
     function mudarImg() {
         var arquivo = document.getElementById("foto1");
@@ -134,7 +292,6 @@ function CadastroProduto() {
             <section id="ca-section">
                 <div className="ca-grid">
                     <Perfil />
-                    <MenuPerfil />
                     <div className="ca-titulo">
                         <h2>CADASTRO DE PRODUTO</h2>
                     </div>
@@ -160,7 +317,7 @@ function CadastroProduto() {
                             <div className="ca-campos-info">
                                 <div className="ca-campos-info-pUm">
                                     <label htmlFor="nome">Nome <span>*</span></label>
-                                    <input type="text" name="nome" id="nome" onChange={handleChangeUser}/>
+                                    <input type="text" name="nome" id="nome" onChange={handleChangeUser} />
                                     <label htmlFor="fkCategoriaProduto">Categoria <span>*</span></label>
                                     <select name="fkCategoriaProduto" id="fkCategoriaProduto" onChange={handleChangeUser}>
                                         <option value="" selected disabled hidden></option>
@@ -171,9 +328,9 @@ function CadastroProduto() {
                                         }
                                     </select>
                                     <label htmlFor="marca">Marca <span>*</span></label>
-                                    <input type="text" name="marca" id="marca" onChange={handleChangeUser}/>
+                                    <input type="text" name="marca" id="marca" onChange={handleChangeUser} />
                                     <label htmlFor="modelo">Modelo <span>*</span></label>
-                                    <input type="text" name="modelo" id="modelo" onChange={handleChangeUser}/>
+                                    <input type="text" name="modelo" id="modelo" onChange={handleChangeUser} />
                                     <label htmlFor="descricao">Descrição <span>*</span></label>
                                     <textarea name="descricao" id="descricao" cols="30" rows="10" onChange={handleChangeUser}></textarea>
                                 </div>
@@ -181,14 +338,14 @@ function CadastroProduto() {
                                     <div className="ca-toggle">
                                         <h4>Defeito</h4>
                                         <div class="toggle">
-                                            <input type="checkbox" name="defeito" id="defeito" onChange={handleChangeUser}/>
+                                            <input type="checkbox" name="defeito" id="defeito" onChange={handleChangeUser} />
                                             <label for="defeito"></label>
                                         </div>
                                     </div>
                                     <div className="ca-toggle">
                                         <h4>Entrega</h4>
                                         <div class="toggle">
-                                            <input type="checkbox" name="entrega" id="entrega" onChange={handleChangeUser}/>
+                                            <input type="checkbox" name="entrega" id="entrega" onChange={handleChangeUser} />
                                             <label for="entrega"></label>
                                         </div>
                                     </div>
@@ -200,51 +357,56 @@ function CadastroProduto() {
                             <div className="ca-preferencia-titulo">
                                 <h4>Preferência de doação <span>*</span></h4>
                                 <div class="toggle">
-                                    <input type="checkbox" id="preferencia" />
+                                    <input type="checkbox" id="preferencia" onChange={preferenciasDesligadas}/>
                                     <label for="preferencia"></label>
                                 </div>
                             </div>
                             <div className="ca-campos-preferencia">
                                 <div className="ca-campos-pref">
                                     <div>
-                                        <label htmlFor="ca-estado-civil">Estado civil <span>*</span></label>
-                                        <select name="ca-estado-civil" id="ca-estado-civi">
-                                            <option value="" selected disabled hidden></option>
-                                            <option value="T">Todos(as)</option>
-                                            <option value="S">Solteiro(a)</option>
-                                            <option value="C">Casado(a)</option>
-                                            <option value="D">Divorciado(a)</option>
-                                            <option value="V">Viúvo(a)</option>
+                                        <label htmlFor="ca-estado-civil" id="label-ec">Estado civil <span>*</span></label>
+                                        <select name="ca-estado-civil" id="ca-estado-civi" onChange={handleChangePref}>
+                                            <option value="X" selected disabled hidden></option>
+                                            <option id="EC1" value="X">Todos(as)</option>
+                                            <option id="EC2" value="S">Solteiro(a)</option>
+                                            <option id="EC3" value="C">Casado(a)</option>
+                                            <option id="EC4" value="D">Divorciado(a)</option>
+                                            <option id="EC5" value="V">Viúvo(a)</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label htmlFor="ca-escolaridade">Escolaridade <span>*</span></label>
-                                        <select name="ca-escolaridade" id="ca-escolaridade">
-                                            <option value="" selected disabled hidden></option>
-                                            <option value="T">Todos(as)</option>
-                                            <option value="A">Analfabeto</option>
-                                            <option value="I">Educação infantil</option>
-                                            <option value="F">Fundamental</option>
-                                            <option value="M">Médio</option>
-                                            <option value="S">Superior (Graduação)</option>
-                                            <option value="P">Pós-graduação</option>
-                                            <option value="E">Mestrado</option>
-                                            <option value="D">Doutorado</option>
+                                        <label htmlFor="ca-escolaridade" id="label-es">Escolaridade <span>*</span></label>
+                                        <select name="ca-escolaridade" id="ca-escolaridade" onChange={handleChangePref}>
+                                            <option value="X" selected disabled hidden></option>
+                                            <option id="ES1" value="X">Todos(as)</option>
+                                            <option id="ES2" value="A">Analfabeto</option>
+                                            <option id="ES3" value="I">Educação infantil</option>
+                                            <option id="ES4" value="F">Fundamental</option>
+                                            <option id="ES5" value="M">Médio</option>
+                                            <option id="ES6" value="S">Superior (Graduação)</option>
+                                            <option id="ES7" value="P">Pós-graduação</option>
+                                            <option id="ES8" value="E">Mestrado</option>
+                                            <option id="ES9" value="D">Doutorado</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label htmlFor="ca-faixa">Faixa etária <span>*</span></label>
-                                        <select name="ca-faixa" id="ca-faixa">
-
+                                        <label htmlFor="ca-faixa" id="label-fx">Faixa etária <span>*</span></label>
+                                        <select name="ca-faixa" id="ca-faixa" onChange={handleChangePref}>
+                                            <option value="X" selected disabled hidden></option>
+                                            <option id="FX1" value="X">Todos(as)</option>
+                                            <option id="FX2" value="J">Jovem (até 19 anos)</option>
+                                            <option id="FX3" value="A">Adulto (20 até 59 anos)</option>
+                                            <option id="FX4" value="I">Idoso (acima de 60 anos)</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label htmlFor="fkSituacaoAtual">Situação atual <span>*</span></label>
-                                        <select name="fkSituacaoAtual" id="fkSituacaoAtual">
-                                            <option value="" selected disabled hidden></option>
+                                        <label htmlFor="fkSituacaoAtual" id="label-sa">Situação atual <span>*</span></label>
+                                        <select name="fkSituacaoAtual" id="fkSituacaoAtual" onChange={handleChangePref}>
+                                            <option value="X" selected disabled hidden></option>
+                                            <option id="0" value="X">Todos(as)</option>
                                             {
                                                 fkSituacaoAtual.map((situacao) => (
-                                                    <option value={situacao.idSituacaoAtual}>{situacao.nome}</option>
+                                                    <option id={situacao.idSituacaoAtual} value={situacao.idSituacaoAtual}>{situacao.nome}</option>
                                                 ))
                                             }
                                         </select>
