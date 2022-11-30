@@ -18,9 +18,9 @@ import apiMensagemDireto from "../apiMensagemDireta";
 function MensagemDireta() {
 
     const [chat, setChat] = useState([]);
-    const [remetente, setRemetente] = useState([]);
-    var remetentes = [];
-    const [usuarioImg, setUsuarioImg] = useState([]);
+    var chatImg = [];
+    var rementente = [];
+    var remetentesImg = [];
 
     /* Puxa todos os chats com o usuário logado */
     useEffect(() => {
@@ -28,22 +28,43 @@ function MensagemDireta() {
         apiMensagemDireto.get(`chat/all?fkUsuarioRemetente=${idUsuarioLogado}`).then((resposta) => {
             try {
                 //console.log(resposta.data)
-                setChat(resposta.data)
+                chatImg = resposta.data;
+                console.log(chatImg);
+                for(let i = 0; i < resposta.data.length; i++){
+                    apiUsuario.get(`${resposta.data[i].idUsuario}/imagem?tipoImagem=P`,
+                    { responseType: 'blob' }).then((respostaImg) => {
+                        let imgUrl = URL.createObjectURL(respostaImg.data)
+                        chatImg[i].imagem = imgUrl;
+                    }).catch((error) => {
+                        //console.log(error)
+                        chatImg[i].imagem = "";
+                    })
+                }
+
+                setChat(chatImg)
+                console.log("Esse é o chat: " + chat)
             } catch (error) {
                 console.log(error)
             }
         })
     })
 
+
+
+
     // function fotoPorId(id) {
-    //     apiUsuario.get(`${id}/imagem?tipoImagem=P`,
+
+    //     for(let i = 0; i < chat.length; i++){
+    //         apiUsuario.get(`${chat[i].idUsuario}/imagem?tipoImagem=P`,
     //         { responseType: 'blob' }).then((respostaImg) => {
     //             let imgUrl = URL.createObjectURL(respostaImg.data)
-    //             return imgUrl;
+    //             remetentesImg[i] = imgUrl;
     //         }).catch((error) => {
     //             //console.log(error)
-    //             return fotoLogado;
+    //             remetentesImg[i] = fotoLogado;
     //         })
+    //     }
+
     // }
 
 
@@ -80,7 +101,7 @@ function MensagemDireta() {
                             <div className="md-chats-interno scroll">
                                 {chat != undefined && chat.length > 0 ? chat.map((chat) => (
                                     <Chat
-                                        //foto={fotoPorId(chat.idUsuario)}
+                                        foto={chat.imagem == "" ? fotoLogado : chat.imagem}
                                         nome={chat.nome}
                                         id={formatacaoId(chat.idUsuario)}
                                     />
@@ -93,10 +114,10 @@ function MensagemDireta() {
                         <div id="md-cabecalho">
                             <img src={fotoPatricia} alt="Foto do outro usuário" />
                             <div>
-                                <h3>{remetente.nome}</h3>
+                                {/* <h3>{remetente.nome}</h3> */}
                             </div>
                             <div>
-                                <p>#{remetente.id}</p>
+                                {/* <p>#{remetente.id}</p> */}
                             </div>
                         </div>
                         <div id="md-mensagens" className="scroll">
