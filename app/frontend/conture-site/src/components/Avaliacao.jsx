@@ -16,7 +16,7 @@ function Avaliacao(props) {
         <div class="avaliacao_sup">
             <div class="container_perfil">
                 <div class="ava_esq">
-                    <img className='' src={foto} alt=""/>
+                    <img className='' src={props.foto} alt=""/>
                     <p>{(props.nota).toFixed(1)}</p>
                 </div>
                 <div class="ava_dir">

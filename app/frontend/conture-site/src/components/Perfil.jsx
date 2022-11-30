@@ -63,7 +63,7 @@ function Perfil() {
                     sessionStorage.setItem('fotoBanner', "Não")
                 }
             })
-    })
+    }, [])
 
     /* Puxa as avaliações do usuário logado */
     useEffect(() => {
@@ -76,6 +76,19 @@ function Perfil() {
             }
         })
     }, [])
+
+    
+    function formatacaoId(id) {
+        if (id < 10) {
+            return "#000" + id;
+        } else if (id < 100) {
+            return "#00" + id;
+        } else if (id < 1000) {
+            return "#0" + id;
+        } else {
+            return "#" + id;
+        }
+    }
 
     /* Muda a foto do banner */
     // useEffect(() => {
@@ -140,7 +153,7 @@ function Perfil() {
                                     <b>
                                         <p>{usuario.nome}</p>
                                     </b>
-                                    <p>#0{usuario.idUsuario}</p>
+                                    <p>{formatacaoId(usuario.idUsuario)}</p>
                                 </div>
                                 <div class="inf_cidade_data">
                                     <p>{endereco.localidade} - {endereco.uf}</p>

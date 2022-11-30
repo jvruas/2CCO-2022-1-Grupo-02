@@ -27,20 +27,6 @@ function PopUpDeletar(props) {
         })
     }
     
-        // let idProduto = sessionStorage.getItem('idProduto');
-        // apiProdutos.delete(`/${produto}?idDoador=${doador}`).then((produtoResposta) => {
-        //     try {
-        //         console.log(produtoResposta)
-        //         setProduto(produtoResposta)
-        //         navegar("/disponivel-pessoal");
-        //     } catch (error) {
-        //         console.log(error)
-        //     }
-        // })
-   
-    
-
-
     return (
         <>
             <section id='deletar'>

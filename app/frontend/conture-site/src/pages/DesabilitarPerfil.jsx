@@ -53,8 +53,8 @@ function DesabilitarPerfil() {
                     'Content-Type': 'application/json'
                 },
                 data: {
-                    email: usuario.email,
-                    senha: usuario.senha
+                    email: sessionStorage.getItem('idEmailLogado'),
+                    senha: valuesUsuario.senha
                 }
             }).then((resposta) => {
                 sessionStorage.setItem('logado', "")

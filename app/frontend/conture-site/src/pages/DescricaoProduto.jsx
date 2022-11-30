@@ -25,11 +25,11 @@ function DescricaoProduto() {
   const [mensagem, setMensagem] = useState([]);
   const [cep, setCep] = useState([]);
 
-  setTimeout(function dataCadastro(){
+  setTimeout(function dataCadastro() {
     var data = document.getElementById("data")
-    data.innerHTML=usuario.dataCadastro.substring(0, 10)
-  },500)
-  
+    data.innerHTML = usuario.dataCadastro.substring(0, 10)
+  }, 500)
+
 
   useEffect(() => {
     apiProdutos
@@ -49,7 +49,7 @@ function DescricaoProduto() {
           .then((response) => {
             setCep(response.data);
             console.log("teste", response.data);
-        });
+          });
       });
 
     apiMensagemGrupo
@@ -62,9 +62,9 @@ function DescricaoProduto() {
     apiProdutos
       .get(`/disponiveis?idDoador=${sessionStorage.getItem("idDoador")}`)
       .then((resposta) => {
-        console.log("TESTE",resposta.data);
-        produtosDoacao=0;
-        produtosDoados=0;
+        console.log("TESTE", resposta.data);
+        produtosDoacao = 0;
+        produtosDoados = 0;
         for (var i = 0; i < resposta.data.length; i++) {
           if (resposta.data[i].dataConclusao == null) {
             produtosDoacao++;
@@ -72,25 +72,23 @@ function DescricaoProduto() {
             produtosDoados++;
           }
         }
-        // produtosDoacao = produtosDoacao/2;
-        // produtosDoados = produtosDoados/2;
       });
 
-        let idUsuario = sessionStorage.getItem('idDoador');
+    let idUsuario = sessionStorage.getItem('idDoador');
 
-        try{
+    try {
 
-            // document.getElementById("nome_usuario").innerHTML = `${usuario.nome}`;
-            document.getElementById("img_perfil").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=P`;
-            // document.getElementById("img_banner").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=B`;  
+      // document.getElementById("nome_usuario").innerHTML = `${usuario.nome}`;
+      document.getElementById("img_perfil").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=P`;
+      // document.getElementById("img_banner").src = `http://localhost:8080/usuarios/${idUsuario}/imagem?tipoImagem=B`;  
 
-        }catch(error){
-            // document.getElementById("nome_usuario").innerHTML = "Usuário";  
-             document.getElementById("img_perfil").src = `${FotoPadrao}`;
+    } catch (error) {
+      // document.getElementById("nome_usuario").innerHTML = "Usuário";  
+      document.getElementById("img_perfil").src = `${FotoPadrao}`;
 
-        }
+    }
   }, []);
-  
+
 
   return (
     <>
@@ -107,36 +105,27 @@ function DescricaoProduto() {
         </span>
       </div>
 
-      {
-        // console.log("mensagemPrincipal", mensagem[0][0].mensagem)
-      }
-
-      
-
-      <CarouselProdutos 
+      <CarouselProdutos
         qtdItens={1}
         image={Computador}
       ></CarouselProdutos>
 
       <CardComentarios
-      comentarios=
+        comentarios=
         {mensagem.map((itemMensagem) =>
           <Comentarios
-            mensagemPrincipal={itemMensagem[0].mensagem}  
+            mensagemPrincipal={itemMensagem[0].mensagem}
             mensagemResposta={itemMensagem[1]}
             index={itemMensagem[0].idMensagemGrupo}
             idMensagemPrincipal={itemMensagem[0].fkUsuario}
-        >
-        </Comentarios>
+          >
+          </Comentarios>
         )}
       >
 
       </CardComentarios>
-      
 
-      
-
-        {/* <Comentarios
+      {/* <Comentarios
             mensagemPrincipal={mensagem.map((itemMensagem) =>
                 itemMensagem[0].mensagem  
             )}
@@ -171,6 +160,7 @@ function DescricaoProduto() {
       </div>
 
       <div className="container-desc-produto more-info-description-product">
+
         <div className="block-left">
           <div className="card-description">
             <div className="title-description">
@@ -181,42 +171,48 @@ function DescricaoProduto() {
             </div>
           </div>
           <div className="div-button">
-          <button className="button-i-a">Tenho Interesse</button>
+            <button className="button-i-a">Tenho Interesse</button>
           </div>
-        </div><Link to={"/disponivel"}>
-        <div className="card-info-user">
-          <div className="div-name-user">
-            <div className="infos-user">
-              <div className="photo-user">
-                <img id="img_perfil" src={FotoPerfil} className="image-description"/>
+        </div>
+
+        <Link to={"/disponivel"}>
+          <div className="card-info-user">
+            <div className="div-name-user">
+              <div className="infos-user">
+                <div className="photo-user">
+                  <img id="img_perfil" src={FotoPerfil} className="image-description" />
+                </div>
+                <b className="name-user">{usuario.nome}</b>
               </div>
-              <b className="name-user">{usuario.nome}</b>
             </div>
-          </div>
-          <div className="div-location-user">
-            <div className="div-location-uf-img">
-                <img className="" src={IconLocation} alt="" /> 
+
+            <div className="div-location-user">
+              <div className="div-location-uf-img">
+                <img className="" src={IconLocation} alt="" />
                 <b>{cep.localidade} - {cep.uf}</b>
+              </div>
             </div>
-            
+
+            <div className="div-numbers-user">
+              <div className="div-produtos-doacao">
+                <h3>Para doação</h3>
+                <h2>{produtosDoacao}</h2>
+              </div>
+              
+              <div className="div-produtos-doados">
+                <h3>Doados</h3>
+                <h2>{produtosDoados}</h2>
+              </div>
+              <div className="div-cadastro">
+                <h3>Cadastrado desde</h3>
+                <h2 id="data">{
+                  // usuario.dataCadastro.substring(0, 10)
+                }</h2>
+              </div>
+            </div>
           </div>
-          <div className="div-numbers-user">
-            <div className="div-produtos-doacao">
-              <h3>Para doação</h3>
-              <h2>{produtosDoacao}</h2>
-            </div>
-            <div className="div-produtos-doados">
-              <h3>Doados</h3>
-              <h2>{produtosDoados}</h2>
-            </div>
-            <div className="div-cadastro">
-              <h3>Cadastrado desde</h3>
-              <h2 id="data">{
-              // usuario.dataCadastro.substring(0, 10)
-              }</h2>
-            </div>
-          </div>
-        </div></Link>
+        </Link>
+
       </div>
 
       <Footer></Footer>

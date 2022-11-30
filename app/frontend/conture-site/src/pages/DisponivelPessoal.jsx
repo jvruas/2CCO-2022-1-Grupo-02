@@ -2,6 +2,7 @@ import Header from "../components/Header"
 import Perfil from "../components/Perfil"
 import MenuPerfil from "../components/MenuDisponivelPessoal"
 import '../html-css-template/css/ProdutoDisponivelPage.css'
+import fotoLogado from '../html-css-template/imagens/icon-logado-sem-foto.png';
 import Footer from "../components/Footer"
 import Card from "../components/ProdutoPessoalCop"
 import { useState, useEffect } from "react";
@@ -16,6 +17,8 @@ function DisponivelPessoal() {
     const [produtos, setProdutos] = useState([]);
     const [imgProd, setImg] = useState([]);
     var produtosImg = [];
+
+    var img = "";
     // const [usuarioImg, setUsuarioImg] = useState([]);
 
     useEffect
@@ -23,42 +26,35 @@ function DisponivelPessoal() {
             let idUsuario = sessionStorage.getItem('idUsuarioLogado');
             apiProdutos.get(`disponiveis?idDoador=${idUsuario}`).then((resposta) => {
                 try {
-                    console.log(resposta.data)
-                    // produtosImg = resposta.data
+                    produtosImg = resposta.data
                     for (let i = 0; i < resposta.data.length; i++) {
-                        // apiProdutos.get(`${produtos.idProdutoDoacao}/imagem-principal`,
-                        // { responseType: 'blob' }).then((respostaImg) => {
-                        //     let imgUrl = URL.createObjectURL(respostaImg.data)
-                        //     produtosImg[i].image = imgUrl    
-                        //     console.log("testetetete",resposta.data.image)                     
-                        // }).catch((error) => {
-                        //     // console.log(error)
-                        // })
                         apiProdutos.get(`${resposta.data[i].idProdutoDoacao}/imagem-principal`,
-                        { responseType: 'blob' }).then((respostaImg) => {
-                            let imgUrl = URL.createObjectURL(respostaImg)
-                            setImg(imgUrl)
-                            console.log("teydfkjsdjsk",imgProd)
-                        }).catch((error) => {
-                            // console.log(error)
-                        })
+                            { responseType: 'blob' }).then((respostaImg) => {
+                                let imgUrl = URL.createObjectURL(respostaImg)
+                                produtosImg[i].imagem = respostaImg;
+                            }).catch((error) => {
+                                // console.log(error)
+                                produtosImg[i].imagem = fotoLogado;
+                            })
                     }
-                    setProdutos(resposta.data)
+                    console.log(produtosImg)
+                    setProdutos(produtosImg)
                 } catch (error) {
                     console.log(error)
                 }
             })
         }, [])
 
-    useEffect(() => {
-        apiProdutos.get(`${produtos.idProdutoDoacao}/imagem-principal`,
-            { responseType: 'blob' }).then((respostaImg) => {
-                let imgUrl = URL.createObjectURL(respostaImg.data)
-                document.getElementById("img_foto").src = imgUrl;
-            }).catch((error) => {
-                // console.log(error)
-            })
-    })
+    // useEffect(() => {
+    //     apiProdutos.get(`${23}/imagem-principal`,
+    //         { responseType: 'blob' }).then((respostaImg) => {
+    //             let imgUrl = URL.createObjectURL(respostaImg.data)
+    //             // document.getElementById("img_foto").src = imgUrl;
+    //             img = imgUrl;
+    //         }).catch((error) => {
+    //             console.log("Erro aqui " + error)
+    //         })
+    // }, [])
 
     return (
         <>
@@ -72,7 +68,7 @@ function DisponivelPessoal() {
                         <div className="div_card">
                             {produtos != undefined && produtos.length > 0 ? produtos.map((prod) => (
                                 <Card
-                                    foto={imgProd.image}
+                                    foto={prod.imagem}
                                     fkDoador={prod.fkDoador}
                                     produto={prod.idProdutoDoacao}
                                     visualizacao={prod.quantidadeVisualizacao}

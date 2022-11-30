@@ -48,7 +48,7 @@ function MensagemDireta() {
                 console.log(error)
             }
         })
-    })
+    }, [])
 
     function getMensagens(idRemetente) {
         let idUsuarioLogado = sessionStorage.getItem('idUsuarioLogado');
@@ -86,15 +86,12 @@ function MensagemDireta() {
 
     // }
 
-
-
     function formatacaoId(id) {
-        //console.log("tamanho" + id.length)
-        if (id.length == 1) {
+        if (id < 10) {
             return "#000" + id;
-        } else if (id.length == 2) {
+        } else if (id < 100) {
             return "#00" + id;
-        } else if (id.length == 3) {
+        } else if (id < 1000) {
             return "#0" + id;
         } else {
             return "#" + id;

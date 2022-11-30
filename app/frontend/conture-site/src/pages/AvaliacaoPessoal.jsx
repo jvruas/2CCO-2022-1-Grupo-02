@@ -43,16 +43,16 @@ function AvaliacaoPessoal() {
                 })
             }
             console.log("Avaliação completa: " + aval)
-            setUsuarioAva(aval)
-            console.log("usaurio aval", aval)
-            
+            console.log("Nome: " + aval[0].nome)
+            console.log("Cidade: " + aval[0].cidade)
+            setUsuarioAva(aval)            
             try {
             } catch (error) {
                 console.log(error)
             }
             
         })
-    },[])
+    }, [])
 
 
     // function getAvaliacoes() {
@@ -105,14 +105,12 @@ function AvaliacaoPessoal() {
                     <div className="comentarios">
                         {usuarioAva != undefined && usuarioAva.length > 0 ? usuarioAva.map((ava) => (
                             <Comentarios 
-                           
                                 nota={ava.valor}
                                 comentario={ava.comentario}
                                 donatario={ava.nome}
                                 cidade={ava.cidade}
                                 estado={ava.uf}
                                 dataCon={ava.data}
-
                             />
                         )): ""}
 

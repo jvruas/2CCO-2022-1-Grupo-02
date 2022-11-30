@@ -52,7 +52,7 @@ function Comentarios(props){
             console.log("tudo certo", error)
         }
          
-    },500)
+    }, 500)
 
     function definitionMessageReply(){
         const buttonFocus = document.getElementById("button-send")
