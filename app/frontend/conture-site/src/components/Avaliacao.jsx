@@ -1,6 +1,7 @@
 import estrela from '../html-css-template/imagens/star7.svg';
 import foto from '../html-css-template/imagens/foto.jpg';
 import '../html-css-template/css/avaliacao.css'
+import { memo } from 'react';
 
 
 function Avaliacao(props) {
@@ -44,4 +45,4 @@ function Avaliacao(props) {
     );
 }
 
-export default Avaliacao;
+export default memo(Avaliacao);

@@ -30,7 +30,6 @@ function PerfilSimples() {
                 setUsuarioPerfil(usuarioResposta.data)
                 fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
                     .then(res => res.json()).then(data => {
-                        console.log(data)
                         setEndereco(data)
                     })
             } catch (error) {
@@ -64,12 +63,11 @@ function PerfilSimples() {
             })
     })
 
-    /* Puxa as avaliações do usuario doador */ 
+    /* Puxa as avaliações do usuario doador */
     useEffect(() => {
         let idUsuarioPerfil = sessionStorage.getItem('idDoador');
         apiProdutos.get(`avaliacao/stats?idDoador=${idUsuarioPerfil}`).then((resposta) => {
             try {
-                console.log("teste", resposta.data)
                 setNota(resposta.data)
             } catch (error) {
                 console.log(error)
