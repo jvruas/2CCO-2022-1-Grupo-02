@@ -16,13 +16,15 @@ function Disponivel() {
         let idDoador = sessionStorage.getItem('idDoador');
         apiProdutos.get(`disponiveis?idDoador=${idDoador}`).then((resposta) => {
             try {
-                console.log(resposta.data)
+                console.log("burura",resposta.data)
                 setProdutos(resposta.data)
             } catch (error) {
                 console.log(error)
             }
         })
     }, [])
+
+    
 
     return (
         <>
@@ -39,7 +41,7 @@ function Disponivel() {
                                 <Card
                                     visualizacao={prod.quantidadeVisualizacao}
                                     nome={prod.nome}
-                                    idProduto={prod.idProduto}
+                                    idProduto={prod.idProdutoDoacao}
                                 />
                             )) : ""}
 

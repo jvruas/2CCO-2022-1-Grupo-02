@@ -74,10 +74,17 @@ align-items: center;
     color: white;
     width: 80%;
     height: 7%;
-    background-color: yellow;
     display: flex;
     align-items: center;
     justify-content: space-around;
+    cursor: pointer;
+    margin-top: 42vh;
+    margin-right: 20px;
+    
+}
+
+.side-dash-opcoes{
+    cursor: pointer;
 }
 
 .div-sair img{

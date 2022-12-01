@@ -1,6 +1,5 @@
 insert into categoria_produto(nome)
-values
-	('CELULAR'),
+values ('SMARTPHONE'),
 	('DESKTOP'),
 	('HEADSET'),
 	('IMPRESSORA'),
@@ -8,7 +7,8 @@ values
 	('MOUSE'),
 	('NOTEBOOK'),
 	('TABLET'),
-    ('TECLADO');
+    ('TECLADO'),
+    ('MESA DIGITALIZADORA');
 
 
 insert into produto_doacao(DATA_CONCLUSAO ,DATA_CRIACAO ,DEFEITO ,DESCRICAO ,ENTREGA ,FK_DOADOR ,IMAGEM_PRINCIPAL ,MARCA ,MODELO ,NOME ,QUANTIDADE_VISUALIZACAO ,REMOVIDO ,STATUS ,FK_CATEGORIA_PRODUTO )values

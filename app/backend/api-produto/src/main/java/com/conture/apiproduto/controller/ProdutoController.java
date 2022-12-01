@@ -1,5 +1,7 @@
 package com.conture.apiproduto.controller;
 
+import com.conture.apiproduto.api.rest.mensagemdireta.MensagemDiretaClient;
+import com.conture.apiproduto.api.rest.usuario.UsuarioResposta;
 import com.conture.apiproduto.model.dto.request.AvaliacaoRequest;
 import com.conture.apiproduto.model.dto.response.*;
 import com.conture.apiproduto.model.entity.*;
@@ -60,6 +62,9 @@ public class ProdutoController {
 
 	@Autowired
 	private UsuarioClient usuarioClient;
+
+	@Autowired
+	private MensagemDiretaClient mensagemDiretaClient;
 
 	PilhaObj<String> pilhaHistorico = new PilhaObj<>(10);
 
@@ -325,6 +330,25 @@ public class ProdutoController {
 
 		if (listaAvaliacaoResponse.isEmpty()) {
 			return status(204).build();
+		}
+
+		try {
+			for (int i = 0; i < listaAvaliacaoResponse.size(); i++) {
+				Optional<UsuarioResposta> usuarioRespostaOptional = this.usuarioClient.getUsuarioById(listaAvaliacaoResponse.get(i).getFkDonatario());
+
+				if (usuarioRespostaOptional.isPresent()) {
+					listaAvaliacaoResponse.get(i).setNome(usuarioRespostaOptional.get().getNome());
+					listaAvaliacaoResponse.get(i).setUf(usuarioRespostaOptional.get().getUf());
+					listaAvaliacaoResponse.get(i).setPerfilImage(usuarioRespostaOptional.get().getPerfilImage());
+				}
+			}
+
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+
+			return status(401).build();
 		}
 
 		for (int i = 0; i < listaAvaliacaoResponse.size(); i++) {
@@ -627,6 +651,14 @@ public class ProdutoController {
 
 		this.matchRepository.updateStatusTrueById(idMatch.get());
 		this.produtoRepository.updateStatusTrueAndDataConclusaoNowById(idProduto, Date.from(Instant.now()));
+
+		try {
+			this.mensagemDiretaClient.adicionarChat(idDoadorRequest, idDonatarioRequest);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+		}
 
 		return status(200).build();
 	}

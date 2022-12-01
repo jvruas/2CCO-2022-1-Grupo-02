@@ -4,6 +4,7 @@ import "../html-css-template/css/DescricaoProduto.css"
 
 function Comentarios(props){
 
+    
     const [nome, setNome] = useState([]);
 
     if(props.idMensagemPrincipal==900){
@@ -77,7 +78,7 @@ function Comentarios(props){
                     <span className="message-coment-description">{props.mensagemPrincipal}</span>
                 </div>
                 <div className="div-reply-coment-description">
-                <button className="button-reply-coment-description" onClick={definitionMessageReply}>Responder</button>
+                {/* <button className="button-reply-coment-description" onClick={definitionMessageReply}>Responder</button> */}
                 </div>
                 
                 

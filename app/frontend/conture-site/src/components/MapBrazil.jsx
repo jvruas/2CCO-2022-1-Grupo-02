@@ -1,87 +1,92 @@
-// import FusionCharts from "fusioncharts";
-// import Maps from "fusioncharts/fusioncharts.maps";
-// import Brazil from "fusionmaps/maps/fusioncharts.brazil";
-// import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
-// import ReactFC from "react-fusioncharts";
+import ReactFC from "react-fusioncharts";
 
 
-// function MapBrazil() {
+function MapBrazil(props) {
 
+    var listMap = [];
 
-//     ReactFC.fcRoot(FusionCharts, Maps, Brazil, FusionTheme);
+    for(var i = 0; i < props.mapa.length; i++) {
 
-//     const dataSource = {
-//         chart: {
-//             bgColor: "#FFFFFF",
-//             bgAlpha: "0",
-//             animation: "0",
-//             showLabels: "0",
-//             usehovercolor: "1",
-//             canvasbordercolor: "FFFFFF",
-//             bordercolor: "#aaa",
-//             showlegend: "0",
-//             showshadow: "0",
-//             legendposition: "BOTTOM",
-//             legendborderalpha: "0",
-//             legendbordercolor: "ffffff",
-//             legendallowdrag: "0",
-//             legendshadow: "0",
-//             caption: "Brazil",
-//             hoverFillalpha: "20",
-//             hovercolor: "#b3ffec",
-//             showborder: "1"
-//         },
-//         colorrange: {
-//             minvalue: "0",
-//             startlabel: "Low",
-//             endlabel: "High",
-//             code: "#e65c00",
-//             gradient: "1",
-//             color: [
-//                 {
-//                     maxvalue: "200000",
-//                     displayvalue: "Average",
-//                     code: "#3ec34d"
-//                 },
-//                 {
-//                     maxvalue: "400000",
-//                     displayvalue: "Above Average",
-//                     code: "#80bfff"
-//                 },
-//                 {
-//                     maxvalue: "600000",
-//                     code: "#00b386"
-//                 }
-//             ],
-//             maxvalue: 0
-//         },
+        var dictId = {
+            AC:"001",AL:"002",AP:"003",AM:"004",BA:"005",CE:"006",DF:"007",ES:"008",GO:"009",MA:"010",MT:"011",MS:"012",MG:"013",PA:"014",PB:"015",PR:"016",PE:"017",PI:"018",RJ:"019",RN:"020",RS:"021",RO:"022",RR:"023",SC:"024",SP:"025",SE:"026",TO:"027"
+        };
 
-//         data: [
-//             {
-//                 id: "002",
-//                 value: "4000"
-//             },
-//             {
-//                 id: "001",
-//                 value: "4000"
-//             }
-//         ]
-//     };
+        var dict = {
+            id: dictId[`${props.mapa[i].uf}`],
+            value: ""+props.mapa[i].qt_reportes
+        };
 
-//     const chartConfigs = {
-//         type: "brazil",
-//         width: 300,
-//         height: 300,
-//         dataFormat: "json",
-//         dataSource: dataSource
-//     };
+        listMap.push(dict);
+        
+    }
 
-//     return (
-//         <>
-//             <ReactFC {...chartConfigs} />
-//         </>
-//     )
-// }
+    console.log("aaaa", listMap);
 
-// export default MapBrazil;
+    ReactFC.fcRoot(FusionCharts, Maps, Brazil, FusionTheme);
+
+    const dataSource = {
+        chart: {
+            bgColor: "#FFFFFF",
+            bgAlpha: "0",
+            animation: "0",
+            showLabels: "0",
+            usehovercolor: "1",
+            canvasbordercolor: "FFFFFF",
+            bordercolor: "#aaa",
+            showlegend: "0",
+            showshadow: "0",
+            legendposition: "BOTTOM",
+            legendborderalpha: "0",
+            legendbordercolor: "ffffff",
+            legendallowdrag: "0",
+            legendshadow: "0",
+            caption: "Brazil",
+            hoverFillalpha: "20",
+            hovercolor: "#b3ffec",
+            showborder: "1"
+        },
+        colorrange: {
+            minvalue: "0",
+            startlabel: "Low",
+            endlabel: "High",
+            code: "#e65c00",
+            gradient: "1",
+            color: [
+                {
+                    maxvalue: "200",
+                    displayvalue: "Average",
+                    code: "#3ec34d"
+                },
+                {
+                    maxvalue: "400",
+                    displayvalue: "Above Average",
+                    code: "#80bfff"
+                },
+                {
+                    maxvalue: "600",
+                    code: "#00b386"
+                }
+            ],
+            maxvalue: 0
+        },
+
+        data: listMap
+    };
+
+    const chartConfigs = {
+        type: "brazil",
+        width: 300,
+        height: 300,
+        dataFormat: "json",
+        dataSource: dataSource
+    };
+
+    return (
+        <>
+            <ReactFC {...chartConfigs} />
+        </>
+    )
+}
+
+export default MapBrazil;
 

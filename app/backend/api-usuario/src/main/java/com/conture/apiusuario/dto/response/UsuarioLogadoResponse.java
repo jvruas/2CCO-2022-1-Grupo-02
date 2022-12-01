@@ -47,6 +47,11 @@ public class UsuarioLogadoResponse {
 	@Pattern(regexp = "^[0-9]+$")
 	private String cep;
 
+	@NotBlank
+	@Size(min = 2, max = 2)
+	@Pattern(regexp = "^[a-z|A-Z]+$")
+	private String uf;
+
 	@PastOrPresent
 	private Date dataCadastro;
 
@@ -77,6 +82,7 @@ public class UsuarioLogadoResponse {
 			String estadoCivil,
 			String telefone,
 			String cep,
+			String uf,
 			Date dataCadastro,
 			String grauEscolaridade,
 			String cpf,
@@ -91,6 +97,7 @@ public class UsuarioLogadoResponse {
 		this.estadoCivil = estadoCivil;
 		this.telefone = telefone;
 		this.cep = cep;
+		this.uf = uf;
 		this.dataCadastro = dataCadastro;
 		this.grauEscolaridade = grauEscolaridade;
 		this.cpf = cpf;
@@ -107,13 +114,14 @@ public class UsuarioLogadoResponse {
 			String estadoCivil,
 			String telefone,
 			String cep,
+			String uf,
 			Date dataCadastro,
 			String grauEscolaridade,
 			String cpf,
 			byte[] perfilImage,
 			String situacaoAtual
 	) {
-		this(idUsuario, email, nome, sobrenome, genero, dataNascimento, estadoCivil, telefone, cep, dataCadastro, grauEscolaridade, cpf, situacaoAtual);
+		this(idUsuario, email, nome, sobrenome, genero, dataNascimento, estadoCivil, telefone, cep, uf, dataCadastro, grauEscolaridade, cpf, situacaoAtual);
 		this.perfilImage = perfilImage;
 	}
 
@@ -156,6 +164,10 @@ public class UsuarioLogadoResponse {
 
 	public String getCep() {
 		return this.cep;
+	}
+
+	public String getUf() {
+		return uf;
 	}
 
 	public Date getDataCadastro() {
@@ -217,6 +229,10 @@ public class UsuarioLogadoResponse {
 
 	public void setCep(String cep) {
 		this.cep = cep;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
 	}
 
 	public void setDataCadastro(Date dataCadastro) {

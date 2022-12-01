@@ -1,38 +1,43 @@
 import { Chart } from "react-google-charts";
-export const data = [
-  ["Ano", "Notebook", "Celular", "Desktop"],
-  ["2019", 1000, 400, 200],
-  ["2020", 1170, 460, 250],
-  ["2021", 660, 1120, 300],
-  ["2022", 1030, 540, 350],
-];
 
-export const optionsBar = {
-    chart: {
-        title: "Produtos mais Doados X Produtos mais Visualizados",
-        backgroundColor: {
-            fill: "rgba(255, 255, 255)",
-        },
+export const options = {
+  title:
+    "Produtos mais Doados X Produtos mais Visualizados",
+  subtilte: "Comparativo entre os produtos mais doados com os produtos mais visualizados em nossa plataforma.",
+  hAxis: { title: "Doações" },
+  vAxis: { title: "Visualizações" },
+  colors: ["#734D84", "#8084D5", "#979BFA"], 
+  bubble: {
+    textStyle: {
+      fontSize: 9,  
+      fontName: "Tajawal",
+      color: "black",
+      bold: true,
+      italic: true,
+      auraColor: "none",
     },
-    chartArea: { backgroundColor: '#f1f7f9' },
-    titleTextStyle: {
-        color: "black",
-        fontName: "Tajawal",
-        fontSize: 18,
-        bold: true,
-        italic: false,
-      },
-    backgroundColorfill: "#f0efef",
-    colors: ["#875B9B", "#979BFA", "#734AE7"],
-
+  },
 };
 
-const chartBarViewTwo = () => {
+function chartBarViewTwo(props){
+
+  var data = [
+    ["Produto", "Doações", "Visualizações"]
+  ];
+
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSPINTO", props.dados);
+
+  for (let index = 0; index < props.dados.length; index++) {
+      var temp = [(props.dados[index].nome).charAt(0)+(props.dados[index].nome).toLowerCase().slice(1), props.dados[index].qtdProdutos, props.dados[index].qtdVisualizacao];
+      data.push(temp);
+  }
+
+  console.log(data);
   return (
     <Chart
-      chartType="Bar"
+      chartType="BarChart"
       data={data}
-      options={optionsBar}
+      options={options}
       width={"100%"}
       height={"100%"}
     />
