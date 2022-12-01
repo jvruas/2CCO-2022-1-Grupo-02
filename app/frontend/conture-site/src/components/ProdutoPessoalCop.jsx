@@ -1,6 +1,6 @@
 import "../html-css-template/css/produto.css"
 import trash from "../html-css-template/imagens/trash2.svg"
-import vector from "../html-css-template/imagens/Vector.svg"
+import vector from "../html-css-template/imagens/vector.svg"
 import foto from "../html-css-template/imagens/ft-card.png"
 
 import { Link, useNavigate } from "react-router-dom";

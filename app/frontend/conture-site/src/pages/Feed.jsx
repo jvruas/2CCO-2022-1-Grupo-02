@@ -95,7 +95,7 @@ function Feed() {
                 }
             />
 
-            <h2 className="title-feed">Celular</h2>
+            <h2 className="title-feed">Smartphone</h2>
             <Carousel
                 qtdItens={4}
                 card1=

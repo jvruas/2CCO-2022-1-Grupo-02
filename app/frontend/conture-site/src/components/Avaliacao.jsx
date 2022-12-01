@@ -21,8 +21,8 @@ function Avaliacao(props) {
                 </div>
                 <div class="ava_dir">
                     <div class="informacaoes">
-                        <p>{props.donatario}</p>
-                        <p>{props.cidade} - {props.estado}</p>
+                        <p><b>{props.donatario}</b></p>
+                        <p>{props.idDoador}</p>
                     </div>
                     <div class="estrela">
                         <img src={estrela} alt=""/>

@@ -68,7 +68,8 @@
 
 .title-coment-description{
     color: #7724BE;
-    padding-top: 1%;
+    font-size: 18px;
+    padding-top: 2%;
     padding-left: 2%;
 }
 
@@ -125,20 +126,8 @@
     height: 100%;
 }
 
-.div-location-uf-img{
-    text-align:left;
-    height: 70%;
-    position: relative;
-    margin-top: 1%;
-}
-
-.div-location-uf-img img{
-    height: 100%;
-    margin-left: 3%;
-}
-
 .name-coment-description{
-    font-size: 10px;
+    font-size: 13px;
 }
 
 .message-coment-description{
@@ -170,13 +159,86 @@
 }
 
 .card-info-user{
-    background-color: brown;
     height: 260px;
     width: 44.5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border-radius: 3px;
+    border: 1px solid #ADADAD;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
     margin-left: auto;
+    margin-right: -9px;
     float: right;
 }
+
+.info_doador{
+    height: 40%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+}
+
+.info_doador img{
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+}
+
+.info_doador > div{
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 20px;
+}
+
+.info_nota{
+    display: flex;
+}
+
+.info_nota img{
+    height: 18px;
+    width: 18px;
+    margin-right: 10px;
+}
+
+.info_local{
+    height: 20%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ADADAD;
+    border-top: 1px solid #ADADAD;
+}
+
+.info_local img{
+    height: 22px;
+    width: 22px;
+    margin-left: 30px;
+    margin-right: 20px;
+}
+
+.info_doacao{
+    height: 40%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.info_doacao div{
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.info_doacao span{
+    color: #7724BE;
+}
+
 
 .block-left{
     width: 49.5%;
@@ -218,6 +280,7 @@
 }
 
 .div-button{
+    margin-top: 15px;
     text-align: center;
 }
 
@@ -237,47 +300,6 @@
     height: 75vh
 }
 
-.div-name-user{
-    width: 100%;
-    height: 40%;
-    background: #FFFFFF;
-    border: 1px solid #ADADAD;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 3px 3px 0px 0px;
-}
-
-.div-location-user{
-    background: #FFFFFF;
-    border: 1px solid #ADADAD;
-    border-radius: 0px;
-    width: 100%;
-    height: 13%;
-}
-
-.div-numbers-user{
-    background: #FFFFFF;
-    border: 1px solid #ADADAD;
-    border-radius: 0px 0px 3px 3px;
-    width: 100%;
-    height: 47%;
-}
-
-.photo-user{
-    background-color: darkorange;
-    height: 60px;
-    width: 60px;
-    float: left;
-}
-
-.infos-user{
-    padding-left: 5%;
-    padding-top: 5%;
-}
-
-.name-user{
-    margin-left: 10px;
-}
-
 .title-description{
     padding-top: 5px;
     margin-left: 15px;
@@ -288,20 +310,24 @@
     margin-left: 15px;
 }
 
-.div-produtos-doacao{
-    float: left;
-    margin-left: 20px;
-    margin-right: 70px;
-    padding-top: 25px;
+#botao-nao-interesse{
+    display: none;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E72B2D;
 }
 
-.div-produtos-doados{
-    float: left;
-    padding-top: 25px;
-    margin-right: 50px;
+#botao-interesse{
+    margin-top: 10px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.div-cadastro{
-    padding-top: 25px;
+#botao-nao-interesse:hover{
+    background-color: #B3182C;
 }
 

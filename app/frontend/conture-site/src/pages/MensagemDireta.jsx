@@ -63,101 +63,107 @@ function MensagemDireta() {
     }
 
 
-    // // Função para enviar uma mensagem
-    // const [valuesUsuarioLogin, setValuesUsuarioLogin] = useState(dataUsuarioLogin)
-
-    // function handleChangeUser(event) {
-    //     const { value, name } = event.target
-    //     setValuesUsuarioLogin({ ...valuesUsuarioLogin, [name]: value, })
-    // }
-
-    // function fotoPorId(id) {
-
-    //     for(let i = 0; i < chat.length; i++){
-    //         apiUsuario.get(`${chat[i].idUsuario}/imagem?tipoImagem=P`,
-    //         { responseType: 'blob' }).then((respostaImg) => {
-    //             let imgUrl = URL.createObjectURL(respostaImg.data)
-    //             remetentesImg[i] = imgUrl;
-    //         }).catch((error) => {
-    //             //console.log(error)
-    //             remetentesImg[i] = fotoLogado;
-    //         })
-    //     }
-
-    // }
-
-    function formatacaoId(id) {
-        if (id < 10) {
-            return "#000" + id;
-        } else if (id < 100) {
-            return "#00" + id;
-        } else if (id < 1000) {
-            return "#0" + id;
-        } else {
-            return "#" + id;
-        }
+    // Função para enviar uma mensagem
+    function idDestinatario(id) {
+        sessionStorage.setItem('idDestinatario', id)
     }
 
+    function handleSubmit(event) {
+        event.preventDefault()
+
+        let idUsuarioLogado = sessionStorage.getItem('idUsuarioLogado');
+        let mensagem = document.getElementById("input-mensagem");
+
+        let json = {
+            fkUsuarioRemetente: idUsuarioLogado,
+            fkUsuarioDestinatario: sessionStorage.getItem('idDestinatario'),
+            mensagem: mensagem.value
+        }
+
+        console.log(json)
+        apiMensagemDireto.post("/mensagem-direta", json, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((resposta) => {
+
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    function formatacaoId(id) {
+                if (id < 10) {
+                    return "#000" + id;
+                } else if (id < 100) {
+                    return "#00" + id;
+                } else if (id < 1000) {
+                    return "#0" + id;
+                } else {
+                    return "#" + id;
+                }
+            }
+
     return (
-        <>
-            <Header />
-            <section id="md-section">
-                <div className="grid">
-                    <div id="md-parte-um">
-                        <div id="md-pequisa">
-                            <h2>MENSAGEM</h2>
-                            <div>
-                                <button>
-                                    <img src={iconLupaPreta} alt="Ícone de lupa para pesquisa" />
-                                </button>
-                                <input type="text" />
+            <>
+                <Header />
+                <section id="md-section">
+                    <div className="grid">
+                        <div id="md-parte-um">
+                            <div id="md-pequisa">
+                                <h2>MENSAGEM</h2>
+                                <div>
+                                    <button>
+                                        <img src={iconLupaPreta} alt="Ícone de lupa para pesquisa" />
+                                    </button>
+                                    <input type="text" />
+                                </div>
+                            </div>
+                            <div id="md-chats">
+                                <div className="md-chats-interno scroll">
+                                    {chat != undefined && chat.length > 0 ? chat.map((chat) => (
+                                        <Chat
+                                            foto={chat.imagem == "" ? fotoLogado : chat.imagem}
+                                            nome={chat.nome}
+                                            id={formatacaoId(chat.idUsuario)}
+                                            onClick={getMensagens(chat.idUsuario)} />
+                                    )) : ""}
+
+                                </div>
                             </div>
                         </div>
-                        <div id="md-chats">
-                            <div className="md-chats-interno scroll">
-                                {chat != undefined && chat.length > 0 ? chat.map((chat) => (
-                                    <Chat
-                                        foto={chat.imagem == "" ? fotoLogado : chat.imagem}
-                                        nome={chat.nome}
-                                        id={formatacaoId(chat.idUsuario)}
-                                        onClick={getMensagens(chat.idUsuario)} />
+                        <div id="md-parte-dois">
+                            <div id="md-cabecalho">
+                                <img src={fotoPatricia} alt="Foto do outro usuário" />
+                                <div>
+                                    {/* <h3>{remetente.nome}</h3> */}
+                                </div>
+                                <div>
+                                    {/* <p>#{remetente.id}</p> */}
+                                </div>
+                            </div>
+                            <div id="md-mensagens" className="scroll">
+                                {mensagens != undefined && mensagens.length > 0 ? mensagens.map((mensagens) => (
+                                    <MensagemOutro mensagem={mensagens.mensagem} />
                                 )) : ""}
 
-                            </div>
-                        </div>
-                    </div>
-                    <div id="md-parte-dois">
-                        <div id="md-cabecalho">
-                            <img src={fotoPatricia} alt="Foto do outro usuário" />
-                            <div>
-                                {/* <h3>{remetente.nome}</h3> */}
-                            </div>
-                            <div>
-                                {/* <p>#{remetente.id}</p> */}
-                            </div>
-                        </div>
-                        <div id="md-mensagens" className="scroll">
-                            {mensagens != undefined && mensagens.length > 0 ? mensagens.map((mensagens) => (
-                                <MensagemOutro mensagem={mensagens.mensagem} />
-                            )) : ""}
 
-
-                            {/* <MensagemOutro />
+                                {/* <MensagemOutro />
                             <MensagemUsuario /> */}
 
-                        </div>
-                        <div id="md-enviar-mensagem">
-                            <input type="text" />
-                            <button>
-                                <img src={iconSend} alt="Ícone de enviar mensagem" />
-                            </button>
+                            </div>
+                            <div id="md-enviar-mensagem">
+                                <input type="text" id="input-mensagem" />
+                                <button>
+                                    <img src={iconSend} alt="Ícone de enviar mensagem" />
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <Footer />
-        </>
-    )
-}
+                </section>
+                <Footer />
+            </>
+        )
+    }
 
-export default MensagemDireta;
+    export default MensagemDireta;
