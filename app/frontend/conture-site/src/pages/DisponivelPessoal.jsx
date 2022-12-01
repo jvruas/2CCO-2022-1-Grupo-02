@@ -18,6 +18,7 @@ function DisponivelPessoal() {
 
     const [produtos, setProdutos] = useState([]);
     const [imgProd, setImg] = useState([]);
+    // const imgTratada = `url(data:image;base64,${imgProd})`
     var produtosImg = [];
 
     var img = "";

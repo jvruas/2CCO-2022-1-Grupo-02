@@ -18,7 +18,7 @@ function Produto(props) {
         <div className="container-produto">
             <div className="informacoes-produto">
                 <div className="superior"><img src={trash} alt="" onClick={DeletarRedirect} /> <div class="visualizacao"><img src={vector} alt="" /><p>{props.visualizacao}</p></div></div>
-                <div className="meio"><img src={props.foto} alt="" /></div>
+                <div className="meio"><img src={ props.foto} alt="" /></div>
                 <div className="inferior"><p>{props.nome}</p></div>
             </div>
         </div>

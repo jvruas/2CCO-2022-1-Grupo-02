@@ -13,6 +13,7 @@ function Pesquisa() {
 
     const navegar = useNavigate();
     const [Produtos, setProdutos] = useState([]);
+    let busca = sessionStorage.getItem('nomeBuscado');
     useEffect
         (() => {
             let pesquisa = sessionStorage.getItem('pesquisa');
@@ -44,8 +45,8 @@ function Pesquisa() {
         <>
             <Header></Header>
             <section id="section-pesquisa">
-                <div className="conteiner-pesquisa">
-                    <div className="div_sup_pesq"><b><p>Resultados para {Produtos.nome}</p></b></div>
+            <div className="conteiner-pesquisa">
+                <div className="div_sup_pesq"><b><p>Resultados para {busca}</p></b></div>
                     <div className="div_inf_pesq">
                         <div className="div_card">
                             {Produtos != undefined && Produtos.length > 0 ? Produtos.map((prod) => (
