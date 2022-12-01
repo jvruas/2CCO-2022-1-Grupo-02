@@ -19,11 +19,18 @@
 }
 
 .div_matchs{
-    margin-top: 70px;
+    margin-top: 20px;
     width: 80%;
     height: 800px;
     /* background-color: aqua; */
     overflow: scroll;
+}
+
+.text_matchs{
+    height: 30px;
+    width: 100%;
+    /* background-color: blue; */
+    font-size: 18px;
 }
 
 .match{
@@ -31,15 +38,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-}
-.header_matchs{
-    height: 30px;
-    border-bottom: solid 1px black;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-
+    background-color: aqua;
 }
 
 .cards{
@@ -47,8 +46,9 @@ height: 300px;
 width: 100%;
 /* background-color:red; */
 display:grid;
+flex-direction: row;
 grid-template-columns:25% 25% 25% 25%;
 align-items: center;
-justify-content: space-between
+justify-content: center
 
 }
