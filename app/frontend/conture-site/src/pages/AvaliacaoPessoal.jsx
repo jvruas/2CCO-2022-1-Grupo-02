@@ -36,7 +36,6 @@ function AvaliacaoPessoal() {
             //     })
             // }
     
-
             setUsuarioAva(resposta.data.fila)
             console.log(resposta.data.fila)
             try {

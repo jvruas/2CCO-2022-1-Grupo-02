@@ -126,7 +126,7 @@ function MensagemDireta() {
                                             foto={chat.imagem == "" ? fotoLogado : chat.imagem}
                                             nome={chat.nome}
                                             id={formatacaoId(chat.idUsuario)}
-                                            onClick={getMensagens(chat.idUsuario)} />
+                                            idUsuario={chat.idUsuario} />
                                     )) : ""}
 
                                 </div>

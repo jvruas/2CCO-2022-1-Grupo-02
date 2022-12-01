@@ -31,61 +31,61 @@ function DescricaoProduto() {
   const [img, setImg] = useState([]);
   const [cep, setCep] = useState([]);
 
-  var listaImg= []
+  var listaImg = []
 
   useEffect(() => {
 
     async function createBlob(base64) {
-      let res =    await fetch(base64)
+      let res = await fetch(base64)
       let myBlob = await res.blob()
-    
-    return myBlob
-  } 
+
+      return myBlob
+    }
 
     apiProdutos
-      .get(`${sessionStorage.getItem("idProduto")}/imagem-principal`, 
-      {responseType: 'blob'}).then((respostaImg) => {
-        let imgPUrl = URL.createObjectURL(respostaImg.data)
-        console.log("Console oieee1",respostaImg.data)
-        // setImg(respostaImg.data)
-        // imgProd[0] = respostaImg.data;
-        // setImg([imgPUrl]);
-        listaImg.push(imgPUrl)
-        // sessionStorage.setItem(`fotinha${props.idProduto}`, imgstr)
-        // console.log(imgProd);
-    }).catch((error) => {
-        console.log(error)
-  }) 
+      .get(`${sessionStorage.getItem("idProduto")}/imagem-principal`,
+        { responseType: 'blob' }).then((respostaImg) => {
+          let imgPUrl = URL.createObjectURL(respostaImg.data)
+          console.log("Console oieee1", respostaImg.data)
+          // setImg(respostaImg.data)
+          // imgProd[0] = respostaImg.data;
+          // setImg([imgPUrl]);
+          listaImg.push(imgPUrl)
+          // sessionStorage.setItem(`fotinha${props.idProduto}`, imgstr)
+          // console.log(imgProd);
+        }).catch((error) => {
+          console.log(error)
+        })
 
-  let _data = {
-    title: "foo",
-    body: "bar"
-  }
+    let _data = {
+      title: "foo",
+      body: "bar"
+    }
 
-  // fetch(`http://localhost:8081/produtos/${sessionStorage.getItem("idProduto")}/imagem-extra`, {
-  //   method: 'GET',
-  //   headers: {
-  //       'Content-Type': 'application/json;charset=UTF-8'
-  //   },
-  //      }).then((respostaImg) => respostaImg.json())
-  //      .then(json => json[0])
-  //     .then((myBlob) => {
-  //       const str2blob = new Blob([myBlob], {
-  //         type: 'image/jpeg'
-  //     });
-  //       console.log("Console ja",str2blob)
-  //       let imgPUrl = URL.createObjectURL(str2blob)
-  //       // setImg(respostaImg.data)
-  //       // imgProd[0] = respostaImg.data;
-  //       // setImg([imgPUrl]);
-  //       listaImg.push(imgPUrl)
-  //       // sessionStorage.setItem(`fotinha${props.idProduto}`, imgstr)
-  //       // console.log(imgProd);
-  //   }).catch((error) => {
-  //       console.log(error)
-  // })
+    // fetch(`http://localhost:8081/produtos/${sessionStorage.getItem("idProduto")}/imagem-extra`, {
+    //   method: 'GET',
+    //   headers: {
+    //       'Content-Type': 'application/json;charset=UTF-8'
+    //   },
+    //      }).then((respostaImg) => respostaImg.json())
+    //      .then(json => json[0])
+    //     .then((myBlob) => {
+    //       const str2blob = new Blob([myBlob], {
+    //         type: 'image/jpeg'
+    //     });
+    //       console.log("Console ja",str2blob)
+    //       let imgPUrl = URL.createObjectURL(str2blob)
+    //       // setImg(respostaImg.data)
+    //       // imgProd[0] = respostaImg.data;
+    //       // setImg([imgPUrl]);
+    //       listaImg.push(imgPUrl)
+    //       // sessionStorage.setItem(`fotinha${props.idProduto}`, imgstr)
+    //       // console.log(imgProd);
+    //   }).catch((error) => {
+    //       console.log(error)
+    // })
 
-  setImg(listaImg)
+    setImg(listaImg)
 
     apiProdutos
       .get(`/${sessionStorage.getItem("idProduto")}`)
@@ -110,9 +110,9 @@ function DescricaoProduto() {
     apiMensagemGrupo
       .get(`/${sessionStorage.getItem("idProduto")}`)
       .then((resposta) => {
-        console.log("aicalica",resposta.data)
-        try{
-          if(resposta.data.trim()==""){
+        console.log("aicalica", resposta.data)
+        try {
+          if (resposta.data.trim() == "") {
             var a = [[{
               "idMensagemGrupo": "",
               "mensagem": "Faça aqui sua pergunta ao doador!",
@@ -181,21 +181,49 @@ function DescricaoProduto() {
   }, []);
 
   function darMatch() {
+
     apiProdutos.post(`${sessionStorage.getItem("idProduto")}/match?idDonatario=${sessionStorage.getItem('idUsuarioLogado')}`,
       {
         headers: {
           'Content-Type': 'application/json'
         }
       }).then((resposta) => {
+
         //console.log(resposta.status)
+
         sessionStorage.setItem('matchDado', "OK")
+        sessionStorage.setItem('idProdutoAvaliacao', sessionStorage.getItem("idProduto"))
+        sessionStorage.setItem('idDoadorAvaliacao', sessionStorage.getItem("idDoador"))
+
+        apiProdutos
+          .get(`/${sessionStorage.getItem("idProduto")}`)
+          .then((resposta) => {
+            sessionStorage.setItem('doadorAval', resposta.data.fkDoador)
+            sessionStorage.setItem('modeloAval', resposta.data.nome)
+            console.log(resposta.data);
+            apiUsuario
+              .get(`/${resposta.data.fkDoador}`)
+              .then((resposta) => {
+                sessionStorage.setItem('idDoadorNomeAval', resposta.data.nome)
+                console.log(resposta.data);
+                apiViaCep
+                  .get(`/${resposta.data.cep}/json`)
+                  .then((response) => {
+                    sessionStorage.setItem('idDoadorUfAval', response.data.uf)
+                    sessionStorage.setItem('idDoadorCidadeAval', response.data.localidade)
+                  });
+              });
+          });
+        document.getElementById("card-match").style.visibility = "visible";
         document.location.reload(true)
       }).catch((error) => {
         console.log(error)
       })
   }
 
+
   function retirarMatch() {
+
     apiProdutos.delete(`${sessionStorage.getItem("idProduto")}/match?idDonatario=${sessionStorage.getItem('idUsuarioLogado')}`,
       {
         headers: {
@@ -204,10 +232,17 @@ function DescricaoProduto() {
       }).then((resposta) => {
         //console.log(resposta.status)
         sessionStorage.setItem('matchDado', "")
+        sessionStorage.setItem('idProdutoAvaliacao', "")
+        sessionStorage.setItem('idDoadorAvaliacao', "")
+        sessionStorage.setItem('idDoadorNomeAval', "")
+        sessionStorage.setItem('idDoadorUfAval', "")
+        sessionStorage.setItem('idDoadorCidadeAval', "")
+        document.getElementById("card-match").style.visibility = "hidden";
         document.location.reload(true)
       }).catch((error) => {
         console.log(error)
       })
+
   }
 
 
@@ -231,11 +266,11 @@ function DescricaoProduto() {
         qtdItens={1}
         content={
           img.map((itemImg) =>
-          <ImgProdutos
-            image={itemImg}
-          >
-          </ImgProdutos>
-        )
+            <ImgProdutos
+              image={itemImg}
+            >
+            </ImgProdutos>
+          )
         }
       ></CarouselProdutos>
 
@@ -321,7 +356,6 @@ function DescricaoProduto() {
                   <img src={estrela} alt="Ícone estrela/nota" />
                   <p>{nota.mediaAvaliacoes == undefined ? "5.0" : nota.mediaAvaliacoes}</p>
                 </div>
-                <b className="name-user">{usuario.nome}</b>
               </div>
             </div>
 

@@ -3,6 +3,7 @@ import Perfil from "../components/PerfilSimples"
 import MenuPerfil from "../components/MenuAvaliacao"
 import '../html-css-template/css/Style.css'
 import '../html-css-template/css/AvaliacaoPage.css'
+import fotoLogado from '../html-css-template/imagens/icon-logado-sem-foto.png';
 import Footer from "../components/Footer"
 import Nota from "../components/NotaCop"
 import Comentarios from "../components/Avaliacao"
@@ -26,22 +27,6 @@ function Avaliacao() {
             console.log(resposta.data.fila)
             setProdutos(resposta.data.fila)
 
-            for (let i = 0; i < resposta.data.fila.length; i++) {
-                apiUsuario.get(`/${resposta.data.fila[i].fkDonatario}`).then((usuarioResposta) => {
-                    try {
-                        console.log(usuarioResposta.data)
-                        aval[i] = usuarioResposta.data;
-                        fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
-                            .then(res => res.json()).then(data => {
-                                console.log(data)
-                                aval[i].cidade = data.cidade;
-                                aval[i].uf = data.uf;
-                            })
-                    } catch (error) {
-                        console.log(error)
-                    }
-                })
-            }
             setUsuarioAva(aval)
             console.log("usaurio aval", aval)
             try {
@@ -50,6 +35,18 @@ function Avaliacao() {
             }
         })
     }, [])
+
+    function formatacaoId(id) {
+        if (id < 10) {
+            return "#000" + id;
+        } else if (id < 100) {
+            return "#00" + id;
+        } else if (id < 1000) {
+            return "#0" + id;
+        } else {
+            return "#" + id;
+        }
+    }
 
     return (
         <>
@@ -65,14 +62,12 @@ function Avaliacao() {
                     <div className="comentarios">
                         {produtos != undefined && produtos.length > 0 ? produtos.map((ava) => (
                             <Comentarios
-
-                                nota={ava.valor}
-                                comentario={ava.comentario}
-                                donatario={usuarioAva.nome}
-                                cidade={endereco.localidade}
-                                estado={endereco.uf}
-                                dataCon={ava.data}
-
+                            idDoador={formatacaoId(ava.fkDonatario)}
+                            nota={ava.valor}
+                            comentario={ava.comentario}
+                            donatario={ava.nome}
+                            dataCon={ava.data}
+                            foto={ava.perfilImage != null || ava.perfilImage != undefined ? ava.perfilImage : fotoLogado}
                             />
                         )) : ""}
 
