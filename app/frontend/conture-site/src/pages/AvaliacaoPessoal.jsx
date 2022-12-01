@@ -38,7 +38,7 @@ function AvaliacaoPessoal() {
     
 
             setUsuarioAva(resposta.data.fila)
-            console.log(resposta.data.fila)
+            console.log("simsim",resposta.data.fila)
             try {
             } catch (error) {
                 console.log(error)
@@ -74,6 +74,7 @@ function AvaliacaoPessoal() {
                         {usuarioAva != undefined && usuarioAva.length > 0 ? usuarioAva.map((ava) => (
                             <Comentarios
                                 idDoador={formatacaoId(ava.fkDonatario)}
+                                otherId={ava.fkDonatario}
                                 nota={ava.valor}
                                 comentario={ava.comentario}
                                 donatario={ava.nome}
