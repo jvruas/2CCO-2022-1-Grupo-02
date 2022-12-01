@@ -27,6 +27,8 @@ function DescricaoProduto() {
   const [produto, setProduto] = useState([]);
   const [usuario, setUsuario] = useState([]);
   const [mensagem, setMensagem] = useState([]);
+  const [nota, setNota] = useState([]);
+  const [img, setImg] = useState([]);
   const [cep, setCep] = useState([]);
 
   var listaImg= []
