@@ -7,13 +7,9 @@ import MenuPerfil from "../components/MenuAvaliacao"
 import '../html-css-template/css/Style.css'
 
 import '../html-css-template/css/AvaliacaoPage.css'
-<<<<<<< HEAD
-import fotoLogado from '../html-css-template/imagens/icon-logado-sem-foto.png';
-=======
 
 import fotoLogado from '../html-css-template/imagens/icon-logado-sem-foto.png';
 
->>>>>>> gabriel
 import Footer from "../components/Footer"
 
 import Nota from "../components/NotaCop"
