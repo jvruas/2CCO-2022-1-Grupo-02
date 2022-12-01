@@ -135,7 +135,7 @@ function MensagemDireta() {
                         </div>
                         <div id="md-parte-dois">
                             <div id="md-cabecalho">
-                                <img src={fotoPatricia} alt="Foto do outro usuário" />
+                                {/* <img src={fotoPatricia} alt="Foto do outro usuário" /> */}
                                 <div>
                                     {/* <h3>{remetente.nome}</h3> */}
                                 </div>
