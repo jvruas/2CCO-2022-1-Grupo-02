@@ -26,6 +26,7 @@ import Dashboard from "./pages/Dashboard";
 import Pesquisa from "./pages/Pesquisa";
 import Match from "./pages/Match";
 import CardMatch from "./components/CardMatch";
+import Analytics from "./pages/Analytics";
 
 function Rotas() {
     return (
@@ -53,7 +54,8 @@ function Rotas() {
                 <Route path="/popup" element={<PopUpSenha/>} />
                 <Route path="/popup-reporte" element={<PopUpReporte/>} />
                 <Route path="/descricao-produto" element={<DescricaoProduto/>} />
-                <Route path="/dashboard-admin-bi" element={<Dashboard/>}></Route>
+                <Route path="/dashboard" element={<Dashboard/>}></Route>
+                <Route path="/analytics" element={<Analytics/>}></Route>
                 <Route path="/popup-avaliacao" element={<PopUpAvaliacao/>} />
                 <Route path="/popup-reporte-confirma" element={<PopUpReporteConfirma/>} />
                 <Route path="/popup-deletar" element={<PopUpDeletar/>} />

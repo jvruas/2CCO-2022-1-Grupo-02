@@ -1,10 +1,13 @@
+import FusionCharts from "fusioncharts";
+import Maps from "fusioncharts/fusioncharts.maps";
+import Brazil from "fusionmaps/maps/fusioncharts.brazil";
+import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 import ReactFC from "react-fusioncharts";
 
 
 function MapBrazil(props) {
 
     var listMap = [];
-
     for(var i = 0; i < props.mapa.length; i++) {
 
         var dictId = {
@@ -13,7 +16,7 @@ function MapBrazil(props) {
 
         var dict = {
             id: dictId[`${props.mapa[i].uf}`],
-            value: ""+props.mapa[i].qt_reportes
+            value: ""+props.mapa[i].qt_produtos
         };
 
         listMap.push(dict);
@@ -53,17 +56,17 @@ function MapBrazil(props) {
             gradient: "1",
             color: [
                 {
-                    maxvalue: "200",
+                    maxvalue: "2000",
                     displayvalue: "Average",
                     code: "#3ec34d"
                 },
                 {
-                    maxvalue: "400",
+                    maxvalue: "4000",
                     displayvalue: "Above Average",
                     code: "#80bfff"
                 },
                 {
-                    maxvalue: "600",
+                    maxvalue: "6000",
                     code: "#00b386"
                 }
             ],
