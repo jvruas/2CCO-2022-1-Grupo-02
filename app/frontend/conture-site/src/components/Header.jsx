@@ -225,7 +225,7 @@ function Header() {
                             </div>
                         </div>
                         <div id="div_icones">
-                            <img src={interesse} alt="Ícone de matchs" />
+                            <Link to="/match"><img src={interesse} alt="Ícone de matchs" /></Link>
                             <img src={mensagem} alt="Ícone de mensagem direta" onClick={redirecionarMensagemD} />
                             <img src={notificacao} alt="Ícone de notificação" />
                         </div>

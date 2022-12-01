@@ -15,6 +15,7 @@ function DisponivelPessoal() {
 
     const [produtos, setProdutos] = useState([]);
     const [imgProd, setImg] = useState([]);
+    // const imgTratada = `url(data:image;base64,${imgProd})`
     var produtosImg = [];
     // const [usuarioImg, setUsuarioImg] = useState([]);
 
@@ -23,27 +24,38 @@ function DisponivelPessoal() {
             let idUsuario = sessionStorage.getItem('idUsuarioLogado');
             apiProdutos.get(`disponiveis?idDoador=${idUsuario}`).then((resposta) => {
                 try {
+                    console.log("RESPOSTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
                     console.log(resposta.data)
-                    // produtosImg = resposta.data
+                    produtosImg = resposta.data
                     for (let i = 0; i < resposta.data.length; i++) {
                         // apiProdutos.get(`${produtos.idProdutoDoacao}/imagem-principal`,
                         // { responseType: 'blob' }).then((respostaImg) => {
-                        //     let imgUrl = URL.createObjectURL(respostaImg.data)
-                        //     produtosImg[i].image = imgUrl    
-                        //     console.log("testetetete",resposta.data.image)                     
-                        // }).catch((error) => {
-                        //     // console.log(error)
-                        // })
-                        apiProdutos.get(`${resposta.data[i].idProdutoDoacao}/imagem-principal`,
-                        { responseType: 'blob' }).then((respostaImg) => {
-                            let imgUrl = URL.createObjectURL(respostaImg)
-                            setImg(imgUrl)
-                            console.log("teydfkjsdjsk",imgProd)
+                        //         let imgUrl = URL.createObjectURL(respostaImg.data)
+                        //         produtosImg[i].image = imgUrl    
+                        //         console.log("testetetete",resposta.data.image)                     
+                        //     }).catch((error) => {
+                        //             // console.log(error)
+                        //         })
+                        console.log("ahhhhhhhhhhhhhhhhhhhhhhh",resposta.data[i].idProdutoDoacao)
+                        apiProdutos.get(`${resposta.data[i].idProdutoDoacao}/imagem-principal`,{ responseType: 'blob' }).then((respostaImg) => {
+                            let imgUrl = URL.createObjectURL(respostaImg.data)
+                            produtosImg[i].imagem = imgUrl;
+                            console.log("fdssssssssssssssssdfsdfsf",produtosImg)
+                            // setImg(imgUrl.data[i])
+                            console.log("teydfkjsdjsk",respostaImg.data[i]) 
+                        
                         }).catch((error) => {
-                            // console.log(error)
+                            console.log("error")
+                            console.log("error")
+                            console.log("error")
+                            console.log("error")
+                            console.log("error")
+                            console.log(error)
                         })
                     }
-                    setProdutos(resposta.data)
+                    console.log("fiudsdsfnidsfnfdsjdsjjdsfk",imgProd)
+                    setProdutos(produtosImg)
+                    console.log(produtosImg)
                 } catch (error) {
                     console.log(error)
                 }
@@ -72,7 +84,7 @@ function DisponivelPessoal() {
                         <div className="div_card">
                             {produtos != undefined && produtos.length > 0 ? produtos.map((prod) => (
                                 <Card
-                                    foto={imgProd.image}
+                                    foto={produtosImg.imagem}
                                     fkDoador={prod.fkDoador}
                                     produto={prod.idProdutoDoacao}
                                     visualizacao={prod.quantidadeVisualizacao}
