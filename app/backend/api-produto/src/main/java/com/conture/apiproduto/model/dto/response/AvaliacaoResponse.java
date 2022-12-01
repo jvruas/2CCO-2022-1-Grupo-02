@@ -7,6 +7,17 @@ import java.util.Date;
 
 public class AvaliacaoResponse {
 	@NotNull
+	@Positive
+	private Integer fkDonatario;
+
+	@Size(max = 45)
+	private String nome;
+
+	@Size(max = 2)
+	@Pattern(regexp = "^[a-z|A-Z]+$")
+	private String uf;
+
+	@NotNull
 	@Max(5)
 	@Min(1)
 	private Integer valor;
@@ -17,9 +28,7 @@ public class AvaliacaoResponse {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
 
-	@NotNull
-	@Positive
-	private Integer fkDonatario;
+	private byte[] perfilImage;
 
 
 	public AvaliacaoResponse(
@@ -49,5 +58,29 @@ public class AvaliacaoResponse {
 
 	public Integer getFkDonatario() {
 		return fkDonatario;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public byte[] getPerfilImage() {
+		return perfilImage;
+	}
+
+	public void setPerfilImage(byte[] perfilImage) {
+		this.perfilImage = perfilImage;
 	}
 }

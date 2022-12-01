@@ -23,9 +23,16 @@ function CardComentarios(props){
             }
         })
 
-        window.location.reload(true);
-    }
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
 
+        async function delayedGreeting() {
+            await sleep(300);
+            window.location.reload(true);
+        }
+        delayedGreeting()
+    }
 
     return(
     <>

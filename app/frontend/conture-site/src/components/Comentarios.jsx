@@ -4,7 +4,15 @@ import "../html-css-template/css/DescricaoProduto.css"
 
 function Comentarios(props){
 
+    
     const [nome, setNome] = useState([]);
+
+    if(props.idMensagemPrincipal==900){
+        setNomeResposta({
+            "nome": "Conture",
+            "sobrenome": ""
+          })
+    }
 
     useEffect(() => {
         apiUsuario
@@ -28,6 +36,7 @@ function Comentarios(props){
                     apiUsuario
                     .get(`/${props.mensagemResposta[i].fkUsuario}`)
                     .then((resposta) => {
+                        console.log("mamamia", resposta.data)
                         setNomeResposta(resposta.data)
                     });
                     resposta.innerHTML += `<div className="message-answer-description"
@@ -52,7 +61,7 @@ function Comentarios(props){
             console.log("tudo certo", error)
         }
          
-    },500)
+    }, 500)
 
     function definitionMessageReply(){
         const buttonFocus = document.getElementById("button-send")
@@ -69,7 +78,7 @@ function Comentarios(props){
                     <span className="message-coment-description">{props.mensagemPrincipal}</span>
                 </div>
                 <div className="div-reply-coment-description">
-                <button className="button-reply-coment-description" onClick={definitionMessageReply}>Responder</button>
+                {/* <button className="button-reply-coment-description" onClick={definitionMessageReply}>Responder</button> */}
                 </div>
                 
                 

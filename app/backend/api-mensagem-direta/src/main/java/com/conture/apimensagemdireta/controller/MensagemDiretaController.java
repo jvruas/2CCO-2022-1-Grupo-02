@@ -34,6 +34,54 @@ public class MensagemDiretaController {
 	@Autowired
 	private UsuarioClient usuarioClient;
 
+
+	@PostMapping("/chat")
+	public ResponseEntity adicionarChat(
+			@RequestParam @NotNull @Min(1) Integer idDoador,
+			@RequestParam @NotNull @Min(1) Integer idDonatario
+	) {
+		if (idDoador == idDonatario) {
+			return status(403).build();
+		}
+
+		try {
+			Optional<UsuarioResposta> usuariofkRemetente = this.usuarioClient.getUsuarioById(idDoador);
+			Optional<UsuarioResposta> usuarioFkDestinatario = this.usuarioClient.getUsuarioById(idDonatario);
+		} catch (FeignException response) {
+			if (response.status() == -1) { // Service Unavailable
+				return status(503).build();
+			}
+			return status(404).build();
+		}
+
+		Optional<ChatDireto> chatDireto1 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(idDoador, idDonatario);
+		Optional<ChatDireto> chatDireto2 = this.repositoryChatDireto.findByFkUsuarioRemetenteAndFkUsuarioDestinatario(idDonatario, idDoador);
+
+		if (chatDireto1.isPresent() && chatDireto2.isPresent()) {
+			return status(409).build();
+		}
+
+		if (chatDireto1.isEmpty()) {
+			chatDireto1 = Optional.of(new ChatDireto());
+
+			chatDireto1.get().setFkUsuarioRemetente(idDoador);
+			chatDireto1.get().setFkUsuarioDestinatario(idDonatario);
+
+			this.repositoryChatDireto.save(chatDireto1.get());
+		}
+
+		if (chatDireto2.isEmpty()) {
+			chatDireto2 = Optional.of(new ChatDireto());
+
+			chatDireto2.get().setFkUsuarioRemetente(idDonatario);
+			chatDireto2.get().setFkUsuarioDestinatario(idDoador);
+
+			this.repositoryChatDireto.save(chatDireto2.get());
+		}
+
+		return status(201).build();
+	}
+
 	@PostMapping
 	public ResponseEntity<Integer> adicionarMensagem(@RequestBody @Valid MensagemRequest mensagemRequest) {
 

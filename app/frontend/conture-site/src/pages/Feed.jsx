@@ -9,18 +9,6 @@ import apiProduto from "../apiProduto.js";
 import apiUsuario from "../apiUsuario";
 
 function Feed() {
-
-
-    function pegarImagemPro(idProduto){
-        apiProduto.get(`${idProduto}/imagem-principal`, 
-        {responseType: 'blob'}).then((respostaImg) => {
-            let imgUrl = URL.createObjectURL(respostaImg.data)
-            return imgUrl;
-        }).catch((error) => {
-            console.log(error)
-        })
-    }
-        
     
     const [produtosNote, setProdutosNote] = useState([]);
     const [produtosCelular, setProdutosCelular] = useState([]);
@@ -36,17 +24,6 @@ function Feed() {
                         resposta.data[i].nomeDoador=response.data.nome
                         setProdutosNote(resposta.data);
                     })
-                    apiProduto.get(`${resposta.data[i].idProdutoDoacao}/imagem-principal`, 
-                    {responseType: 'blob'}).then((respostaImg) => {
-                        let imgUrl = URL.createObjectURL(respostaImg.data)
-                        // console.log("Console oieee",respostaImg.data)
-                        // setImg(respostaImg.data)
-                        imgProd[i] = respostaImg.data;
-                        console.log(imgProd);
-                    }).catch((error) => {
-                        console.log(error)
-                    })    
-                    
                 }
                 console.log("resposta.data");
                 console.log(resposta.data);
@@ -107,7 +84,7 @@ function Feed() {
                 }
             />
 
-            <h2 className="title-feed">Celular</h2>
+            <h2 className="title-feed">Smartphone</h2>
             <Carousel
                 qtdItens={4}
                 card1=

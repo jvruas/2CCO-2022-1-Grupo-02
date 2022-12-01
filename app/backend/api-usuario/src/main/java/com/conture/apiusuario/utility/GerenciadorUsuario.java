@@ -13,7 +13,7 @@ public class GerenciadorUsuario {
 	}
 
 	public static boolean logoff(Integer idUsuario) {
-		return hashTableLogados.remove(new UsuarioLogadoResponse(idUsuario, null, null, null, null, null, null, null, null, null, null, null, null));
+		return hashTableLogados.remove(new UsuarioLogadoResponse(idUsuario, null, null, null, null, null, null, null, null, null, null, null, null, null));
 	}
 
 	public static boolean isEmpty() {
@@ -21,7 +21,7 @@ public class GerenciadorUsuario {
 	}
 
 	public static Optional<UsuarioLogadoResponse> buscaUsuarioLogado(Integer idUsuario) {
-		UsuarioLogadoResponse usuario = hashTableLogados.get(new UsuarioLogadoResponse(idUsuario, null, null, null, null, null, null, null, null, null, null, null, null));
+		UsuarioLogadoResponse usuario = hashTableLogados.get(new UsuarioLogadoResponse(idUsuario, null, null, null, null, null, null, null, null, null, null, null, null, null));
 
 		if (usuario == null) {
 			return Optional.ofNullable(null);

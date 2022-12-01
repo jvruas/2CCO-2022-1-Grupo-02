@@ -8,7 +8,6 @@ function Nota() {
 
     const [avaliacao, setAvaliacao] = useState([]);
 
-
     useEffect
     (() => {
         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
@@ -27,7 +26,7 @@ function Nota() {
             <body>
             <div id="circulo">
         <div class="circulo_informacoes">
-            <p id="nota">{avaliacao.mediaAvaliacoes}</p>
+            <p id="nota">{avaliacao.mediaAvaliacoes == undefined ? "5.0" : avaliacao.mediaAvaliacoes}</p>
             <div class="estrelas_maior">
                 <img src={estrela} alt=""/>
                 <img src={estrela} alt=""/>
@@ -35,7 +34,7 @@ function Nota() {
                 <img src={estrela} alt=""/>
                 <img src={estrela} alt=""/>
             </div>
-            <p id="avaliacoes">{avaliacao.quantidadeAvaliacoes} avaliação no total</p>
+            <p id="avaliacoes">{avaliacao.quantidadeAvaliacoes == undefined ? "0" : avaliacao.quantidadeAvaliacoes} avaliação no total</p>
         </div>
     </div>
             </body>

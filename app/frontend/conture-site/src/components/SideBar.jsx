@@ -15,11 +15,11 @@ function SideBar() {
                     <b>Administrador</b>
                 </div>
 
-                <div className="div-topic">
-                    <div>
+                <div className="div-topic dvi">
+                    <div className="side-dash-opcoes">
                         <img src={iconBi} alt="Ícone de BI" /><p>GRÁFICOS BI</p>
                     </div>
-                    <div>
+                    <div className="side-dash-opcoes">
                         <img src={iconAna} alt="Ícone de Analytics" /><p>ANALYTICS</p>
                     </div>
                 </div>

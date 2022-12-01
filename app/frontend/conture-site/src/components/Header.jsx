@@ -242,7 +242,7 @@ function Header() {
                     </div>
                     <div id="div_produtos">
                         <p id='7' onClick={((event) => { Redirect(event) })}>Notebook</p>
-                        <p id='1' onClick={((event) => { Redirect(event) })}>Celular</p>
+                        <p id='1' onClick={((event) => { Redirect(event) })}>Smartphone</p>
                         <p id='8' onClick={((event) => { Redirect(event) })}>Tablet</p>
                         <p id='2' onClick={((event) => { Redirect(event) })}>Desktop</p>
                     </div>
