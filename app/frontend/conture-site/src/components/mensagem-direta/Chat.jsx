@@ -1,14 +1,38 @@
 import '../../html-css-template/css/MensagemDireta.css';
-import apiMensagemDireto from "../../apiMensagemDireta";
-import { useState } from 'react';
+import fotoPatricia from "../../html-css-template/imagens/patricia.jpg"
+import iconLixo from "../../html-css-template/imagens/icon-lixo.svg"
+import { useEffect, useState } from "react";
+import apiMensagemDireto from '../../apiMensagemDireta';
+import ListarMensagens from './ListarMensagens';
 
 function Chat(props) {
 
+
     const [mensagens, setMensagens] = useState([]);
 
-    function getMensagens(idRemetente) {
+    function getMensagens(){
         let idUsuarioLogado = sessionStorage.getItem('idUsuarioLogado');
-        apiMensagemDireto.get(`?fkUsuarioRemetente=${idRemetente}&fkUsuarioDonatario=${idUsuarioLogado}`).then((resposta) => {
+
+        sessionStorage.setItem(`tamanhoMensa${idUsuarioLogado}`,mensagens.length)
+
+        for(var i =0;i<mensagens.length;i++){
+            sessionStorage.setItem(`mensa${idUsuarioLogado}.${i}`, mensagens[i].mensagem);
+        }
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function delayedGreeting() {
+            await sleep(300);
+            window.location.reload(true);
+        }
+        delayedGreeting()
+    }
+
+    useEffect(() => {
+        let idUsuarioLogado = sessionStorage.getItem('idUsuarioLogado');
+        apiMensagemDireto.get(`?fkUsuarioRemetente=${props.idUsuario}&fkUsuarioDonatario=${idUsuarioLogado}`).then((resposta) => {
             try {
                 console.log(resposta.data)
                 setMensagens(resposta.data)
@@ -16,11 +40,11 @@ function Chat(props) {
                 console.log(error)
             }
         })
-    }
+    },[]);
 
     return (
         <>
-            <div className="md-chat" onClick={getMensagens(props.idUsuario)}>
+            <div className="md-chat" onClick={getMensagens}>
                 <div className="identificacao">
                     <img src={props.foto} alt="Foto do usuário" id="md-chats-foto" />
                     <div>

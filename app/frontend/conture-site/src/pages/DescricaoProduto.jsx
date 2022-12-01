@@ -351,7 +351,7 @@ function DescricaoProduto() {
             <div className="info_doador">
               <img id="img_perfil_doador" src={fotoLogado} className="image-description" />
               <div>
-                <p><b>{usuario.nome}</b></p>
+                <p><b>{usuario.nome} </b></p>
                 <div className="info_nota">
                   <img src={estrela} alt="Ícone estrela/nota" />
                   <p>{nota.mediaAvaliacoes == undefined ? "5.0" : nota.mediaAvaliacoes}</p>

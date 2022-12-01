@@ -1,8 +1,7 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Chat from "../components/mensagem-direta/Chat";
-import MensagemOutro from "../components/mensagem-direta/MensagemOutro";
-import MensagemUsuario from "../components/mensagem-direta/MensagemUsuario";
+import ListarMensagens from "../components/mensagem-direta/ListarMensagens";
 import '../html-css-template/css/MensagemDireta.css';
 import iconLupaPreta from "../html-css-template/imagens/icon-lupa-preta.svg"
 import iconSend from "../html-css-template/imagens/icon-send.svg"
@@ -22,6 +21,8 @@ function MensagemDireta() {
     var chatImg = [];
     var rementente = [];
     var remetentesImg = [];
+
+    
 
     /* Puxa todos os chats com o usuário logado */
     useEffect(() => {
@@ -50,17 +51,17 @@ function MensagemDireta() {
         })
     }, [])
 
-    function getMensagens(idRemetente) {
-        let idUsuarioLogado = sessionStorage.getItem('idUsuarioLogado');
-        apiMensagemDireto.get(`?fkUsuarioRemetente=${idRemetente}&fkUsuarioDonatario=${idUsuarioLogado}`).then((resposta) => {
-            try {
-                console.log(resposta.data)
-                setMensagens(resposta.data)
-            } catch (error) {
-                console.log(error)
-            }
-        })
-    }
+    // function getMensagens(idRemetente) {
+    //     let idUsuarioLogado = sessionStorage.getItem('idUsuarioLogado');
+    //     apiMensagemDireto.get(`?fkUsuarioRemetente=${idRemetente}&fkUsuarioDonatario=${idUsuarioLogado}`).then((resposta) => {
+    //         try {
+    //             console.log(resposta.data)
+    //             setMensagens(resposta.data)
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     })
+    // }
 
 
     // Função para enviar uma mensagem
@@ -123,7 +124,7 @@ function MensagemDireta() {
                                 <div className="md-chats-interno scroll">
                                     {chat != undefined && chat.length > 0 ? chat.map((chat) => (
                                         <Chat
-                                            foto={chat.imagem == "" ? fotoLogado : chat.imagem}
+                                            foto={chat.imagem == "" || chat.imagem == undefined? fotoLogado : chat.imagem}
                                             nome={chat.nome}
                                             id={formatacaoId(chat.idUsuario)}
                                             idUsuario={chat.idUsuario} />
@@ -142,22 +143,20 @@ function MensagemDireta() {
                                     {/* <p>#{remetente.id}</p> */}
                                 </div>
                             </div>
-                            <div id="md-mensagens" className="scroll">
-                                {mensagens != undefined && mensagens.length > 0 ? mensagens.map((mensagens) => (
-                                    <MensagemOutro mensagem={mensagens.mensagem} />
-                                )) : ""}
-
-
-                                {/* <MensagemOutro />
-                            <MensagemUsuario /> */}
-
-                            </div>
-                            <div id="md-enviar-mensagem">
+                           
+                    
+                            {/* <div id="md-enviar-mensagem">
                                 <input type="text" id="input-mensagem" />
                                 <button>
                                     <img src={iconSend} alt="Ícone de enviar mensagem" />
                                 </button>
-                            </div>
+                            </div> */}
+
+                            <ListarMensagens
+                                
+                            >
+
+                            </ListarMensagens>
                         </div>
                     </div>
                 </section>
