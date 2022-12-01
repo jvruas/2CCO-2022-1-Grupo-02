@@ -17,30 +17,33 @@ function Avaliacao() {
     const [produtos, setProdutos] = useState([]);
     const [usuarioAva, setUsuarioAva] = useState([]);
     const [endereco, setEndereco] = useState([]);
+    var aval = [];
 
-    
     useEffect(() => {
         let idDoador = sessionStorage.getItem('idDoador');
         apiProdutos.get(`/avaliacao?idDoador=${idDoador}`).then((resposta) => {
 
             console.log(resposta.data.fila)
             setProdutos(resposta.data.fila)
-            
-            for(let i=0; i<resposta.data.fila.length; i++){
-            apiUsuario.get(`/${resposta.data.fila[i].fkDonatario}`).then((usuarioResposta) => {
-                try {
-                    console.log(usuarioResposta.data)
-                    setUsuarioAva(usuarioResposta.data)
-                    fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
-                    .then(res => res.json()).then(data => {
-                        console.log(data)
-                        setEndereco(data)
-                    })
-                } catch (error) {
-                    console.log(error)
-                }
-            })
-        }
+
+            for (let i = 0; i < resposta.data.fila.length; i++) {
+                apiUsuario.get(`/${resposta.data.fila[i].fkDonatario}`).then((usuarioResposta) => {
+                    try {
+                        console.log(usuarioResposta.data)
+                        aval[i] = usuarioResposta.data;
+                        fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
+                            .then(res => res.json()).then(data => {
+                                console.log(data)
+                                aval[i].cidade = data.cidade;
+                                aval[i].uf = data.uf;
+                            })
+                    } catch (error) {
+                        console.log(error)
+                    }
+                })
+            }
+            setUsuarioAva(aval)
+            console.log("usaurio aval", aval)
             try {
             } catch (error) {
                 console.log(error)
@@ -52,7 +55,7 @@ function Avaliacao() {
         <>
             <Header></Header>
             <section id="ava-section">
-                <Perfil/>
+                <Perfil />
                 <MenuPerfil></MenuPerfil>
                 <div className="conteiner-avaliacao">
                     <div className="div_superior_ava"><b>Avaliação</b></div>
@@ -60,9 +63,9 @@ function Avaliacao() {
                         <Nota></Nota>
                     </div>
                     <div className="comentarios">
-                    {produtos != undefined && produtos.length > 0 ? produtos.map((ava) => (
-                            <Comentarios 
-                           
+                        {produtos != undefined && produtos.length > 0 ? produtos.map((ava) => (
+                            <Comentarios
+
                                 nota={ava.valor}
                                 comentario={ava.comentario}
                                 donatario={usuarioAva.nome}
@@ -71,8 +74,8 @@ function Avaliacao() {
                                 dataCon={ava.data}
 
                             />
-                        )): ""}
-                
+                        )) : ""}
+
                     </div>
                 </div>
 

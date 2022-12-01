@@ -1,0 +1,195 @@
+@import url('https://fonas.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;
+}
+
+.div_match{
+    height: 250px;
+    width: 270px;
+    border: 2px black solid;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    /* background-color: aqua; */
+}
+
+.perfil{
+    margin-top: 30px;
+    height: 262px;
+    width: 80%;
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: row;
+}
+
+.perfil_imagem{
+    height: 122px;
+    width: 100%;
+ 
+}
+
+.perfil_imagem img{
+    height: 122px;
+    width: 100%;
+    object-fit: fill;
+}
+
+.perfil_inf{
+    height: 40%;
+    width: 100%;
+    border-bottom: black 2px solid;
+    /* background-color: blue; */
+    display: flex;
+    justify-content: row;
+    /* background-color: aquamarine; */
+}
+
+
+.perfil{
+    height: 70px;
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    /* background-color: yellow */
+}
+
+.foto_match{
+    height: 80px;
+    width: 80px;
+    background-color: cornflowerblue;
+}
+
+.foto_match img{
+    height: 160px;
+    width: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.perfil_texto_match{
+    height: 70px;
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.perfil_texto_match div{
+    height: 33.3px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.inf_match{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#perfil_texto_match img{
+    height: 16px;
+    width: 16px;
+}
+
+.div_imagem{
+    height: 100%;
+    width: 80px;
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.div_imagem img{
+    height: 60px;
+    width: 60px;
+}
+
+.div_informacao{
+    height: 100%;
+    width: 190px;
+    /* background-color: yellow; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.inf_sup{
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* background-color: green; */
+    align-items: center;
+}
+.inf_meio{
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* background-color: brown; */
+    align-items: center;
+}
+
+.div_inf{
+    height: 30px;
+    width: 42px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* background-color: aqua; */
+}
+
+#disp-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text_match{
+height: 40px;
+width: 100%;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+}
+
+.div_circulo{
+    height: 110px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.circulo{
+    height: 80px;
+    width: 80px;
+    border: solid black 1px;
+    border-radius: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagens{
+    height: 30px;
+    width: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    left: 100px;
+}

@@ -14,10 +14,16 @@ public class UsuarioResposta {
 	private String estadoCivil;
 	private String telefone;
 	private String cep;
+	private String uf;
 	private Date dataCadastro;
 	private String grauEscolaridade;
+
 	private boolean removido;
 
+	private byte[] perfilImage;
+
+
+	public UsuarioResposta() {}
 
 	public UsuarioResposta(
 			Integer idUsuario,
@@ -31,9 +37,11 @@ public class UsuarioResposta {
 			String estadoCivil,
 			String telefone,
 			String cep,
+			String uf,
 			Date dataCadastro,
 			String grauEscolaridade,
-			boolean removido
+			boolean removido,
+			byte[] perfilImage
 	) {
 		this.idUsuario = idUsuario;
 		this.email = email;
@@ -46,9 +54,11 @@ public class UsuarioResposta {
 		this.estadoCivil = estadoCivil;
 		this.telefone = telefone;
 		this.cep = cep;
+		this.uf = uf;
 		this.dataCadastro = dataCadastro;
 		this.grauEscolaridade = grauEscolaridade;
 		this.removido = removido;
+		this.perfilImage = perfilImage;
 	}
 
 
@@ -108,6 +118,11 @@ public class UsuarioResposta {
 		return removido;
 	}
 
-	public UsuarioResposta() {
+	public String getUf() {
+		return uf;
+	}
+
+	public byte[] getPerfilImage() {
+		return perfilImage;
 	}
 }

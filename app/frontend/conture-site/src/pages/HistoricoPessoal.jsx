@@ -9,15 +9,19 @@ import Historico from "../components/HistoricoMaior"
 import { useState, useEffect } from "react";
 import apiProdutos from "../apiProduto"
 import apiUsuario from "../apiUsuario"
+import { useNavigate } from "react-router-dom"
 
 function HistoricoDonatario() {
 
     const [historico, setHistorico] = useState([]);
     const [usuario, setUsuario] = useState([]);
-    let idUsuario;
-    
+    let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+
+
+    let status = sessionStorage.getItem('status')
+    let navegar = useNavigate();
     useEffect(() => {
-        idUsuario = sessionStorage.getItem('idUsuarioLogado');
+
         apiProdutos.get(`/status?idDoador=${idUsuario}&status=todos`).then((resposta) => {
             try {
                 console.log("uijhhjh", resposta.data)
@@ -28,23 +32,9 @@ function HistoricoDonatario() {
         })
         let dataCad = new Date(historico.dataConclusao);
 
-
-
-
-        // if(select_opcoes.value == 0){
-        //     apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
-        //         try {
-        //             console.log(resposta.data)
-        //             setHistorico(resposta.data)
-        //         } catch (error) {
-        //             console.log(error)
-        //         }
-        //     })
-        // }
-
         apiUsuario.get(`/${idUsuario}`).then((usuarioResposta) => {
             try {
-                console.log("ofdoidsfodsfoifdsj", usuarioResposta.data)
+                console.log(usuarioResposta.data)
                 setUsuario(usuarioResposta.data)
             } catch (error) {
                 console.log(error)
@@ -53,51 +43,27 @@ function HistoricoDonatario() {
 
     }, [])
 
-    const teste = (event) => {
-
-        if (event.target.value == 0) {
-            apiProdutos.get(`/status?idDoador=${idUsuario}&status=todos`).then((resposta) => {
-                try {
-                    console.log(resposta.data)
-                    setHistorico(resposta.data)
-                } catch (error) {
-                    console.log(error)
-                }
-            })
-        }
-
-        if (event.target.value == 1) {
-            apiProdutos.get(`/status?idDoador=${idUsuario}&status=todos`).then((resposta) => {
-                try {
-                    console.log(resposta.data)
-                    setHistorico(resposta.data)
-                } catch (error) {
-                    console.log(error)
-                }
-            })
-        }
-        if (event.target.value == 2) {
-            apiProdutos.get(`/status?idDoador=${idUsuario}&status=todos`).then((resposta) => {
-                try {
-                    console.log(resposta.data)
-                    setHistorico(resposta.data)
-                } catch (error) {
-                    console.log(error)
-                }
-            })
-        }
-        if (event.target.value == 3) {
-            apiProdutos.get(`/status?idDoador=${idUsuario}&status=todos`).then((resposta) => {
-                try {
-                    console.log(resposta.data)
-                    setHistorico(resposta.data)
-                } catch (error) {
-                    console.log(error)
-                }
-            })
-        }
-
+    const getFiltro = () => {
+        let status = sessionStorage.getItem('status');
+        apiProdutos.get(`/status?idDoador=${idUsuario}&status=${status}`).then((resposta) => {
+            try {
+                console.log("uijhhjh", resposta.data)
+                setHistorico(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
     }
+
+    function Redirect(event) {
+        console.log(event)
+        if (event.target.value != "") {
+            sessionStorage.setItem("status", event.target.value);
+            getFiltro();
+        }
+    }
+
+
 
 
     return (
@@ -111,11 +77,11 @@ function HistoricoDonatario() {
                         <b><p>Histórico</p></b>
 
                         <div id="div_filtro"><p>Filtrar por</p>
-                            <select onChange={((event) => teste(event))} name="" id="select_opcoes">
-                                <option value="0">Todos</option>
-                                <option value="1">Processo</option>
-                                <option value="2">Doados</option>
-                                <option value="3">Recebidos</option>
+                            <select onChange={((event) => { Redirect(event) })} name="select_opcoes" id="select_opcoes">
+                                <option value='todos'>Todos</option>
+                                <option value='andamento'>Processo</option>
+                                <option value='doado'>Doados</option>
+                                <option value='recebido'>Recebidos</option>
                             </select>
                         </div>
 

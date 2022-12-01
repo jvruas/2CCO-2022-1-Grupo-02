@@ -4,7 +4,7 @@ import MenuPerfil from "../components/MenuDisponivel"
 import '../html-css-template/css/ProdutoDisponivelPage.css'
 import Footer from "../components/Footer"
 import Card from "../components/ProdutoCop"
-import Filtro from "../html-css-template/imagens/filtro.svg";
+import Filtro from "../html-css-template/imagens/Filtro.svg";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiProdutos from "../apiProduto.js"
@@ -16,13 +16,15 @@ function Disponivel() {
         let idDoador = sessionStorage.getItem('idDoador');
         apiProdutos.get(`disponiveis?idDoador=${idDoador}`).then((resposta) => {
             try {
-                console.log(resposta.data)
+                console.log("burura",resposta.data)
                 setProdutos(resposta.data)
             } catch (error) {
                 console.log(error)
             }
         })
     }, [])
+
+    
 
     return (
         <>
@@ -32,14 +34,14 @@ function Disponivel() {
                 <MenuPerfil></MenuPerfil>
 
                 <div className="conteiner-produto">
-                    <div className="div_sup_disp"><b><p>Disponíveis</p></b> <Link to="/popup-filtro"><img src={Filtro} /></Link></div>
+                    <div className="div_sup_disp"><b><p>Disponíveis</p></b></div>
                     <div className="div_inf_disp">
                         <div className="div_card">
                             {produtos != undefined && produtos.length > 0 ? produtos.map((prod) => (
                                 <Card
                                     visualizacao={prod.quantidadeVisualizacao}
                                     nome={prod.nome}
-                                    idProduto={prod.idProduto}
+                                    idProduto={prod.idProdutoDoacao}
                                 />
                             )) : ""}
 

@@ -9,46 +9,27 @@ import apiProduto from "../apiProduto.js";
 import apiUsuario from "../apiUsuario";
 
 function Feed() {
-
     
-    // const [categorias, setCategoria] = useState([]);
-
-    // useEffect(() => {
-    //     apiProduto.get("/todas-categorias").then((resposta) => {
-    //         try {
-    //             console.log(resposta.data)
-    //             setCategoria(resposta.data)
-    //             console.log(resposta.data[0].nome)
-    //             console.log(resposta.data[1].nome)
-    //             console.log(resposta.data[2].nome)
-
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     })
-    // }, [])
-
     const [produtosNote, setProdutosNote] = useState([]);
     const [produtosCelular, setProdutosCelular] = useState([]);
     const [produtosTablet, setProdutosTablet] = useState([]);
+    const [imgProduto, setImg] = useState([]);
+
+    var imgProd = [];
     useEffect(() => {
-            apiProduto.get("/categoria?idCategoria=1").then((resposta) => {
+            apiProduto.get("/categoria?idCategoria=7").then((resposta) => {
                 console.log("cat1", resposta.data);
                 for(let i=0; i<resposta.data.length; i++){
                     apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
                         resposta.data[i].nomeDoador=response.data.nome
                         setProdutosNote(resposta.data);
                     })
-                    // apiUsuario.get(`/${resposta.data[i].fkDoador}/imagem?tipoImagem=P
-                    // `).then((response) => {
-                    //     resposta.data[i].imagem="data:image/png;base64,"+response.data
-                    // })
                 }
                 console.log("resposta.data");
                 console.log(resposta.data);
             })
 
-            apiProduto.get("/categoria?idCategoria=2").then((resposta) => {
+            apiProduto.get("/categoria?idCategoria=8").then((resposta) => {
                 console.log("cat2", resposta.data);
                 for(let i=0; i<resposta.data.length; i++){
                     apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
@@ -63,7 +44,7 @@ function Feed() {
                 console.log(resposta.data);
             })
        
-            apiProduto.get("/categoria?idCategoria=3").then((resposta) => {
+            apiProduto.get("/categoria?idCategoria=1").then((resposta) => {
                 console.log("cat3", resposta.data);
                 for(let i=0; i<resposta.data.length; i++){
                     apiUsuario.get(`/${resposta.data[i].fkDoador}`).then((response) => {
@@ -92,12 +73,12 @@ function Feed() {
                 {
                     produtosNote.map((itemProduto) => (
                         <Produto
-                            idProduto={1}
+                            idProduto={itemProduto.idProdutoDoacao}
                             idDoador={itemProduto.fkDoador}
                             visualizacao={itemProduto.quantidadeVisualizacao}
                             nome={itemProduto.nome}
                             nomeDoador={itemProduto.nomeDoador}
-                            // imagem={itemProduto.imagem}
+                            foto={imgProduto.imagem}
                         />
                     ))
                 }
@@ -110,7 +91,7 @@ function Feed() {
                 {
                     produtosCelular.map((itemProduto) => (
                         <Produto
-                        idProduto={1}
+                        idProduto={itemProduto.idProdutoDoacao}
                         idDoador={itemProduto.fkDoador}
                         visualizacao={itemProduto.quantidadeVisualizacao}
                         nome={itemProduto.nome}
@@ -129,7 +110,7 @@ function Feed() {
                 {
                     produtosTablet.map((itemProduto) => (
                         <Produto
-                        idProduto={1}
+                        idProduto={itemProduto.idProdutoDoacao}
                         idDoador={itemProduto.fkDoador}
                         visualizacao={itemProduto.quantidadeVisualizacao}
                         nome={itemProduto.nome}

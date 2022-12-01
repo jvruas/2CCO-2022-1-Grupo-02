@@ -8,15 +8,12 @@ function Chat(props) {
         <>
             <div className="md-chat">
                 <div className="identificacao">
-                    <img src={props.foto} alt="" id="md-chats-foto" />
+                    <img src={props.foto} alt="Foto do usuário" id="md-chats-foto" />
                     <div>
                         <h4>{props.nome}</h4>
                         <p>{props.id}</p>
                     </div>
                 </div>
-                <button>
-                    <img src={iconLixo} alt="Ícone lixo" id="md-chats-icon" />
-                </button>
             </div>
         </>
     )

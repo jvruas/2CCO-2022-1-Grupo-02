@@ -38,6 +38,11 @@
     object-fit: fill;
 }
 
+
+#perfil_imagem label > img:hover{
+    opacity: 0.2;
+}
+
 #perfil_inf{
     height: 142px;
     width: 100%;
@@ -54,7 +59,7 @@
 
 #perfil_conteudo{
     height: 100px;
-    width: 372px;
+    width: 450px;
     display: flex;
 }
 
@@ -70,12 +75,16 @@
     object-fit: cover;
 }
 
+#foto label > img:hover{
+    opacity: 0.2;
+}
+
 #perfil_texto{
     height: 100px;
-    width: 272px;
+    width: 450px;
     display: flex;
     flex-direction: column;
-    
+    margin-left: 20px;
 }
 
 #perfil_texto div{
@@ -83,7 +92,10 @@
     width: 100%;
     display: flex;
     align-items: center;
-    margin-left: 20px;
+}
+
+.nota_avaliacao{
+    margin-left: 10px;
 }
 
 .inf{
@@ -92,11 +104,15 @@
     justify-content: space-between;
 }
 
+.inf_cidade_data{
+    display: flex;
+    justify-content: space-between;
+}
+
 #perfil_texto img{
     height: 16px;
     width: 16px;
 }
-
 
 #perfil_inf button{
     height: 44px;
@@ -110,11 +126,10 @@
     position: relative;
     top:56px;
 }
+
 .img_reporte{
     height: 15px;
-    width: 15px;
-   
-  
+    width: 15px; 
 }
 
 #disp-section{

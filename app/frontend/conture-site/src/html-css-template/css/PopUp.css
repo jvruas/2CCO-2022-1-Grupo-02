@@ -37,7 +37,7 @@ h2{
     background:rgba(0,0,0,.4);
 }
 
-.pop_up, .pop_up-dois{
+#pop_up, #pop_up-dois{
     width: 528px;
     height: 387px;
     display: flex;
@@ -46,11 +46,11 @@ h2{
     background-color: #FFFFFF;
 }
 
-.pop_up-dois{
+#pop_up-dois{
     display: none;
 }
 
-#popUp{
+.popUp{
     width: 425px;
     height: 100%;
     display: grid;

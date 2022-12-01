@@ -62,6 +62,11 @@ public class UsuarioCadastroRequest {
 	@Pattern(regexp = "^[0-9]+$")
 	private String cep;
 
+	@NotBlank
+	@Size(min = 2, max = 2)
+	@Pattern(regexp = "^[a-z|A-Z]+$")
+	private String uf;
+
 	@NotNull
 	@NotBlank
 	@Size(min = 1, max = 1)
@@ -113,6 +118,10 @@ public class UsuarioCadastroRequest {
 		return cep;
 	}
 
+	public String getUf() {
+		return uf;
+	}
+
 	public String getGrauEscolaridade() {
 		return grauEscolaridade;
 	}
@@ -121,9 +130,13 @@ public class UsuarioCadastroRequest {
 		return fkSituacaoAtual;
 	}
 
-	public void setNome(String nome) { this.nome = nome; }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-	public void setSobrenome(String sobrenome) { this.sobrenome = sobrenome; }
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
+	}
 
 
 	public void setEmail(String email) {
@@ -156,6 +169,10 @@ public class UsuarioCadastroRequest {
 
 	public void setCep(String cep) {
 		this.cep = cep;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
 	}
 
 	public void setGrauEscolaridade(String grauEscolaridade) {

@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+/*Reset*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Tajawal;
+    text-decoration: none;     
+}
+
+.section-pesquisa{
+    height: 1000px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* background-color: blue; */
+}
+
+.conteiner-pesquisa{
+    height: 500px;
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* background-color: aqua; */
+}
+
+.div_sup_pesq{
+    height: 50px;
+    width: 80%;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    font-size: 18px;
+    /* background-color: red; */
+    border-bottom: 1px black solid;
+}
+
+.div_inf_pesq{
+    height: 400px;
+    width: 80%;
+    overflow: scroll;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+     justify-content: left;
+    flex-wrap: wrap;
+    /* background-color: blueviolet; */
+}
+
+.div_card{
+    height: 300px;
+    width: 100%;
+    display:grid;
+    grid-template-columns:25% 25% 25% 25%;
+}

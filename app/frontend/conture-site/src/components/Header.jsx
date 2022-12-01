@@ -1,15 +1,16 @@
 import logo from '../html-css-template/imagens/logo-conture.png';
 import lupa from '../html-css-template/imagens/icon-lupa.png';
-import fotoLogado from '../html-css-template/imagens/foto.jpg';
-import fotoDesogado from '../html-css-template/imagens/imagem-deslogado.png';
+import fotoLogado from '../html-css-template/imagens/icon-logado-sem-foto.png';
+import fotoDeslogado from '../html-css-template/imagens/imagem-deslogado.png';
 import setaBaixo from '../html-css-template/imagens/chevron-down1.svg';
-import interesse from '../html-css-template/imagens/interesses.svg';
+import interesse from '../html-css-template/imagens/Interesses.svg';
 import mensagem from '../html-css-template/imagens/icon-mensagem.svg';
 import notificacao from '../html-css-template/imagens/icon-notificacao.svg';
-import adicionarProduto from '../html-css-template/imagens/subtract.svg';
+import adicionarProduto from '../html-css-template/imagens/Subtract.svg';
 import '../html-css-template/css/Style.css'
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import apiProduto from '../apiProduto';
 import apiUsuario from "../apiUsuario.js";
 
 function Header() {
@@ -17,32 +18,44 @@ function Header() {
     const navegar = useNavigate();
 
     const [usuarioHeader, setUsuarioHeader] = useState([]);
-    // const [usuarioImg, setUsuarioImg] = useState([]);
 
+    /* Puxa as informações do usuário logado */
     useEffect(() => {
         let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
         apiUsuario.get(`/${idUsuarioHeader}`).then((resposta) => {
             try {
-                console.log(resposta.data)
+                // console.log(resposta.data)
                 setUsuarioHeader(resposta.data)
             } catch (error) {
-                console.log(error)  
+                console.log(error)
             }
         })
-    })
 
+    }, [])
+
+    /* Puxa as fotos do usuário logado */
     useEffect(() => {
         let param = sessionStorage.getItem('logado');
         let idUsuarioHeader = sessionStorage.getItem('idUsuarioLogado');
-        if(param == "OK"){
-            document.getElementById("nome_usuario").innerHTML = `${usuarioHeader.nome}`; 
-            document.getElementById("img_foto").src = `http://localhost:8080/usuarios/${idUsuarioHeader}/imagem?tipoImagem=P`;   
-        }else{
-            document.getElementById("nome_usuario").innerHTML = "Usuário";  
-            document.getElementById("img_foto").src = `${fotoDesogado}`;
+        apiUsuario.get(`${idUsuarioHeader}/imagem?tipoImagem=P`,
+            { responseType: 'blob' }).then((respostaImg) => {
+                let imgUrl = URL.createObjectURL(respostaImg.data)
+                document.getElementById("img_foto").src = imgUrl;
+            }).catch((error) => {
+                // console.log(error)
+                if (param == "OK") {
+                    document.getElementById("img_foto").src = `${fotoLogado}`;
+                }
+            })
+        if (param == "OK") {
+            document.getElementById("nome_usuario").innerHTML = `${usuarioHeader.nome}`;
+        } else {
+            document.getElementById("nome_usuario").innerHTML = "Usuário";
+            document.getElementById("img_foto").src = `${fotoDeslogado}`;
         }
-    })   
-    
+    })
+
+    /* Faz logoff do usuário logado */
     function logoff(event) {
         event.preventDefault()
         sessionStorage.setItem('logado', "")
@@ -58,9 +71,10 @@ function Header() {
         }).catch((error) => {
             console.log(error)
         })
-        
+
     }
 
+    /* Mostra o menu dependendo se tem usuário está logado ou não */
     const mostrarMenu = () => {
         var menu = document.getElementById("he-tooltip");
         let param = sessionStorage.getItem('logado');
@@ -81,23 +95,74 @@ function Header() {
         }
     }
 
+     /* Mostra categoria de produtos */
+     const mostrarCategorias = () => {
+        var menu = document.getElementById("todas-categorias");
+        if (menu.style.visibility == "hidden") {
+            menu.style.visibility = "visible";
+        }
+        else {
+            menu.style.visibility = "hidden";
+        }
+    }
+
+    /* Direciona para página de cadastro de produto dependendo se tem usuário está logado ou não */
     const redirecionarDoar = () => {
         let param = sessionStorage.getItem('logado');
-        if(param == "OK"){
+        if (param == "OK") {
             navegar("/cadastro-produto")
-        }else{
+        } else {
             navegar("/login")
         }
     }
 
+    /* Direciona para página mensagem direta dependendo se tem usuário está logado ou não */
     const redirecionarMensagemD = () => {
         let param = sessionStorage.getItem('logado');
-        if(param == "OK"){
+        if (param == "OK") {
             navegar("/mensagem-direta")
-        }else{
+        } else {
             navegar("/login")
         }
     }
+
+    function PesquisarRedirect() {
+        const value = document.getElementById("input_pesq").value;
+        sessionStorage.setItem("pesquisa", value);
+        navegar("/pesquisa");
+        document.location.reload(true);
+        console.log(value);
+    }
+
+    function Redirect(event) {
+
+        if (event.target.id != "") {
+
+            sessionStorage.setItem("tipoCategoria", event.target.id);
+            navegar("/pesquisa")
+            document.location.reload(true);
+        }
+        else {
+            sessionStorage.setItem("tipoCategoria", event.nativeEvent.path[1].id);
+            navegar("/pesquisa")
+            document.location.reload(true);
+        }
+    }
+
+    /* Função que chama o endPoint que traz todas as categorias */
+    const [categorias, setCategoria] = useState([]);
+
+    useEffect(() => {
+        apiProduto.get("/todas-categorias").then((resposta) => {
+            try {
+                console.log(resposta.data)
+                setCategoria(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }, [])
+
 
     return (
         <>
@@ -106,15 +171,15 @@ function Header() {
                     <div class="container_completo">
                         <Link to="/"><img src={logo} alt="Logo Conture" className="logo" /></Link>
                         <div id="input_pesquisar">
-                            <input type="text" />
-                            <button>
+                            <input type="text" id="input_pesq" />
+                            <button onClick={PesquisarRedirect}>
                                 <img src={lupa} alt="Lupa de pesquisa" />
                             </button>
                         </div>
-                        <div id="div_usuario"onClick={mostrarMenu}>
-                            <img src={fotoDesogado} alt="" id="img_foto" />
+                        <div id="div_usuario" onClick={mostrarMenu}>
+                            <img src={fotoDeslogado} alt="" id="img_foto" />
                             <p id="nome_usuario">Usuário</p>
-                            <img src={setaBaixo} alt="" className="img_seta" id="seta_menu"  />
+                            <img src={setaBaixo} alt="" className="img_seta" id="seta_menu" />
                             <div id="he-tooltip">
                                 <div className="menuzinho">
                                     <div id="triangulo-para-cima">
@@ -138,29 +203,37 @@ function Header() {
                         </div>
                         <div id="div_icones">
                             <img src={interesse} alt="Ícone de matchs" />
-                            <img src={mensagem} alt="Ícone de mensagem direta" onClick={redirecionarMensagemD}/>
+                            <img src={mensagem} alt="Ícone de mensagem direta" onClick={redirecionarMensagemD} />
                             <img src={notificacao} alt="Ícone de notificação" />
                         </div>
                         <button type="button" id="btn_doacao" onClick={redirecionarDoar}>
                             <p>DOAR PRODUTO</p>
-                            <img src={adicionarProduto} alt="" />
+                            <img src={adicionarProduto} alt="Ícone de soma" />
                         </button>
                     </div>
                 </div>
                 <div id="header_inferior">
-                    <div id="div_produto">
+                    <div id="div_produto" onClick={mostrarCategorias}>
                         <p>Produtos</p>
                         <img src={setaBaixo} alt="" className="img_seta" />
                     </div>
                     <div id="div_produtos">
-                        <p>Notebook</p>
-                        <p>Celular</p>
-                        <p>Tablet</p>
-                        <p>Desktop</p>
+                        <p id='7' onClick={((event) => { Redirect(event) })}>Notebook</p>
+                        <p id='1' onClick={((event) => { Redirect(event) })}>Celular</p>
+                        <p id='8' onClick={((event) => { Redirect(event) })}>Tablet</p>
+                        <p id='2' onClick={((event) => { Redirect(event) })}>Desktop</p>
                     </div>
                 </div>
-
             </header>
+            <div id="todas-categorias">
+                <div>
+                    {
+                        categorias.map((categoria) => (
+                            <p id={categoria.idCategoriaProduto} value={categoria.idCategoriaProduto} onClick={((event) => { Redirect(event) })}>{categoria.nome}</p>
+                        ))
+                    }
+                </div>
+            </div>
 
         </>
     );

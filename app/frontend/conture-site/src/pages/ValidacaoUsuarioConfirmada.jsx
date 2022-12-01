@@ -4,6 +4,8 @@ import '../html-css-template/css/ValidacaoUsuarioConfirmada.css';
 import ImagemValidado from "../html-css-template/imagens/imagem-validado.svg";
 import IconComemoracao from "../html-css-template/imagens/icon-comemoracao.svg";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import apiUsuario from "../apiUsuario.js";
 
 function ValidacaoUsuarioConfirmada() {
 
@@ -12,6 +14,21 @@ function ValidacaoUsuarioConfirmada() {
     function redirecionar(){
         navegar("/")
     }
+
+     /* Função para pegar os dados do usuário logado */
+     const [usuarioLogado, setUsuario] = useState([]);
+
+     useEffect(() => {
+         let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+         apiUsuario.get(`/${idUsuario}`).then((resposta) => {
+             try {
+                 console.log(resposta.data)
+                 setUsuario(resposta.data)
+             } catch (error) {
+                 console.log(error)
+             }
+         })
+     }, [])
 
     return (
         <>
@@ -37,7 +54,7 @@ function ValidacaoUsuarioConfirmada() {
                             <p>Sua conta foi validada com sucesso, a partir de agora você terá<br />
                                 mais chances de receber doações através de Matchs.</p>
                             <img src={ImagemValidado} alt="" className="vlc-imagem" />
-                            <p>Obrigado por validar sua conta <span>Yan </span><img src={IconComemoracao} alt="" className="vlc-icon" /></p>
+                            <p>Obrigado por validar sua conta <span>{usuarioLogado.nome} </span><img src={IconComemoracao} alt="" className="vlc-icon" /></p>
                         </div>
                         <div className="vlc-btns">
                             <button type="button" onClick={redirecionar}>

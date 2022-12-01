@@ -50,14 +50,21 @@
     background-color: #4E3069;
 }
 
-#ep-parte-dois{
+#ep-parte-dois, #ep-parte-tres{
     height: 495px;
     width: 75%;
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
     border: 1px solid #AFAFAF;
+}
+
+#ep-parte-dois{
+    display: flex;
+}
+
+#ep-parte-tres{
+    display: none;
 }
 
 .ep-titulo{
@@ -103,6 +110,14 @@
     justify-content: space-evenly;
 }
 
+.ep-fundo-cinza div{
+    height: 44px;
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    background-color: #f5f5f5;
+}
+
 .ep-aviso{
     height: 4%;
     width: 80%;
@@ -142,16 +157,21 @@
     border-radius: 3px;
 }
 
-.ep-btns div{
-    border: 1px solid red;
-    background-color: #FFFFFF;
+#icon-editar{
+    height: 20px;
+    width: 20px;
 }
 
 .ep-btns a{
     color: red;
 }
 
-.ep-btns div:hover{
+.btn_desabilitar{
+    border: 1px solid red;
+    background-color: #FFFFFF;
+}
+
+.btn_desabilitar:hover{
     border: 1px solid red;
     background-color: #F44545;
 }
@@ -168,4 +188,14 @@
 
 .ep-btns button:hover{
     background-color: #308354;
+}
+
+.btn_voltar {
+    color: #000000;
+    background-color: var(--cinza-btn);
+    border: 1px solid var(--cinza-btn-border);
+}
+
+.btn_voltar:hover {
+    background-color: var(--cinza-btn-hover);
 }

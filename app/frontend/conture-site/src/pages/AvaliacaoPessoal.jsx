@@ -14,39 +14,80 @@ import apiUsuario from "../apiUsuario.js"
 function AvaliacaoPessoal() {
 
     const [produtos, setProdutos] = useState([]);
-    const [usuario, setUsuario] = useState([]);
+    const [usuarioAva, setUsuarioAva] = useState([]);
     const [endereco, setEndereco] = useState([]);
+    var aval = [];
 
-    
     useEffect(() => {
-        let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-        apiProdutos.get(`/avaliacao?idDoador=${idUsuario}`).then((resposta) => {
+        let idDoador = sessionStorage.getItem('idUsuarioLogado');
+        apiProdutos.get(`/avaliacao?idDoador=${idDoador}`).then((resposta) => {
 
-            console.log("pppdgdg", resposta.data.fila)
-            setProdutos(resposta.data.fila)
-            
-            for(let i=0; i<resposta.data.fila.length; i++){
-            apiUsuario.get(`/${resposta.data.fila[i].fkDonatario}`).then((usuarioResposta) => {
-                try {
-                    console.log("vvddsssd",usuarioResposta.data)
-                    setUsuario(usuarioResposta.data)
-                    fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
-                    .then(res => res.json()).then(data => {
-                        console.log(data)
-                        setEndereco(data)
-                    })
-                } catch (error) {
-                    console.log(error)
-                }
-            })
-        }
+            console.log("Fila: " + resposta.data.fila)
+            aval = resposta.data.fila;
+
+            for (let i = 0; i < resposta.data.fila.length; i++) {
+                apiUsuario.get(`/${resposta.data.fila[i].fkDonatario}`).then((usuarioResposta) => {
+                    try {
+                        // console.log(usuarioResposta.data)
+                        aval[i].nome = usuarioResposta.data.nome;
+                
+                        fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
+                            .then(res => res.json()).then(data => {
+                                console.log(data)
+                                aval[i].cidade = data.localidade;
+                                aval[i].uf = data.uf;
+                            })
+                    } catch (error) {
+                        console.log(error)
+                    }
+                })
+            }
+            console.log("Avaliação completa: " + aval)
+            console.log("Nome: " + aval[0].nome)
+            console.log("Cidade: " + aval[0].cidade)
+            setUsuarioAva(aval)            
             try {
             } catch (error) {
                 console.log(error)
             }
+            
         })
     }, [])
 
+
+    // function getAvaliacoes() {
+    //     let idDoador = sessionStorage.getItem('idUsuarioLogado');
+    //     apiProdutos.get(`/avaliacao?idDoador=${idDoador}`).then((resposta) => {
+
+    //         console.log("Fila: " + resposta.data.fila)
+    //         aval = resposta.data.fila;
+
+    //         for (let i = 0; i < resposta.data.fila.length; i++) {
+    //             apiUsuario.get(`/${resposta.data.fila[i].fkDonatario}`).then((usuarioResposta) => {
+    //                 try {
+    //                     // console.log(usuarioResposta.data)
+    //                     aval[i].nome = usuarioResposta.data.nome;
+                
+    //                     fetch(`https://viacep.com.br/ws/${usuarioResposta.data.cep}/json/`)
+    //                         .then(res => res.json()).then(data => {
+    //                             console.log(data)
+    //                             aval[i].cidade = data.localidade;
+    //                             aval[i].uf = data.uf;
+    //                         })
+    //                 } catch (error) {
+    //                     console.log(error)
+    //                 }
+    //             })
+    //         }
+    //         console.log("Avaliação completa: " + aval)
+    //         setUsuarioAva(aval)
+    //         console.log("usaurio aval", aval)
+    //         try {
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     })
+    // }
 
 
     return (
@@ -62,16 +103,14 @@ function AvaliacaoPessoal() {
                         <Nota></Nota>
                     </div>
                     <div className="comentarios">
-                        {produtos != undefined && produtos.length > 0 ? produtos.map((ava) => (
+                        {usuarioAva != undefined && usuarioAva.length > 0 ? usuarioAva.map((ava) => (
                             <Comentarios 
-                           
                                 nota={ava.valor}
                                 comentario={ava.comentario}
-                                donatario={usuario.nome}
-                                cidade={endereco.localidade}
-                                estado={endereco.uf}
+                                donatario={ava.nome}
+                                cidade={ava.cidade}
+                                estado={ava.uf}
                                 dataCon={ava.data}
-
                             />
                         )): ""}
 

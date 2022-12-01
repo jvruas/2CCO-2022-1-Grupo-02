@@ -81,6 +81,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    /* background-color: red; */
 }
 
 .div_inf_reporte div {

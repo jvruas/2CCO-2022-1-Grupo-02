@@ -26,7 +26,6 @@ function Login() {
     function handleChangeUser(event) {
         const { value, name } = event.target
         setValuesUsuarioLogin({ ...valuesUsuarioLogin, [name]: value, })
-        console.log(valuesUsuarioLogin)
     }
 
     const navegar = useNavigate();

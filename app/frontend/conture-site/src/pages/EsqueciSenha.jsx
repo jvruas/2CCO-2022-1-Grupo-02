@@ -15,38 +15,6 @@ function EsqueciSenha() {
 
     const navegar = useNavigate();
 
-    /* Função para pegar os dados do usuário logado */
-    // const [usuarioLogado, setUsuario] = useState([]);
-
-    // useEffect(() => {
-    //     let idUsuario = sessionStorage.getItem('idUsuarioLogado');
-    //     apiUsuario.get(`/1`).then((resposta) => {
-    //         try {
-    //             console.log(resposta.data)
-    //             setUsuario(resposta.data)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     })
-    // }, [])
-
-    /* Função para enviar o código de validação e enviar o usuário para a página de validação */
-    // function validacao(event) {
-    //     event.preventDefault()
-
-    //     apiUsuario.post(`conta/validacao-email?emailDestinatario=${usuarioLogado.email}&idUsuario=1`, {
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         }
-    //     }).then((resposta) => {
-    //         navegar("/validacao-usuario")
-    //         console.log(resposta.status)
-    //     }).catch((error) => {
-    //         console.log(error)
-    //     })
-    // }
-
-
     function handleSubmit(event) {
         event.preventDefault()
 
@@ -65,10 +33,11 @@ function EsqueciSenha() {
             document.getElementById("alerta-img").style.display = "flex"
             document.getElementById("msg-alerta").innerHTML = `A senha deve ter mais que 6 caracteres`
         } else {
-            apiUsuario.patch(`/atualizar-senha?idUsuario=${idUsuario}&novaSenha=${senha.value}`)
+            apiUsuario.patch(`/atualizar-senha?idUsuario=${sessionStorage.getItem('idUsuarioRetornado')}&novaSenha=${senha.value}`)
                 .then((resposta) => {
-                    navegar("/")
                     console.log(resposta.status)
+                    sessionStorage.setItem('idUsuarioRetornado', "")
+                    navegar("/")
                 }).catch((error) => {
                     console.log(error)
                     document.getElementById("alerta-img").style.display = "flex"
@@ -130,8 +99,7 @@ function EsqueciSenha() {
                     <div className="divisao input">
                         <label htmlFor="confSenha">Confirmar sua senha</label>
                         <input type="password" name="confSenha" id="senha2" />
-                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye3"
-                            onClick={ocultarSenha2} />
+                        <img src={iconSenha} alt="Ícone senha escondida" className="eye" id="eye3" onClick={ocultarSenha2} />
                     </div>
                     <div id="alerta" className="coluna">
                         <img src={iconError} id="alerta-img" /><p id="msg-alerta"></p>

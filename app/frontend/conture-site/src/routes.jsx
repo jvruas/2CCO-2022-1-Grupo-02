@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import EsqueciSenha from "./pages/EsqueciSenha";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
-import PopUp from "./pages/PopUp";
+import PopUpSenha from "./pages/PopUpSenha";
 import Feed from "./pages/Feed";
 import MensagemDireta from "./pages/MensagemDireta";
 import ValidacaoUsuario from "./pages/ValidacaoUsuario";
@@ -17,19 +17,22 @@ import DisponivelPessoal from "./pages/DisponivelPessoal";
 import Avaliacao from "./pages/Avaliacao";
 import AvaliacaoPessoal from "./pages/AvaliacaoPessoal";
 import CadastroProduto from "./pages/CadastroProduto";
-import PopUpFiltro from "./pages/pop-up/PopUpFiltro";
+import PopUpReporteConfirma from "./pages/pop-up/PopUpReporte2";
 import PopUpReporte from "./pages/pop-up/PopUpReporte";
 import PopUpAvaliacao from "./pages/pop-up/PopUpAvaliacao";
 import PopUpDeletar from "./pages/pop-up/PopUpDeletar";
 import DescricaoProduto from "./pages/DescricaoProduto";
 import Dashboard from "./pages/Dashboard";
+import Pesquisa from "./pages/Pesquisa";
+import Match from "./pages/Match";
+import CardMatch from "./components/CardMatch";
 
 function Rotas() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/login" element={<Login/>} />
-                <Route path="/email-esqueci-senha" element={<PopUp/>} />
+                <Route path="/email-esqueci-senha" element={<PopUpSenha/>} />
                 <Route path="/esqueci-senha" element={<EsqueciSenha/>} />
                 <Route path="/cadastro" element={<Cadastro/>} />
                 <Route path="*" element={<Feed/>} />
@@ -47,13 +50,16 @@ function Rotas() {
                 <Route path="/avaliacao" element={<Avaliacao/>} />
                 <Route path="/avaliacao-pessoal" element={<AvaliacaoPessoal/>} />
                 <Route path="/cadastro-produto" element={<CadastroProduto/>} />
-                <Route path="/popup" element={<PopUp/>} />
+                <Route path="/popup" element={<PopUpSenha/>} />
                 <Route path="/popup-reporte" element={<PopUpReporte/>} />
                 <Route path="/descricao-produto" element={<DescricaoProduto/>} />
                 <Route path="/dashboard-admin-bi" element={<Dashboard/>}></Route>
                 <Route path="/popup-avaliacao" element={<PopUpAvaliacao/>} />
-                <Route path="/popup-filtro" element={<PopUpFiltro/>} />
+                <Route path="/popup-reporte-confirma" element={<PopUpReporteConfirma/>} />
                 <Route path="/popup-deletar" element={<PopUpDeletar/>} />
+                <Route path="/pesquisa" element={<Pesquisa/>} />
+                <Route path="/match" element={<Match/>} />
+                <Route path="/card-match" element={<CardMatch/>} />
             </Routes>
         </BrowserRouter>
     );

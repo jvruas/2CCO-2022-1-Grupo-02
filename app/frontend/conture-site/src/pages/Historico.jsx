@@ -9,16 +9,20 @@ import Historico from "../components/HistoricoMenor"
 import { useState, useEffect } from "react";
 import apiProdutos from "../apiProduto.js"
 import apiUsuario from "../apiUsuario"
-
+import { useNavigate } from "react-router-dom"
 
 function HistoricoDonatario() {
 
-    
     const [historico, setHistorico] = useState([]);
-    const [usuarioDon, setUsuarioDon] = useState([]);
+    const [usuario, setUsuario] = useState([]);
+    let idUsuario = sessionStorage.getItem('idUsuarioLogado');
+
+
+    let status = sessionStorage.getItem('status')
+    let navegar = useNavigate();
     useEffect(() => {
-        let idDoador= sessionStorage.getItem('idDoador');
-            apiProdutos.get(`/status?idDoador=${idDoador}&status=todos`).then((resposta) => {
+
+        apiProdutos.get(`/status?idDoador=${idUsuario}&status=todos`).then((resposta) => {
             try {
                 console.log("uijhhjh", resposta.data)
                 setHistorico(resposta.data)
@@ -28,39 +32,37 @@ function HistoricoDonatario() {
         })
         let dataCad = new Date(historico.dataConclusao);
 
-    // if(select_opcoes.value == 0){
-    //     apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
-    //         try {
-    //             console.log(resposta.data)
-    //             setHistorico(resposta.data)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     })
-    // }
+        apiUsuario.get(`/${idUsuario}`).then((usuarioResposta) => {
+            try {
+                console.log(usuarioResposta.data)
+                setUsuario(usuarioResposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
 
-
-    // if(select_opcoes.value == 0){
-    //     apiProdutos.get(`/status?idDoador=${idUsuario}?todos`).then((resposta) => {
-    //         try {
-    //             console.log(resposta.data)
-    //             setHistorico(resposta.data)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     })
-    // }
-
-    apiUsuario.get(`/${idDoador}`).then((usuarioResposta) => {
-        try {
-            console.log(usuarioResposta.data)
-            setUsuarioDon(usuarioResposta.data)
-        } catch (error) {
-            console.log(error)
-        }
-    })
-    
     }, [])
+
+    const getFiltro = () => {
+        let status = sessionStorage.getItem('status');
+        apiProdutos.get(`/status?idDoador=${idUsuario}&status=${status}`).then((resposta) => {
+            try {
+                console.log("uijhhjh", resposta.data)
+                setHistorico(resposta.data)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    }
+
+    function Redirect(event) {
+        console.log(event)
+        if (event.target.value != "") {
+            sessionStorage.setItem("status", event.target.value);
+            getFiltro();
+        }
+    }
+
 
 
     return (
@@ -75,11 +77,11 @@ function HistoricoDonatario() {
 
                         <div id="div_filtro"><p>Filtrar por</p>
 
-                            <select name="" id="select_opcoes">
-                                <option value="">Todos</option>
-                                <option value="">Processo</option>
-                                <option value="">Doados</option>
-                                <option value="">Recebidos</option>
+                            <select name="" onChange={((event) => { Redirect(event) })} id="select_opcoes">
+                                <option value="todos">Todos</option>
+                                <option value="processo">Processo</option>
+                                <option value="doado">Doados</option>
+                                <option value="recebido">Recebidos</option>
                             </select>
                         </div>
 
