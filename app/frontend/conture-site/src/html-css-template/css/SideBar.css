@@ -9,6 +9,7 @@
 }
 
 
+
 .side-bar{
     background-color: #7724BE;
     height: 100vh;
@@ -66,7 +67,7 @@ align-items: center;
 }
 
 .div-topic p:hover{
-    font-size: 18px;
+
     text-shadow: 0 0 0.2em #FFFFFF;
 }
 
@@ -90,4 +91,8 @@ align-items: center;
 .div-sair img{
     height: 30px;
     width: 30px;
+}
+
+p {
+    color: white;
 }

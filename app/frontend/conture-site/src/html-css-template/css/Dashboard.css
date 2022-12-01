@@ -6,6 +6,16 @@
     text-decoration: none;     
 }
 
+.dashMaps{
+    display: flex;
+}
+
+.dashMaps h1{
+    font-size: 20px;
+    text-align: center;
+    color: black;
+}
+
 #dash{
     display: flex;
     height: 100vh;
@@ -28,7 +38,8 @@
 }
 
 .title-bi h1{
-    font-size: 32px;
+    font-size: 30px;
+    text-align: center;
 }
 
 .dash-pDois{

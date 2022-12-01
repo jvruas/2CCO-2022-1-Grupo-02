@@ -28,12 +28,12 @@ function MapBrazil(props) {
             canvasbordercolor: "FFFFFF",
             bordercolor: "#aaa",
             showlegend: "0",
-            showshadow: "0",
+            showshadow: "1",
             legendposition: "BOTTOM",
             legendborderalpha: "0",
             legendbordercolor: "ffffff",
             legendallowdrag: "0",
-            legendshadow: "0",
+            legendshadow: "1",
             caption: "Brazil",
             hoverFillalpha: "20",
             hovercolor: "#b3ffec",
@@ -43,8 +43,8 @@ function MapBrazil(props) {
             minvalue: "0",
             startlabel: "Low",
             endlabel: "High",
-            code: "#e65c00",
-            gradient: "1",
+            code: "#c60000",
+            gradient: "3",
             color: [
                 {
                     maxvalue: "200",
@@ -67,8 +67,8 @@ function MapBrazil(props) {
     };
     const chartConfigs = {
         type: "brazil",
-        width: 300,
-        height: 300,
+        width: 500,
+        height: 500,
         dataFormat: "json",
         dataSource: dataSource
     };

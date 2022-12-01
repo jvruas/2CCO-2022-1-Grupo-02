@@ -37,7 +37,7 @@ function MapBrazil(props) {
             canvasbordercolor: "FFFFFF",
             bordercolor: "#aaa",
             showlegend: "0",
-            showshadow: "0",
+            showshadow: "1",
             legendposition: "BOTTOM",
             legendborderalpha: "0",
             legendbordercolor: "ffffff",
@@ -52,7 +52,7 @@ function MapBrazil(props) {
             minvalue: "0",
             startlabel: "Low",
             endlabel: "High",
-            code: "#e65c00",
+            code: "#008718",
             gradient: "1",
             color: [
                 {
@@ -78,8 +78,8 @@ function MapBrazil(props) {
 
     const chartConfigs = {
         type: "brazil",
-        width: 300,
-        height: 300,
+        width: 500,
+        height: 500,
         dataFormat: "json",
         dataSource: dataSource
     };

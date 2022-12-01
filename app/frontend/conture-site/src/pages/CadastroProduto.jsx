@@ -3,7 +3,7 @@ import Footer from "../components/Footer";
 import Perfil from "../components/Perfil";
 import MenuPerfil from "../components/MenuHistorico";
 import '../html-css-template/css/CadastroProduto.css';
-import iconCamera from "../html-css-template/imagens/icon-camera.svg"
+import iconCamera from "../html-css-template/imagens/Icon-camera.svg"
 import iconCheck from "../html-css-template/imagens/icon-check.png"
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";

@@ -38,8 +38,8 @@ function chartBarViewTwo(props){
       chartType="BarChart"
       data={data}
       options={options}
-      width={"100%"}
-      height={"100%"}
+      width={"1000px"}
+      height={"400px"}
     />
   );
 };

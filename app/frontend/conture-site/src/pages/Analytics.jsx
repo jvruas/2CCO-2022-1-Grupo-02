@@ -1,5 +1,6 @@
 import SideBar from "../components/SideBar";
 import "../html-css-template/css/Dashboard.css";
+import "../html-css-template/css/Dashboard.css";
 import ViewOne from "../components/AnalyticsViewOne";
 import ViewTwo from "../components/AnalyticsViewTwo";
 import ViewThree from "../components/AnalyticsViewThree";

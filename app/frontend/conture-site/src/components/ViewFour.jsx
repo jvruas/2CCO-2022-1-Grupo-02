@@ -29,8 +29,8 @@ function chartBarViewFour(props){
       chartType="Bar"
       data={dataLine}
       options={options}
-      width={"100%"}
-      height={"100%"}
+      width={"1000px"}
+      height={"400px"}
       backgroundColor="red"
     />
   )
