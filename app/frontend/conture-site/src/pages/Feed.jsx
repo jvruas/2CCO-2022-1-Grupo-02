@@ -24,17 +24,6 @@ function Feed() {
                         resposta.data[i].nomeDoador=response.data.nome
                         setProdutosNote(resposta.data);
                     })
-                    apiProduto.get(`${resposta.data[i].idProdutoDoacao}/imagem-principal`, 
-                    {responseType: 'blob'}).then((respostaImg) => {
-                        let imgUrl = URL.createObjectURL(respostaImg.data)
-                        // console.log("Console oieee",respostaImg.data)
-                        // setImg(respostaImg.data)
-                        imgProd[i] = respostaImg.data;
-                        console.log(imgProd);
-                    }).catch((error) => {
-                        console.log(error)
-                    })    
-                    
                 }
                 console.log("resposta.data");
                 console.log(resposta.data);

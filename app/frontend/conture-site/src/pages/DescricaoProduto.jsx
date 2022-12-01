@@ -16,6 +16,7 @@ import IconLocation from "../html-css-template/imagens/iconLocation.svg";
 import FotoPadrao from "../html-css-template/imagens/foto.jpg"
 import { Link, useNavigate } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary"
+import ImgProdutos from "../components/ImgProdutos";
 
 var produtosDoacao = 0;
 var produtosDoados = 0;
@@ -25,14 +26,64 @@ function DescricaoProduto() {
   const [usuario, setUsuario] = useState([]);
   const [mensagem, setMensagem] = useState([]);
   const [cep, setCep] = useState([]);
+  const [img, setImg] = useState([]);
 
-  setTimeout(function dataCadastro() {
-    var data = document.getElementById("data")
-    data.innerHTML = usuario.dataCadastro.substring(0, 10)
-  }, 500)
-
+  var listaImg= []
 
   useEffect(() => {
+
+    async function createBlob(base64) {
+      let res =    await fetch(base64)
+      let myBlob = await res.blob()
+    
+    return myBlob
+  } 
+
+    apiProdutos
+      .get(`${sessionStorage.getItem("idProduto")}/imagem-principal`, 
+      {responseType: 'blob'}).then((respostaImg) => {
+        let imgPUrl = URL.createObjectURL(respostaImg.data)
+        console.log("Console oieee1",respostaImg.data)
+        // setImg(respostaImg.data)
+        // imgProd[0] = respostaImg.data;
+        // setImg([imgPUrl]);
+        listaImg.push(imgPUrl)
+        // sessionStorage.setItem(`fotinha${props.idProduto}`, imgstr)
+        // console.log(imgProd);
+    }).catch((error) => {
+        console.log(error)
+  }) 
+
+  let _data = {
+    title: "foo",
+    body: "bar"
+  }
+
+  // fetch(`http://localhost:8081/produtos/${sessionStorage.getItem("idProduto")}/imagem-extra`, {
+  //   method: 'GET',
+  //   headers: {
+  //       'Content-Type': 'application/json;charset=UTF-8'
+  //   },
+  //      }).then((respostaImg) => respostaImg.json())
+  //      .then(json => json[0])
+  //     .then((myBlob) => {
+  //       const str2blob = new Blob([myBlob], {
+  //         type: 'image/jpeg'
+  //     });
+  //       console.log("Console ja",str2blob)
+  //       let imgPUrl = URL.createObjectURL(str2blob)
+  //       // setImg(respostaImg.data)
+  //       // imgProd[0] = respostaImg.data;
+  //       // setImg([imgPUrl]);
+  //       listaImg.push(imgPUrl)
+  //       // sessionStorage.setItem(`fotinha${props.idProduto}`, imgstr)
+  //       // console.log(imgProd);
+  //   }).catch((error) => {
+  //       console.log(error)
+  // })
+
+  setImg(listaImg)
+
     apiProdutos
       .get(`/${sessionStorage.getItem("idProduto")}`)
       .then((resposta) => {
@@ -56,7 +107,6 @@ function DescricaoProduto() {
     apiMensagemGrupo
       .get(`/${sessionStorage.getItem("idProduto")}`)
       .then((resposta) => {
-        console.log("aicalica",resposta.data)
         try{
           if(resposta.data.trim()==""){
             var a = [[{
@@ -129,7 +179,14 @@ function DescricaoProduto() {
 
       <CarouselProdutos
         qtdItens={1}
-        image={Computador}
+        content={
+          img.map((itemImg) =>
+          <ImgProdutos
+            image={itemImg}
+          >
+          </ImgProdutos>
+        )
+        }
       ></CarouselProdutos>
 
 
@@ -209,7 +266,7 @@ function DescricaoProduto() {
                 <div className="photo-user">
                   <img id="img_perfil" src={FotoPerfil} className="image-description" />
                 </div>
-                <b className="name-user">{usuario.nome}</b>
+                <b className="name-user">{usuario.nome} {usuario.sobreNome}</b>
               </div>
             </div>
 

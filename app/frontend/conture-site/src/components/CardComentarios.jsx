@@ -28,7 +28,7 @@ function CardComentarios(props){
         }
 
         async function delayedGreeting() {
-            await sleep(1000);
+            await sleep(300);
             window.location.reload(true);
         }
         delayedGreeting()
