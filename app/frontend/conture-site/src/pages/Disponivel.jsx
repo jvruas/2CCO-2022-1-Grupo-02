@@ -42,6 +42,7 @@ function Disponivel() {
                                     visualizacao={prod.quantidadeVisualizacao}
                                     nome={prod.nome}
                                     idProduto={prod.idProdutoDoacao}
+                                    idDoador={prod.fkDoador}
                                 />
                             )) : ""}
 

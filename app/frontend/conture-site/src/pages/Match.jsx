@@ -2,14 +2,16 @@ import Header from "../components/Header"
 import Perfil from "../components/Perfil"
 import MenuPerfil from "../components/MenuDisponivel"
 import '../html-css-template/css/Match.css'
+import '../html-css-template/css/CardMatch.css'
 import Footer from "../components/Footer"
 import Card from "../components/CardMatch"
 import Card2 from "../components/CardMatch"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import apiProdutos from "../apiProduto.js"
 import apiUsuario from "../apiUsuario.js"
 import fotoLogado from '../html-css-template/imagens/icon-logado-sem-foto.png';
+import estrela from '../html-css-template/imagens/star16.svg';
 
 function Match() {
 
@@ -73,7 +75,7 @@ function Match() {
 
     return (
         <>
-            <Header></Header>
+           <Header></Header>
             <section className="section-match">
                 <Perfil></Perfil>
                 <MenuPerfil></MenuPerfil>
@@ -81,38 +83,21 @@ function Match() {
                     <div className="text_matchs"><b><p>Matchs</p></b></div>
 
                     <div className="cards">
-                    <Card2
-                     foto={fotoLogado}
-                     nome={"Flávia"}
-                     cidade={"São Paulo"}
-                     uf={"SP"}
-                     nota={"5.0"}
-                     modelo={"Ideapad 3i"}
-                     data={"01/12/2022"}
-                    ></Card2>
-                    {/* {produtos != undefined && produtos.length > 0 ? produtos.map((prod) => (
-                            <Card2
-                                foto={}
-                                // nome={prod.nome}
-                                cidade={prod.cidade}
-                                // uf={prod.uf}
-                                // nota={prod.nota}
-                                modelo={prod.modelo}
-                                data={prod.data}
-                            />
-                        )) : ""} */}
+                        <Card
 
-                        {produtos != undefined && produtos.length > 0 ? produtos.map((prod) => (
-                            <Card
-                                foto={prod.imagem}
-                                nome={prod.nome}
-                                cidade={prod.cidade}
-                                // uf={prod.uf}
-                                // nota={prod.nota}
-                                modelo={prod.modelo}
-                                data={prod.data}
-                            />
-                        )) : ""}
+                            foto={fotoLogado}
+
+                            nome={"Flávia"}
+
+                            cidade={"São Paulo"}
+
+                            uf={"SP"}
+
+                            nota={"5.0"}
+
+                            modelo={"Ideapad 3i"}
+                            data={"01/12/2022"}
+                        ></Card>
 
                     </div>
                 </div>

@@ -10,10 +10,10 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-
 function CardMatch(props) {
 
-    const navegar = useNavigate();   
+const navegar = useNavigate();  
+
 
     function aceitarMatch(){
         apiProdutos.patch(`26?idDoador=6&idDonatario=7`).then((resposta) => {
@@ -24,7 +24,6 @@ function CardMatch(props) {
          })
 
     }
-
 
     function retirarMatch() {
         apiProdutos.delete(`28/match?idDonatario=7`,
@@ -40,7 +39,6 @@ function CardMatch(props) {
             console.log(error)
           })
       }
-
     return (
         <>
             <div className='div_match'>

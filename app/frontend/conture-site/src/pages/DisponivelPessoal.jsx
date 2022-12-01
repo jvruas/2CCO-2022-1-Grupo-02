@@ -76,7 +76,7 @@ function DisponivelPessoal() {
                                     produto={prod.idProdutoDoacao}
                                     visualizacao={prod.quantidadeVisualizacao}
                                     nome={prod.nome}
-                                    idProduto={prod.idProduto}
+                                    idProduto={prod.idProdutoDoacao}
                                 />
                             )) : ""}
 
