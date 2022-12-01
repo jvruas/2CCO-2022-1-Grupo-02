@@ -101,13 +101,24 @@ SELECT * FROM vw_qtd_desligamento_motivo_desligamento;
 
 -- View Produtos Vendidos X Doados
 CREATE OR REPLACE VIEW vw_produtos_vendidos_doados AS
-	SELECT cp.nome AS 'produto', pd.data_conclusao AS 'data_de_doacao',pd.quantidade_visualizacao AS 'qtd_visualizacao', COUNT(*) as 'qtd_produtos'
-		FROM produto_doacao pd 
-	INNER JOIN categoria_produto cp 
-		ON pd.fk_categoria_produto = cp.id_categoria_produto
-	WHERE pd.data_conclusao != 'NULL'
-		GROUP BY cp.nome, YEAR(pd.data_conclusao)
-	ORDER BY cp.nome DESC;
+SELECT
+	cp.nome,
+	SUM(quantidade_visualizacao) as qtd_visualizacao,
+	COUNT(cp.nome) as qtd_produtos,
+	SUM(quantidade_visualizacao)/ COUNT(cp.nome) as media,
+	avg(m.match_porcentagem) AS "media_match",
+	pd.data_conclusao AS "data_de_doacao"
+FROM
+	produto_doacao pd
+iNNER JOIN categoria_produto cp 
+		ON
+	pd.fk_categoria_produto = cp.id_categoria_produto
+INNER JOIN `match` m ON
+	m.fk_produto_doacao = pd.id_produto_doacao
+WHERE
+	pd.data_conclusao != 'NULL'
+group by
+	cp.nome;
 
 SELECT * FROM vw_produtos_vendidos_doados;
 	
@@ -144,19 +155,19 @@ GROUP BY
 )SELECT
 	CASE WHEN MAX(`HEADSET`) IS NULL THEN 0
 	ELSE MAX(`HEADSET`)
-	END AS 'HEADSET',
+	END AS 'Headset',
 	CASE WHEN MAX(`MESA DIGITALIZADORA`) IS NULL THEN 0
 	ELSE MAX(`MESA DIGITALIZADORA`)
-	END AS 'MESA_DIGITALIZADORA',
+	END AS 'Mesa_Digitalizadora',
 	CASE WHEN MAX(`NOTEBOOK`) IS NULL THEN 0
 	ELSE MAX(`NOTEBOOK`)
-	END AS 'NOTEBOOK',
+	END AS 'Notebook',
 	CASE WHEN MAX(`SMARTPHONE`) IS NULL THEN 0
 	ELSE MAX(`SMARTPHONE`)
-	END AS 'SMARTPHONE',
+	END AS 'Smartphone',
 	CASE WHEN MAX(`TABLET`) IS NULL THEN 0
 	ELSE MAX(`TABLET`)
-	END AS 'TABLET',
+	END AS 'Tablet',
 	`data` AS 'DATA'
 FROM
 	CTE
@@ -201,6 +212,46 @@ CREATE OR REPLACE VIEW vw_todas_datas AS
 	ORDER BY 1;
 
 SELECT * FROM vw_todas_datas;
+
+-- Analytics 
+CREATE OR REPLACE VIEW vw_base_furtos AS
+SELECT COUNT(*) as 'qt_furtos', ano as 'data' FROM BASE_FURTOS bf GROUP BY bf.Ano ORDER BY 1;
+
+SELECT * FROM vw_base_furtos;
+
+CREATE OR REPLACE VIEW vw_furtos_por_qt_produtos AS
+SELECT COUNT(*) as 'qt_produtos', DATE_FORMAT(pd.data_conclusao,'%Y') AS 'data'
+		FROM produto_doacao pd 
+			INNER JOIN usuario u 
+				ON pd.fk_doador = u.id_usuario 
+		WHERE pd.data_conclusao != 'NULL'
+	GROUP BY DATE_FORMAT(pd.data_conclusao,'%Y');
+SELECT * FROM vw_furtos_por_qt_produtos;
+
+CREATE OR REPLACE VIEW vw_furtos_por_qt_visualizacao AS
+SELECT SUM(pd.quantidade_visualizacao) as 'qt_visualizacao', DATE_FORMAT(pd.data_conclusao,'%Y') AS 'data'
+		FROM produto_doacao pd 
+			INNER JOIN usuario u 
+				ON pd.fk_doador = u.id_usuario 
+		WHERE pd.data_conclusao != 'NULL'
+	GROUP BY DATE_FORMAT(pd.data_conclusao,'%Y');
+SELECT * FROM vw_furtos_por_qt_visualizacao;
+
+CREATE OR REPLACE VIEW vw_furtos_por_qt_usuarios AS
+SELECT COUNT(*) as 'qt_usuarios', DATE_FORMAT(pd.data_conclusao,'%Y') AS 'data'
+		FROM produto_doacao pd 
+			INNER JOIN usuario u 
+				ON pd.fk_doador = u.id_usuario 
+		WHERE pd.data_conclusao != 'NULL'
+	GROUP BY DATE_FORMAT(pd.data_conclusao,'%Y');
+SELECT * FROM vw_furtos_por_qt_usuarios;
+
+
+
+
+
+
+
 
 
 

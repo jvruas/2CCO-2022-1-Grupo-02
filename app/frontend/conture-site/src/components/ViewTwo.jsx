@@ -4,12 +4,12 @@ export const options = {
   title:
     "Produtos mais Doados X Produtos mais Visualizados",
   subtilte: "Comparativo entre os produtos mais doados com os produtos mais visualizados em nossa plataforma.",
-  hAxis: { title: "Visualizações" },
-  vAxis: { title: "Doações" },
-  colorAxis: { colors: ["purple", "red"] },
+  hAxis: { title: "Doações" },
+  vAxis: { title: "Visualizações" },
+  colors: ["#734D84", "#8084D5", "#979BFA"], 
   bubble: {
     textStyle: {
-      fontSize: 11,
+      fontSize: 9,  
       fontName: "Tajawal",
       color: "black",
       bold: true,
@@ -25,17 +25,17 @@ function chartBarViewTwo(props){
     ["Produto", "Doações", "Visualizações"]
   ];
 
-  console.log(props.dados);
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASSPINTO", props.dados);
 
   for (let index = 0; index < props.dados.length; index++) {
-      var temp = [props.dados[index].produto, props.dados[index].qtdProdutos, props.dados[index].qtdVisualizacao];
+      var temp = [(props.dados[index].nome).charAt(0)+(props.dados[index].nome).toLowerCase().slice(1), props.dados[index].qtdProdutos, props.dados[index].qtdVisualizacao];
       data.push(temp);
   }
 
   console.log(data);
   return (
     <Chart
-      chartType="BubbleChart"
+      chartType="BarChart"
       data={data}
       options={options}
       width={"100%"}

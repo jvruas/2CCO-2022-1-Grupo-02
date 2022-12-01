@@ -23,6 +23,7 @@ import PopUpAvaliacao from "./pages/pop-up/PopUpAvaliacao";
 import PopUpDeletar from "./pages/pop-up/PopUpDeletar";
 import DescricaoProduto from "./pages/DescricaoProduto";
 import Dashboard from "./pages/Dashboard";
+import Analytics from "./pages/Analytics";
 
 function Rotas() {
     return (
@@ -50,7 +51,8 @@ function Rotas() {
                 <Route path="/popup" element={<PopUp/>} />
                 <Route path="/popup-reporte" element={<PopUpReporte/>} />
                 <Route path="/descricao-produto" element={<DescricaoProduto/>} />
-                <Route path="/dashboard-admin-bi" element={<Dashboard/>}></Route>
+                <Route path="/dashboard" element={<Dashboard/>}></Route>
+                <Route path="/analytics" element={<Analytics/>}></Route>
                 <Route path="/popup-avaliacao" element={<PopUpAvaliacao/>} />
                 <Route path="/popup-filtro" element={<PopUpFiltro/>} />
                 <Route path="/popup-deletar" element={<PopUpDeletar/>} />

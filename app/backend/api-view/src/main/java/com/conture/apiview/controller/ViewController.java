@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.conture.apiview.repository.ViewBaseFurtosRepository;
 import com.conture.apiview.repository.ViewDoacaoReporitory;
+import com.conture.apiview.repository.ViewFurtosProdutosRepository;
+import com.conture.apiview.repository.ViewFurtosQtdUsuariosRepository;
+import com.conture.apiview.repository.ViewFurtosVisualizacaoRepository;
 import com.conture.apiview.repository.ViewProdutosVendidosDoadosRepository;
 import com.conture.apiview.repository.ViewQtdProdutosEstadoRepository;
 import com.conture.apiview.repository.ViewQtdReportesEstadoRepository;
@@ -45,6 +49,18 @@ public class ViewController {
 	@Autowired
 	private ViewTodasDatasRepository vwTodasDatasRepository;
 
+	@Autowired
+	private ViewFurtosProdutosRepository vwFurtosProdutosRepository;
+
+	@Autowired
+	private ViewFurtosVisualizacaoRepository vwFurtosVisualizacaoRepository;
+
+	@Autowired
+	private ViewFurtosQtdUsuariosRepository vwFurtosQtdUsuariosRepository;
+
+	@Autowired
+	private ViewBaseFurtosRepository vwBaseFurtosRepository;
+
 	@GetMapping("/busca_datas")
 	public ResponseEntity listaDatas(){
 		return status(200).body(vwTodasDatasRepository.findTeste());
@@ -78,5 +94,26 @@ public class ViewController {
 	@GetMapping("/vw_qtd_reportes_estado")
 	public ResponseEntity listaReportesEstado(@RequestParam String data) {
 		return status(200).body(vwQtdReportesEstadoRepository.findTeste(data));
+	}
+
+	// Analytics
+	@GetMapping("/vw_base_furtos")
+	public ResponseEntity listaFurtos(@RequestParam String data) {
+		return status(200).body(vwBaseFurtosRepository.findTeste(data));
+	}
+
+	@GetMapping("/vw_furtos_por_qt_produtos")
+	public ResponseEntity listaFurtosProdutos(@RequestParam String data) {
+		return status(200).body(vwFurtosProdutosRepository.findTeste(data));
+	}
+
+	@GetMapping("/vw_furtos_por_qt_visualizacao")
+	public ResponseEntity listaFurtosVisualizacao(@RequestParam String data) {
+		return status(200).body(vwFurtosVisualizacaoRepository.findTeste(data));
+	}
+
+	@GetMapping("/vw_furtos_por_qt_usuarios")
+	public ResponseEntity listaFurtosUsuarios(@RequestParam String data) {
+		return status(200).body(vwFurtosQtdUsuariosRepository.findTeste(data));
 	}
 }

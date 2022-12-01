@@ -69,14 +69,21 @@ function Dashboard() {
         </div>
         <div className="dash-pDois">
           <div className="dash-scroll">
+            
+            <div>
+            <h1>Reportes</h1>
             <MapBrazil
               mapa={mapReport}
             ></MapBrazil>
+            </div>
 
-            <MapBrazilDonations
+            <div>
+              <h1>Doações</h1>
+              <MapBrazilDonations
               mapa={mapDonations}
             ></MapBrazilDonations>
-
+            </div>
+          
             <ChartLine
             dados={historyDonations}
             ></ChartLine>

@@ -57,17 +57,17 @@ function MapBrazil(props) {
             gradient: "1",
             color: [
                 {
-                    maxvalue: "2000",
+                    maxvalue: "200",
                     displayvalue: "Average",
                     code: "#3ec34d"
                 },
                 {
-                    maxvalue: "4000",
+                    maxvalue: "400",
                     displayvalue: "Above Average",
                     code: "#80bfff"
                 },
                 {
-                    maxvalue: "6000",
+                    maxvalue: "600",
                     code: "#00b386"
                 }
             ],

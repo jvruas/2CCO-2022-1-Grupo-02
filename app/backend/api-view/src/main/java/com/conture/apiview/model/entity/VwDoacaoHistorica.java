@@ -23,19 +23,19 @@ public class VwDoacaoHistorica {
 	@Id
 	private String id;
 
-    @Column(name = "HEADSET")
+    @Column(name = "Headset")
     private Integer headset;
 
-    @Column(name = "MESA_DIGITALIZADORA")
+    @Column(name = "Mesa_Digitalizadora")
     private Integer mesaDigitalizadora;
 
-    @Column(name = "NOTEBOOK")
+    @Column(name = "Notebook")
     private Integer notebook;
 
-    @Column(name = "SMARTPHONE")
+    @Column(name = "Smartphone")
     private Integer smartphone;
 
-    @Column(name = "TABLET")
+    @Column(name = "Tablet")
     private Integer tablet;
 
     @Column(name = "DATA")

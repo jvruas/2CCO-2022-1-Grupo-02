@@ -25,12 +25,8 @@ public class VwProdutosVendidosDoados implements Serializable{
 	@Id
 	private String id;
 
-	@Column(name = "produto")
-    private String produto;
-
-	@Column(name = "data_de_doacao")
-	@Temporal(TemporalType.TIMESTAMP)
-    private Date dataDoacao;
+	@Column(name = "nome")
+    private String nome;
 
 	@Column(name = "qtd_visualizacao")
     private Integer qtdVisualizacao;
@@ -38,19 +34,30 @@ public class VwProdutosVendidosDoados implements Serializable{
 	@Column(name = "qtd_produtos")
     private Integer qtdProdutos;
 
+	@Column(name = "media")
+    private Double media;
+
+	@Column(name = "media_match")
+    private Double mediaMatch;
+
+	@Column(name = "data_de_doacao")
+    private String data;
+
 
 	public VwProdutosVendidosDoados(){
 
 	}
 
 
-	public VwProdutosVendidosDoados(String id, String produto, Date dataDoacao, Integer qtdVisualizacao,
-			Integer qtdProdutos) {
+	public VwProdutosVendidosDoados(String id, String nome, Integer qtdVisualizacao, Integer qtdProdutos, Double media,
+			Double mediaMatch, String data) {
 		this.id = id;
-		this.produto = produto;
-		this.dataDoacao = dataDoacao;
+		this.nome = nome;
 		this.qtdVisualizacao = qtdVisualizacao;
 		this.qtdProdutos = qtdProdutos;
+		this.media = media;
+		this.mediaMatch = mediaMatch;
+		this.data = data;
 	}
 
 
@@ -64,23 +71,13 @@ public class VwProdutosVendidosDoados implements Serializable{
 	}
 
 
-	public String getProduto() {
-		return produto;
+	public String getNome() {
+		return nome;
 	}
 
 
-	public void setProduto(String produto) {
-		this.produto = produto;
-	}
-
-
-	public Date getDataDoacao() {
-		return dataDoacao;
-	}
-
-
-	public void setDataDoacao(Date dataDoacao) {
-		this.dataDoacao = dataDoacao;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 
@@ -101,6 +98,36 @@ public class VwProdutosVendidosDoados implements Serializable{
 
 	public void setQtdProdutos(Integer qtdProdutos) {
 		this.qtdProdutos = qtdProdutos;
+	}
+
+
+	public Double getMedia() {
+		return media;
+	}
+
+
+	public void setMedia(Double media) {
+		this.media = media;
+	}
+
+
+	public Double getMediaMatch() {
+		return mediaMatch;
+	}
+
+
+	public void setMediaMatch(Double mediaMatch) {
+		this.mediaMatch = mediaMatch;
+	}
+
+
+	public String getData() {
+		return data;
+	}
+
+
+	public void setData(String data) {
+		this.data = data;
 	}
 
 	
