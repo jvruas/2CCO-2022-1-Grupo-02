@@ -4,9 +4,43 @@ import fotoDeslogado from '../html-css-template/imagens/imagem-deslogado.png';
 import aceitar from '../html-css-template/imagens/accept.svg';
 import rejeitar from '../html-css-template/imagens/reject.svg';
 import '../html-css-template/css/CardMatch.css'
+import apiProdutos from '../apiProduto';
+import { useNavigate } from 'react-router-dom';
 // import Header from './headerMatch';
 
+
+
+
 function CardMatch(props) {
+
+    const navegar = useNavigate();   
+
+    function aceitarMatch(){
+        apiProdutos.patch(`26?idDoador=6&idDonatario=7`).then((resposta) => {
+            // sessionStorage.setItem("produtoAvaliado","23")
+            navegar("/popup-avaliacao")
+        }).catch((error) => { 
+                console.log(error)
+         })
+
+    }
+
+
+    function retirarMatch() {
+        apiProdutos.delete(`28/match?idDonatario=7`,
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }).then((resposta) => {
+            //console.log(resposta.status)
+            navegar("/")
+            // document.location.reload(true)
+          }).catch((error) => {
+            console.log(error)
+          })
+      }
+
     return (
         <>
             <div className='div_match'>
@@ -30,8 +64,8 @@ function CardMatch(props) {
                     <div className='text_match'>{props.data}</div>
                     </div>
                         <div className='imagens'>
-                            <button className='btn_aceitar'>ACEITAR</button>
-                            <button className='btn_recusar'>RECUSAR</button>
+                            <button className='btn_aceitar' onClick={aceitarMatch}>ACEITAR</button>
+                            <button className='btn_recusar' onClick={retirarMatch}>RECUSAR</button>
                             </div>
                     
 

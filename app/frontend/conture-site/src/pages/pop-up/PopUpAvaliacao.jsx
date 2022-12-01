@@ -3,6 +3,7 @@ import seta from "../../html-css-template/imagens/arrow.svg";
 import fechar from "../../html-css-template/imagens/x-lg1.svg";
 import { useState, useEffect } from "react";
 import apiProdutos from "../../apiProduto.js"
+import { useNavigate } from 'react-router-dom';
 
 function dataAvaliacao() {
     return {
@@ -12,6 +13,8 @@ function dataAvaliacao() {
 }
 
 function PopUpAvaliacao() {
+
+    const navegar = useNavigate();
 
     // Função para chamar o endpoint para avaliar doação
     const [valuesAvaliacao, setValuesAvaliacao] = useState(dataAvaliacao)
@@ -39,6 +42,7 @@ function PopUpAvaliacao() {
                 'Content-Type': 'application/json'
             }
         }).then((resposta) => {
+            navegar("/mensagem-direta")
             console.log(resposta.status)
         }).catch((error) => {
             console.log(error)
